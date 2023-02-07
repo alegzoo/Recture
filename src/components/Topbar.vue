@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-    import Searchbar from './Searchbar.vue';
+    import Searchbar from './SearchBar.vue';
 </script>
 
 <style>
