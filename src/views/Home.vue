@@ -2,6 +2,9 @@
     <CornerLogo/>
     <Sidebar/>
     <Topbar/>
+    <v-container id="home-content" fluid>
+        <router-view/>
+    </v-container>
 </template>
 
 <script lang="ts" setup>

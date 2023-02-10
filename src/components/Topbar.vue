@@ -3,7 +3,7 @@
         <v-container id="topbar-panel" class="overflow-hidden" fluid>
             <v-row no-gutters align-content="center" justify="center" class="h-100">
                 <v-col v-show="smAndUp" cols="2" align="left" align-self="center">
-                    <v-img id= "topbar-logo" src="@/assets/typeface_recture_logo.svg" width="165"></v-img>
+                    <v-img id="topbar-logo" src="@/assets/typeface_recture_logo.svg" width="165"></v-img>
                 </v-col>
                 <v-col align-self="center" class="px-1">
                     <Searchbar/>
