@@ -1,9 +1,7 @@
 <template>
-    <v-app>
-        <CornerLogo/>
-        <Sidebar/>
-        <Topbar/>
-    </v-app>
+    <CornerLogo/>
+    <Sidebar/>
+    <Topbar/>
 </template>
 
 <script lang="ts" setup>
