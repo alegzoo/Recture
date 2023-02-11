@@ -54,3 +54,34 @@ $nav-panel-color: #232323;
     margin: 0px 3px 0px 66px;
     padding: 0px;
 }
+
+
+#video-row-button{
+    background-color: transparent;
+    margin: 0 0 0 13px;
+}
+
+#video-container{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.v-btn {
+    background-color: grey;
+    color: white;
+    padding: 1px 1px;
+    border-radius: 7px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    margin: 0px 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+} 
+  
+.selected {
+    background-color: darkgrey;
+
+}
