@@ -1,5 +1,6 @@
 // Composables
 import Home from '@/views/Home.vue'
+import Signin from '@/views/Signin.vue'
 import VideoBrowser from '@/views/VideoBrowser.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -13,6 +14,10 @@ const routes = [
         component: VideoBrowser
       }
     ]
+  },
+  {
+    path: "/signin",
+    component: Signin
   }
 ]
 
