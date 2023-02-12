@@ -1,9 +1,10 @@
 <template>
     <v-container id="video-container" fluid>
-        <v-row id="video-row-button" style="align-items: flex-start;">
-                <v-item-group>
-                    <SubjectButton></SubjectButton>
-                </v-item-group>
+        <v-row id="video-row-button">
+            <v-btn-toggle id="subject-button-toggle" selected-class="selected" :model-value="[0]" mandatory>
+                <SubjectButton text="MAT"/>
+                <SubjectButton text="INF"/>
+            </v-btn-toggle>
         </v-row>
     </v-container>
 </template>
