@@ -60,6 +60,17 @@ $nav-panel-color: #232323;
     background-size: cover;
 }
 
+#signin-logo{
+    border-radius: 10px;
+    width: 60px;
+    height: 60px;
+    padding: 65px;
+}
+
+#signin-text-title {
+    font-weight: bold;
+}
+
 #video-row-button {
     background-color: transparent;
     margin: 0 0 0 13px;
