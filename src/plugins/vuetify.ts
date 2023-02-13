@@ -23,10 +23,10 @@ export default createVuetify({
                     'primary-darken-1': '#000000',
                     secondary: '#000000',
                     'secondary-darken-1': '#000000',
-                    error: '#000000',
-                    info: '#000000',
-                    success: '#000000',
-                    warning: '#000000'
+                    error: '#EF5350',
+                    info: '#42A5F5',
+                    success: '#66BB6A',
+                    warning: '#FFA726'
                 }
             }
             },

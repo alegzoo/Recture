@@ -56,7 +56,8 @@ $nav-panel-color: #232323;
 }
 
 #signin-container {
-    background-color: $nav-panel-color;
+    background-image: url("@/assets/bg_login_screen.png");
+    background-size: cover;
 }
 
 #video-row-button {
