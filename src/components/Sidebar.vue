@@ -1,25 +1,38 @@
 <template>
     <v-navigation-drawer id="sidebar" width="66" permanent floating>
         <v-list id="sidebar-panel" width="60" density="compact" nav>
-                <v-list-item>
-                <v-avatar size="36px">
-                    <v-img src="https://randomuser.me/api/portraits/men/85.jpg"/>
-                </v-avatar>
+            <v-list-item>
+                <v-responsive :aspect-ratio="1">
+                    <v-avatar size="36px">
+                        <v-img src="https://randomuser.me/api/portraits/men/85.jpg"/>
+                    </v-avatar>
+                </v-responsive>
                 <v-tooltip
-                        theme="light"
-                        activator="parent"
-                        location="end"
-                    >johndoe@example.gov</v-tooltip>
+                    theme="light"
+                    activator="parent"
+                    location="end"
+                    >johndoe@example.gov
+                </v-tooltip>
             </v-list-item>
-            <SidebarButton icon="mdi-home" text="Home"/>
-            <SidebarButton icon="mdi-account" text="Account"/>
-            <SidebarButton icon="mdi-file-document" text="My T&C"/>
+            <SidebarButton icon="mdi-home" text="Home" @click="() => router.push('/')"/>
+            <SidebarButton icon="mdi-account" text="Account" @click="() => router.push('/account')"/>
+            <SidebarButton icon="mdi-file-document" text="My T&C" @click="() => router.push('/account/terms')"/>
+            <v-divider></v-divider>
+            <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
         </v-list>
     </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
+    import { RectureApi } from '@/api/RectureApi';
     import SidebarButton from './SidebarButton.vue';
+    import router from '@/router';
+
+    function signOut() {
+        RectureApi.signOut().then(function (response) {
+            if (response.ok) router.push("/signin");
+        });
+    }
 </script>
 
 <style>

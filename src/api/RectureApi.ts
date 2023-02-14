@@ -14,6 +14,13 @@ export class RectureApi {
         });
     }
 
+    public static signOut(): Promise<Response> {
+        return fetch(this.pathToUrl("auth/signout"), {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
     private static pathToUrl(path: string): string {
         return RectureApi.BASE_API_URL + path;
     }
