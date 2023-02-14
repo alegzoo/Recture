@@ -9,7 +9,7 @@
                     <p class="my-10" id="signin-text-title">Sign in to start!</p>
                     <v-text-field id="email-input" v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2"/>
                     <v-text-field id="password-input" v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2"/>
-                    <v-alert v-show="alertBody !== null" density="compact" type="warning" align="left" :text="(alertBody as string)" class="mb-5"/>
+                    <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="mb-5"/>
                     <v-btn type="submit" :disabled="submitDisabled" class="mb-5">Sign in</v-btn>
                     <br/>
                     <router-link to="/signup">No account? Sign up!</router-link>
@@ -57,6 +57,8 @@
                     router.push("/");
                 } else if (response.status === status.UNAUTHORIZED || response.status === status.BAD_REQUEST) {
                     alertBody.value = "Incorrect username or password.";
+                } else if (response.status === status.NOT_FOUND) {
+                    alertBody.value = "This account does not exist.";
                 } else {
                     alertBody.value = "An error has occurred.";
                 }
