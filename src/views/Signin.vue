@@ -7,12 +7,12 @@
                     <v-img src="@/assets/recture_logo.svg" id="signin-logo" class="my-10" style="height: 60px;"/>
                     <v-img src="@/assets/typeface_recture_logo.svg" alt="typeface-logo" class="my-10" style="height: 60px;"/>
                     <p class="my-10" id="signin-text-title">Sign in to start!</p>
-                    <v-text-field id="email-input" v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2"/>
-                    <v-text-field id="password-input" v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2"/>
+                        <v-text-field id="email-input" v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2" variant="solo" theme="light"/>
+                    <v-text-field id="password-input" v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2" variant="solo" theme="light"/>
                     <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="mb-5"/>
-                    <v-btn type="submit" :disabled="submitDisabled" class="mb-5">Sign in</v-btn>
+                    <v-btn id="login-button" type="submit" :disabled="submitDisabled" class="mb-5">Sign in</v-btn>
                     <br/>
-                    <router-link to="/signup">No account? Sign up!</router-link>
+                    <router-link id="hyperlink-signin" to="/signup">No account? Sign up!</router-link>
                 </v-form>
             </v-col>
             <v-col/>
