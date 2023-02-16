@@ -25,12 +25,16 @@
 
 <script lang="ts" setup>
     import { RectureApi } from '@/api/RectureApi';
-    import SidebarButton from './SidebarButton.vue';
+    import { Stores } from '@/stores/Stores';
     import router from '@/router';
+    import SidebarButton from './SidebarButton.vue';
 
     function signOut() {
         RectureApi.signOut().then(function (response) {
-            if (response.ok) router.push("/signin");
+            if (response.ok) {
+                Stores.resetAllStores();
+                router.push("/signin");
+            }
         });
     }
 </script>

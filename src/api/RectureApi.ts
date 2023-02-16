@@ -21,8 +21,25 @@ export class RectureApi {
         });
     }
 
+    public static getAccountInfo(): Promise<Response> {
+        return fetch(this.pathToUrl("account"), {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
     private static pathToUrl(path: string): string {
         return RectureApi.BASE_API_URL + path;
     }
 
+}
+
+export interface IAccount {
+    userId: number
+    email: string
+    userType: string
+    emailConfirmed: boolean
+    firstName: string
+    lastName: string
+    bio: string
 }

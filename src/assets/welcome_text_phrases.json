@@ -1,0 +1,10 @@
+{
+    "primary": [
+        "Welcome back, %name!",
+        "Hello, %name!"
+    ],
+    "secondary": [
+        "Let's share what you know with the world!",
+        "What will you share with the world today?"
+    ]
+}
