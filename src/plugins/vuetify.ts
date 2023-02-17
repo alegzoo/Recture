@@ -17,7 +17,7 @@ export default createVuetify({
         themes: {
             dark: {
                 colors: {
-                    background: '#000000',
+                    background: '#555555',
                     surface: '#000000',
                     primary: '#000000',
                     'primary-darken-1': '#000000',
@@ -29,7 +29,7 @@ export default createVuetify({
                     warning: '#FFA726'
                 }
             }
-            },
+        },
         defaultTheme: "dark"
     }
 })

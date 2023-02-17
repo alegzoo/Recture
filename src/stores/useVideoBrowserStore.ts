@@ -42,7 +42,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
         },
-        fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
+        /*fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
                         sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
                         classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
                         visibilityFilter: RecordingVisibilityFilter | null = null) {
@@ -54,6 +54,28 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     })
                 }
             });
+        }*/
+        fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
+            sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
+            classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
+            visibilityFilter: RecordingVisibilityFilter | null = null) {
+            this.recordings = []
+            for (let i = 0; i < 30; i++) {
+                this.recordings.push({
+                    recordingId: i,
+                    title: "Definičný obor",
+                    description: "test",
+                    notifications: 0,
+                    classId: 0,
+                    className: "IV.A",
+                    subjectId: 0,
+                    subjectName: "INF",
+                    uploadTimestamp: Math.floor(Date.now()/1000),
+                    recordingTimestamp: Math.floor(Date.now()/1000),
+                    sources: ["http://api.recture.study:81/recordings/1/content/primary"],
+                    thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
+                });
+            }
         }
     }
 });

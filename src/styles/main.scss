@@ -73,6 +73,10 @@ $nav-panel-color: #232323;
     font-size: 20px;
 }
 
+#hyperlink-signin{
+    color: white;
+}
+
 #video-row-button {
     background-color: transparent;
     margin: 0 0 0 13px;
@@ -103,6 +107,24 @@ $nav-panel-color: #232323;
     background-color: darkgrey;
 }
 
-#hyperlink-signin{
-    color: white;
+.video-box {
+    background-color: white;
+    color: black;
+    border: solid 2px black;
+    border-radius: 30px;
+    box-shadow: none;
+}
+
+.video-box:hover {
+    background-color: #FF1E23;
+    box-shadow: 3px 3px black;
+}
+
+.video-box-thumbnail {
+    border-bottom: solid 2px black;
+}
+
+.video-box-title {
+    font-size: 1.4em;
+    font-weight: bold;
 }

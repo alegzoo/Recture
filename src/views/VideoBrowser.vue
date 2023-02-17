@@ -7,14 +7,19 @@
             </v-btn-toggle>
         </v-row>
         <v-row>
-            <v-col/>
-            <v-col cols="4">
+            <v-col cols="12" md="6">
                 <h1 style="text-align: center;">{{ videoBrowserStore.welcomeText.primary }}</h1>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="12" md="6">
                 <h2 style="text-align: center;">{{ videoBrowserStore.welcomeText.secondary }}</h2>
             </v-col>
-            <v-col/>
+        </v-row>
+        <v-row class="pa-4">
+            <template v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
+                <v-col cols="12" sm="4" md="3" xxl="2" class="pa-1">
+                    <VideoBox :recording="recording"/>
+                </v-col>
+            </template>
         </v-row>
     </v-container>
 </template>
@@ -27,15 +32,16 @@
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
     import SubjectButton from '@/components/SubjectButton.vue';
+    import VideoBox from '@/components/VideoBox.vue';
 
     const accountStore = useAccountStore();
     const videoBrowserStore = useVideoBrowserStore();
 
-    videoBrowserStore.clearWelcomeText();
+    videoBrowserStore.fetchRecordings(0);
 
+    videoBrowserStore.clearWelcomeText();
     accountStore.$subscribe((mutation, state) => {
         videoBrowserStore.formatWelcomeText();
     });
-
     videoBrowserStore.generateWelcomeText();
 </script>
