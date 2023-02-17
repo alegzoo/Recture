@@ -14,9 +14,9 @@
                     >johndoe@example.gov
                 </v-tooltip>
             </v-list-item>
-            <SidebarButton icon="mdi-home" text="Home" @click="() => router.push('/')"/>
-            <SidebarButton icon="mdi-account" text="Account" @click="() => router.push('/account')"/>
-            <SidebarButton icon="mdi-file-document" text="My T&C" @click="() => router.push('/account/terms')"/>
+            <SidebarButton icon="mdi-home" text="Home" to="/"/>
+            <SidebarButton icon="mdi-account" text="Account" to="/account"/>
+            <SidebarButton icon="mdi-file-document" text="My T&C" to="/account/terms"/>
             <v-divider></v-divider>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
         </v-list>
