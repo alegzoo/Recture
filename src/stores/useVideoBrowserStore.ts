@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 
 import { useAccountStore } from '@/stores/useAccountStore';
+import { IRecording, RecordingSort, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
 
 export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     state: () => ({
@@ -15,7 +16,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         subjects: [],
         classes: [],
         topics: [],
-        recordings: []
+        recordings: [] as IRecording[]
     }),
     actions: {
         generateWelcomeText() {
@@ -40,6 +41,19 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.secondary = "";
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
+        },
+        fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
+                        sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
+                        classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
+                        visibilityFilter: RecordingVisibilityFilter | null = null) {
+            this.recordings = []
+            RectureApi.getRecordings(page, pageSize, sort, sortDirection, query, classIds, subjectIds, topicIds, visibilityFilter).then((response) => {
+                if (response.ok) {
+                    response.json().then((data) => {
+                        this.recordings = data.data as IRecording[];
+                    })
+                }
+            });
         }
     }
 });

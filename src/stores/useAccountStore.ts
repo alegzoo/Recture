@@ -20,6 +20,15 @@ export const useAccountStore = defineStore("accountStore", {
             this.firstName = account.firstName;
             this.lastName = account.lastName;
             this.bio = account.bio;
+        },
+        fetchData() {
+            RectureApi.getAccountInfo().then((response) => {
+                if (response.ok) {
+                    response.json().then((data) => {
+                        this.loadData(data as IAccount);
+                    });
+                }
+            });
         }
     }
 });
