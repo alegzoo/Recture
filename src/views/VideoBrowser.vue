@@ -16,7 +16,7 @@
         </v-row>
         <v-row class="pa-4">
             <template v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
-                <v-col cols="12" sm="4" md="3" xxl="2" class="pa-1">
+                <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-1">
                     <VideoBox :recording="recording"/>
                 </v-col>
             </template>
