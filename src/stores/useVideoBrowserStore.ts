@@ -55,12 +55,14 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 }
             });
         }*/
+        
+        //TODO: Use the real method instead of the one created for testing
         fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
             sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
             classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
             visibilityFilter: RecordingVisibilityFilter | null = null) {
             this.recordings = []
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < pageSize; i++) {
                 this.recordings.push({
                     recordingId: i,
                     title: "Definičný obor",
@@ -72,7 +74,12 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     subjectName: "INF",
                     uploadTimestamp: Math.floor(Date.now()/1000),
                     recordingTimestamp: Math.floor(Date.now()/1000),
-                    sources: ["http://api.recture.study:81/recordings/1/content/primary"],
+                    sources: [
+                        {
+                            sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
+                            mimeType: "video/mp4"
+                        }
+                    ],
                     thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
                 });
             }

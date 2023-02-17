@@ -49,6 +49,13 @@ export class RectureApi {
         });
     }
 
+    public static getRecording(id: number): Promise<Response> {
+        return fetch(this.pathToUrl("recordings/"+id), {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -78,8 +85,13 @@ export interface IRecording {
     subjectName: string
     uploadTimestamp: number
     recordingTimestamp: number
-    sources: string[]
+    sources: IMediaSource[]
     thumbnail: string
+}
+
+export interface IMediaSource {
+    sourceUrl: string,
+    mimeType: string
 }
 
 export interface IRecordingSearchParams {
