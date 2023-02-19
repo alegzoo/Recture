@@ -9,7 +9,11 @@
         single-line
         hide-details
         theme="light"
-    ></v-text-field>
+    >
+        <template v-slot:clear>
+            <v-icon icon="mdi-close"/>
+        </template>
+    </v-text-field>
 </template>
 
 <script lang="ts" setup>
