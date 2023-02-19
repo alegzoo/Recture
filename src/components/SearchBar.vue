@@ -5,14 +5,12 @@
         variant="solo"
         label="Search by the lesson's title..."
         clearable
+        clear-icon="mdi-close"
         append-inner-icon="mdi-magnify"
         single-line
         hide-details
         theme="light"
     >
-        <template v-slot:clear>
-            <v-icon icon="mdi-close"/>
-        </template>
     </v-text-field>
 </template>
 
