@@ -4,7 +4,9 @@
         density="compact"
         variant="solo"
         label="Search by the lesson's title..."
+        clearable
         append-inner-icon="mdi-magnify"
+        :on-click:append-inner="Boolean"
         single-line
         hide-details
         theme="light"
