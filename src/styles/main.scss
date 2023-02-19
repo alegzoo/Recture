@@ -3,28 +3,31 @@ $nav-panel-color: #232323;
 
 #sidebar, #topbar {
     background-color: $nav-container-color;
-    border: none;
 }
 
 #sidebar {
-    padding: 66px 3px 3px 3px;
+    padding: 74px 3px 6px 6px;
 }
 
 #topbar {
     margin: 0px;
-    padding: 3px 3px 3px 66px;
+    padding: 6px 12px 3px 74px;
 }
 
 #sidebar-panel {
-    background-color: $nav-panel-color;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
     border-radius: 6px;
     padding: 8px 0px 0px 0px;
     text-align: center;
     height: 100%;
+    border-color: black;
+    border-width: 2px;
 }
 
 #topbar-panel {
-    background-color: $nav-panel-color;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
     border-radius: 6px;
     height: 60px;
     padding: 0px;
@@ -32,11 +35,16 @@ $nav-panel-color: #232323;
     top: 0px;
 }
 
+#topbar-col{
+    border-color: black;
+    border-width: 2px;
+}
+
 #corner-logo {
     border-radius: 6px;
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 6px;
+    left: 6px;
     width: 60px;
     height: 60px;
 }

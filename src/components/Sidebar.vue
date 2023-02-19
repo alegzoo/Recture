@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer id="sidebar" width="66" permanent floating>
+    <v-navigation-drawer id="sidebar" width="70" permanent floating>
         <v-list id="sidebar-panel" width="60" density="compact" nav>
             <v-list-item>
                 <v-responsive :aspect-ratio="1">
