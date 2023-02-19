@@ -12,11 +12,11 @@
                     <v-container fluid class="h-100 pa-0">
                         <v-row no-gutters align-content="center" justify="center" class="h-100">
                             <v-col align="center" align-self="center">
-                                <v-icon v-show="mdAndUp" icon="mdi-upload" class="pa-5" style="border-radius: 9999px; border: dashed 1px white;"/>
+                                <v-icon v-show="mdAndUp" icon="mdi-upload" class="pa-5" style="border-radius: 9999px; border: dashed 1.8px black; color: black;"/>
                             </v-col>
                             <v-col cols="auto" align="right" align-self="center" class="h-100">
-                                <v-sheet width="60" height="60" align="center" class="rounded-bs-pill" theme="light">
-                                    <v-icon icon="mdi-message-text-outline" class="ml-3 pt-5"></v-icon>
+                                <v-sheet width="60" height="60" align="center" class="rounded-bs-pill" theme="dark">
+                                    <v-icon icon="mdi-message-text-outline" class="ml-3 pt-5" style="color: white;"></v-icon>
                                 </v-sheet>
                             </v-col>
                         </v-row>

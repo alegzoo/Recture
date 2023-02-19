@@ -6,7 +6,7 @@ $nav-panel-color: #232323;
 }
 
 #sidebar {
-    padding: 74px 3px 6px 6px;
+    padding: 74px 3px 8px 6px;
 }
 
 #topbar {
@@ -23,6 +23,7 @@ $nav-panel-color: #232323;
     height: 100%;
     border-color: black;
     border-width: 2px;
+    border-style: solid;
 }
 
 #topbar-panel {
@@ -33,6 +34,9 @@ $nav-panel-color: #232323;
     padding: 0px;
     position: absolute;
     top: 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
 }
 
 #topbar-col{
@@ -47,9 +51,19 @@ $nav-panel-color: #232323;
     left: 6px;
     width: 60px;
     height: 60px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
 }
 
 .search-bar .v-field {
+    border-radius: 9999px;
+}
+
+.search-bar{
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
     border-radius: 9999px;
 }
 

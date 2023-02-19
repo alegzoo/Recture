@@ -3,7 +3,7 @@
         class="search-bar"
         density="compact"
         variant="solo"
-        label="Search"
+        label="Search by the lesson's title..."
         append-inner-icon="mdi-magnify"
         single-line
         hide-details
