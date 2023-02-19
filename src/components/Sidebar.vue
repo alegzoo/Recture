@@ -3,7 +3,7 @@
         <v-list id="sidebar-panel" width="60" density="compact" nav>
             <v-list-item>
                 <v-responsive :aspect-ratio="1">
-                    <v-avatar size="36px">
+                    <v-avatar size="38px" style="border-style: solid; border-color:black; border-width:2px">
                         <v-img src="https://randomuser.me/api/portraits/men/85.jpg"/>
                     </v-avatar>
                 </v-responsive>
@@ -15,7 +15,6 @@
                 </v-tooltip>
             </v-list-item>
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
-            <SidebarButton icon="mdi-account" text="Account" to="/account"/>
             <SidebarButton icon="mdi-file-document" text="My T&C" to="/account/terms"/>
             <v-divider></v-divider>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
