@@ -1,7 +1,7 @@
 <template>
     <v-card :to="'videos/'+recording.recordingId" variant="outlined" class="video-box">
         <v-img :src="recording.thumbnail" :aspect-ratio="16/9" class="video-box-thumbnail" cover/>
-        <v-container class="pa-0">
+        <v-container class="video-box-info-area pa-0">
             <v-row class="h-100">
                 <v-col cols="8">
                     <v-container>
