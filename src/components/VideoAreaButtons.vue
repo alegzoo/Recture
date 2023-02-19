@@ -16,7 +16,7 @@
             </v-btn>
         </h3>
         <v-spacer></v-spacer> 
-            <FilterButtonVideoArea v-text="button"/>
+            <FilterButtonVideoArea/>
     </v-row>
 </template>
 
