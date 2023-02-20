@@ -1,22 +1,34 @@
 <template>
-    <v-row id="buttons-video-area" class="d-flex flex-row mb-2">
-        <v-btn id="upload-btn" variant="text" append-icon="mdi-download" height="40px" width="180px">
-            UPLOAD
-        </v-btn>
-        <h3>
-            NEW THEME UNIT
-            <v-btn id="btn-new-theme-unit" variant="text">
-            +
+    <v-row id="buttons-video-area" align="center" align-self="center" no-gutters>
+        <v-col cols="auto" class="h-100">
+            <v-btn id="upload-btn" class="h-100" variant="text" append-icon="mdi-download" width="180px">
+                UPLOAD
             </v-btn>
-        </h3>
-        <h3>
-            NEW QUESTION SERIES
-            <v-btn variant="text">
-            +
+        </v-col>
+
+        <v-col cols="auto" class="h-100" align="center">
+            <v-btn 
+                variant="text" 
+                id="btn-new-theme-unit"  
+                append-icon="mdi-plus-circle">
+                NEW THEMATIC UNIT
             </v-btn>
-        </h3>
-        <v-spacer></v-spacer> 
-            <FilterButtonVideoArea/>
+        </v-col>  
+
+        <v-col cols="auto" class="h-100" align="center">
+            <v-btn 
+                variant="text" 
+                id="btn-new-question-series" 
+                append-icon="mdi-plus-circle">
+                NEW QUESTION SERIES
+            </v-btn>
+        </v-col>
+
+        <v-col align="right" no gutters px="0" mx="0" class="h-100">
+            <v-btn class="h-100" theme="light">
+                FILTER
+            </v-btn>
+        </v-col>   
     </v-row>
 </template>
 
