@@ -25,9 +25,7 @@
         </v-col>
 
         <v-col align="right" no gutters px="0" mx="0" class="h-100">
-            <v-btn class="h-100" theme="light">
-                FILTER
-            </v-btn>
+            <FilterButtonVideoArea class="h-100"/>
         </v-col>   
     </v-row>
 </template>
@@ -37,7 +35,5 @@
 </style>
 
 <script lang="ts" setup>
-import FilterButtonVideoArea from './FilterButtonVideoArea.vue';
-
-
+    import FilterButtonVideoArea from './FilterButtonVideoArea.vue';
 </script>

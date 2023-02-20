@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 
 import { useAccountStore } from '@/stores/useAccountStore';
-import { IClass, IRecording, ISubject, ITopic, RecordingSort, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
+import { IClass, IRecording, IRecordingSort, ISubject, ITopic, RecordingSortKey, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
 
 export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     state: () => ({
@@ -42,12 +42,11 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
         },
-        /*fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
-                        sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
+        /*fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING}, query: string | null = null,
                         classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
                         visibilityFilter: RecordingVisibilityFilter | null = null) {
             this.recordings = [];
-            RectureApi.getRecordings(page, pageSize, sort, sortDirection, query, classIds, subjectIds, topicIds, visibilityFilter).then(response => {
+            RectureApi.getRecordings(page, pageSize, sort, query, classIds, subjectIds, topicIds, visibilityFilter).then(response => {
                 if (response.ok) {
                     response.json().then((data) => {
                         this.recordings = data.data as IRecording[];
@@ -57,8 +56,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         },*/
         
         //TODO: Use the real method instead of the one created for testing
-        fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
-            sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
+        fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING}, query: string | null = null,
             classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
             visibilityFilter: RecordingVisibilityFilter | null = null) {
             this.recordings = [];

@@ -28,15 +28,15 @@ export class RectureApi {
         });
     }
 
-    public static getRecordings(page: number, pageSize: number, sort: RecordingSort, sortDirection: SortOrder, query: string | null = null,
+    public static getRecordings(page: number, pageSize: number, sort: IRecordingSort, query: string | null = null,
                                 classIds: number[] | null = null, subjectIds: number[] | null = null, topicIds: number[] | null = null,
                                 visibilityFilter: RecordingVisibilityFilter | null = null): Promise<Response> {
         let urlParams = new URLSearchParams();
 
         urlParams.append("page", page.toString());
         urlParams.append("size", pageSize.toString());
-        urlParams.append("sort", sort.toString());
-        urlParams.append("direction", sortDirection.toString());
+        urlParams.append("sort", sort.sortKey.toString());
+        urlParams.append("direction", sort.sortOrder.toString());
         if (query != null) urlParams.append("query", query as string);
         if (classIds != null) urlParams.append("classIds", (classIds as number[])?.join(","));
         if (subjectIds != null) urlParams.append("subjectIds", (subjectIds as number[])?.join(","));
@@ -135,13 +135,9 @@ export interface ITopic {
     name: string
 }
 
-export interface IRecordingSearchParams {
-    page: number,
-    size: number,
-    sort: RecordingSort,
-    direction: number,
-    query: string,
-    
+export interface IRecordingSort {
+    sortKey: RecordingSortKey,
+    sortOrder: SortOrder
 }
 
 export enum RecordingVisibilityFilter {
@@ -150,7 +146,7 @@ export enum RecordingVisibilityFilter {
     SHOW_PUBLIC_ONLY = "SHOW_PUBLIC_ONLY"
 }
 
-export enum RecordingSort {
+export enum RecordingSortKey {
     BY_RECORDING_DATE = "recordingDate"
 }
 
