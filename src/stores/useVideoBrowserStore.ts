@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 
 import { useAccountStore } from '@/stores/useAccountStore';
-import { IRecording, RecordingSort, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
+import { IClass, IRecording, ISubject, ITopic, RecordingSort, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
 
 export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     state: () => ({
@@ -13,9 +13,9 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 secondary: ""
             }
         },
-        subjects: [],
-        classes: [],
-        topics: [],
+        subjects: [] as ISubject[],
+        classes: [] as IClass[],
+        topics: [] as ITopic[],
         recordings: [] as IRecording[]
     }),
     actions: {
@@ -46,22 +46,22 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                         sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
                         classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
                         visibilityFilter: RecordingVisibilityFilter | null = null) {
-            this.recordings = []
-            RectureApi.getRecordings(page, pageSize, sort, sortDirection, query, classIds, subjectIds, topicIds, visibilityFilter).then((response) => {
+            this.recordings = [];
+            RectureApi.getRecordings(page, pageSize, sort, sortDirection, query, classIds, subjectIds, topicIds, visibilityFilter).then(response => {
                 if (response.ok) {
                     response.json().then((data) => {
                         this.recordings = data.data as IRecording[];
                     })
                 }
             });
-        }*/
+        },*/
         
         //TODO: Use the real method instead of the one created for testing
         fetchRecordings(page: number, pageSize: number = 20, sort: RecordingSort = RecordingSort.BY_RECORDING_DATE,
             sortDirection: SortOrder = SortOrder.DESCENDING, query: string | null = null,
             classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
             visibilityFilter: RecordingVisibilityFilter | null = null) {
-            this.recordings = []
+            this.recordings = [];
             for (let i = 0; i < pageSize; i++) {
                 this.recordings.push({
                     recordingId: i,
@@ -83,6 +83,49 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
                 });
             }
+        },
+
+        /*fetchClassesAndSubjects() {
+            this.classes = [];
+            this.subjects = [];
+
+            RectureApi.getClasses().then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        this.classes = data as IClass[];
+                    });
+                }
+            });
+
+            RectureApi.getSubjects().then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        this.subjects = data as ISubject[];
+                    });
+                }
+            });
+        },*/
+
+        //TODO: Use the real method instead of the one created for testing
+        fetchClassesAndSubjects() {
+            this.classes = [
+                {classId: 0, name: "I.A"}, {classId: 1, name: "II.B"}, {classId: 2, name: "III.C"}, {classId: 3, name: "oktáva"}
+            ];
+
+            this.subjects = [
+                {subjectId: 0, name: "MAT"},{subjectId: 1, name: "INF"}
+            ];
+        },
+
+        fetchTopics(classId: number, subjectId: number) {
+            this.topics = [];
+            RectureApi.getTopics(classId, subjectId).then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        this.topics = data as ITopic[];
+                    });
+                }
+            });
         }
     }
 });

@@ -9,8 +9,7 @@
             </v-col>
         <v-row id="video-row-button">
             <v-btn-toggle id="subject-button-toggle" selected-class="selected" :model-value="[0]" mandatory>
-                <SubjectButton text="MAT"/>
-                <SubjectButton text="INF"/>
+                <SubjectButton v-for="subject in videoBrowserStore.subjects" :key="subject.subjectId" :subject="subject"/>
             </v-btn-toggle>
         </v-row>
         </v-row>
@@ -21,10 +20,10 @@
             </v-row>
             <v-row class="pa-6">
                 <template v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
-                <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
-                    <VideoBox :recording="recording"/>
-                </v-col>
-            </template>
+                    <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
+                        <VideoBox :recording="recording"/>
+                    </v-col>
+                </template>
             </v-row>
             
         </v-row>  
@@ -40,11 +39,12 @@
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
     import SubjectButton from '@/components/SubjectButton.vue';
     import VideoBox from '@/components/VideoBox.vue';
-import VideoAreaButtons from '@/components/VideoAreaButtons.vue';
+    import VideoAreaButtons from '@/components/VideoAreaButtons.vue';
 
     const accountStore = useAccountStore();
     const videoBrowserStore = useVideoBrowserStore();
 
+    videoBrowserStore.fetchClassesAndSubjects();
     videoBrowserStore.fetchRecordings(0);
 
     videoBrowserStore.clearWelcomeText();
@@ -52,4 +52,6 @@ import VideoAreaButtons from '@/components/VideoAreaButtons.vue';
         videoBrowserStore.formatWelcomeText();
     });
     videoBrowserStore.generateWelcomeText();
+
+    //TODO: Fetch topics whenever selected classes/subjects change
 </script>

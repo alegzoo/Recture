@@ -56,6 +56,32 @@ export class RectureApi {
         });
     }
 
+    public static getClasses(): Promise<Response> {
+        return fetch(this.pathToUrl("classes"), {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    public static getSubjects(): Promise<Response> {
+        return fetch(this.pathToUrl("subjects"), {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    public static getTopics(classId: number, subjectId: number): Promise<Response> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("classId", classId.toString());
+        urlParams.append("subjectId", subjectId.toString());
+
+        return fetch(this.pathToUrl("topics", urlParams), {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -92,6 +118,21 @@ export interface IRecording {
 export interface IMediaSource {
     sourceUrl: string,
     mimeType: string
+}
+
+export interface IClass {
+    classId: number,
+    name: string
+}
+
+export interface ISubject {
+    subjectId: number,
+    name: string
+}
+
+export interface ITopic {
+    topicId: number,
+    name: string
 }
 
 export interface IRecordingSearchParams {

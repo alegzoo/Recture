@@ -1,9 +1,11 @@
 <template>
-    <v-btn>{{ text }}</v-btn>
+    <v-btn>{{ subject?.name }}</v-btn>
 </template>
 
 <script lang="ts" setup>
+    import { ISubject } from '@/api/RectureApi';
+
     const props = defineProps<{
-        text: string
+        subject: ISubject | null
     }>();
 </script>
