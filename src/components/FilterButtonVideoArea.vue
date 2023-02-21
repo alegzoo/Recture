@@ -9,6 +9,7 @@
                 v-bind="props"
                 prepend-icon="mdi-filter-outline"
                 rounded
+                theme="dark"
             >
                 Filters
             </v-btn>
