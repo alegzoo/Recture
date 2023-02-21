@@ -2,7 +2,7 @@
     <v-menu
         v-model="menu"
         :close-on-content-click="false"
-        location="start"
+        :location="mdAndUp?'start':'bottom center'"
     >
         <template v-slot:activator="{ props }">
             <v-btn
@@ -47,6 +47,8 @@
                 </v-list-item>
             </v-list>
 
+            <v-divider></v-divider>
+
             <v-card-actions>
                 <v-spacer/>
                 <v-btn
@@ -68,6 +70,9 @@
 <script lang="ts" setup>
     import { IRecordingSort, RecordingVisibilityFilter, RecordingSortKey, SortOrder } from '@/api/RectureApi';
     import { ref } from 'vue';
+    import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+    const { mdAndUp } = useDisplay();
 
     const menu = ref(false);
 

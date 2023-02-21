@@ -1,12 +1,12 @@
 <template>
     <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
         <v-col cols="12" md="auto" align="center">
-            <v-btn id="upload-btn" variant="text" append-icon="mdi-download" class="px-12">
+            <v-btn id="upload-btn" variant="text" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
                 UPLOAD
             </v-btn>
         </v-col>
 
-        <v-col cols="12" md="auto" align="center">
+        <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
             <v-btn 
                 variant="text" 
                 id="btn-new-theme-unit"  
@@ -15,7 +15,7 @@
             </v-btn>
         </v-col>  
 
-        <v-col cols="12" md="auto" align="center">
+        <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
             <v-btn 
                 variant="text" 
                 id="btn-new-question-series" 
