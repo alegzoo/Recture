@@ -9,7 +9,6 @@
         append-inner-icon="mdi-magnify"
         single-line
         hide-details
-        theme="light"
     >
     </v-text-field>
 </template>

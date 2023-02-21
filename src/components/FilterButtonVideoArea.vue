@@ -6,7 +6,6 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
-                theme="light"
                 v-bind="props"
                 prepend-icon="mdi-filter-outline"
                 rounded
@@ -15,7 +14,7 @@
             </v-btn>
         </template>
 
-        <v-card min-width="300" theme="light">
+        <v-card min-width="300">
             <v-list>
                 <v-list-item>
                     <h4>FILTER & SORT</h4>

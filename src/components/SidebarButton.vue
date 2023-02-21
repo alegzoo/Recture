@@ -4,7 +4,6 @@
             <v-icon class="h-100" style="color: black;">{{ icon }}</v-icon>
         </v-responsive>
         <v-tooltip
-            theme="dark"
             activator="parent"
             location="end"
             >{{ text }}

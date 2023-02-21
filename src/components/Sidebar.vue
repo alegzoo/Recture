@@ -8,7 +8,6 @@
                     </v-avatar>
                 </v-responsive>
                 <v-tooltip
-                    theme="dark"
                     activator="parent"
                     location="end"
                     >johndoe@example.gov

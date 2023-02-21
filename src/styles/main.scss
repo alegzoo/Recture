@@ -1,5 +1,9 @@
 $nav-container-color: #C6BDBD;
 
+.v-theme--dark .v-btn, .v-theme--dark.v-btn {
+    color: white;
+}
+
 #sidebar, #topbar {
     background-color: $nav-container-color;
 }
@@ -18,7 +22,6 @@ $nav-container-color: #C6BDBD;
 }
 
 #sidebar-panel {
-    background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
     border-radius: 6px;
     padding: 8px 0px 0px 0px;
@@ -30,7 +33,6 @@ $nav-container-color: #C6BDBD;
 }
 
 #topbar-panel {
-    background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
     border-radius: 6px;
     height: 60px;
@@ -131,7 +133,8 @@ $nav-container-color: #C6BDBD;
 }
 
 #subject-button-toggle .v-btn {
-    color: rgb(255, 255, 255);
+    background-color: black;
+    color: white;
     padding: 1px 1px;
     font-size: 16px;
     text-transform: uppercase;
@@ -139,13 +142,20 @@ $nav-container-color: #C6BDBD;
     font-weight: bold;
     margin: 0px 10px;
     border-radius: 7px 7px 0px 0px;
+    transition: all none;
 } 
-  
+
+#subject-button-toggle .v-btn * {
+    background-color: transparent;
+}
+
 #subject-button-toggle .v-btn.selected {
     background-color: white;
+    color: black;
     border-color: black;
-    border-width: 2px;
+    border-width: 2px 2px 0px 2px;
     border-style: solid;
+    transition: all none;
 }
 
 .video-box {
