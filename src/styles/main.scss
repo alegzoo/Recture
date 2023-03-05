@@ -1,4 +1,6 @@
-$nav-container-color: #C6BDBD;
+$nav-container-color: #9CBBC4;
+$video-browser-background-color: #FFD900;
+$accent-color: #FF0000;
 
 .v-theme--dark .v-btn, .v-theme--dark.v-btn {
     color: white;
@@ -44,7 +46,7 @@ $nav-container-color: #C6BDBD;
     border-width: 2px;
 }
 
-#topbar-col{
+#topbar-col {
     border-color: black;
     border-width: 2px;
 }
@@ -66,7 +68,7 @@ $nav-container-color: #C6BDBD;
     border-radius: 9999px;
 }
 
-.search-bar{
+.search-bar {
     border-style: solid;
     border-width: 2px;
     border-color: black;
@@ -88,7 +90,7 @@ $nav-container-color: #C6BDBD;
     background-size: cover;
 }
 
-#signin-logo{
+#signin-logo {
     border-radius: 10px;
     width: 60px;
     height: 60px;
@@ -101,29 +103,30 @@ $nav-container-color: #C6BDBD;
     font-size: 20px;
 }
 
-#hyperlink-signin{
+#hyperlink-signin {
     color: white;
 }
 
 #video-row-button {
     background-color: transparent;
-    margin: 0 0 0 37px;
+    margin: 0px 0px 0px 37px;
     padding-left: 30px;
 }
 
-#video-area{
-    background-color:white;
-    border-style:solid;
-    border-color:black;
-    border-width:2px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-
+#video-area {
+    margin: 0px 10px 0px 10px;
 }
 
-#video-container {
+#video-area-content {
+    background-color: $video-browser-background-color;
+    border-style: solid;
+    border-color:black;
+    border-width: 2px;
+    border-radius: 20px;
+    padding: 18px;
+}
+
+#video-browser-container {
     margin: 0px;
     padding: 0px;
 }
@@ -150,7 +153,7 @@ $nav-container-color: #C6BDBD;
 }
 
 #subject-button-toggle .v-btn.selected {
-    background-color: white;
+    background-color: $video-browser-background-color;
     color: black;
     border-color: black;
     border-width: 2px 2px 0px 2px;
@@ -182,7 +185,7 @@ $nav-container-color: #C6BDBD;
     transition: box-shadow 0.1s linear;
 
     .video-box-info-area {
-        background-color: #FF1E23;
+        background-color: $accent-color;
     }
 }
 
@@ -191,7 +194,7 @@ $nav-container-color: #C6BDBD;
     border-width: 2px;
     border-style: solid;
     border-color: black;
-    background-color: #2096fd;
+    background-color: #00A6E2;
     color: white;
 }
 
@@ -205,12 +208,22 @@ $nav-container-color: #C6BDBD;
 }
 
 #buttons-video-area {
-    margin-left: 32px;
-    margin-top: 30px;
-    margin-right: 32px;
     border-color: transparent;
 }
 
 #filter-button {
     border-radius: 9999px;
+}
+
+.v-chip {
+    background-color: white;
+    border: solid 2px black;
+    font-weight: bold;
+    transition: box-shadow 0.1s linear;
+}
+
+.v-chip.selected {
+    background-color: $accent-color !important;
+    box-shadow: 2px 2px 0px 0px black;
+    transition: box-shadow 0.1s linear;
 }

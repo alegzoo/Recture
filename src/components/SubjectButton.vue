@@ -1,5 +1,5 @@
 <template>
-    <v-btn>{{ subject?.name }}</v-btn>
+    <v-btn :value="subject">{{ subject?.name }}</v-btn>
 </template>
 
 <script lang="ts" setup>
