@@ -69,7 +69,7 @@
 
 <script lang="ts" setup>
     import { IRecordingSort, RecordingVisibilityFilter, RecordingSortKey, SortOrder } from '@/api/RectureApi';
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     const { mdAndUp } = useDisplay();
@@ -78,6 +78,14 @@
 
     const selectedVisibilityFilter = ref();
     const selectedSort = ref();
+
+    const emit = defineEmits<{
+        (e: "filterOrSortChanged", filter: RecordingVisibilityFilter, sort: IRecordingSort): void
+    }>();
+
+    watch([selectedVisibilityFilter, selectedSort], () => {
+        emit("filterOrSortChanged", selectedVisibilityFilter.value, selectedSort.value);
+    });
 
     reset();
 
