@@ -1,5 +1,4 @@
 <template>
-    <!-- <v-container id="video-browser-container" fluid> -->
         <v-row class="py-10">
             <v-col cols="12" md="6">
                 <h1 style="text-align: center;">{{ videoBrowserStore.welcomeText.primary }}</h1>
