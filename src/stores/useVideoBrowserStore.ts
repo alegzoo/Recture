@@ -13,9 +13,12 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 secondary: ""
             }
         },
-        subjects: [] as ISubject[],
         classes: [] as IClass[],
+        subjects: [] as ISubject[],
         topics: [] as ITopic[],
+        selectedClasses: [] as IClass[],
+        selectedSubject: null as ISubject | null,
+        selectedTopics: [] as ITopic[],
         recordings: [] as IRecording[]
     }),
     actions: {
@@ -42,10 +45,20 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
         },
-        /*fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING}, query: string | null = null,
-                        classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
-                        visibilityFilter: RecordingVisibilityFilter | null = null) {
+        /*fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING},
+                        query: string | null = null, visibilityFilter: RecordingVisibilityFilter | null = null) {
             this.recordings = [];
+
+            //TODO: Test out!!!
+            let classIds = [] as number[];
+            this.selectedClasses.forEach(selectedClass => classIds.push(selectedClass.classId));
+
+            let subjectIds = [] as number[];
+            if (this.selectedSubject != null) subjectIds.push(this.selectedSubject.subjectId);
+
+            let topicIds = [] as number[];
+            this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
+
             RectureApi.getRecordings(page, pageSize, sort, query, classIds, subjectIds, topicIds, visibilityFilter).then(response => {
                 if (response.ok) {
                     response.json().then((data) => {
@@ -56,36 +69,74 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         },*/
         
         //TODO: Use the real method instead of the one created for testing
-        fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING}, query: string | null = null,
-            classIds: number[] | null = null,subjectIds: number[] | null = null, topicIds: number[] | null = null,
-            visibilityFilter: RecordingVisibilityFilter | null = null) {
+        fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING},
+            query: string | null = null, visibilityFilter: RecordingVisibilityFilter | null = null) {
             this.recordings = [];
+
+            let classIds = [] as number[];
+            this.selectedClasses.forEach(selectedClass => classIds.push(selectedClass.classId));
+
+            let subjectIds = [] as number[];
+            if (this.selectedSubject != null) subjectIds.push(this.selectedSubject.subjectId);
+
+            let topicIds = [] as number[];
+            this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
+
             for (let i = 0; i < pageSize; i++) {
-                this.recordings.push({
-                    recordingId: i,
-                    title: "Definičný obor",
-                    description: "test",
-                    notifications: 0,
-                    classId: 0,
-                    className: "IV.A",
-                    subjectId: 0,
-                    subjectName: "INF",
-                    uploadTimestamp: Math.floor(Date.now()/1000),
-                    recordingTimestamp: Math.floor(Date.now()/1000),
-                    sources: [
-                        {
-                            sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
-                            mimeType: "video/mp4"
-                        }
-                    ],
-                    thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
-                });
+                let recordingClass = this.classes[i%this.classes.length];
+                let recordingSubject = this.subjects[Math.floor(i/(this.classes.length-1))%this.subjects.length];
+                let recordingTopic = null;
+                let title = "Test";
+
+                if (recordingSubject.name === "MAT") {
+                    title = "Definičný obor";
+                    recordingTopic = {
+                        topicId: 0,
+                        name: "Funkcie"
+                    };
+                } else if (recordingSubject.name === "INF") {
+                    title = "Modelovanie náhodných javov";
+                    recordingTopic = [{
+                        topicId: 1,
+                        name: "Python"
+                    },
+                    {
+                        topicId: 2,
+                        name: "Hardware"
+                    }][(recordingClass.classId%3+i*3)%2];
+                }
+
+                if ((classIds.length == 0 || classIds.includes(recordingClass.classId)) && (subjectIds.length == 0 || subjectIds.includes(recordingSubject.subjectId)) && (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId)))) {
+                    this.recordings.push({
+                        recordingId: i,
+                        title: title,
+                        description: "test",
+                        notifications: 0,
+                        classId: recordingClass.classId,
+                        className: recordingClass.name,
+                        subjectId: recordingSubject.subjectId,
+                        subjectName: recordingSubject.name,
+                        uploadTimestamp: Math.floor(Date.now()/1000),
+                        recordingTimestamp: Math.floor(Date.now()/1000),
+                        sources: [
+                            {
+                                sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
+                                mimeType: "video/mp4"
+                            }
+                        ],
+                        thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
+                    });
+                }
             }
         },
 
         /*fetchClassesAndSubjects() {
             this.classes = [];
             this.subjects = [];
+            this.topics = [];
+            this.selectedClasses = [];
+            this.selectedSubject = null;
+            this.selectedTopics = [];
 
             RectureApi.getClasses().then(response => {
                 if (response.ok) {
@@ -99,6 +150,10 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 if (response.ok) {
                     response.json().then(data => {
                         this.subjects = data as ISubject[];
+                        if (this.subjects.length > 0) {
+                            //TODO: Test out!
+                            this.selectedSubject = this.subjects[0];
+                        }
                     });
                 }
             });
@@ -113,17 +168,49 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.subjects = [
                 {subjectId: 0, name: "MAT"},{subjectId: 1, name: "INF"}
             ];
+
+            this.topics = [];
+            this.selectedClasses = [];
+            this.selectedSubject = this.subjects[0];
+            this.selectedTopics = [];
         },
 
-        fetchTopics(classId: number, subjectId: number) {
+        /*fetchTopics() {
+            //TODO: Test out!
             this.topics = [];
-            RectureApi.getTopics(classId, subjectId).then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        this.topics = data as ITopic[];
-                    });
+            this.selectedTopics = [];
+            if (this.selectedSubject != null && this.selectedClasses.length == 1) {
+                this.topics = [];
+                RectureApi.getTopics(this.selectedClasses[0].classId, this.selectedSubject.subjectId).then(response => {
+                    if (response.ok) {
+                        response.json().then(data => {
+                            this.topics = data as ITopic[];
+                        });
+                    }
+                });
+            }
+        }*/
+
+        //TODO: Use the real method instead of the one created for testing
+        fetchTopics() {
+            this.topics = [];
+            if (this.selectedSubject != null && this.selectedClasses.length == 1) {
+                if (this.selectedSubject.name == "MAT") {
+                    this.topics = [{
+                        topicId: 0,
+                        name: "Funkcie"
+                    }];
+                } else if (this.selectedSubject.name == "INF") {
+                    this.topics = [{
+                        topicId: 1,
+                        name: "Python"
+                    },
+                    {
+                        topicId: 2,
+                        name: "Hardware"
+                    }];
                 }
-            });
+            }
         }
     }
 });
