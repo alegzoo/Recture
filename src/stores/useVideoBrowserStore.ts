@@ -19,7 +19,9 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         selectedClasses: [] as IClass[],
         selectedSubject: null as ISubject | null,
         selectedTopics: [] as ITopic[],
-        recordings: [] as IRecording[]
+        recordings: [] as IRecording[],
+        recordingVisibilityFilter: RecordingVisibilityFilter.SHOW_ALL as RecordingVisibilityFilter,
+        recordingSort: { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort
     }),
     actions: {
         generateWelcomeText() {
@@ -45,8 +47,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
         },
-        /*fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING},
-                        query: string | null = null, visibilityFilter: RecordingVisibilityFilter | null = null) {
+        /*fetchRecordings(page: number, pageSize: number = 20, query: string | null = null) {
             this.recordings = [];
 
             //TODO: Test out!!!
@@ -59,7 +60,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             let topicIds = [] as number[];
             this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
 
-            RectureApi.getRecordings(page, pageSize, sort, query, classIds, subjectIds, topicIds, visibilityFilter).then(response => {
+            RectureApi.getRecordings(page, pageSize, this.recordingSort, query, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(response => {
                 if (response.ok) {
                     response.json().then((data) => {
                         this.recordings = data.data as IRecording[];
@@ -69,8 +70,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         },*/
         
         //TODO: Use the real method instead of the one created for testing
-        fetchRecordings(page: number, pageSize: number = 20, sort: IRecordingSort = {sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING},
-            query: string | null = null, visibilityFilter: RecordingVisibilityFilter | null = null) {
+        fetchRecordings(page: number, pageSize: number = 20, query: string | null = null) {
+            this.recordings = [];
             this.recordings = [];
 
             let classIds = [] as number[];
@@ -87,6 +88,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 let recordingSubject = this.subjects[Math.floor(i/(this.classes.length-1))%this.subjects.length];
                 let recordingTopic = null;
                 let title = "Test";
+                let published = i%2 == 0;
 
                 if (recordingSubject.name === "MAT") {
                     title = "Definičný obor";
@@ -106,18 +108,20 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     }][(recordingClass.classId%3+i*3)%2];
                 }
 
-                if ((classIds.length == 0 || classIds.includes(recordingClass.classId)) && (subjectIds.length == 0 || subjectIds.includes(recordingSubject.subjectId)) && (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId)))) {
+                if ((classIds.length == 0 || classIds.includes(recordingClass.classId)) && (subjectIds.length == 0 || subjectIds.includes(recordingSubject.subjectId)) && 
+                (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId))) && (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_ALL || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PUBLIC_ONLY && published) || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PRIVATE_ONLY && !published))) {
                     this.recordings.push({
                         recordingId: i,
                         title: title,
                         description: "test",
+                        published: published,
                         notifications: 0,
                         classId: recordingClass.classId,
                         className: recordingClass.name,
                         subjectId: recordingSubject.subjectId,
                         subjectName: recordingSubject.name,
-                        uploadTimestamp: Math.floor(Date.now()/1000),
-                        recordingTimestamp: Math.floor(Date.now()/1000),
+                        uploadTimestamp: Math.floor(Date.now()/1000-i*(24*60*60)),
+                        recordingTimestamp: Math.floor(Date.now()/1000-i*(24*60*60)),
                         sources: [
                             {
                                 sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
@@ -127,6 +131,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                         thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
                     });
                 }
+
+                if (this.recordingSort.sortOrder ==  SortOrder.ASCENDING) this.recordings.reverse();
             }
         },
 

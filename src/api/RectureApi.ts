@@ -104,6 +104,7 @@ export interface IRecording {
     recordingId: number
     title: string
     description: string | null
+    published: boolean
     notifications: number
     classId: number
     className: string

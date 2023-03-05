@@ -65,6 +65,7 @@
                     recordingId: parseInt(recordingId as string),
                     title: "Definičný obor",
                     description: "test",
+                    published: true,
                     notifications: 0,
                     classId: 0,
                     className: "IV.A",
