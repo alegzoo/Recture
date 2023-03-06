@@ -1,5 +1,5 @@
 <template>
-    <v-img id="corner-logo" src="@/assets/recture_logo.svg"/>
+    <v-btn id="menu-btn" icon="mdi-menu" variant="text" position="fixed" align="center"/>
 </template>
 
 <style lang="scss">

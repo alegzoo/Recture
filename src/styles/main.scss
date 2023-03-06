@@ -9,72 +9,60 @@
 }
 
 #sidebar, #topbar {
-    background-color: $nav-container-color;
+    background-color: transparent;
 }
 
 #sidebar {
-    padding: 82px 3px 10px 6px;
     position: fixed;
     z-index: 100 !important;
 }
 
 #topbar {
-    margin: 0px;
-    padding: 6px 16px 0px 82px;
+    margin: 0px 0px 0px 58px;
     position: fixed;
     z-index: 100 !important;
+    border-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
 }
 
 #sidebar-panel {
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
-    border-radius: 6px;
-    padding: 8px 0px 0px 0px;
+    background: transparent;
+    border-radius: 0px;
+    padding: 70px 0px 0px 0px;
     text-align: center;
     height: 100%;
-    border-color: black;
-    border-width: 2px;
+    border-right-width: 2px;
     border-style: solid;
+    border-right-color: black;
+}
+
+#menu-btn {
+    width: 60px;
+    height: 60px;
+    z-index: 110;
+    border-style: solid;
+    border-right-color: black;
+    border-right-width: 2px;
+    border-bottom-color: black;
+    border-bottom-width: 2px;
+    border-radius: 0px;
 }
 
 #topbar-panel {
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.4) 100%);
-    border-radius: 6px;
+    background: #9CBBC4;
     height: 60px;
     padding: 0px;
     position: absolute;
-    top: 0px;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
 }
 
-#topbar-col {
-    border-color: black;
-    border-width: 2px;
-}
-
-#corner-logo {
-    border-radius: 6px;
-    position: fixed;
-    top: 6px;
-    left: 6px;
-    width: 60px;
-    height: 60px;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    z-index: 110;
-}
-
-.search-bar .v-field {
+.v-field {
     border-radius: 9999px;
 }
 
-.search-bar {
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    border-radius: 9999px;
+.search-bar{
+    margin-right: 650px;
+    size: 20px;
 }
 
 #home-content {

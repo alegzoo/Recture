@@ -2,7 +2,7 @@
     <v-text-field
         class="search-bar"
         density="compact"
-        variant="solo"
+        variant="underlined"
         label="Search by the lesson's title..."
         clearable
         clear-icon="mdi-close"

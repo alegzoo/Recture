@@ -16,6 +16,11 @@
         
         <v-row id="video-area" no-gutters class="h-100">
             <v-col id="video-area-content" cols="12">
+                <v-row class="mb-3" no gutters>
+                    <v-col>
+                        <SearchBar></SearchBar>
+                    </v-col>
+                </v-row>
                 <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
                     <v-col cols="12" md="auto" align="center">
                         <v-btn id="upload-btn" variant="text" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
@@ -82,6 +87,7 @@
     import FilterButtonVideoArea from '@/components/FilterButtonVideoArea.vue';
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
     const { mdAndUp } = useDisplay();
 
