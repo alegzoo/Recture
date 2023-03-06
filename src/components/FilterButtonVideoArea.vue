@@ -10,6 +10,7 @@
                 prepend-icon="mdi-filter-outline"
                 rounded
                 theme="dark"
+                :ripple="false"
             >
                 Filters
             </v-btn>
