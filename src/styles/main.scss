@@ -60,11 +60,6 @@
     border-radius: 9999px;
 }
 
-.search-bar{
-    margin-right: 650px;
-    size: 20px;
-}
-
 #home-content {
     border-radius: 6px;
     overflow: hidden;
@@ -73,114 +68,6 @@
     height: calc(100% - 69px);
     margin: 69px 6px 0px 72px;
     padding: 0px;
-}
-
-#video-row-button {
-    background-color: transparent;
-    margin: 0px 0px 0px 37px;
-    padding-left: 30px;
-}
-
-#video-area {
-    margin: 0px 10px 0px 10px;
-}
-
-#video-area-content {
-    background-color: $recture-yellow;
-    border-style: solid;
-    border-color:black;
-    border-width: 2px;
-    border-radius: 20px;
-    padding: 18px;
-}
-
-#video-browser-container {
-    margin: 0px;
-    padding: 0px;
-}
-
-#subject-button-toggle {
-    height: 36px;
-}
-
-#subject-button-toggle .v-btn {
-    background-color: black;
-    color: white;
-    padding: 1px 1px;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: bold;
-    margin: 0px 10px;
-    border-radius: 7px 7px 0px 0px;
-    transition: all none;
-} 
-
-#subject-button-toggle .v-btn * {
-    background-color: transparent;
-}
-
-#subject-button-toggle .v-btn.selected {
-    background-color: $recture-yellow;
-    color: black;
-    border-color: black;
-    border-width: 2px 2px 0px 2px;
-    border-style: solid;
-    transition: all none;
-}
-
-.video-box {
-    background-color: black;
-    color: black;
-    border: solid 2px black;
-    border-radius: 30px;
-    box-shadow: none;
-    transition: box-shadow 0.1s linear;
-}
-
-.video-box-info-area {
-    background-color: white;
-    border-top: solid 2px black;
-}
-
-.video-box-title {
-    font-size: 1.4em;
-    font-weight: bold;
-}
-
-.video-box:hover {
-    box-shadow: 3px 3px 0px 0px black;
-    transition: box-shadow 0.1s linear;
-
-    .video-box-info-area {
-        background-color: $recture-red;
-    }
-}
-
-#upload-btn {
-    border-radius: 9999px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-    background-color: #00A6E2;
-    color: white;
-}
-
-#btn-new-theme-unit {
-    border-radius: 9999px;
-    border-style: solid;
-}
-
-#btn-new-question-series {
-    border-radius: 9999px;
-}
-
-#buttons-video-area {
-    border-color: transparent;
-}
-
-#filter-button {
-    border-radius: 9999px;
 }
 
 .v-chip {

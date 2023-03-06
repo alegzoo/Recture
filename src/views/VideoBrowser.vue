@@ -87,7 +87,9 @@
     import FilterButtonVideoArea from '@/components/FilterButtonVideoArea.vue';
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
-import SearchBar from '@/components/SearchBar.vue';
+    import SearchBar from '@/components/SearchBar.vue';
+    
+    import "@/styles/videobrowser.scss";
 
     const { mdAndUp } = useDisplay();
 
