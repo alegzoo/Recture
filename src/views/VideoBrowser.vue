@@ -25,7 +25,7 @@
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
                             <v-col cols="12" md="auto" align="center">
-                                <v-btn id="upload-btn" variant="text" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
+                                <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
                                     UPLOAD
                                 </v-btn>
                             </v-col>

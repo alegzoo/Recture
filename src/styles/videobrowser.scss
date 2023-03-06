@@ -95,6 +95,16 @@
     color: white;
 }
 
+#upload-btn:hover{
+    box-shadow: 3px 3px 0px 0px black;
+    transition: box-shadow 0.1s linear;
+}
+
+#upload-btn:active{
+    box-shadow: 2px 2px 0px 0px black;
+    transition: box-shadow 0.1s linear;
+}
+
 #btn-new-theme-unit {
     border-radius: 9999px;
     border-style: solid;
