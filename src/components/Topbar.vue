@@ -1,12 +1,9 @@
 <template>
-    <v-toolbar id="topbar" height="60">
+    <v-toolbar id="topbar" height="58">
         <v-container id="topbar-panel" class="overflow-hidden" fluid>
             <v-row no-gutters align-content="center" justify="center" class="h-100">
-                <v-col v-show="smAndUp" cols="2" align="left" align-self="center">
+                <v-col v-show="smAndUp" cols="9" align="center" align-self="center">
                     <v-img id="topbar-logo" src="@/assets/typeface_recture_logo.svg" width="165" :aspect-ratio="1"/>
-                </v-col>
-                <v-col align-self="center" class="px-1">
-                    <Searchbar/>
                 </v-col>
                 <v-col :cols="smAndUp?2:'auto'" align-self="center" class="h-100">
                     <v-container fluid class="h-100 pa-0">
