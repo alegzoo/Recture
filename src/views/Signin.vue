@@ -1,18 +1,18 @@
 <template>
-    <v-container id="signin-container" class="h-100" fluid>
+    <v-container id="signin" class="h-100" fluid>
         <v-row class="h-100">
             <v-col/>
             <v-col cols="10" md="4" align="center" align-self="center">
-                <v-form id="signin-form" validate-on="input" @submit.prevent="submitHandler">
+                <v-form validate-on="input" @submit.prevent="submitHandler">
                     <v-img src="@/assets/recture_logo.svg" id="signin-logo" class="my-10" style="height: 60px;"/>
                     <v-img src="@/assets/typeface_recture_logo.svg" alt="typeface-logo" class="my-10" style="height: 60px;"/>
-                    <p class="my-10" id="signin-text-title">Sign in to start!</p>
-                    <v-text-field id="email-input" v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2" variant="solo"/>
-                    <v-text-field id="password-input" v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2" variant="solo"/>
+                    <p class="my-10">Sign in to start!</p>
+                    <v-text-field v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2" variant="solo"/>
+                    <v-text-field v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2" variant="solo"/>
                     <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="mb-5" />
-                    <v-btn id="login-button" variant="outlined" type="submit" :disabled="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
+                    <v-btn variant="outlined" type="submit" :disabled="submitDisabled" :loading="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
                     <br/>
-                    <router-link id="hyperlink-signin" to="/signup">No account? Sign up!</router-link>
+                    <router-link to="/signup">No account? Sign up!</router-link>
                 </v-form>
             </v-col>
             <v-col/>
@@ -29,6 +29,8 @@
     import * as status from 'http-status';
     import router from '@/router';
     import { ref } from 'vue';
+
+    import "@/styles/signin.scss";
     
     const email = ref<string>("");
     const password = ref<string>("");

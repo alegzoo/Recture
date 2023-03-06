@@ -1,9 +1,11 @@
-$nav-container-color: #A8B9C1;
-$video-browser-background-color: #FFD900;
-$accent-color: #FF0000;
+@import "./constants.scss";
 
 .v-theme--dark .v-btn, .v-theme--dark.v-btn {
     color: white;
+}
+
+.v-alert {
+    border: solid 2px black;
 }
 
 #sidebar, #topbar {
@@ -72,66 +74,6 @@ $accent-color: #FF0000;
     padding: 0px;
 }
 
-#signin-container {
-    background-image: url("@/assets/bg_signin.png");
-    background-size: cover;
-}
-
-#signin-logo {
-    border-radius: 10px;
-    width: 60px;
-    height: 60px;
-    padding: 65px;
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-    box-shadow: 5px 5px 0px 0px black;
-}
-
-#signin-text-title {
-    font-weight: bold;
-    color: black;
-    font-size: 20px;
-}
-
-#email-input{
-    box-shadow: 5px 5px 0px 0px black;
-    border-radius: 4px;
-    background-color: white;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    border-radius: 4px;
-}
-
-#password-input{
-    box-shadow: 5px 5px 0px 0px black;
-    border-radius: 4px;
-    background-color: white;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    border-radius: 4px;
-}
-
-
-#login-button{
-    background-color: $video-browser-background-color;
-    border-radius: 4px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-}
-
-#login-button:hover{
-    box-shadow: 3px 3px 0px 0px black;
-    transition: box-shadow 0.1s linear;
-}
-
-#hyperlink-signin {
-    color: black;
-}
-
 #video-row-button {
     background-color: transparent;
     margin: 0px 0px 0px 37px;
@@ -143,7 +85,7 @@ $accent-color: #FF0000;
 }
 
 #video-area-content {
-    background-color: $video-browser-background-color;
+    background-color: $recture-yellow;
     border-style: solid;
     border-color:black;
     border-width: 2px;
@@ -178,7 +120,7 @@ $accent-color: #FF0000;
 }
 
 #subject-button-toggle .v-btn.selected {
-    background-color: $video-browser-background-color;
+    background-color: $recture-yellow;
     color: black;
     border-color: black;
     border-width: 2px 2px 0px 2px;
@@ -210,7 +152,7 @@ $accent-color: #FF0000;
     transition: box-shadow 0.1s linear;
 
     .video-box-info-area {
-        background-color: $accent-color;
+        background-color: $recture-red;
     }
 }
 
@@ -261,7 +203,7 @@ $accent-color: #FF0000;
 }
 
 .v-chip.selected {
-    background-color: $accent-color !important;
+    background-color: $recture-red !important;
     box-shadow: 2px 2px 0px 0px black;
     transition: box-shadow 0.1s linear;
     -webkit-user-select: none;
