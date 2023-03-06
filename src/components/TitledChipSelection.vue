@@ -6,8 +6,8 @@
     </v-row>
     <v-row no-gutters>
         <v-col cols="12">
-            <v-chip-group v-if="data.length > 0" multiple column @update:model-value="selection => {emit('selectionChanged', selection);}">
-                <v-chip v-for="chip in data" :value="chip" selected-class="selected" variant="outlined" filter filter-icon="mdi-close-circle-outline">{{ chip.name }}</v-chip>
+            <v-chip-group v-if="data.length > 0" multiple column  @update:model-value="selection => {emit('selectionChanged', selection);}">
+                <v-chip v-for="chip in data" :value="chip" selected-class="selected" :ripple="false" variant="outlined" filter filter-icon="mdi-close-circle-outline">{{ chip.name }}</v-chip>
             </v-chip-group>
             <p v-else>{{ emptyMessage }}</p>
         </v-col>

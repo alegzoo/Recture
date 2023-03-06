@@ -1,4 +1,4 @@
-$nav-container-color: #9CBBC4;
+$nav-container-color: #A8B9C1;
 $video-browser-background-color: #FFD900;
 $accent-color: #FF0000;
 
@@ -86,7 +86,7 @@ $accent-color: #FF0000;
 }
 
 #signin-container {
-    background-image: url("@/assets/bg_signup.png");
+    background-image: url("@/assets/bg_signin.png");
     background-size: cover;
 }
 
@@ -95,6 +95,10 @@ $accent-color: #FF0000;
     width: 60px;
     height: 60px;
     padding: 65px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 5px 5px 0px 0px black;
 }
 
 #signin-text-title {
@@ -103,8 +107,40 @@ $accent-color: #FF0000;
     font-size: 20px;
 }
 
+.v-field{
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+#email-input{
+    box-shadow: 5px 5px 0px 0px black;
+    border-radius: 4px;
+}
+
+#password-input{
+    box-shadow: 5px 5px 0px 0px black;
+    border-radius: 4px;
+}
+
+
+#login-button{
+    background-color: $video-browser-background-color;
+    border-radius: 4px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+}
+
+#login-button:hover{
+    box-shadow: 3px 3px 0px 0px black;
+    transition: box-shadow 0.1s linear;
+}
+
 #hyperlink-signin {
-    color: white;
+    color: black;
 }
 
 #video-row-button {
@@ -220,10 +256,16 @@ $accent-color: #FF0000;
     border: solid 2px black;
     font-weight: bold;
     transition: box-shadow 0.1s linear;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .v-chip.selected {
     background-color: $accent-color !important;
     box-shadow: 2px 2px 0px 0px black;
     transition: box-shadow 0.1s linear;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
