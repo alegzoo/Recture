@@ -20,7 +20,7 @@
                     <v-col :cols="mdAndUp?'auto':12">
                         <v-row class="mb-3" no gutters>
                             <v-col>
-                                <SearchBar class="mx-0"/>
+                                <SearchBar class="mx-0" @search-query-changed="onSearchQueryChanged"/>
                             </v-col>
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
@@ -62,19 +62,25 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet." :data="videoBrowserStore.classes" @selection-changed="selection => { onClassSelectionChanged(selection as IClass[]); }"/>
+                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :data="classes" @selection-changed="selection => { onClassSelectionChanged(selection as IClass[]); }"/>
                     </v-col>
                 </v-row>
                 <v-row >
                     <v-col cols="12">
-                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units." :data="videoBrowserStore.topics" @selection-changed="selection => { onTopicSelectionChanged(selection as ITopic[]); }"/>
+                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units" :data="topics" @selection-changed="selection => { onTopicSelectionChanged(selection as ITopic[]); }"/>
                     </v-col>
                 </v-row>
                 <v-row>
-                    <template v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
+                    <template v-if="videoBrowserStore.recordings.length > 0" v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
                         <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
                             <VideoBox :recording="recording"/>
                         </v-col>
+                    </template>
+                    <template v-else>
+                        <v-col :cols="mdAndUp?4:12">
+                            <h2 class="mt-3">No results found</h2>
+                        </v-col>
+                        <v-spacer/>
                     </template>
                 </v-row>
             </v-col>
@@ -87,6 +93,7 @@
 
 <script lang="ts" setup>
     import { watch } from 'vue';
+    import { storeToRefs } from 'pinia';
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
     import { IClass, IRecordingSort, ITopic, RecordingVisibilityFilter } from '@/api/RectureApi';
@@ -104,6 +111,8 @@
     const accountStore = useAccountStore();
     const videoBrowserStore = useVideoBrowserStore();
 
+    const { classes, topics } = storeToRefs(videoBrowserStore);
+
     videoBrowserStore.fetchClassesAndSubjects();
     videoBrowserStore.fetchRecordings(0);
 
@@ -113,16 +122,20 @@
     });
     videoBrowserStore.generateWelcomeText();
 
+    //TODO: May need to prevent race conditions here and in similar calls!
     watch(() => [videoBrowserStore.selectedSubject, videoBrowserStore.selectedClasses], () => {
         videoBrowserStore.fetchTopics();
+        videoBrowserStore.fetchRecordings(0);
     });
 
-    watch(() => [videoBrowserStore.selectedSubject, videoBrowserStore.selectedClasses, videoBrowserStore.selectedTopics], () => {
+    //TODO: May need to prevent race conditions here and in similar calls!
+    watch(() => [videoBrowserStore.selectedTopics], () => {
         videoBrowserStore.fetchRecordings(0);
     });
 
     function onClassSelectionChanged(selection: IClass[]) {
         videoBrowserStore.selectedClasses = selection;
+        videoBrowserStore.selectedTopics = [];
     }
 
     function onTopicSelectionChanged(selection: ITopic[]) {
@@ -132,6 +145,11 @@
     function onFilterOrSortChanged(filter: RecordingVisibilityFilter, sort: IRecordingSort) {
         videoBrowserStore.recordingVisibilityFilter = filter;
         videoBrowserStore.recordingSort = sort;
+        videoBrowserStore.fetchRecordings(0);
+    }
+
+    function onSearchQueryChanged(searchQuery: string) {
+        videoBrowserStore.searchQuery = searchQuery;
         videoBrowserStore.fetchRecordings(0);
     }
 </script>

@@ -21,7 +21,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         selectedTopics: [] as ITopic[],
         recordings: [] as IRecording[],
         recordingVisibilityFilter: RecordingVisibilityFilter.SHOW_ALL as RecordingVisibilityFilter,
-        recordingSort: { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort
+        recordingSort: { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort,
+        searchQuery: "" as string | null
     }),
     actions: {
         generateWelcomeText() {
@@ -47,7 +48,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.primary = "";
             this.welcomeText.templates.secondary = "";
         },
-        /*fetchRecordings(page: number, pageSize: number = 20, query: string | null = null) {
+        
+        /*fetchRecordings(page: number, pageSize: number = 20) {
             this.recordings = [];
 
             //TODO: Test out!!!
@@ -60,7 +62,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             let topicIds = [] as number[];
             this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
 
-            RectureApi.getRecordings(page, pageSize, this.recordingSort, query, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(response => {
+            RectureApi.getRecordings(page, pageSize, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(response => {
                 if (response.ok) {
                     response.json().then((data) => {
                         this.recordings = data.data as IRecording[];
@@ -70,7 +72,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         },*/
         
         //TODO: Use the real method instead of the one created for testing
-        fetchRecordings(page: number, pageSize: number = 20, query: string | null = null) {
+        fetchRecordings(page: number, pageSize: number = 20) {
             this.recordings = [];
             this.recordings = [];
 
@@ -88,6 +90,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 let recordingSubject = this.subjects[Math.floor(i/(this.classes.length-1))%this.subjects.length];
                 let recordingTopic = null;
                 let title = "Test";
+                let description = "test";
                 let published = i%2 == 0;
 
                 if (recordingSubject.name === "MAT") {
@@ -109,11 +112,12 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 }
 
                 if ((classIds.length == 0 || classIds.includes(recordingClass.classId)) && (subjectIds.length == 0 || subjectIds.includes(recordingSubject.subjectId)) && 
-                (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId))) && (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_ALL || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PUBLIC_ONLY && published) || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PRIVATE_ONLY && !published))) {
+                (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId))) && (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_ALL || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PUBLIC_ONLY && published) || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PRIVATE_ONLY && !published)) &&
+                (this.searchQuery == null || title.toLocaleUpperCase().includes(this.searchQuery.toLocaleUpperCase()) || description.toLocaleUpperCase().includes(this.searchQuery.toLocaleUpperCase()))) {
                     this.recordings.push({
                         recordingId: i,
                         title: title,
-                        description: "test",
+                        description: description,
                         published: published,
                         notifications: 0,
                         classId: recordingClass.classId,
@@ -200,6 +204,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         //TODO: Use the real method instead of the one created for testing
         fetchTopics() {
             this.topics = [];
+            this.selectedTopics = [];
             if (this.selectedSubject != null && this.selectedClasses.length == 1) {
                 if (this.selectedSubject.name == "MAT") {
                     this.topics = [{

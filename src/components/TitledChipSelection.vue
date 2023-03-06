@@ -19,6 +19,8 @@
         name: string
     }
 
+    //TODO: These props are not reactive - using chip filters can sometimes be buggy (filter by thematic units on one page in a way that results in no recordings found, then switch to a different subject and back to see the bug)
+    //      not sure if this is truly caused by lack of reactivty or not, though
     const props = defineProps<{
         title: string
         emptyMessage: string
