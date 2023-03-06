@@ -8,7 +8,7 @@
             </v-col>
         </v-row>
 
-        <v-row id="video-row-button">
+        <v-row id="subject-button-row">
             <v-btn-toggle id="subject-button-toggle" selected-class="selected" v-model="videoBrowserStore.selectedSubject" mandatory>
                 <SubjectButton v-for="subject in videoBrowserStore.subjects" :key="subject.subjectId" :subject="subject"/>
             </v-btn-toggle>
@@ -16,41 +16,49 @@
         
         <v-row id="video-area" no-gutters class="h-100">
             <v-col id="video-area-content" cols="12">
-                <v-row class="mb-3" no gutters>
-                    <v-col>
-                        <SearchBar></SearchBar>
+                <v-row>
+                    <v-col :cols="mdAndUp?'auto':12">
+                        <v-row class="mb-3" no gutters>
+                            <v-col>
+                                <SearchBar class="mx-0"/>
+                            </v-col>
+                        </v-row>
+                        <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
+                            <v-col cols="12" md="auto" align="center">
+                                <v-btn id="upload-btn" variant="text" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
+                                    UPLOAD
+                                </v-btn>
+                            </v-col>
+
+                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
+                                <v-btn 
+                                    variant="text" 
+                                    id="btn-new-theme-unit"  
+                                    append-icon="mdi-plus-circle">
+                                    NEW THEMATIC UNIT
+                                </v-btn>
+                            </v-col>  
+
+                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
+                                <v-btn 
+                                    variant="text" 
+                                    id="btn-new-question-series" 
+                                    append-icon="mdi-plus-circle">
+                                    NEW QUESTION SERIES
+                                </v-btn>
+                            </v-col>
+                        </v-row>
                     </v-col>
-                </v-row>
-                <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
-                    <v-col cols="12" md="auto" align="center">
-                        <v-btn id="upload-btn" variant="text" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
-                            UPLOAD
-                        </v-btn>
+
+                    <v-spacer/>
+
+                    <v-col :cols="mdAndUp?'auto':12" :align="mdAndUp?'right':'center'" align-self="end">
+                        <v-row align="center" align-content="center" justify="center">
+                            <v-col cols="auto" :class="mdAndUp?'':'pt-0'">
+                                <FilterButtonVideoArea @filter-or-sort-changed="onFilterOrSortChanged"/>
+                            </v-col>
+                        </v-row>
                     </v-col>
-
-                    <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                        <v-btn 
-                            variant="text" 
-                            id="btn-new-theme-unit"  
-                            append-icon="mdi-plus-circle">
-                            NEW THEMATIC UNIT
-                        </v-btn>
-                    </v-col>  
-
-                    <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                        <v-btn 
-                            variant="text" 
-                            id="btn-new-question-series" 
-                            append-icon="mdi-plus-circle">
-                            NEW QUESTION SERIES
-                        </v-btn>
-                    </v-col>
-
-                    <v-col/>
-
-                    <v-col cols="12" md="auto" :align="mdAndUp?'right':'center'">
-                        <FilterButtonVideoArea @filter-or-sort-changed="onFilterOrSortChanged"/>
-                    </v-col>   
                 </v-row>
                 <v-row>
                     <v-col cols="12">
