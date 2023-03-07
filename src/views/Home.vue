@@ -2,7 +2,7 @@
     <MenuButton @click="homeStore.sidebarVisible = !homeStore.sidebarVisible"/>
     <Sidebar v-model="homeStore.sidebarVisible"/>
     <Topbar/>
-    <v-container id="home-content" fluid>
+    <v-container id="home-content" :class="homeStore.sidebarVisible?'':'full'" fluid>
         <router-view/>
     </v-container>
 </template>
