@@ -38,6 +38,18 @@
     transition: box-shadow 0.1s;
 }
 
+#signin .v-field .v-icon {
+    color: black;
+    opacity: 80%;
+    transition: opacity 0.1s;
+}
+
+#signin .v-field .v-icon:hover {
+    color: black;
+    opacity: 100%;
+    transition: opacity 0.1s;
+}
+
 #signin .v-btn {
     background-color: $recture-yellow;
     border-radius: 4px;
