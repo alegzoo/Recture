@@ -62,12 +62,12 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :data="classes" @selection-changed="selection => { onClassSelectionChanged(selection as IClass[]); }"/>
+                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :data="videoBrowserStore.classes" v-model="videoBrowserStore.selectedClasses"/>
                     </v-col>
                 </v-row>
                 <v-row >
                     <v-col cols="12">
-                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units" :data="topics" @selection-changed="selection => { onTopicSelectionChanged(selection as ITopic[]); }"/>
+                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units" :data="videoBrowserStore.topics" v-model="videoBrowserStore.selectedTopics"/>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -93,10 +93,9 @@
 
 <script lang="ts" setup>
     import { watch } from 'vue';
-    import { storeToRefs } from 'pinia';
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
-    import { IClass, IRecordingSort, ITopic, RecordingVisibilityFilter } from '@/api/RectureApi';
+    import { IRecordingSort, RecordingVisibilityFilter } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import SubjectButton from '@/components/SubjectButton.vue';
     import FilterButtonVideoArea from '@/components/FilterButtonVideoArea.vue';
@@ -110,8 +109,6 @@
 
     const accountStore = useAccountStore();
     const videoBrowserStore = useVideoBrowserStore();
-
-    const { classes, topics } = storeToRefs(videoBrowserStore);
 
     videoBrowserStore.fetchClassesAndSubjects();
     videoBrowserStore.fetchRecordings(0);
@@ -132,15 +129,6 @@
     watch(() => [videoBrowserStore.selectedTopics], () => {
         videoBrowserStore.fetchRecordings(0);
     });
-
-    function onClassSelectionChanged(selection: IClass[]) {
-        videoBrowserStore.selectedClasses = selection;
-        videoBrowserStore.selectedTopics = [];
-    }
-
-    function onTopicSelectionChanged(selection: ITopic[]) {
-        videoBrowserStore.selectedTopics = selection;
-    }
 
     function onFilterOrSortChanged(filter: RecordingVisibilityFilter, sort: IRecordingSort) {
         videoBrowserStore.recordingVisibilityFilter = filter;
