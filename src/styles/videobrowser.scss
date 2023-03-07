@@ -1,7 +1,12 @@
 @import "./constants.scss";
 
-.search-bar{
-    margin-right: 650px;
+.search-bar * {
+    font-size: 20px;
+}
+
+.search-bar .v-icon {
+    font-size: 28px;
+    height: 100%;
 }
 
 #subject-button-row {
