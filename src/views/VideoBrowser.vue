@@ -97,6 +97,7 @@
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
     import { IRecordingSort, RecordingVisibilityFilter } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
+    import { useHomeStore } from '@/stores/useHomeStore';
     import SubjectButton from '@/components/SubjectButton.vue';
     import FilterButtonVideoArea from '@/components/FilterButtonVideoArea.vue';
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
@@ -107,8 +108,11 @@
 
     const { mdAndUp } = useDisplay();
 
+    const homeStore = useHomeStore();
     const accountStore = useAccountStore();
     const videoBrowserStore = useVideoBrowserStore();
+
+    homeStore.sidebarVisible = true;
 
     videoBrowserStore.fetchClassesAndSubjects();
     videoBrowserStore.fetchRecordings(0);

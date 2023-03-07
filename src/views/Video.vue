@@ -21,7 +21,11 @@
     import { useRoute } from 'vue-router';
     import { IRecording, RectureApi } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
+    import { useHomeStore } from '@/stores/useHomeStore';
     import VideoPlayer from '@/components/VideoPlayer.vue';
+
+    const homeStore = useHomeStore();
+    homeStore.sidebarVisible = false;
 
     const recording = ref(null as IRecording | null)
 

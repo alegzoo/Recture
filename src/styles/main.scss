@@ -46,11 +46,10 @@
     width: 60px;
     height: 60px;
     z-index: 110;
+    background-color: $recture-cadet-blue;
     border-style: solid;
-    border-right-color: black;
-    border-right-width: 2px;
-    border-bottom-color: black;
-    border-bottom-width: 2px;
+    border-color: black;
+    border-width: 0px 2px 2px 0px;
     border-radius: 0px;
 }
 

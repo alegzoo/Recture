@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer id="sidebar" width="70" permanent floating>
+    <v-navigation-drawer id="sidebar" width="70" permanent floating :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)">
         <v-list id="sidebar-panel" width="60" density="compact" nav>
             <v-list-item height="58" to="/account">
                 <v-avatar size="38px">
@@ -25,6 +25,14 @@
     import { Stores } from '@/stores/Stores';
     import router from '@/router';
     import SidebarButton from './SidebarButton.vue';
+
+    const props = defineProps<{
+        modelValue?: boolean
+    }>();
+
+    const emit = defineEmits<{
+        (e: "update:modelValue", val: boolean): void
+    }>();
 
     function signOut() {
         RectureApi.signOut().then(function (response) {
