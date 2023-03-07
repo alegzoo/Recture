@@ -1,8 +1,6 @@
 <template>
-    <v-list-item>
-        <v-responsive :aspect-ratio="1">
-            <v-icon class="h-100" style="color: black;">{{ icon }}</v-icon>
-        </v-responsive>
+    <v-list-item height="58">
+        <v-icon class="h-100" style="color: black;">{{ icon }}</v-icon>
         <v-tooltip
             activator="parent"
             location="end"
