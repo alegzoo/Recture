@@ -29,6 +29,5 @@
 
 <script lang="ts" setup>
     import { useDisplay } from 'vuetify/lib/framework.mjs';
-    import Searchbar from './SearchBar.vue';
     const { smAndUp } = useDisplay();
 </script>

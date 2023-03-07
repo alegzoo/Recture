@@ -14,7 +14,8 @@
                 </v-tooltip>
             </v-list-item>
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
-            <SidebarButton icon="mdi-file-document" text="My T&C" to="/account/terms"/>
+            <SidebarButton icon="mdi-comment-text" text="New comments" to="/"/>
+            <SidebarButton icon="mdi-lead-pencil" text="Edit" to="/"/>
             <v-divider></v-divider>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
         </v-list>
