@@ -4,7 +4,11 @@
             <v-row no-gutters align-content="center" justify="center" class="h-100">
                 <v-col :cols="smAndUp?3:''" align-self="center" class="h-100"/>
                 <v-col :cols="smAndUp?'':6" align="center" align-self="center">
-                    <v-img id="topbar-logo" src="@/assets/typeface_recture_logo.svg" width="165" :aspect-ratio="1"/>
+                    <v-responsive width="165" :aspect-ratio="1">
+                        <router-link to="/">
+                            <img src="@/assets/typeface_recture_logo.svg" style="width: 100%; height: 100%;"/>
+                        </router-link>
+                    </v-responsive>
                 </v-col>
                 <v-col :cols="smAndUp?3:''" align-self="center" class="h-100">
                     <v-row no-gutters align-content="center" justify="center" class="h-100">
@@ -28,6 +32,7 @@
 </style>
 
 <script lang="ts" setup>
+    import router from '@/router';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     const { smAndUp } = useDisplay();
 </script>
