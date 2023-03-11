@@ -125,3 +125,38 @@
 #filter-button {
     border-radius: 9999px;
 }
+
+#filter-btn{
+    background-color: black;
+    color: white;
+    box-shadow: none;
+}
+
+#filter-v-card{
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    box-shadow: none;
+}
+
+#filter-v-list{
+    border-top-width: 2px;
+    border-top-color: black;
+    border-top-style: solid;
+    color: black;
+}
+
+#radio-btn-filter{
+    box-shadow: 2px 2px 0px 0px black;
+}
+
+#filter-v-card2{
+    background-color: black;
+    color: white;
+}
+
+#filter-sort-title *{
+    opacity:100;
+    color: black;
+    font-weight: bold;
+}

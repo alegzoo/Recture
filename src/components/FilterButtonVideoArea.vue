@@ -6,28 +6,31 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
+                id="filter-btn"
                 v-bind="props"
-                prepend-icon="mdi-filter-outline"
+                append-icon="mdi-filter-outline"
                 rounded
-                theme="dark"
                 :ripple="false"
+                align-content="center"
             >
-                Filters
+                Filter
             </v-btn>
         </template>
 
-        <v-card min-width="300">
+        <v-card min-width="300" id="filter-v-card">
             <v-list>
-                <v-list-item>
-                    <h4>FILTER & SORT</h4>
-                </v-list-item>
+                <v-list-item 
+                    id="filter-sort-title"
+                    title="FILTER & SORT"
+                    prepend-icon="mdi-filter"
+                />
             </v-list>
 
-            <v-divider></v-divider>
+            <v-divider id="v-divider" class="border-opacity-100" :thickness="2"/>
 
             <v-list>
                 <v-list-item>
-                    Filter by visibilty:
+                    Filter by visibility:
                 </v-list-item>
                 <v-list-item>
                     <v-radio-group v-model="selectedVisibilityFilter">
@@ -48,9 +51,9 @@
                 </v-list-item>
             </v-list>
 
-            <v-divider></v-divider>
+            <v-divider id="v-divider" class="border-opacity-100" :thickness="2"/>
 
-            <v-card-actions>
+            <v-card-actions id="filter-v-card2">
                 <v-spacer/>
                 <v-btn
                     variant="text"
