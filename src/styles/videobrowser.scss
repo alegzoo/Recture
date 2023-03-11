@@ -148,12 +148,14 @@
 
 #upload-btn:hover {
     box-shadow: 3px 3px 0px 0px black;
-    transition: box-shadow 0.1s linear;
+    transform: none;
+    transition: all 0.1s ease-in;
 }
 
 #upload-btn:active {
+    transform: translate(1px, 1px);
     box-shadow: 2px 2px 0px 0px black;
-    transition: box-shadow 0.1s linear;
+    transition: all 0.1s ease-out;
 }
 
 #btn-new-theme-unit {
