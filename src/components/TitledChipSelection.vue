@@ -7,7 +7,8 @@
     <v-row no-gutters>
         <v-col cols="12">
             <v-chip-group v-if="data.length > 0" multiple column :model-value="modelValue" @update:model-value="selection => {emit('update:modelValue', selection)}">
-                <v-chip v-for="chip in data" class="px-4" :value="chip" selected-class="selected" :ripple="false" variant="outlined" filter filter-icon="mdi-close-circle-outline">{{ chip.name }}</v-chip>
+                <!-- TODO: Maybe add key to v-for? -->
+                <v-chip v-for="chip in data" class="px-4" :value="chip" selected-class="selected" :ripple="false" variant="outlined" append-icon="mdi-close-circle-outline">{{ chip.name }}</v-chip>
             </v-chip-group>
             <p v-else>{{ emptyMessage }}</p>
         </v-col>
@@ -31,6 +32,6 @@
     }>();
 </script>
   
-<style>
+<style scoped>
   
 </style>
