@@ -24,12 +24,14 @@
     import { useHomeStore } from '@/stores/useHomeStore';
     import VideoPlayer from '@/components/VideoPlayer.vue';
 
-    const homeStore = useHomeStore();
-    homeStore.sidebarVisible = false;
-
     const recording = ref(null as IRecording | null)
 
-    const { mdAndUp } = useDisplay();
+    const { mdAndUp, lgAndDown } = useDisplay();
+
+    if (lgAndDown.value) {
+        const homeStore = useHomeStore();
+        homeStore.sidebarVisible = false;
+    }
 
     const router = useRoute();
     loadRecording();
