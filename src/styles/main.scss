@@ -30,27 +30,41 @@
     box-shadow: none;
     opacity: 100%;
     transition: all 0.15s ease-in-out;
+    overflow: visible;
 }
 
-#sidebar .v-list-item:hover {
+#sidebar .v-list-item.active {
+    background-color: $recture-yellow;
     background-position: -200% 0px, -100% 0px;
     transition: all 0.15s ease-in-out;
     box-shadow: 0px 2px 0px 0px black;
 }
 
-#sidebar .v-list-item.active {
-    background-color: $recture-yellow;
-    box-shadow: 0px 2px 0px 0px black;
+#sidebar .v-list-item .v-icon {
+    filter: none;
+    transition: filter 0.15s ease-out;
 }
 
-#sidebar .v-list-item.active:hover {
-    background-position: 0px 0px, 0px 0px;
+#sidebar .v-list-item:hover .v-icon {
+    filter: drop-shadow(2px 2px 0px $recture-yellow);
+    transition: filter 0.15s ease-in;
 }
 
 #sidebar .v-divider {
     border-top-color: black;
     border-top-width: 2px;
     opacity: 20%;
+}
+
+.sidebar-button-tooltip div {
+    opacity: 100% !important;
+    background-color: $recture-yellow !important;
+    color: black !important;
+    border: solid 2px black !important;
+    border-radius: 0px 6px 6px 6px !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    box-shadow: 2px 2px 0px 0px black;
 }
 
 #topbar {

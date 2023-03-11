@@ -14,9 +14,15 @@ const routes = [
       {
         path: '',
         component: VideoBrowser
-      },
+      }
+    ]
+  },
+  {
+    path: '/videos/:id',
+    component: Home,
+    children: [
       {
-        path: 'videos/:id',
+        path: '',
         component: Video
       }
     ]
