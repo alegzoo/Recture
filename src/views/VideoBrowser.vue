@@ -20,7 +20,7 @@
                     <v-col :cols="mdAndUp?'auto':12">
                         <v-row class="mb-3" no gutters>
                             <v-col>
-                                <SearchBar class="mx-0" @search-query-changed="onSearchQueryChanged"/>
+                                <SearchBar class="mx-0" v-model="videoBrowserStore.searchQuery"/>
                             </v-col>
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
@@ -134,14 +134,13 @@
         videoBrowserStore.fetchRecordings(0);
     });
 
+    watch(() => videoBrowserStore.searchQuery, () => {
+        videoBrowserStore.fetchRecordings(0);
+    });
+
     function onFilterOrSortChanged(filter: RecordingVisibilityFilter, sort: IRecordingSort) {
         videoBrowserStore.recordingVisibilityFilter = filter;
         videoBrowserStore.recordingSort = sort;
-        videoBrowserStore.fetchRecordings(0);
-    }
-
-    function onSearchQueryChanged(searchQuery: string) {
-        videoBrowserStore.searchQuery = searchQuery;
         videoBrowserStore.fetchRecordings(0);
     }
 </script>
