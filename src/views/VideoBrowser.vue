@@ -1,10 +1,10 @@
 <template>
-        <v-row class="py-10">
-            <v-col cols="12" md="6">
-                <h1 style="text-align: center;">{{ videoBrowserStore.welcomeText.primary }}</h1>
+        <v-row class="pa-10">
+            <v-col cols="12" md="auto" xl="6" align-self="center">
+                <h1 :class="'welcome-text primary'+((smAndDown||xlAndUp)?' centered':'')">{{ videoBrowserStore.welcomeText.primary }}</h1>
             </v-col>
-            <v-col cols="12" md="6">
-                <h2 style="text-align: center;">{{ videoBrowserStore.welcomeText.secondary }}</h2>
+            <v-col cols="12" md="" xl="6" align-self="center">
+                <h2 :class="'welcome-text secondary'+((smAndDown||xlAndUp)?' centered':'')">{{ videoBrowserStore.welcomeText.secondary }}</h2>
             </v-col>
         </v-row>
 
@@ -106,7 +106,7 @@
     
     import "@/styles/videobrowser.scss";
 
-    const { mdAndUp } = useDisplay();
+    const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
 
     const homeStore = useHomeStore();
     const accountStore = useAccountStore();
