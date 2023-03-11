@@ -83,7 +83,7 @@
 
 .video-box:hover {
     box-shadow: 3px 3px 0px 0px black;
-    transition: box-shadow 0.1s linear;
+    transition: box-shadow 0.1s ease-out;
 
     .video-box-info-area {
         background-color: $recture-red;
