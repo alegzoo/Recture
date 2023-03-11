@@ -6,7 +6,7 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
-                id="filter-btn"
+                id="filter-button"
                 v-bind="props"
                 append-icon="mdi-filter-outline"
                 rounded
@@ -17,16 +17,16 @@
             </v-btn>
         </template>
 
-        <v-card min-width="300" id="filter-v-card">
+        <v-card min-width="300" id="recording-filter-menu" class="mr-2">
             <v-list>
                 <v-list-item 
-                    id="filter-sort-title"
+                    class="filter-sort-title"
                     title="FILTER & SORT"
                     prepend-icon="mdi-filter"
                 />
             </v-list>
 
-            <v-divider id="v-divider" class="border-opacity-100" :thickness="2"/>
+            <v-divider thickness="2"/>
 
             <v-list>
                 <v-list-item>
@@ -51,17 +51,15 @@
                 </v-list-item>
             </v-list>
 
-            <v-divider id="v-divider" class="border-opacity-100" :thickness="2"/>
-
-            <v-card-actions id="filter-v-card2">
-                <v-spacer/>
+            <v-card-actions>
                 <v-btn
                     variant="text"
                     @click="reset"
+                    class="rounded-0"
+                    block
                 >
                     Reset
                 </v-btn>
-                <v-spacer/>
             </v-card-actions>
         </v-card>
     </v-menu>
