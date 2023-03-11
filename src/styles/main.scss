@@ -21,6 +21,38 @@
     border: solid 2px black;
 }
 
+#sidebar .v-list-item {
+    margin: 0px;
+    border-radius: 0px;
+    background: linear-gradient(to right, transparent 50%, black 50%), linear-gradient(to right, transparent 50%, $recture-yellow 50%);
+    background-size: 200% 100%, 200% 100%;
+    background-position: 0px 0px, 0px 0px;
+    box-shadow: none;
+    opacity: 100%;
+    transition: all 0.15s ease-in-out;
+}
+
+#sidebar .v-list-item:hover {
+    background-position: -200% 0px, -100% 0px;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0px 2px 0px 0px black;
+}
+
+#sidebar .v-list-item.active {
+    background-color: $recture-yellow;
+    box-shadow: 0px 2px 0px 0px black;
+}
+
+#sidebar .v-list-item.active:hover {
+    background-position: 0px 0px, 0px 0px;
+}
+
+#sidebar .v-divider {
+    border-top-color: black;
+    border-top-width: 2px;
+    opacity: 20%;
+}
+
 #topbar {
     margin: 0px;
     padding: 0px 0px 0px 60px;
@@ -34,7 +66,7 @@
 #sidebar-panel {
     background: transparent;
     border-radius: 0px;
-    padding: 70px 0px 0px 0px;
+    padding: 60px 0px 0px 0px;
     text-align: center;
     height: 100%;
     border-right-width: 2px;
