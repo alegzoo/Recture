@@ -25,10 +25,21 @@
                 <v-container class="mt-3 ml-2" fluid no-gutters>
                     <v-row class="pb-5 ml-5">
                         <v-col cols="2">
-                            <p class="font-weight-medium">Name</p>
+                            <p class="font-weight-medium">First Name</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">Jano Číslový</p>
+                            <p class="font-weight-black">Jano</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-divider thickness="2" class="border-opacity-100"/>
+
+                    <v-row class="pb-5 mt-3 ml-5">
+                        <v-col cols="2">
+                            <p class="font-weight-medium">Second Name</p>
+                        </v-col>
+                        <v-col>
+                            <p class="font-weight-black">Číslový</p>
                         </v-col>
                     </v-row>
 
