@@ -4,6 +4,7 @@ import Signin from '@/views/Signin.vue'
 import VideoBrowser from '@/views/VideoBrowser.vue'
 import Video from '@/views/Video.vue'
 import NotFound from '@/views/NotFound.vue'
+import Profile from '@/views/Profile.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -24,6 +25,16 @@ const routes = [
       {
         path: '',
         component: Video
+      }
+    ]
+  },
+  {
+    path: '/account',
+    component: Home,
+    children: [
+      {
+        path: '',
+        component: Profile
       }
     ]
   },
