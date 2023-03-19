@@ -1,0 +1,45 @@
+@import "./constants.scss";
+@import "./mixins.scss";
+
+#profile-avatar {
+    border-radius: 9999px;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+}
+
+#profile-edit-icon {
+    @include elevated-button(3px, 3px, 1px);
+    background-color: $recture-yellow;
+    color: black;
+    border-radius: 0px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+}
+
+#profile-v-sheet {
+    border-top-style: dashed;
+    border-left-style: dashed;
+    border-top-width: 4px;
+    border-left-width: 4px;
+    -webkit-border-top-width: 4px;
+    -webkit-border-left-width: 4px;
+    background-color: transparent;
+}
+
+#whole-profile-container {
+    background-image: url("@/assets/bg_profile.png");
+    background-size: cover;
+    background-color: transparent;
+}
+
+.profile-name {
+    font-family: 'Clash Display', sans-serif !important;
+    font-size: 60px !important; 
+    font-weight: 1000;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke: 1.5px;
+    text-shadow: 3px 3px 0px black;
+}

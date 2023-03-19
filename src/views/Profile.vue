@@ -96,5 +96,5 @@
 </style>
 
 <script lang="ts" setup>
-    import router from '@/router';
+    import "@/styles/profile.scss";
 </script>

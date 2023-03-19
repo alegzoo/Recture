@@ -1,4 +1,5 @@
 @import "./constants.scss";
+@import "./mixins.scss";
 
 .welcome-text {
     font-family: 'Clash Display', sans-serif;
@@ -11,7 +12,15 @@
     -webkit-text-stroke-color: black;
     -webkit-text-stroke: 2px;
     text-shadow: 2px 2px 0px black;
+
+    &.loaded {
+        animation: fade-in, fly-in;
+        animation-duration: 1s, 1s;
+        animation-iteration-count: 1, 1;
+        animation-timing-function: ease-in, ease-in-out;
+    }
 }
+
 .welcome-text.secondary {
     font-size: 24px;
     font-weight: 400;
@@ -21,10 +30,35 @@
     animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+
+    &.loaded {
+        animation: fade-in, pulsate;
+        animation-duration: 1s, 5s;
+        animation-iteration-count: 1, infinite;
+        animation-timing-function: ease-in-out, ease-in-out;
+    }
 }
 
 .welcome-text.primary.centered, .welcome-text.secondary.centered {
     text-align: center;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes fly-in {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
 }
 
 @keyframes pulsate {
@@ -138,24 +172,13 @@
 }
 
 #upload-btn {
+    @include elevated-button(0px, 3px, 1px);
     border-radius: 9999px;
     border-width: 2px;
     border-style: solid;
     border-color: black;
     background-color: #00A6E2;
     color: white;
-}
-
-#upload-btn:hover {
-    box-shadow: 3px 3px 0px 0px black;
-    transform: none;
-    transition: all 0.1s ease-in;
-}
-
-#upload-btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0px 0px black;
-    transition: all 0.1s ease-out;
 }
 
 #btn-new-theme-unit {

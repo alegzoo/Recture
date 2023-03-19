@@ -1,0 +1,17 @@
+@mixin elevated-button($elevation, $elevation-hover, $press-depth) {
+    box-shadow: $elevation $elevation 0px 0px black;
+    transform: none;
+    transition: box-shadow 0.1s ease-in, transform 0.1s ease-in;
+
+    &:hover {
+        box-shadow: $elevation-hover $elevation-hover 0px 0px black;
+        transform: none;
+        transition: box-shadow 0.1s ease-in, transform 0.1s ease-in;
+    }
+
+    &:active {
+        box-shadow: calc($elevation-hover - $press-depth) calc($elevation-hover - $press-depth) 0px 0px black;
+        transform: translate($press-depth, $press-depth);
+        transition: box-shadow 0.1s ease-out, transform 0.1s ease-out;
+    }
+}

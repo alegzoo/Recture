@@ -24,6 +24,22 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         recordingSort: { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort,
         searchQuery: "" as string | null
     }),
+    getters: {
+        welcomeTextPrimaryDisplay: (state) => {
+            if (state.welcomeText.primary?.length > 0) {
+                return state.welcomeText.primary;
+            } else {
+                return "\u00A0";
+            }
+        },
+        welcomeTextSecondaryDisplay: (state) => {
+            if (state.welcomeText.secondary?.length > 0) {
+                return state.welcomeText.secondary;
+            } else {
+                return "\u00A0";
+            }
+        }
+    },
     actions: {
         generateWelcomeText() {
             fetch("/src/assets/welcome_text_phrases.json").then((response) => {

@@ -1,10 +1,10 @@
 <template>
         <v-row class="pa-10">
             <v-col cols="12" md="auto" xl="6" align-self="center">
-                <h1 :class="'welcome-text primary'+((smAndDown||xlAndUp)?' centered':'')">{{ videoBrowserStore.welcomeText.primary }}</h1>
+                <h1 :class="'welcome-text primary'+((smAndDown||xlAndUp)?' centered':'')+((videoBrowserStore.welcomeText.primary?.length > 0)?' loaded':'')">{{ videoBrowserStore.welcomeTextPrimaryDisplay }}</h1>
             </v-col>
             <v-col cols="12" md="" xl="6" align-self="center">
-                <h2 :class="'welcome-text secondary'+((smAndDown||xlAndUp)?' centered':'')">{{ videoBrowserStore.welcomeText.secondary }}</h2>
+                <h2 :class="'welcome-text secondary'+((smAndDown||xlAndUp)?' centered':'')+((videoBrowserStore.welcomeText.secondary?.length > 0)?' loaded':'')">{{ videoBrowserStore.welcomeTextSecondaryDisplay }}</h2>
             </v-col>
         </v-row>
 
