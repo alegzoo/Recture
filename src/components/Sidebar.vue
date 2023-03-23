@@ -3,7 +3,7 @@
         <v-list id="sidebar-panel" width="60" density="compact" active-class="active" nav>
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
             <SidebarButton icon="mdi-account" text="Profile" to="/account"/>
-            <SidebarButton icon="mdi-comment-text" text="New comments" to="/comments"/>
+            <SidebarButton icon="mdi-comment-text" text="New comments" to="/newcomments"/>
             <SidebarButton icon="mdi-lead-pencil" text="Edit" to="/edit"/>
             <v-divider/>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>

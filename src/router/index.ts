@@ -5,6 +5,8 @@ import VideoBrowser from '@/views/VideoBrowser.vue'
 import Video from '@/views/Video.vue'
 import NotFound from '@/views/NotFound.vue'
 import Profile from '@/views/Profile.vue'
+import Edit from '@/views/Edit.vue'
+import NewComments from '@/views/NewComments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -35,6 +37,26 @@ const routes = [
       {
         path: '',
         component: Profile
+      }
+    ]
+  },
+  {
+    path: '/newcomments',
+    component: Home,
+    children: [
+      {
+        path: '',
+        component: NewComments
+      }
+    ]
+  },
+  {
+    path: '/edit',
+    component: Home,
+    children: [
+      {
+        path: '',
+        component: Edit
       }
     ]
   },
