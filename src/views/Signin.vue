@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
     import { RectureApi } from '@/api/RectureApi';
-    import * as status from 'http-status';
+    import status from "http-status";
     import router from '@/router';
     import { ref } from 'vue';
 
@@ -56,12 +56,12 @@
         alertBody.value = null;
         submitDisabled.value = true;
         RectureApi.signIn(email.value, password.value)
-            .then((response) => {
-                if (response.ok) {
+            .then((result) => {
+                if (result.success) {
                     router.push("/");
-                } else if (response.status === status.UNAUTHORIZED || response.status === status.BAD_REQUEST) {
+                } else if (result.statusCode === status.UNAUTHORIZED || result.statusCode === status.BAD_REQUEST) {
                     alertBody.value = "Incorrect username or password.";
-                } else if (response.status === status.NOT_FOUND) {
+                } else if (result.statusCode === status.NOT_FOUND) {
                     alertBody.value = "This account does not exist.";
                 } else {
                     alertBody.value = "An error has occurred.";
