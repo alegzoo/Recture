@@ -273,16 +273,16 @@ export type LessonColor =
     "orchid";
 
 export enum RecordingVisibilityFilter {
-    SHOW_ALL = "SHOW_ALL",
-    SHOW_PRIVATE_ONLY = "SHOW_PRIVATE_ONLY",
-    SHOW_PUBLIC_ONLY = "SHOW_PUBLIC_ONLY"
+    ShowAll = "SHOW_ALL",
+    ShowPrivateOnly = "SHOW_PRIVATE_ONLY",
+    ShowPublicOnly = "SHOW_PUBLIC_ONLY"
 }
 
 export enum RecordingSortKey {
-    BY_RECORDING_DATE = "recordingDate"
+    ByRecordingDate = "recordingDate"
 }
 
 export enum SortOrder {
-    ASCENDING = "ASC",
-    DESCENDING = "DESC"
+    Ascending = "ASC",
+    Descending = "DESC"
 }

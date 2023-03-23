@@ -34,9 +34,9 @@
                 </v-list-item>
                 <v-list-item>
                     <v-radio-group v-model="selectedVisibilityFilter">
-                        <v-radio label="All" :value="RecordingVisibilityFilter.SHOW_ALL"></v-radio>
-                        <v-radio label="Public only" :value="RecordingVisibilityFilter.SHOW_PUBLIC_ONLY"></v-radio>
-                        <v-radio label="Private only" :value="RecordingVisibilityFilter.SHOW_PRIVATE_ONLY"></v-radio>
+                        <v-radio label="All" :value="RecordingVisibilityFilter.ShowAll"></v-radio>
+                        <v-radio label="Public only" :value="RecordingVisibilityFilter.ShowPublicOnly"></v-radio>
+                        <v-radio label="Private only" :value="RecordingVisibilityFilter.ShowPrivateOnly"></v-radio>
                     </v-radio-group>
                 </v-list-item>
 
@@ -45,8 +45,8 @@
                 </v-list-item>
                 <v-list-item>
                     <v-radio-group v-model="selectedSort">
-                        <v-radio label="Newest" :value="{ sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING }"></v-radio>
-                        <v-radio label="Oldest" :value="{ sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.ASCENDING }"></v-radio>
+                        <v-radio label="Newest" :value="{ sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Descending }"></v-radio>
+                        <v-radio label="Oldest" :value="{ sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Ascending }"></v-radio>
                     </v-radio-group>
                 </v-list-item>
             </v-list>
@@ -93,7 +93,7 @@
     reset();
 
     function reset() {
-        selectedVisibilityFilter.value = RecordingVisibilityFilter.SHOW_ALL;
-        selectedSort.value = { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort;
+        selectedVisibilityFilter.value = RecordingVisibilityFilter.ShowAll;
+        selectedSort.value = { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Descending } as IRecordingSort;
     }
 </script>
