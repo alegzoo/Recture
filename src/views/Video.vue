@@ -46,13 +46,9 @@
 
         try {
             recordingId = parseInt(recordingId as string);
-            RectureApi.getRecording(recordingId).then((response) => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        recording.value = data as IRecording;
-                    }). catch((reason) => {
-                        console.error(reason);
-                    });
+            RectureApi.getRecording(recordingId).then(result => {
+                if (result.success && result.data != null) {
+                    recording.value = result.data;
                 } else {
                     console.error("Failed to load recording.");
                 }

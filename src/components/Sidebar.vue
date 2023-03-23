@@ -26,8 +26,8 @@
     }>();
 
     function signOut() {
-        RectureApi.signOut().then(function (response) {
-            if (response.ok) {
+        RectureApi.signOut().then(function (result) {
+            if (result.success) {
                 Stores.resetAllStores();
                 router.push("/signin");
             }

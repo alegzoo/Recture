@@ -23,10 +23,8 @@ export const useAccountStore = defineStore("accountStore", {
         },
         fetchData() {
             RectureApi.getAccountInfo().then((response) => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        this.loadData(data as IAccount);
-                    });
+                if (response.success && response.data != null) {
+                    this.loadData(response.data);
                 }
             });
         }

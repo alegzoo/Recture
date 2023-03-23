@@ -20,8 +20,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         selectedSubject: null as ISubject | null,
         selectedTopics: [] as ITopic[],
         recordings: [] as IRecording[],
-        recordingVisibilityFilter: RecordingVisibilityFilter.SHOW_ALL as RecordingVisibilityFilter,
-        recordingSort: { sortKey: RecordingSortKey.BY_RECORDING_DATE, sortOrder: SortOrder.DESCENDING } as IRecordingSort,
+        recordingVisibilityFilter: RecordingVisibilityFilter.ShowAll as RecordingVisibilityFilter,
+        recordingSort: { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Descending } as IRecordingSort,
         searchQuery: "" as string | null
     }),
     getters: {
@@ -78,11 +78,10 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             let topicIds = [] as number[];
             this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
 
-            RectureApi.getRecordings(page, pageSize, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(response => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        this.recordings = data.data as IRecording[];
-                    })
+            RectureApi.getRecordings(page, pageSize, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(result => {
+                if (result.success && result.data != null) {
+                    const page = result.data;
+                    this.recordings = page.data;
                 }
             });
         },*/
@@ -128,7 +127,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 }
 
                 if ((classIds.length == 0 || classIds.includes(recordingClass.classId)) && (subjectIds.length == 0 || subjectIds.includes(recordingSubject.subjectId)) && 
-                (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId))) && (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_ALL || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PUBLIC_ONLY && published) || (this.recordingVisibilityFilter == RecordingVisibilityFilter.SHOW_PRIVATE_ONLY && !published)) &&
+                (topicIds.length == 0 || (recordingTopic != null && topicIds.includes(recordingTopic.topicId))) && (this.recordingVisibilityFilter == RecordingVisibilityFilter.ShowAll || (this.recordingVisibilityFilter == RecordingVisibilityFilter.ShowPublicOnly && published) || (this.recordingVisibilityFilter == RecordingVisibilityFilter.ShowPrivateOnly && !published)) &&
                 (this.searchQuery == null || title.toLocaleUpperCase().includes(this.searchQuery.toLocaleUpperCase()) || description.toLocaleUpperCase().includes(this.searchQuery.toLocaleUpperCase()))) {
                     this.recordings.push({
                         recordingId: i,
@@ -152,7 +151,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     });
                 }
 
-                if (this.recordingSort.sortOrder ==  SortOrder.ASCENDING) this.recordings.reverse();
+                if (this.recordingSort.sortOrder ==  SortOrder.Ascending) this.recordings.reverse();
             }
         },
 
@@ -164,23 +163,19 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.selectedSubject = null;
             this.selectedTopics = [];
 
-            RectureApi.getClasses().then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        this.classes = data as IClass[];
-                    });
+            RectureApi.getClasses().then(result => {
+                if (result.success && result.data != null) {
+                    this.classes = result.data;
                 }
             });
 
-            RectureApi.getSubjects().then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        this.subjects = data as ISubject[];
-                        if (this.subjects.length > 0) {
-                            //TODO: Test out!
-                            this.selectedSubject = this.subjects[0];
-                        }
-                    });
+            RectureApi.getSubjects().then(result => {
+                if (result.success && result.data != null) {
+                    this.subjects = result.data;
+                    if (this.subjects.length > 0) {
+                        //TODO: Test out!
+                        this.selectedSubject = this.subjects[0];
+                    }
                 }
             });
         },*/
@@ -202,16 +197,13 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         },
 
         /*fetchTopics() {
-            //TODO: Test out!
             this.topics = [];
             this.selectedTopics = [];
             if (this.selectedSubject != null && this.selectedClasses.length == 1) {
                 this.topics = [];
-                RectureApi.getTopics(this.selectedClasses[0].classId, this.selectedSubject.subjectId).then(response => {
-                    if (response.ok) {
-                        response.json().then(data => {
-                            this.topics = data as ITopic[];
-                        });
+                RectureApi.getTopics(this.selectedClasses[0].classId, this.selectedSubject.subjectId).then(result => {
+                    if (result.success && result.data != null) {
+                        this.topics = result.data;
                     }
                 });
             }
