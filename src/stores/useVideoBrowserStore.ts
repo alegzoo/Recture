@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 
 import { useAccountStore } from '@/stores/useAccountStore';
-import { DayOfWeek, IClass, ILesson, IRecording, IRecordingSort, ISubject, ITopic, RecordingSortKey, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
+import { IClass, IRecording, IRecordingSort, ISubject, ITopic, RecordingSortKey, RecordingVisibilityFilter, RectureApi, SortOrder } from "@/api/RectureApi";
 
 export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     state: () => ({

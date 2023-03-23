@@ -237,7 +237,7 @@ export interface ILesson {
     lessonId: number,
     dayOfWeek: DayOfWeek,
     lessonNumber: number,
-    color: string,
+    color: LessonColor,
     className: string,
     subjectName: string,
     classId: number,
@@ -250,14 +250,27 @@ export interface IRecordingSort {
 }
 
 export enum DayOfWeek {
-    MONDAY = 0,
-    TUESDAY = 1,
-    WEDNESDAY = 2,
-    THURSDAY = 3,
-    FRIDAY = 4,
-    SATURDAY = 5,
-    SUNDAY = 6
+    Monday = 0,
+    Tuesday = 1,
+    Wednesday = 2,
+    Thursday = 3,
+    Friday = 4,
+    Saturday = 5,
+    Sunday = 6
 }
+
+export type LessonColor =
+    "mustard" |
+    "aqua" |
+    "steel_blue" |
+    "red" |
+    "gray" |
+    "rose" |
+    "melon" |
+    "blush" |
+    "crystal_blue" |
+    "canary" |
+    "orchid";
 
 export enum RecordingVisibilityFilter {
     SHOW_ALL = "SHOW_ALL",
