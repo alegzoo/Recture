@@ -130,6 +130,21 @@ export class RectureApi {
         }
     }
 
+    public static async getTimetable(): Promise<ApiResult<ITimetable>> {
+        const response = await fetch(this.pathToUrl("lessons/timetable"), {
+            method: "GET",
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ITimetable;
+            
+            return new ApiResult<ITimetable>(response.status, data);
+        } else {
+            return new ApiResult<ITimetable>(response.status);
+        }
+    }
+
     public static async getLessons(): Promise<ApiResult<ILesson[]>> {
         const response = await fetch(this.pathToUrl("lessons"), {
             method: "GET",
@@ -231,6 +246,12 @@ export interface ISubject {
 export interface ITopic {
     topicId: number,
     name: string
+}
+
+export interface ITimetable {
+    daysOfWeek: boolean[],
+    lessonsPerDay: number,
+    firstLessonNumber: number
 }
 
 export interface ILesson {
