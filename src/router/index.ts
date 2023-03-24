@@ -5,7 +5,7 @@ import VideoBrowser from '@/views/VideoBrowser.vue'
 import Video from '@/views/Video.vue'
 import NotFound from '@/views/NotFound.vue'
 import Profile from '@/views/Profile.vue'
-import Edit from '@/views/Edit.vue'
+import Timetable from '@/views/Timetable.vue'
 import NewComments from '@/views/NewComments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -51,12 +51,12 @@ const routes = [
     ]
   },
   {
-    path: '/edit',
+    path: '/timetable',
     component: Home,
     children: [
       {
         path: '',
-        component: Edit
+        component: Timetable
       }
     ]
   },

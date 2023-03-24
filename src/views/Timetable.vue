@@ -8,7 +8,7 @@
             <v-spacer></v-spacer>
 
             <v-col cols="auto" align-self="center">
-                <v-btn id="editview-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
+                <v-btn id="timetable-edit-button" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
             </v-col>
         </v-row>
 
@@ -34,13 +34,13 @@
         <v-row class="pr-16" id="v-row-edit-btns">
             <v-spacer></v-spacer>
             <v-col cols="auto" align-self="start">
-                <v-btn variant="text" id="edit-view-btn" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
+                <v-btn variant="text" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
                     NEW THEMATIC UNIT
                 </v-btn>
             </v-col>
 
             <v-col cols="auto" align-self="start">
-                <v-btn variant="text" id="edit-view-btn" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
+                <v-btn variant="text" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
                     NEW QUESTION SERIES
                 </v-btn>
             </v-col>
@@ -56,5 +56,5 @@
 </style>
 
 <script lang="ts" setup>
-    import "@/styles/edit.scss";
+    import "@/styles/timetable.scss";
 </script>

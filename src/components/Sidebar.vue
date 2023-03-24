@@ -4,7 +4,7 @@
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
             <SidebarButton icon="mdi-account" text="Profile" to="/account"/>
             <SidebarButton icon="mdi-comment-text" text="New comments" to="/newcomments"/>
-            <SidebarButton icon="mdi-lead-pencil" text="Edit" to="/edit"/>
+            <SidebarButton icon="mdi-calendar-clock" text="Timetable" to="/timetable"/>
             <v-divider/>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
         </v-list>

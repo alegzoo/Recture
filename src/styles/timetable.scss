@@ -1,7 +1,7 @@
 @import "./constants.scss";
 @import "./mixins.scss";
 
-#editview-edit-icon{
+#timetable-edit-button {
     @include elevated-button(3px, 3px, 1px);
     background-color: $recture-yellow;
     color: black;
@@ -11,11 +11,20 @@
     border-width: 2px;
 }
 
-#v-row-edit-btns{
+#v-row-edit-btns {
     margin-right: 1px;
 }
 
-#edit-view-btn{
+.plus-btn .v-icon {
+    font-size: 27px;
+    height: 100%;
+    padding-bottom: 2px;
+    justify-content: start;
+    padding-left: 8px;
+}
+
+.plus-btn {
+    padding-left: 28px;
     border-radius: 9999px;
     background-color: $recture-yellow;
     border-width: 2px;
@@ -25,18 +34,6 @@
     color: black;
 }
 
-.plus-btn .v-icon{
-    font-size: 27px;
-    height: 100%;
-    padding-bottom: 2px;
-    justify-content: start;
-    padding-left: 8px;
-}
-
-.plus-btn{
-    padding-left: 28px;
-}
-
-#v-sheet-edit{
+#v-sheet-edit {
     border-radius: 15px;
 }
