@@ -47,7 +47,7 @@
 
                     <v-row class="pb-5 mt-3 ml-5">
                         <v-col cols="2">
-                            <p class="font-weight-medium">E-mail</p>
+                            <p class="font-weight-medium">Email</p>
                         </v-col>
                         <v-col>
                             <p class="font-weight-black">{{ accountStore.email }}</p>
