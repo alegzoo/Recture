@@ -186,8 +186,24 @@ export function makeServer() {
                 return schema.all("subject").models;
             }, {timing: 300});
 
-            this.get(RectureApi.BASE_API_URL+"/topics", (schema) => {
-                return schema.all("topic").models;
+            this.get(RectureApi.BASE_API_URL+"/topics", (schema, request) => {
+                const params = request.queryParams;
+
+                if (params.classId == null || params.subjectId == null) return new Response(400);
+
+                const classId = parseInt(params.classId);
+                const subjectId = parseInt(params.subjectId);
+
+                const topics = [] as ITopic[];
+
+                schema.all("topic").models.forEach(topic => {
+                    const topicId = topic.topicId;
+                    //TODO: Update if we change topics in mock backend
+                    if (topicId == 0 && subjectId == 0) topics.push(topic);
+                    else if (topicId > 0 && subjectId > 0) topics.push(topic);
+                });
+
+                return topics;
             }, {timing: 300});
 
             this.get(RectureApi.BASE_API_URL+"/lessons/timetable", (schema) => {
