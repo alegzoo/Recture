@@ -54,19 +54,19 @@ export function makeServer() {
                 avatar: "http://recture.study/src/assets/jano.png"
             } as IAccount);
 
-            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: "mustard", className: "IV.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 4, color: 'aqua', className: 'IV.B', subjectName: 'INF', classId: 1, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 4, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
 
-            server.create("class", {classId: 0, name: "I.A"} as IClass);
-            server.create("class", {classId: 1, name: "II.B"} as IClass);
-            server.create("class", {classId: 1, name: "III.C"} as IClass);
-            server.create("class", {classId: 1, name: "oktáva A"} as IClass);
+            server.create("class", {classId: 1, name: "I.A"} as IClass);
+            server.create("class", {classId: 2, name: "II.B"} as IClass);
+            server.create("class", {classId: 3, name: "III.C"} as IClass);
+            server.create("class", {classId: 4, name: "oktáva A"} as IClass);
 
-            server.create("subject", {subjectId: 0, name: "MAT"} as ISubject);
-            server.create("subject", {subjectId: 1, name: "INF"} as ISubject);
+            server.create("subject", {subjectId: 1, name: "MAT"} as ISubject);
+            server.create("subject", {subjectId: 2, name: "INF"} as ISubject);
 
-            const topics = [[{topicId: 0, name: "Funkcie"} as ITopic], //Subject ID 0
-                            [{topicId: 1, name: "Python"} as ITopic, {topicId: 2, name: "Hardware"} as ITopic]] as ITopic[][]; //Subject ID 1
+            const topics = [[{topicId: 1, name: "Funkcie"} as ITopic], //Subject ID 1
+                            [{topicId: 2, name: "Python"} as ITopic, {topicId: 3, name: "Hardware"} as ITopic]] as ITopic[][]; //Subject ID 2
 
             topics.forEach(array => array.forEach(topic => server.create("topic", topic)));
 
@@ -76,7 +76,7 @@ export function makeServer() {
 
                 const recordingClass = classes[i%classes.length];
                 const recordingSubject = subjects[Math.floor(i/(classes.length-1))%subjects.length];
-                const matchingTopics = topics[recordingSubject.subjectId] as ITopic[];
+                const matchingTopics = topics[recordingSubject.subjectId-1] as ITopic[];
                 const recordingTopic = matchingTopics[i%matchingTopics.length];
                 
                 let title;
@@ -85,7 +85,7 @@ export function makeServer() {
                 else title = "Procesory";
 
                 const recording = {
-                    recordingId: i,
+                    recordingId: i+1,
                     title: title,
                     description: i%2===0?"test":null,
                     published: i%2 === 0,
@@ -105,7 +105,7 @@ export function makeServer() {
                         }
                     ],
                     thumbnail: "https://source.unsplash.com/random/384x216?sig="+i
-                } as IRecording
+                } as IRecording;
 
                 server.create("recording", recording);
             }
@@ -147,7 +147,7 @@ export function makeServer() {
                 const topicIds = [] as number[];
                 let searchQuery = null as string | null;
 
-                if (params.searchQuery != null) searchQuery = params.searchQuery.trim().toUpperCase();
+                if (params.query != null) searchQuery = params.query.trim().toUpperCase();
 
                 if (params.classIds != null && params.classIds.length > 0) params.classIds.split(",").forEach(value => classIds.push(parseInt(value)));
                 if (params.subjectIds != null && params.subjectIds.length > 0) params.subjectIds.split(",").forEach(value => subjectIds.push(parseInt(value)));
@@ -199,8 +199,8 @@ export function makeServer() {
                 schema.all("topic").models.forEach(topic => {
                     const topicId = topic.topicId;
                     //TODO: Update if we change topics in mock backend
-                    if (topicId == 0 && subjectId == 0) topics.push(topic);
-                    else if (topicId > 0 && subjectId > 0) topics.push(topic);
+                    if (topicId == 1 && subjectId == 1) topics.push(topic);
+                    else if (topicId > 1 && subjectId > 1) topics.push(topic);
                 });
 
                 return topics;
