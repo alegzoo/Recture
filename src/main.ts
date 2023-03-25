@@ -25,3 +25,7 @@ registerPlugins(app)
 app.use(createPinia())
 
 app.mount('#app')
+
+//TODO: Remove later?
+import { makeServer } from './api/Mock';
+makeServer();

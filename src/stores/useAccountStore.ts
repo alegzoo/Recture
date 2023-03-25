@@ -10,7 +10,8 @@ export const useAccountStore = defineStore("accountStore", {
         firstName: null  as string | null,
         lastName: null  as string | null,
         bio: null as string | null,
-        organization: null as string | null
+        organization: null as string | null,
+        avatar: null as string | null
     }),
     actions: {
         loadData(account: IAccount) {
@@ -22,6 +23,7 @@ export const useAccountStore = defineStore("accountStore", {
             this.lastName = account.lastName;
             this.bio = account.bio;
             this.organization = account.organization;
+            this.avatar = account.avatar;
         },
         fetchData() {
             RectureApi.getAccountInfo().then((response) => {

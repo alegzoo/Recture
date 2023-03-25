@@ -2,7 +2,8 @@ import status from "http-status";
 
 export class RectureApi {
 
-    private static BASE_API_URL: string = "http://recture.study:81/";
+    //public static BASE_API_URL: string = "http://recture.study:81/";
+    public static BASE_API_URL: string = "http://api.recture.study/";
 
     public static async signIn(email: string, password: string): Promise<ApiResult<null>> {
         let formData = new FormData();
@@ -153,7 +154,7 @@ export class RectureApi {
 
         if (response.ok) {
             const data = await response.json() as ILesson[];
-            
+
             return new ApiResult<ILesson[]>(response.status, data);
         } else {
             return new ApiResult<ILesson[]>(response.status);
@@ -222,6 +223,8 @@ export interface IRecording {
     className: string
     subjectId: number
     subjectName: string
+    topicId: number
+    topicName: string
     uploadTimestamp: number
     recordingTimestamp: number
     sources: IMediaSource[]

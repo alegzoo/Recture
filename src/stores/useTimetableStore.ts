@@ -1,16 +1,13 @@
-import { DayOfWeek, ILesson, LessonColor } from "@/api/RectureApi";
+import { DayOfWeek, ILesson, LessonColor, RectureApi } from "@/api/RectureApi";
 import { defineStore } from "pinia"
 
 export const useTimetableStore = defineStore("timetableStore", {
     state: () => ({
-        //TODO: Change defaults and implement fetching
-        daysOfWeek: [true, true, true, true, true, false, false] as boolean[],
-        lessonsPerDay: 7 as number,
+        //TODO: Maybe change defaults?
+        daysOfWeek: [false, false, false, false, false, false, false] as boolean[],
+        lessonsPerDay: 0 as number,
         firstLessonNumber: 1 as number,
-        lessons: [
-            {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: 'mustard', className: 'IV.A', subjectName: 'MAT', classId: 1, subjectId: 1},
-            {lessonId: 1, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 4, color: 'aqua', className: 'IV.B', subjectName: 'INF', classId: 1, subjectId: 1}
-        ] as ILesson[],
+        lessons: [] as ILesson[],
         weekDates: [] as Date[],
 
         colors: { //TODO: There has to be a better place to store this
@@ -45,6 +42,28 @@ export const useTimetableStore = defineStore("timetableStore", {
                 date.setHours(0, 0, 0, 0);
                 this.weekDates[i] = date;
             }
+        },
+
+        fetchTimetable() {
+            this.daysOfWeek = [false, false, false, false, false, false, false];
+            this.lessonsPerDay = 0;
+            this.firstLessonNumber = 1
+            RectureApi.getTimetable().then(result => {
+                if (result.success && result.data != null) {
+                    this.daysOfWeek = result.data.daysOfWeek;
+                    this.lessonsPerDay = result.data.lessonsPerDay;
+                    this.firstLessonNumber = result.data.firstLessonNumber;
+                }
+            });
+        },
+
+        fetchLessons() {
+            this.lessons = [];
+            RectureApi.getLessons().then(result => {
+                if (result.success && result.data != null) {
+                    this.lessons = result.data;
+                }
+            });
         }
     }
 });

@@ -54,7 +54,9 @@
     const { smAndDown, smAndUp, mdAndUp } = useDisplay();
 
     const timetableStore = useTimetableStore();
-    //TODO: Fetch timetable and lessons
+    
     timetableStore.$reset();
     timetableStore.setWeek();
+    timetableStore.fetchTimetable();
+    timetableStore.fetchLessons();
 </script>

@@ -36,7 +36,7 @@
     const router = useRoute();
     loadRecording();
 
-    /*function loadRecording() {
+    function loadRecording() {
         let recordingId = router.params.id as string | string[] | number;
         
         if (!(typeof recordingId === 'string' || recordingId instanceof String)) {
@@ -58,30 +58,5 @@
         } catch (e) {
             console.error(e);
         }
-    }*/
-
-    //TODO: Use the real method instead of the one created for testing
-    function loadRecording() {
-        let recordingId = router.params.id as string | string[];
-        recording.value = {
-                    recordingId: parseInt(recordingId as string),
-                    title: "Definičný obor",
-                    description: "test",
-                    published: true,
-                    notifications: 0,
-                    classId: 0,
-                    className: "IV.A",
-                    subjectId: 0,
-                    subjectName: "INF",
-                    uploadTimestamp: Math.floor(Date.now()/1000),
-                    recordingTimestamp: Math.floor(Date.now()/1000),
-                    sources: [
-                        {
-                            sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
-                            mimeType: "video/mp4"
-                        }
-                    ],
-                    thumbnail: "https://source.unsplash.com/random/384x216?sig="+recordingId
-                };
     }
 </script>
