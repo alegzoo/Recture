@@ -204,7 +204,7 @@ export interface IPage<T> {
 export interface IAccount {
     userId: number
     email: string
-    userType: string
+    userType: UserType
     emailConfirmed: boolean
     firstName: string
     lastName: string
@@ -272,6 +272,8 @@ export interface IRecordingSort {
     sortKey: RecordingSortKey,
     sortOrder: SortOrder
 }
+
+export type UserType = "TEACHER" | "STUDENT";
 
 export enum DayOfWeek {
     Monday = 0,

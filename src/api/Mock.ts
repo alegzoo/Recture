@@ -1,9 +1,10 @@
 import { createServer, Model, Response } from "miragejs"
-import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage } from "./RectureApi";
+import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType } from "./RectureApi";
 
 //TODO: Exclude both library and code from production
 export function makeServer() {
     const mockModels = {
+        account: Model.extend({userId: 0, email: "", userType: "TEACHER", emailConfirmed: false, firstName: "", lastName: "", bio: "", organization: "", avatar: ""} as IAccount),
         lesson: Model.extend({lessonId: 0, dayOfWeek: DayOfWeek.Monday, lessonNumber: 1, color: "mustard", className: "", subjectName: "", classId: 1, subjectId: 1} as ILesson),
         recording: Model.extend({recordingId: 0,
             title: "",
@@ -32,6 +33,7 @@ export function makeServer() {
         environment: "development",
   
         models: {
+            account: Model,
             lesson: Model,
             recording: Model,
             class: Model,
@@ -40,6 +42,18 @@ export function makeServer() {
         },
   
         seeds(server) {
+            server.create("account", {
+                userId: 1,
+                email: "jancislovy@gmail.com",
+                userType: "TEACHER",
+                emailConfirmed: true,
+                firstName: "Jano",
+                lastName: "Číslový",
+                bio: "Ahoj. Volám sa Ján Číslový a som učiteľom informatiky a matematiky na škole GJAR. Okrem toho že rád vzdelávam a vyučujem, mám kopec voľnočasových aktivít pri ktorých si vetrám hlavu! Či už ide o horské bicyklovanie, alebo beh aj rád sledujem športy v televízii. Ak chceš držať krok s tým čo robím vo svojom voľnom čase, môžeš ma nájsť aj na instagrame pod menom @jan_cislovy. Prajem ti príjemné vzdelávanie. PS: Ak by si mal otázku ohľadom nejakej časti v nahrávke, naváhaj mi napísať!",
+                organization: "GJAR",
+                avatar: "http://recture.study/src/assets/jano.png"
+            } as IAccount);
+
             server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: "mustard", className: "IV.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
             server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 4, color: 'aqua', className: 'IV.B', subjectName: 'INF', classId: 1, subjectId: 1} as ILesson);
 
@@ -106,26 +120,16 @@ export function makeServer() {
                 const email = body.get("email");
                 const password = body.get("password");
                 if (email == null || password == null) return new Response(400);
-                else if (email === "janocislovy@gmail.com" && password == "letmein123") return new Response(200);
+                else if (email === schema.first("account")?.attrs.email && password == "letmein123") return new Response(200);
                 else return new Response(401);
             }, {timing: 1000});
 
             this.post(RectureApi.BASE_API_URL+"/auth/signout", (schema, request) => {
                 return new Response(200);
-            }, {timing: 1000});
+            }, {timing: 300});
 
             this.get(RectureApi.BASE_API_URL+"/account", (schema) => {
-                return {
-                    userId: 1,
-                    email: "jancislovy24@gmail.com",
-                    userType: "TEACHER",
-                    emailConfirmed: true,
-                    firstName: "Jano",
-                    lastName: "Číslový",
-                    bio: "Ahoj. Volám sa Ján Číslový a som učiteľom informatiky a matematiky na škole GJAR. Okrem toho že rád vzdelávam a vyučujem, mám kopec voľnočasových aktivít pri ktorých si vetrám hlavu! Či už ide o horské bicyklovanie, alebo beh aj rád sledujem športy v televízii. Ak chceš držať krok s tým čo robím vo svojom voľnom čase, môžeš ma nájsť aj na instagrame pod menom @jan_cislovy. Prajem ti príjemné vzdelávanie. PS: Ak by si mal otázku ohľadom nejakej časti v nahrávke, naváhaj mi napísať!",
-                    organization: "GJAR",
-                    avatar: "http://recture.study/src/assets/jano.png",
-                } as IAccount;
+                return schema.first("account")?.attrs as IAccount;
             }, {timing: 300});
 
             this.get(RectureApi.BASE_API_URL+"/recordings", (schema, request) => {
