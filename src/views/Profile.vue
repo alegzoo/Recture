@@ -7,11 +7,11 @@
             <v-row align="center" class="pt-5 mb-10" no-gutters>
 
                 <v-col align-content="center" class="pl-5" cols="auto">
-                    <v-avatar outlined id="profile-avatar" size="150" image="@/assets/jano.png"></v-avatar>
+                    <v-avatar v-if="accountStore.avatar != null" outlined id="profile-avatar" size="150" :image="accountStore.avatar"></v-avatar>
                 </v-col>
 
                 <v-col cols="auto" align-self="center" class="pl-10">
-                    <p class="text-h2 text-md-h3 profile-name">Jano Číslový</p>
+                    <p class="text-h2 text-md-h3 profile-name">{{ accountStore.fullName }}</p>
                 </v-col>
 
                 <v-spacer></v-spacer>
@@ -28,7 +28,7 @@
                             <p class="font-weight-medium">First Name</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">Jano</p>
+                            <p class="font-weight-black">{{ accountStore.firstName }}</p>
                         </v-col>
                     </v-row>
 
@@ -36,10 +36,10 @@
 
                     <v-row class="pb-5 mt-3 ml-5">
                         <v-col cols="2">
-                            <p class="font-weight-medium">Second Name</p>
+                            <p class="font-weight-medium">Last Name</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">Číslový</p>
+                            <p class="font-weight-black">{{ accountStore.lastName }}</p>
                         </v-col>
                     </v-row>
 
@@ -47,10 +47,10 @@
 
                     <v-row class="pb-5 mt-3 ml-5">
                         <v-col cols="2">
-                            <p class="font-weight-medium">Email</p>
+                            <p class="font-weight-medium">E-mail</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">jancislovy24@gmail.com</p>
+                            <p class="font-weight-black">{{ accountStore.email }}</p>
                         </v-col>
                     </v-row>
 
@@ -61,7 +61,7 @@
                             <p class="font-weight-medium">School</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">GJAR</p>
+                            <p class="font-weight-black">{{ accountStore.organization }}</p>
                         </v-col>
                     </v-row>
 
@@ -72,15 +72,7 @@
                             <p class="font-weight-medium">Bio</p>
                         </v-col>
                         <v-col>
-                            <p class="font-weight-black">
-                                Ahoj. Volám sa Ján Číslový a som učiteľom informatiky a matematiky na škole GJAR.
-                                Okrem toho že rád vzdelávam a vyučujem, mám kopec voľnočasových aktivít pri ktorých
-                                si vetrám hlavu! Či už ide o horské bicyklovanie, alebo beh aj rád sledujem športy v televízii.
-                                Ak chceš držať krok s tým čo robím vo svojom voľnom čase, môžeš ma nájsť aj na
-                                instagrame pod menom @jan_cislovy.
-                                Prajem ti príjemné vzdelávanie.
-                                PS: Ak by si mal otázku ohľadom nejakej časti v nahrávke, naváhaj mi napísať !
-                            </p>
+                            <p class="font-weight-black">{{ accountStore.bio }}</p>
                         </v-col>
                     </v-row>
 
@@ -96,5 +88,9 @@
 </style>
 
 <script lang="ts" setup>
+    import { useAccountStore } from '@/stores/useAccountStore';
+
     import "@/styles/profile.scss";
+
+    const accountStore = useAccountStore();
 </script>

@@ -13,6 +13,9 @@ export const useAccountStore = defineStore("accountStore", {
         organization: null as string | null,
         avatar: null as string | null
     }),
+    getters: {
+        fullName: state => (state.firstName != null && state.lastName != null) ? (state.firstName+" "+state.lastName) : null
+    },
     actions: {
         loadData(account: IAccount) {
             this.userId = account.userId;
