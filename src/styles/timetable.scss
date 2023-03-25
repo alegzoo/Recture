@@ -37,6 +37,7 @@
     border-collapse: collapse;
     box-shadow: 0px 0px 0px 2px black, 6px 6px 0px 0px black;
     table-layout: fixed;
+    overflow: hidden;
 
     tr, td {
         height: 20px !important;
