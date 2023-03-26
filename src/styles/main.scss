@@ -68,6 +68,7 @@
 }
 
 #topbar {
+    background-color: $recture-cadet-blue;
     margin: 0px;
     padding: 0px 0px 0px 60px;
     position: fixed;
@@ -75,6 +76,7 @@
     border-style: solid;
     border-bottom-width: 2px;
     border-bottom-color: black;
+    overflow: visible;
 }
 
 #sidebar-panel {
@@ -100,10 +102,35 @@
 }
 
 #topbar-panel {
-    background: #9CBBC4;
+    background: transparent;
     height: 60px;
     padding: 0px;
     position: absolute;
+}
+
+.floating-avatar {
+    position: absolute;
+    margin: 17px 0px 0px 50px;
+    text-decoration: none;
+    color: black;
+}
+
+.floating-avatar .v-avatar {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin: 8px 0px 0px 0px;
+    background-color: black;
+    border: solid 2px black;
+}
+
+.floating-avatar p {
+    position: relative;
+    display: inline-block;
+    margin: 0px 0px 0px 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .v-field {
@@ -165,23 +192,4 @@
         transition-property: width, opacity, transform;
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
-}
-
-#avatar-btn{
-    background-image: url("@/assets/jano.png");
-    background-size: 50px;
-    background-position-y: center;
-    background-position-x: center;
-    left: 105px;
-    top: 23px;
-    border-style: solid;
-    border-radius: 9999px;
-    border-width: 2px;
-    border-color: black;
-
-}
-
-#v-col-avatar{
-    padding-top: 85px;
-    padding-left: 105px;
 }
