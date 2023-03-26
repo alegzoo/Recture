@@ -3,7 +3,7 @@
         <v-container id="topbar-panel" fluid>
             <v-row no-gutters align-content="center" justify="center" class="h-100 overflow-hidden">
                 <v-col :cols="smAndUp?3:''" align-self="center" class="h-100">
-                    <FloatingAvatar/>
+                    <FloatingAvatar v-show="router.currentRoute.value.name !== 'profile'"/>
                 </v-col>
                 <v-col :cols="smAndUp?'':6" align="center" align-self="center">
                     <v-responsive width="165" :aspect-ratio="1">
@@ -34,6 +34,7 @@
 </style>
 
 <script lang="ts" setup>
+    import router from '@/router';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import FloatingAvatar from './FloatingAvatar.vue';
     const { smAndUp } = useDisplay();
