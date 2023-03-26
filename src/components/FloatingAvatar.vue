@@ -1,5 +1,5 @@
 <template>
-        <router-link class="floating-avatar" to="/account">
+        <router-link class="floating-avatar" to="/profile">
             <v-avatar :image="(accountStore.avatar != null ? accountStore.avatar as string : undefined)"/>
             <p>{{ accountStore.fullName }}</p>
         </router-link>

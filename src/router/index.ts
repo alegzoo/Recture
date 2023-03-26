@@ -31,11 +31,12 @@ const routes = [
     ]
   },
   {
-    path: '/account',
+    path: '/profile',
     component: Home,
     children: [
       {
         path: '',
+        name: 'profile',
         component: Profile
       }
     ]
