@@ -12,10 +12,10 @@
             </v-col>
         </v-row>
 
-        <v-row class="mt-0  flex-grow-0"> 
+        <v-row class="mt-0 flex-grow-0"> 
             <v-col cols="12" align-self="start">
                 <v-icon icon="mdi-information" class="mr-2"/>
-                <span class="text-h10 font-weight-medium" style="vertical-align: middle;">To add a new lesson, click on an empty space in the timetable</span>
+                <span class="text-h10 font-weight-medium" style="vertical-align: middle;">Click on an empty space in the timetable to add a new lesson</span>
             </v-col>
         </v-row>
 

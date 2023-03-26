@@ -1,24 +1,34 @@
 <template>
-    <table>
-        <tr>
-            <th></th>
-            <th v-for="i in lessonsPerDay">{{ (firstLessonNumber+i-1)+["th", "st", "nd", "rd", "th"][Math.min((firstLessonNumber+i-1)%10, 4)] }}</th>
-        </tr>
+    <v-container class="pa-0" fluid>
+        <v-row class="timetable-grid-row" no-gutters>
+            <v-col class="timetable-grid-header"></v-col>
+            <v-col class="timetable-grid-header" v-for="i in lessonsPerDay">
+                <v-row no-gutters class="h-100">
+                    <v-col align-self="center">
+                        <p>{{ (firstLessonNumber+i-1)+["th", "st", "nd", "rd", "th"][Math.min((firstLessonNumber+i-1)%10, 4)] }}</p>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
         <template v-for="(visible, day) in daysOfWeek">
-            <tr v-if="visible">
-                <th>
-                    <p class="text-uppercase">{{ DayOfWeek[day].substring(0, 3) }}</p>
-                    <p class="text-uppercase">{{ timetableStore.weekDates[day].toLocaleDateString(undefined, {month: "numeric", day: "numeric"}) }}</p>
-                </th>
+            <v-row class="timetable-grid-row" v-if="visible" no-gutters>
+                <v-col class="timetable-grid-header">
+                    <v-row no-gutters class="h-100">
+                        <v-col align-self="center">
+                            <p>{{ DayOfWeek[day].substring(0, 3).toLocaleUpperCase() }}</p>
+                            <p>{{ timetableStore.weekDates[day].toLocaleDateString(undefined, {month: "numeric", day: "numeric"}).toLocaleUpperCase() }}</p>
+                        </v-col>
+                    </v-row>
+                </v-col>
                 <template v-for="i in lessonsPerDay">
                     <template v-for="lesson in [lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
                         <TimetableLesson v-if="lesson != null" :lesson="lesson"/>
-                        <td v-else></td>
+                        <v-col class="timetable-grid-cell" v-else></v-col>
                     </template>
                 </template>
-            </tr>
+            </v-row>
         </template>
-    </table>
+    </v-container>
 </template>
 
 <script lang="ts" setup>

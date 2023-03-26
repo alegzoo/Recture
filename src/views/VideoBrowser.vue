@@ -115,7 +115,7 @@
     import SearchBar from '@/components/SearchBar.vue';
     
     import "@/styles/videobrowser.scss";
-import { useSkeletons } from '@/composables/useSkeletons';
+    import { useSkeletons } from '@/composables/useSkeletons';
 
     const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
 
