@@ -9,7 +9,10 @@
         </v-row>
 
         <v-row id="subject-button-row">
-            <v-btn-toggle id="subject-button-toggle" selected-class="selected" v-model="videoBrowserStore.selectedSubject" mandatory>
+            <v-btn-toggle v-if="videoBrowserStore.subjectsLoading" id="subject-button-toggle">
+                <SubjectButton v-for="size in skeletonSubjects.sizes.value" class="skeleton" :style="'width: '+size+'px;'" :subject="null"/>
+            </v-btn-toggle>
+            <v-btn-toggle v-else id="subject-button-toggle" selected-class="selected" v-model="videoBrowserStore.selectedSubject" mandatory>
                 <SubjectButton v-for="subject in videoBrowserStore.subjects" :key="subject.subjectId" :subject="subject"/>
             </v-btn-toggle>
         </v-row>
@@ -62,12 +65,12 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :data="videoBrowserStore.classes" v-model="videoBrowserStore.selectedClasses"/>
+                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :loading="videoBrowserStore.classesLoading" :data="videoBrowserStore.classes" v-model="videoBrowserStore.selectedClasses"/>
                     </v-col>
                 </v-row>
-                <v-row >
+                <v-row>
                     <v-col cols="12">
-                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units" :data="videoBrowserStore.topics" v-model="videoBrowserStore.selectedTopics"/>
+                        <TitledChipSelection title="THEMATIC UNITS" empty-message="Select exactly one class to filter by thematic units" :loading="videoBrowserStore.topicsLoading" :data="videoBrowserStore.topics" v-model="videoBrowserStore.selectedTopics"/>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -75,6 +78,13 @@
                         <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
                             <VideoBox :recording="recording"/>
                         </v-col>
+                    </template>
+                    <template v-else-if="videoBrowserStore.recordingsLoading">
+                        <v-progress-circular
+                            class="ma-auto"
+                            indeterminate
+                            size="48"
+                        ></v-progress-circular>
                     </template>
                     <template v-else>
                         <v-col :cols="mdAndUp?4:12">
@@ -105,6 +115,7 @@
     import SearchBar from '@/components/SearchBar.vue';
     
     import "@/styles/videobrowser.scss";
+import { useSkeletons } from '@/composables/useSkeletons';
 
     const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
 
@@ -136,6 +147,11 @@
 
     watch(() => videoBrowserStore.searchQuery, () => {
         videoBrowserStore.fetchRecordings(0);
+    });
+
+    const skeletonSubjects = useSkeletons(2, 5, 40, 90);
+    watch(() => videoBrowserStore.subjectsLoading, () => {
+        if (videoBrowserStore.subjectsLoading === true) skeletonSubjects.generate();
     });
 
     function onFilterOrSortChanged(filter: RecordingVisibilityFilter, sort: IRecordingSort) {

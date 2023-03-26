@@ -22,7 +22,12 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         recordings: [] as IRecording[],
         recordingVisibilityFilter: RecordingVisibilityFilter.ShowAll as RecordingVisibilityFilter,
         recordingSort: { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Descending } as IRecordingSort,
-        searchQuery: "" as string | null
+        searchQuery: "" as string | null,
+
+        classesLoading: false as boolean,
+        subjectsLoading: false as boolean,
+        topicsLoading: false as boolean,
+        recordingsLoading: false as boolean
     }),
     getters: {
         welcomeTextPrimaryDisplay: (state) => {
@@ -67,6 +72,7 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         
         fetchRecordings(page: number, pageSize: number = 20) {
             this.recordings = [];
+            this.recordingsLoading = true;
 
             //TODO: Test out!!!
             let classIds = [] as number[];
@@ -79,10 +85,14 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
 
             RectureApi.getRecordings(page, pageSize, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(result => {
+                this.recordingsLoading = false;
+
                 if (result.success && result.data != null) {
                     const page = result.data;
                     this.recordings = page.data;
                 }
+            }).catch(reason => {
+                this.recordingsLoading = false;
             });
         },
 
@@ -94,13 +104,20 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.selectedSubject = null;
             this.selectedTopics = [];
 
+            this.classesLoading = true;
+            this.subjectsLoading = true;
+
             RectureApi.getClasses().then(result => {
+                this.classesLoading = false;
                 if (result.success && result.data != null) {
                     this.classes = result.data;
                 }
+            }).catch(reason => {
+                this.classesLoading = false;
             });
 
             RectureApi.getSubjects().then(result => {
+                this.subjectsLoading = false;
                 if (result.success && result.data != null) {
                     this.subjects = result.data;
                     if (this.subjects.length > 0) {
@@ -108,18 +125,24 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                         this.selectedSubject = this.subjects[0];
                     }
                 }
+            }).catch(reason => {
+                this.subjectsLoading = false;
             });
         },
 
         fetchTopics() {
             this.topics = [];
             this.selectedTopics = [];
+
             if (this.selectedSubject != null && this.selectedClasses.length == 1) {
-                this.topics = [];
+                this.topicsLoading = true;
                 RectureApi.getTopics(this.selectedClasses[0].classId, this.selectedSubject.subjectId).then(result => {
+                    this.topicsLoading = false;
                     if (result.success && result.data != null) {
                         this.topics = result.data;
                     }
+                }).catch(reason => {
+                    this.topicsLoading = false;
                 });
             }
         }

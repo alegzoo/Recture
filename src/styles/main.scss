@@ -8,6 +8,27 @@
     border: solid 2px black;
 }
 
+.skeleton {
+    opacity: 30% !important;
+    background-color: black !important;
+    animation: skeleton-pulsate !important;
+    animation-duration: 0.8s !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: ease-in-out !important;
+}
+
+@keyframes skeleton-pulsate {
+    0% {
+        opacity: 20%;
+    }
+    50% {
+        opacity: 30%;
+    }
+    100% {
+        opacity: 20%;
+    }
+}
+
 #sidebar, #topbar {
     background-color: transparent;
 }
@@ -174,6 +195,10 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
     }
+}
+
+.v-chip.skeleton {
+    width: 80px;
 }
 
 .v-chip.selected {
