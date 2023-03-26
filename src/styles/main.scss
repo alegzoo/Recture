@@ -9,7 +9,7 @@
 }
 
 .skeleton {
-    opacity: 30% !important;
+    opacity: 20%;
     background-color: black !important;
     animation: skeleton-pulsate !important;
     animation-duration: 0.8s !important;
@@ -195,10 +195,6 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
     }
-}
-
-.v-chip.skeleton {
-    width: 80px;
 }
 
 .v-chip.selected {
