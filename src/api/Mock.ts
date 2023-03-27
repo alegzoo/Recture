@@ -126,19 +126,19 @@ export function makeServer() {
 
             this.post(RectureApi.BASE_API_URL+"/auth/signout", (schema, request) => {
                 return new Response(200);
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.post(RectureApi.BASE_API_URL+"/auth/refreshtoken", (schema, request) => {
                 return new Response(200);
-            }, {timing: 300});
+            }, {timing: 50});
 
             this.get(RectureApi.BASE_API_URL+"/auth/authenticated", (schema, request) => {
                 return new Response(200);
-            }, {timing: 300});
+            }, {timing: 50});
 
             this.get(RectureApi.BASE_API_URL+"/account", (schema) => {
                 return schema.first("account")?.attrs as IAccount;
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/recordings", (schema, request) => {
                 const params = request.queryParams;
@@ -184,15 +184,15 @@ export function makeServer() {
                 const recording = schema.findBy("recording", {"recordingId": id})?.attrs;
                 if (recording != null) return recording;
                 else return new Response(404);
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/classes", (schema) => {
                 return schema.all("class").models;
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/subjects", (schema) => {
                 return schema.all("subject").models;
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/topics", (schema, request) => {
                 const params = request.queryParams;
@@ -212,7 +212,7 @@ export function makeServer() {
                 });
 
                 return topics;
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/lessons/timetable", (schema) => {
                 return {
@@ -220,11 +220,11 @@ export function makeServer() {
                     lessonsPerDay: 7,
                     firstLessonNumber: 1
                 } as ITimetable;
-            }, {timing: 300});
+            }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/lessons", (schema) => {
                 return schema.all("lesson").models;
-            }, {timing: 300});
+            }, {timing: 200});
         }
     });
   
