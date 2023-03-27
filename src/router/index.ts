@@ -85,8 +85,16 @@ const router = createRouter({
     routes,
 });
 
+//TODO: Maybe store in localstorage?
+let lastAuthCheckTimestamp = 0;
+
 router.beforeEach(async to => {
     if (to.meta.requiresAuth) {
+        //TODO: Verify that this works in every possible scenario
+        const timestamp = Date.now();
+        if (timestamp - lastAuthCheckTimestamp < 60000) return;
+        lastAuthCheckTimestamp = timestamp;
+
         try {
             const result = await RectureApi.validateAuthentication();
             if (!result.success) return { name: "signin" };
