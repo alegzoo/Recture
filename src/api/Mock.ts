@@ -128,6 +128,14 @@ export function makeServer() {
                 return new Response(200);
             }, {timing: 300});
 
+            this.post(RectureApi.BASE_API_URL+"/auth/refreshtoken", (schema, request) => {
+                return new Response(200);
+            }, {timing: 300});
+
+            this.get(RectureApi.BASE_API_URL+"/auth/authenticated", (schema, request) => {
+                return new Response(200);
+            }, {timing: 300});
+
             this.get(RectureApi.BASE_API_URL+"/account", (schema) => {
                 return schema.first("account")?.attrs as IAccount;
             }, {timing: 300});

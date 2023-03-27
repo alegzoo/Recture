@@ -2,8 +2,8 @@ import status from "http-status";
 
 export class RectureApi {
 
-    //public static BASE_API_URL: string = "http://recture.study:81/";
-    public static BASE_API_URL: string = "http://api.recture.study/";
+    //TODO: Change API URL
+    public static BASE_API_URL: string = "http://recture.study:81/";
 
     public static async signIn(email: string, password: string): Promise<ApiResult<null>> {
         let formData = new FormData();
@@ -26,6 +26,25 @@ export class RectureApi {
         });
 
         return new ApiResult<null>(response.status);
+    }
+
+    public static async refreshToken(): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("auth/refreshtoken"), {
+            method: "POST",
+            credentials: "include"
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async validateAuthentication(): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("auth/authenticated"), {
+            method: "GET",
+            credentials: "include"
+        });
+
+        if (response.status === status.UNAUTHORIZED) return await this.refreshToken();
+        else return new ApiResult<null>(response.status);
     }
 
     public static async getAccountInfo(): Promise<ApiResult<IAccount>> {

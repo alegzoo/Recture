@@ -8,72 +8,92 @@ import Profile from '@/views/Profile.vue'
 import Timetable from '@/views/Timetable.vue'
 import NewComments from '@/views/NewComments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { RectureApi } from '@/api/RectureApi'
 
 const routes = [
-  {
-    path: '/',
-    component: Home,
-    children: [
-      {
-        path: '',
-        component: VideoBrowser
-      }
-    ]
-  },
-  {
-    path: '/videos/:id',
-    component: Home,
-    children: [
-      {
-        path: '',
-        component: Video
-      }
-    ]
-  },
-  {
-    path: '/profile',
-    component: Home,
-    children: [
-      {
-        path: '',
-        name: 'profile',
-        component: Profile
-      }
-    ]
-  },
-  {
-    path: '/newcomments',
-    component: Home,
-    children: [
-      {
-        path: '',
-        component: NewComments
-      }
-    ]
-  },
-  {
-    path: '/timetable',
-    component: Home,
-    children: [
-      {
-        path: '',
-        component: Timetable
-      }
-    ]
-  },
-  {
-    path: "/signin",
-    component: Signin
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    component: NotFound
-  }
-]
+    {
+        path: '/',
+        component: Home,
+        children: [
+            {
+                path: '',
+                component: VideoBrowser,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+    {
+        path: '/videos/:id',
+        component: Home,
+        children: [
+            {
+                path: '',
+                component: Video,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+    {
+        path: '/profile',
+        component: Home,
+        children: [
+            {
+                path: '',
+                name: 'profile',
+                component: Profile,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+    {
+        path: '/newcomments',
+        component: Home,
+        children: [
+            {
+                path: '',
+                component: NewComments,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+    {
+        path: '/timetable',
+        component: Home,
+        children: [
+            {
+                path: '',
+                component: Timetable,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+    {
+        path: "/signin",
+        name: "signin",
+        component: Signin,
+        meta: { requiresAuth: false }
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        component: NotFound,
+        meta: { requiresAuth: false }
+    }
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
-})
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+});
+
+router.beforeEach(async to => {
+    if (to.meta.requiresAuth) {
+        try {
+            const result = await RectureApi.validateAuthentication();
+            if (!result.success) return { name: "signin" };
+        } catch (e) {
+            return { name: "signin" };
+        }
+    }
+});
 
 export default router
