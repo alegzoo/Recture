@@ -3,9 +3,11 @@
         <v-row>
             <v-col v-if="mdAndUp"/>
             <v-col cols="12" md="10" xl="6">
-                <VideoPlayer :recording="recording"/>
-                <h1>{{ recording?.title }}</h1>
-                <p>{{ recording?.description }}</p>
+                <VideoPlayer :recording="(recordingComposable?.recording.value as IRecording | null)"/>
+                <p class="mt-3">{{ recordingComposable?.recordingDate.value }}</p>
+                <h1 class="video-title">{{ recordingComposable?.recording.value?.title }}</h1>
+                <p v-if="recordingComposable?.recording.value?.description != null">{{ recordingComposable?.recording.value?.description }}</p>
+                <v-alert v-if="recordingComposable !== undefined && (recordingComposable === null || recordingComposable.recording.value === null)" density="compact" type="error" align="left" text="Failed to load recording." class="mt-5"/>
             </v-col>
             <v-col v-if="mdAndUp"/>
         </v-row>
@@ -17,14 +19,14 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref } from 'vue';
     import { useRoute } from 'vue-router';
-    import { IRecording, RectureApi } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useHomeStore } from '@/stores/useHomeStore';
     import VideoPlayer from '@/components/VideoPlayer.vue';
+    import { useRecording, IUsableRecording } from '@/composables/useRecording';
+    import { IRecording } from '@/api/RectureApi';
 
-    const recording = ref(null as IRecording | null)
+    import "@/styles/video.scss";
 
     const { mdAndUp, lgAndDown } = useDisplay();
 
@@ -34,29 +36,14 @@
     }
 
     const router = useRoute();
-    loadRecording();
 
-    function loadRecording() {
-        let recordingId = router.params.id as string | string[] | number;
-        
-        if (!(typeof recordingId === 'string' || recordingId instanceof String)) {
-            console.error("Invalid recordingId!");
-            return false;
-        }
+    let recordingComposable = undefined as IUsableRecording | null | undefined;
+    const recordingIdParam = router.params.id as string | string[] | number;
 
-        try {
-            recordingId = parseInt(recordingId as string);
-            RectureApi.getRecording(recordingId).then(result => {
-                if (result.success && result.data != null) {
-                    recording.value = result.data;
-                } else {
-                    console.error("Failed to load recording.");
-                }
-            }).catch((reason) => {
-                console.error(reason);
-            });
-        } catch (e) {
-            console.error(e);
-        }
+    if (typeof recordingIdParam === "string" || recordingIdParam instanceof String) {
+        recordingComposable = useRecording(parseInt(recordingIdParam as string));
+        recordingComposable.fetchAll();
+    }  else {
+        recordingComposable = null;
     }
 </script>

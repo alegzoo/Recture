@@ -1,6 +1,12 @@
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 
-export function useSkeletons(min: number, max: number, minSize: number, maxSize: number) {
+export interface IUsableSkeletons {
+    sizes: Ref<number[]>,
+
+    generate(): void
+}
+
+export function useSkeletons(min: number, max: number, minSize: number, maxSize: number) : IUsableSkeletons {
     const sizes = ref([] as number[]);
     generate();
     

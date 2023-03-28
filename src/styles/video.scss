@@ -1,0 +1,11 @@
+@import "./constants.scss";
+
+.video-title {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke: 1px;
+    text-shadow: 2px 2px 0px black;
+}
