@@ -47,18 +47,38 @@
 
     .timetable-grid-cell {
         background-color: transparent;
-        box-shadow: none;
         cursor: pointer;
-        transition: box-shadow 0.1s linear;
+        text-align: center;
+        font-weight: bold;
 
         * {
             overflow: hidden;
         }
+
+        p {
+            user-select: none;
+        }
     }
 
-    .timetable-grid-cell:empty:hover, .timetable-lesson:hover .v-row {
+    .timetable-grid-cell .v-row {
+        box-shadow: none;
+        transition: box-shadow 0.1s linear;
+    }
+
+    /*.timetable-grid-cell:empty:hover, .timetable-lesson:hover .v-row {*/
+    .timetable-grid-cell:hover .v-row {
         box-shadow: 0px 0px 0px 2px black inset, -5px -5px 0px 0px black inset;
         transition: box-shadow 0.1s linear;
+    }
+
+    .timetable-grid-cell:not(.timetable-lesson) .v-row > *{
+        opacity: 0%;
+        transition: opacity 0.1s linear;
+    }
+
+    .timetable-grid-cell:not(.timetable-lesson):hover .v-row > *{
+        opacity: 30%;
+        transition: opacity 0.1s linear;
     }
 
     .timetable-grid-header {
@@ -96,9 +116,4 @@
     .timetable-grid-cell:last-child, .timetable-grid-header:last-child {
         border-right: none;
     }
-}
-
-.timetable-lesson {
-    text-align: center;
-    font-weight: bold;
 }

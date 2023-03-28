@@ -23,7 +23,14 @@
                 <template v-for="i in lessonsPerDay">
                     <template v-for="lesson in [lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
                         <TimetableLesson v-if="lesson != null" :lesson="lesson"/>
-                        <v-col class="timetable-grid-cell" v-else></v-col>
+                        <v-col class="timetable-grid-cell" v-else>
+                            <v-row no-gutters class="h-100">
+                                <v-col align-self="center">
+                                    <v-icon icon="mdi-plus" size="32"/>
+                                    <p v-show="smAndUp">CREATE LESSON</p>
+                                </v-col>
+                            </v-row>
+                        </v-col>
                     </template>
                 </template>
             </v-row>
@@ -35,6 +42,9 @@
     import { useTimetableStore } from '@/stores/useTimetableStore';
     import { DayOfWeek, ILesson } from '@/api/RectureApi';
     import TimetableLesson from './TimetableLesson.vue';
+    import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+    const { smAndUp } = useDisplay();
 
     const props = defineProps<{
         daysOfWeek: boolean[]
