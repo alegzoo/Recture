@@ -180,6 +180,40 @@ export class RectureApi {
         }
     }
 
+    public static async getCommentsByRecording(recordingId: number): Promise<ApiResult<IPage<IComment>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("recordingId", recordingId.toString());
+
+        const response = await fetch(this.pathToUrl("comments", urlParams), {
+            method: "GET",
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IComment>;
+            
+            return new ApiResult<IPage<IComment>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IComment>>(response.status);
+        }
+    }
+
+    public static async getRepliesByComment(commentId: number): Promise<ApiResult<IPage<ICommentReply>>> {
+        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
+            method: "GET",
+            credentials: "include"
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<ICommentReply>;
+            
+            return new ApiResult<IPage<ICommentReply>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<ICommentReply>>(response.status);
+        }
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -238,6 +272,7 @@ export interface IRecording {
     description: string | null
     published: boolean
     notifications: number
+    teacherId: number
     classId: number
     className: string
     subjectId: number
@@ -251,40 +286,63 @@ export interface IRecording {
 }
 
 export interface IMediaSource {
-    sourceUrl: string,
+    sourceUrl: string
     mimeType: string
 }
 
 export interface IClass {
-    classId: number,
+    classId: number
     name: string
 }
 
 export interface ISubject {
-    subjectId: number,
+    subjectId: number
     name: string
 }
 
 export interface ITopic {
-    topicId: number,
+    topicId: number
     name: string
 }
 
 export interface ITimetable {
-    daysOfWeek: boolean[],
-    lessonsPerDay: number,
+    daysOfWeek: boolean[]
+    lessonsPerDay: number
     firstLessonNumber: number
 }
 
 export interface ILesson {
-    lessonId: number,
-    dayOfWeek: DayOfWeek,
-    lessonNumber: number,
-    color: LessonColor,
-    className: string,
-    subjectName: string,
-    classId: number,
+    lessonId: number
+    dayOfWeek: DayOfWeek
+    lessonNumber: number
+    color: LessonColor
+    className: string
+    subjectName: string
+    classId: number
     subjectId: number
+}
+
+export interface IComment {
+    commentId: number
+    recordingId: number
+    userId: number
+    userFirstName: string
+    userLastName: string
+    content: string
+    creationTimestamp: number
+    lastEditTimestamp: number | null
+}
+
+export interface ICommentReply {
+    replyId: number
+    recordingId: number
+    parentCommentId: number
+    userId: number
+    userFirstName: string
+    userLastName: string
+    content: string
+    creationTimestamp: number
+    lastEditTimestamp: number | null
 }
 
 export interface IRecordingSort {

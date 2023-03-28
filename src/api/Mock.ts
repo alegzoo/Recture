@@ -1,5 +1,5 @@
 import { createServer, Model, Response } from "miragejs"
-import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType } from "./RectureApi";
+import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType, IComment, ICommentReply } from "./RectureApi";
 
 //TODO: Exclude both library and code from production
 export function makeServer() {
@@ -11,6 +11,7 @@ export function makeServer() {
             description: "",
             published: false,
             notifications: 0,
+            teacherId: 0,
             classId: 0,
             className: "",
             subjectId: 0,
@@ -24,7 +25,9 @@ export function makeServer() {
         } as IRecording),
         class: Model.extend({classId: 0, name: ""} as IClass),
         subject: Model.extend({subjectId: 0, name: ""} as ISubject),
-        topic: Model.extend({topicId: 0, name: ""} as ITopic)
+        topic: Model.extend({topicId: 0, name: ""} as ITopic),
+        comment: Model.extend({commentId: 0, recordingId: 0, userId: 0, userFirstName: "", userLastName: "", content: "", creationTimestamp: 0, lastEditTimestamp: null} as IComment),
+        commentReply: Model.extend({replyId: 0, recordingId: 0, parentCommentId: 0, userId: 0, userFirstName: "", userLastName: "", content: "", creationTimestamp: 0, lastEditTimestamp: null} as ICommentReply)
     };
 
     const mockFactories = {};
@@ -38,7 +41,9 @@ export function makeServer() {
             recording: Model,
             class: Model,
             subject: Model,
-            topic: Model
+            topic: Model,
+            comment: Model,
+            commentReply: Model
         },
   
         seeds(server) {
@@ -84,12 +89,15 @@ export function makeServer() {
                 else if (recordingTopic.name == "Python") title = "Modelovanie náhodných javov";
                 else title = "Procesory";
 
+                const account = server.schema.first("account")?.attrs;
+
                 const recording = {
                     recordingId: i+1,
                     title: title,
-                    description: i%2===0?"test":null,
+                    description: i%2===0?"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.":null,
                     published: i%2 === 0,
                     notifications: i%5,
+                    teacherId: account?.userId,
                     classId: recordingClass.classId,
                     className: recordingClass.name,
                     subjectId: recordingSubject.subjectId,
@@ -108,6 +116,37 @@ export function makeServer() {
                 } as IRecording;
 
                 server.create("recording", recording);
+
+                if ((i+1)%2===0) {
+                    const comment = {
+                        commentId: i+1,
+                        recordingId: i+1,
+                        userId: account?.userId,
+                        userFirstName: account?.firstName,
+                        userLastName: account?.lastName,
+                        content: "A random comment.",
+                        creationTimestamp: Math.floor(Date.now()/1000-i*(24*60*60))+10000,
+                        lastEditTimestamp: null
+                    } as IComment;
+
+                    server.create("comment", comment);
+
+                    if ((i+1)%3===0) {
+                        const reply = {
+                            replyId: i+1,
+                            recordingId: i+1,
+                            parentCommentId: i+1,
+                            userId: account?.userId,
+                            userFirstName: account?.firstName,
+                            userLastName: account?.lastName,
+                            content: "A random reply to a random comment.",
+                            creationTimestamp: Math.floor(Date.now()/1000-i*(24*60*60))+600000,
+                            lastEditTimestamp: null
+                        } as ICommentReply;
+
+                        server.create("commentReply", reply);
+                    }
+                }
             }
 
         },
@@ -225,6 +264,20 @@ export function makeServer() {
             this.get(RectureApi.BASE_API_URL+"/lessons", (schema) => {
                 return schema.all("lesson").models;
             }, {timing: 200});
+
+            this.get(RectureApi.BASE_API_URL+"/comments", (schema, request) => {
+                const params = request.queryParams;
+
+                if (params.recordingId == null) return new Response(400);
+
+                const recordingId = parseInt(params.recordingId);
+                return schema.all("comment").models.filter(comment => comment.recordingId === recordingId);
+            }, {timing: 300});
+
+            this.get(RectureApi.BASE_API_URL+"/comments/:id/replies", (schema, request) => {
+                const commentId = parseInt(request.params.id);
+                return schema.all("commentReply").models.filter(reply => reply.parentCommentId === commentId);
+            }, {timing: 300});
         }
     });
   
