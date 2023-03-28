@@ -1,10 +1,10 @@
 <template>
-    <v-container id="whole-comments-container" class="h-100" fluid>
+    <v-container id="whole-comments-container" class="h-100 pa-0" fluid>
         <v-row class="pl-8 mt-2">
                 <p class="text-h4 font-weight-medium">Comments</p>
         </v-row>
         <v-row class="h-100 mt-8" fluid align-content="start" align-self="start">
-            <v-col cols="8" id="v-col-comments">
+            <v-col cols="8" class="v-col-comments">
                 <v-row align-content="center">
                     <v-col class="ml-3" cols="auto">
                         <v-avatar outlined id="comments-avatar" size="50" image="@/assets/student1.png"></v-avatar>
@@ -19,16 +19,16 @@
                         <h1 id="interpunct-comments">·</h1>
                     </v-col>
                     <v-col cols="auto" class="ml-1" align-self="center">
-                        <h4>8 hours ago</h4>
+                        <h4 class="time-label">8 hours ago</h4>
                     </v-col>
                     <v-spacer></v-spacer>
-                        <v-btn icon="mdi-dots-horizontal" :ripple="false" variant="plain" id="replynignorendots-btns"></v-btn>
+                        <v-btn icon="mdi-dots-horizontal" :ripple="false" variant="plain" class="reply-ignore-dots-buttons"></v-btn>
                 </v-row>
             
             <v-row class="mt-3 ml-16 mr-10" align-content="center">
                 <v-col class="ml-3" cols="auto">
                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. t in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
-Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, </p>
+                       Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, </p>
                 </v-col>
                 </v-row>
                 <v-row class="mt-3 ml-15" align-content="center">
@@ -47,7 +47,7 @@ Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="4" class="pl-4" id="v-col-comments2">
+            <v-col cols="4" class="pl-4 v-col-video">
                 <v-row id="comments-row" no-gutters align-content="center">
                     <v-col>
                         <h2>Definičný obor 1/2</h2>
@@ -63,11 +63,7 @@ Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh
                         <p class="font-weight-medium">I.C</p>
                     </v-col>
                 </v-row>
-                <v-row class="pt-10 pb-16" id="comments-row" no-gutters>
-                    <v-col align="center">
-                        <v-btn icon="mdi-play" id="btn-play-comments" outlined theme="light" :ripple="false" variant="plain"></v-btn>
-                    </v-col>
-                </v-row>
+                <v-icon icon="mdi-play" class="play-icon"/>
             </v-col>
         </v-row>
 </v-container>
@@ -78,5 +74,5 @@ Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh
 </style>
 
 <script lang="ts" setup>
-
+    import "@/styles/newcomments.scss";
 </script>
