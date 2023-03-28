@@ -8,7 +8,7 @@
             </v-col>
         </v-row>
 
-        <v-row id="subject-button-row">
+        <v-row id="subject-button-row" class="mx-9">
             <v-btn-toggle v-if="videoBrowserStore.subjectsLoading" id="subject-button-toggle">
                 <SubjectButton v-for="size in skeletonSubjects.sizes.value" class="skeleton" :style="'width: '+size+'px;'" :subject="null"/>
             </v-btn-toggle>
@@ -17,7 +17,7 @@
             </v-btn-toggle>
         </v-row>
         
-        <v-row id="video-area" no-gutters class="h-100">
+        <v-row id="video-area" no-gutters class="h-100 mx-5">
             <v-col id="video-area-content" cols="12">
                 <v-row>
                     <v-col :cols="mdAndUp?'auto':12">

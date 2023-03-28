@@ -1,7 +1,9 @@
 <template>
     <v-container id="whole-profile-container" class="h-100" fluid no gutters>
-        <v-row class="pl-8 mt-2">
+        <v-row>
+            <v-col cols="12">
                 <p class="text-h4 font-weight-medium">Profile</p>
+            </v-col>
         </v-row>
         <v-container :class="'mt-6'+(mdAndUp?' pl-15':'')" fluid>
             <v-row align="center" justify="center" class="pt-5 mb-10" no-gutters>

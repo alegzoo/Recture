@@ -1,6 +1,10 @@
 @import "./constants.scss";
 @import "./mixins.scss";
 
+.timetable-container {
+    padding: 22px 22px 0px 22px;
+}
+
 #timetable-edit-button {
     @include elevated-button(3px, 3px, 1px);
     background-color: $recture-yellow;
@@ -65,7 +69,6 @@
         transition: box-shadow 0.1s linear;
     }
 
-    /*.timetable-grid-cell:empty:hover, .timetable-lesson:hover .v-row {*/
     .timetable-grid-cell:hover .v-row {
         box-shadow: 0px 0px 0px 2px black inset, -5px -5px 0px 0px black inset;
         transition: box-shadow 0.1s linear;

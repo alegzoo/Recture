@@ -161,18 +161,18 @@
 #home-content {
     border-radius: 6px;
     overflow: hidden;
-    max-width: calc(100% - 72px);
-    width: calc(100% - 72px);
-    height: calc(100% - 66px);
-    margin: 66px 6px 0px 66px;
+    max-width: calc(100% - 60px);
+    width: calc(100% - 60px);
+    height: calc(100% - 60px);
+    margin: 60px 0px 0px 60px;
     padding: 0px;
     transition: all 0.1s ease-in;
 }
 
 #home-content.full {
-    max-width: calc(100% - 12px);
-    width: calc(100% - 12px);
-    margin-left: 6px;
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0px;
     transition: all 0.1s ease-out;
 }
 

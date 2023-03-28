@@ -1,5 +1,5 @@
 <template>
-    <v-container class="px-6 h-100 d-flex flex-column" fluid>
+    <v-container class="timetable-container px-6 h-100 d-flex flex-column" fluid>
         <v-row class="mt-1 pr-3 flex-grow-0">
             <v-col align-self="start">
                 <p id="your-timetable-text" class="text-h4 font-weight-medium">Your timetable</p>
