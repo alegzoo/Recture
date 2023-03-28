@@ -214,3 +214,68 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
+#v-row-comments-whole{
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+}
+
+#comments-avatar{
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+}
+
+#class-chip-comment{
+    background-color: $recture-red;
+    border-radius: 9999px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: 2px 2px 0px 0px black;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#v-col-video{
+    background-color: white;
+}
+
+#v-col-comments{
+    background-color: white;
+    border-color: black;
+    border-right-width: 0px;
+    border-left-width: 2px;
+    border-top: 2px;
+    border-bottom: 2px;
+    border-style: solid;
+}
+
+#v-col-comments2{
+    background-image: linear-gradient(90deg, rgba(255,217,0,0.65) 0%, rgba(255,217,0,0.65) 100%),url("@/assets/class.png");
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 800px;
+    background-size: cover;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+}
+
+#btn-play-comments{
+    color: white;
+    opacity: 100%;
+    font-size: 50px;
+    stroke-width: 2px;
+    outline-color: black;
+}
+
+#btn-play-comments:hover{
+    filter: drop-shadow(4px 4px 0px black);
+    transition: filter 0.15s ease-in;
+}
+
+#replynignorendots-btns{
+    color: black;
+    opacity: 100%;
+}
