@@ -1,12 +1,12 @@
 <template>
-    <v-card :to="'videos/'+recording.recordingId" variant="outlined" class="video-box">
-        <v-img :src="recording.thumbnail" :aspect-ratio="16/9" class="video-box-thumbnail" cover/>
-        <v-container class="video-box-info-area pa-0">
+    <v-card :to="'videos/'+recording.recordingId" variant="outlined" class="video-box d-flex flex-column h-100">
+        <v-img :src="recording.thumbnail" :aspect-ratio="16/9" class="video-box-thumbnail flex-grow-0" cover/>
+        <v-container class="video-box-info-area pa-0 flex-grow-1">
             <v-row class="h-100">
                 <v-col cols="8">
                     <v-container>
                         <v-row>
-                            <v-col cols="12" class="video-box-title py-0 pt-1">{{ recording.title }}</v-col>
+                            <v-col cols="12" class="video-box-title py-0 pt-1" :title="recording.title">{{ recording.title }}</v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" class="py-0">{{ date }}</v-col>
