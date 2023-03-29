@@ -1,10 +1,10 @@
 <template>
     <v-container id="whole-comments-container" class="h-100 pa-0" fluid>
-        <v-row class="pl-8 mt-2">
+        <v-row class="pl-8 mt-10">
                 <p class="text-h4 font-weight-medium">Comments</p>
         </v-row>
-        <v-row class="h-100 mt-8" fluid align-content="start" align-self="start">
-            <v-col cols="8" class="v-col-comments">
+        <v-row class="h-100 mt-12" fluid align-content="start" align-self="start">
+            <v-col cols="8" class="v-col-comments mb-n2">
                 <v-row align-content="center">
                     <v-col class="ml-3" cols="auto">
                         <v-avatar outlined id="comments-avatar" size="50" image="@/assets/student1.png"></v-avatar>
@@ -31,9 +31,9 @@
                        Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, </p>
                 </v-col>
                 </v-row>
-                <v-row class="mt-3 ml-15" align-content="center">
+                <v-row class="mt-3 ml-15 mr-10 mb-2" align-content="center">
                     <v-col cols="auto">
-                        <v-btn variant="plain" id="replynignorendots-btns" :ripple="false">
+                        <v-btn variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
                             REPLY
                         </v-btn>
                     </v-col>
@@ -41,13 +41,13 @@
                         <h2>/</h2>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn variant="plain" id="replynignorendots-btns" :ripple="false">
+                        <v-btn variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
                             IGNORE
                         </v-btn>
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="4" class="pl-4 v-col-video">
+            <v-col cols="4" class="pl-4 v-col-video mb-n2">
                 <v-row id="comments-row" no-gutters align-content="center">
                     <v-col>
                         <h2>Definičný obor 1/2</h2>
@@ -65,6 +65,11 @@
                 </v-row>
                 <v-icon icon="mdi-play" class="play-icon"/>
             </v-col>
+            <v-container class="pa-0" fluid no-gutters>
+                <v-row class="pt-n1">
+                    <v-img id="comment-bottom" repeat cover src="@/assets/comment_bottom.svg"></v-img>
+                </v-row>
+            </v-container>
         </v-row>
 </v-container>
 </template>
@@ -75,4 +80,5 @@
 
 <script lang="ts" setup>
     import "@/styles/newcomments.scss";
+    
 </script>
