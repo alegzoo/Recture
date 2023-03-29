@@ -214,26 +214,3 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
-
-#v-row-comments-whole {
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-}
-
-#comments-avatar {
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-}
-
-#class-chip-comment {
-    background-color: $recture-red;
-    border-radius: 9999px;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-    box-shadow: 2px 2px 0px 0px black;
-    padding-left: 15px;
-    padding-right: 15px;
-}

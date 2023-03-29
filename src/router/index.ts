@@ -71,7 +71,10 @@ const routes = [
         path: "/signin",
         name: "signin",
         component: Signin,
-        meta: { requiresAuth: false }
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
     },
     {
         path: "/:pathMatch(.*)*",
@@ -86,18 +89,18 @@ const router = createRouter({
 });
 
 //TODO: Maybe store in localstorage?
-let lastAuthCheckTimestamp = 0;
+let lastSuccessfulAuthCheckTimestamp = 0;
 
-router.beforeEach(async to => {
+router.beforeEach(async (to, from) => {
     if (to.meta.requiresAuth) {
         //TODO: Verify that this works in every possible scenario
         const timestamp = Date.now();
-        if (timestamp - lastAuthCheckTimestamp < 60000) return;
-        lastAuthCheckTimestamp = timestamp;
+        if (timestamp - lastSuccessfulAuthCheckTimestamp < 60000 && from.meta.requiresAuth === true) return;
 
         try {
             const result = await RectureApi.validateAuthentication();
-            if (!result.success) return { name: "signin" };
+            if (result.success) lastSuccessfulAuthCheckTimestamp = timestamp;
+            else return { name: "signin" };
         } catch (e) {
             return { name: "signin" };
         }

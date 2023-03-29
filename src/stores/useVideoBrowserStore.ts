@@ -6,6 +6,16 @@ import { IClass, IRecording, IRecordingSort, ISubject, ITopic, RecordingSortKey,
 export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     state: () => ({
         welcomeText: {
+            phrases: {
+                "primary": [
+                    "Welcome back, %name!",
+                    "Hello, %name!"
+                ],
+                "secondary": [
+                    "Let's share what you know with the world!",
+                    "What will you share with the world today?"
+                ]
+            },
             primary: "",
             secondary: "",
             templates: {
@@ -47,15 +57,9 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     },
     actions: {
         generateWelcomeText() {
-            fetch("/src/assets/welcome_text_phrases.json").then((response) => {
-                if (response.ok) {
-                    response.json().then((data) => {
-                        this.welcomeText.templates.primary = data.primary[Math.floor(Math.random()*data.primary.length)];
-                        this.welcomeText.templates.secondary = data.secondary[Math.floor(Math.random()*data.secondary.length)];
-                        this.formatWelcomeText();
-                    });
-                }
-            });
+            this.welcomeText.templates.primary = this.welcomeText.phrases.primary[Math.floor(Math.random()*this.welcomeText.phrases.primary.length)];
+            this.welcomeText.templates.secondary = this.welcomeText.phrases.secondary[Math.floor(Math.random()*this.welcomeText.phrases.secondary.length)];
+            this.formatWelcomeText();
         },
         formatWelcomeText() {
             const accountStore = useAccountStore();

@@ -56,7 +56,7 @@ export function makeServer() {
                 lastName: "Číslový",
                 bio: "Ahoj. Volám sa Ján Číslový a som učiteľom informatiky a matematiky na škole GJAR. Okrem toho že rád vzdelávam a vyučujem, mám kopec voľnočasových aktivít pri ktorých si vetrám hlavu! Či už ide o horské bicyklovanie, alebo beh aj rád sledujem športy v televízii. Ak chceš držať krok s tým čo robím vo svojom voľnom čase, môžeš ma nájsť aj na instagrame pod menom @jan_cislovy. Prajem ti príjemné vzdelávanie. PS: Ak by si mal otázku ohľadom nejakej časti v nahrávke, naváhaj mi napísať!",
                 organization: "GJAR",
-                avatar: "http://recture.study/src/assets/jano.png"
+                avatar: "/jano.png"
             } as IAccount);
 
             server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);

@@ -29,7 +29,7 @@
         RectureApi.signOut().then(function (result) {
             if (result.success) {
                 Stores.resetAllStores();
-                router.push("/signin");
+                router.push({ name: "signin" });
             }
         });
     }

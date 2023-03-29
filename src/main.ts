@@ -18,13 +18,13 @@ import { createPinia } from 'pinia';
 
 import "@/styles/main.scss"
 
-const app = createApp(App)
+const app = createApp(App);
 
-registerPlugins(app)
+registerPlugins(app);
 
-app.use(createPinia())
+app.use(createPinia());
 
-app.mount('#app')
+app.mount('#app');
 
 //TODO: Remove later?
 import { makeServer } from './api/Mock';

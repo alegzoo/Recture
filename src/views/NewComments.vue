@@ -3,11 +3,11 @@
         <v-row class="pl-8 mt-10">
                 <p class="text-h4 font-weight-medium">Comments</p>
         </v-row>
-        <v-row class="h-100 mt-12" fluid align-content="start" align-self="start">
+        <v-row class="mt-12" fluid align-content="start" align-self="start">
             <v-col cols="8" class="v-col-comments mb-n2">
                 <v-row align-content="center">
                     <v-col class="ml-3" cols="auto">
-                        <v-avatar outlined id="comments-avatar" size="50" image="@/assets/student1.png"></v-avatar>
+                        <v-avatar outlined id="comments-avatar" size="50" image="/student1.png"></v-avatar>
                     </v-col>
                     <v-col cols="auto" align-self="center">
                         <h4>Gabriela Fotová</h4>
@@ -25,11 +25,11 @@
                         <v-btn icon="mdi-dots-horizontal" :ripple="false" variant="plain" class="reply-ignore-dots-buttons"></v-btn>
                 </v-row>
             
-            <v-row class="mt-3 ml-16 mr-10" align-content="center">
-                <v-col class="ml-3" cols="auto">
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. t in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
-                       Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, </p>
-                </v-col>
+                <v-row class="mt-3 ml-16 mr-10" align-content="center">
+                    <v-col class="ml-3" cols="auto">
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. t in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+                            Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, </p>
+                    </v-col>
                 </v-row>
                 <v-row class="mt-3 ml-15 mr-10 mb-2" align-content="center">
                     <v-col cols="auto">
@@ -66,8 +66,8 @@
                 <v-icon icon="mdi-play" class="play-icon"/>
             </v-col>
             <v-container class="pa-0" fluid no-gutters>
-                <v-row class="pt-n1">
-                    <v-img id="comment-bottom" repeat cover src="@/assets/comment_bottom.svg"></v-img>
+                <v-row>
+                    <img class="comment-bottom" src="@/assets/comment_bottom.svg"/>
                 </v-row>
             </v-container>
         </v-row>
