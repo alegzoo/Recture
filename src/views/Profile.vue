@@ -17,7 +17,7 @@
 
                 <v-spacer></v-spacer>
 
-                <upload-overlay></upload-overlay>
+                <UploadDialog/>
 
                 <v-col :cols="mdAndUp?'auto':12" align="center" align-self="start">
                     <v-btn id="profile-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
@@ -91,7 +91,7 @@
 <script lang="ts" setup>
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
-    import UploadOverlay from '@/components/UploadDialog.vue.js';
+    import UploadDialog from '@/components/UploadDialog.vue';
     import "@/styles/profile.scss";
 
     const accountStore = useAccountStore();

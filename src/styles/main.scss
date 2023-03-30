@@ -215,18 +215,12 @@
     }
 }
 
-.v-card-upload{
+.upload-card {
     background-color: #efefef;
 }
 
-.choose-btns{
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    border-radius: 0 0 0 0;
+.choose-btns {
+    border: solid 2px black;
+    border-radius: 0px;
     box-shadow: 3px 3px 0px 0px black;
-}
-
-.txt-field-upload{
-    margin-left: -10px;
 }

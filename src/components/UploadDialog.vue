@@ -1,12 +1,13 @@
 <template>
-    <v-btn icon="mdi-checkbox" theme="light">
         <v-dialog activator="parent" class="h-100 justify-center" width="630" scroll-strategy="block">
-            
-            <v-card class="v-card-upload upload-card" height="auto" scroll-strategy="block">
+            <template v-slot:activator>
+                <v-btn icon="mdi-checkbox" theme="light"/>
+            </template>
+            <v-card class="upload-card">
+                <template v-slot:title>
+                    <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
+                </template>
                 <v-card-text>
-                    <v-row class="pl-3 pt-3">
-                        <h1>CREATE A CLASS</h1>
-                    </v-row>
                     <v-row align="center" class="px-1">
                         <v-col cols="6">
                             <v-menu>
@@ -44,7 +45,6 @@
                             single-line
                             ></v-text-field>
                         </v-col>
-
                     </v-row>
 
                     <v-row align="center" class="px-1">
@@ -84,14 +84,10 @@
                             single-line
                             ></v-text-field>
                         </v-col>
-
                     </v-row>
-
-
                 </v-card-text>
             </v-card>
         </v-dialog>
-    </v-btn>
 </template>
 
 <style lang="scss">
