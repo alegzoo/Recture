@@ -214,3 +214,19 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
+
+.v-card-upload{
+    background-color: #efefef;
+}
+
+.choose-btns{
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 0 0 0 0;
+    box-shadow: 3px 3px 0px 0px black;
+}
+
+.txt-field-upload{
+    margin-left: -10px;
+}
