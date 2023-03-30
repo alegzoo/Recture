@@ -8,7 +8,7 @@
             <v-spacer/>
             
             <v-col cols="auto" align-self="center">
-                <v-btn id="timetable-edit-button" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
+                <v-btn id="timetable-edit-button" :ripple="false" variant="text" :icon="timetableStore.editing?'mdi-close':'mdi-lead-pencil'" @click="timetableStore.toggleEditing()"/>
             </v-col>
         </v-row>
 
@@ -21,7 +21,7 @@
 
         <v-row class="flex-grow-1">
             <v-col cols="12" :class="'h-100 d-flex flex-column py-7'+(mdAndUp?' px-10':'')">
-                <TimetableGrid :days-of-week="timetableStore.daysOfWeek" :lessons-per-day="timetableStore.lessonsPerDay" :first-lesson-number="timetableStore.firstLessonNumber" :lessons="timetableStore.lessons" id="timetable-grid" align="stretch" class="flex-grow-1" rounded/>
+                <TimetableGrid id="timetable-grid" align="stretch" class="flex-grow-1" rounded/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
                         <v-btn variant="text" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">

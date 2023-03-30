@@ -4,11 +4,14 @@ import { defineStore } from "pinia"
 export const useTimetableStore = defineStore("timetableStore", {
     state: () => ({
         //TODO: Maybe change defaults?
+        
         daysOfWeek: [false, false, false, false, false, false, false] as boolean[],
         lessonsPerDay: 0 as number,
         firstLessonNumber: 1 as number,
         lessons: [] as ILesson[],
         weekDates: [] as Date[],
+
+        editing: false as boolean,
 
         colors: { //TODO: There has to be a better place to store this
             "mustard": "#FFBE5D",
@@ -64,6 +67,19 @@ export const useTimetableStore = defineStore("timetableStore", {
                     this.lessons = result.data;
                 }
             });
+        },
+
+        deleteLesson(lesson: ILesson) {
+            this.lessons = this.lessons.filter(item => item !== lesson);
+            RectureApi.deleteLesson(lesson.lessonId).then(result => {
+                if (!result.success) this.lessons.push(lesson);
+            }).catch(reason => {
+                this.lessons.push(lesson);
+            });
+        },
+
+        toggleEditing() {
+            this.editing = !this.editing;
         }
     }
 });

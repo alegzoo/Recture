@@ -59,8 +59,20 @@ export function makeServer() {
                 avatar: "/jano.png"
             } as IAccount);
 
-            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 2, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 4, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
+            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 3, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 2, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Friday, lessonNumber: 0, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 3, dayOfWeek: DayOfWeek.Monday, lessonNumber: 4, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
+            server.create("lesson", {lessonId: 4, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 3, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
+            server.create("lesson", {lessonId: 5, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 6, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
+            server.create("lesson", {lessonId: 6, dayOfWeek: DayOfWeek.Monday, lessonNumber: 5, color: "red", className: "III.C", subjectName: "MAT", classId: 3, subjectId: 1} as ILesson);
+            server.create("lesson", {lessonId: 7, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 1, color: "red", className: "III.C", subjectName: "MAT", classId: 3, subjectId: 1} as ILesson);
+
+            /*for (let day = DayOfWeek.Monday; day <= DayOfWeek.Sunday; day++) {
+                for (let num = 0; num < 7; num++) {
+                    server.create("lesson", {lessonId: (day+1)*(num+1), dayOfWeek: day, lessonNumber: num, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
+                }
+            }*/
 
             server.create("class", {classId: 1, name: "I.A"} as IClass);
             server.create("class", {classId: 2, name: "II.B"} as IClass);
@@ -277,6 +289,17 @@ export function makeServer() {
             this.get(RectureApi.BASE_API_URL+"/comments/:id/replies", (schema, request) => {
                 const commentId = parseInt(request.params.id);
                 return schema.all("commentReply").models.filter(reply => reply.parentCommentId === commentId);
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/lessons/:id", (schema, request) => {
+                const lessonId = parseInt(request.params.id);
+                const lesson = schema.findBy("lesson", {lessonId: lessonId});
+                if (lesson != null) {
+                    lesson.destroy();
+                    return new Response(200);
+                } else {
+                    return new Response(404);
+                }
             }, {timing: 300});
         }
     });

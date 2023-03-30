@@ -214,6 +214,15 @@ export class RectureApi {
         }
     }
 
+    public static async deleteLesson(lessonId: number): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("lessons/"+lessonId), {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        return new ApiResult(response.status);
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;

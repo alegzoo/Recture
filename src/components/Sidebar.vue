@@ -29,6 +29,7 @@
         RectureApi.signOut().then(function (result) {
             if (result.success) {
                 Stores.resetAllStores();
+                //TODO: router.push does not work on ios safari? At least this one. Maybe async is causing issues?
                 router.push({ name: "signin" });
             }
         });
