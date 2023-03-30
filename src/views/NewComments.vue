@@ -33,7 +33,7 @@
                 </v-row>
                 <v-row class="mt-3 ml-15 mr-10 mb-2" align-content="center">
                     <v-col cols="auto">
-                        <v-btn variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
+                        <v-btn @click="showReplyField" variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
                             REPLY
                         </v-btn>
                     </v-col>
@@ -67,8 +67,9 @@
             </v-col>
             <v-container class="pa-0" fluid no-gutters>
                 <v-row>
-                    <img class="comment-bottom" src="@/assets/comment_bottom.svg"/>
+                    <img class="comment-bottom w-100" src="@/assets/comment_bottom.svg"/>
                 </v-row>
+                <reply-text-field :comment-id="0"></reply-text-field>
             </v-container>
         </v-row>
 </v-container>
@@ -79,6 +80,9 @@
 </style>
 
 <script lang="ts" setup>
+    import ReplyTextField from '@/components/ReplyTextField.vue'
     import "@/styles/newcomments.scss";
-    
+
+    function showReplyField() {    
+    }
 </script>
