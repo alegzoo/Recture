@@ -214,6 +214,50 @@ export class RectureApi {
         }
     }
 
+    public static async renameClass(classId: number, name: string): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("classes/"+classId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async renameSubject(subjectId: number, name: string): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteClass(classId: number): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("classes/"+classId), {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteSubject(subjectId: number): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId), {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async deleteLesson(lessonId: number): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("lessons/"+lessonId), {
             method: "DELETE",

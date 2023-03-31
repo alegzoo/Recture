@@ -15,15 +15,7 @@
     border-width: 2px;
 }
 
-.plus-btn .v-icon {
-    font-size: 27px;
-    height: 100%;
-    padding-bottom: 2px;
-    justify-content: start;
-    padding-left: 8px;
-}
-
-.plus-btn {
+.footer-button {
     @include elevated-button(0px, 3px, 1px);
     border-radius: 9999px;
     background-color: $recture-yellow;
@@ -32,6 +24,17 @@
     border-color: black;
     align-content: center;
     color: black;
+}
+
+.footer-button .v-icon {
+    font-size: 27px;
+    height: 100%;
+    padding-bottom: 2px;
+    justify-content: start;
+}
+
+.plus-button .v-icon {
+    padding-left: 8px;
 }
 
 #timetable-grid {

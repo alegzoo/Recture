@@ -24,13 +24,21 @@
                 <TimetableGrid id="timetable-grid" align="stretch" class="flex-grow-1" rounded/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
-                        <v-btn variant="text" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
+                        <v-btn variant="text" class="footer-button" :ripple="false" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = !showManageGroupsDialog">
+                            MANAGE CLASSES AND SUBJECTS
+                        </v-btn>
+                    </v-col>
+
+                    <v-spacer v-show="lgAndUp"/>
+
+                    <v-col cols="auto">
+                        <v-btn variant="text" class="footer-button plus-button" :ripple="false" append-icon="mdi-plus-circle">
                             NEW THEMATIC UNIT
                         </v-btn>
                     </v-col>
 
                     <v-col cols="auto">
-                        <v-btn variant="text" class="plus-btn" :ripple="false" append-icon="mdi-plus-circle">
+                        <v-btn variant="text" class="footer-button plus-button" :ripple="false" append-icon="mdi-plus-circle">
                             NEW QUESTION SERIES
                         </v-btn>
                     </v-col>
@@ -38,6 +46,7 @@
             </v-col>
         </v-row>
     </v-container>
+    <ManageGroupsDialog v-model="showManageGroupsDialog" @dataUpdated="timetableStore.fetchLessons()"/>
 </template>
 
 <style>
@@ -45,13 +54,17 @@
 </style>
 
 <script lang="ts" setup>
+    import { ref } from 'vue';
     import { useTimetableStore } from '@/stores/useTimetableStore';
     import TimetableGrid from '@/components/TimetableGrid.vue';
+    import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     import "@/styles/timetable.scss";
 
-    const { smAndDown, smAndUp, mdAndUp } = useDisplay();
+    const { mdAndUp, lgAndUp } = useDisplay();
+
+    const showManageGroupsDialog = ref(false);
 
     const timetableStore = useTimetableStore();
     

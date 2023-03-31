@@ -59,28 +59,28 @@ export function makeServer() {
                 avatar: "/jano.png"
             } as IAccount);
 
-            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 3, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 2, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Friday, lessonNumber: 0, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 3, dayOfWeek: DayOfWeek.Monday, lessonNumber: 4, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
-            server.create("lesson", {lessonId: 4, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 3, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
-            server.create("lesson", {lessonId: 5, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 6, color: 'aqua', className: 'II.B', subjectName: 'INF', classId: 2, subjectId: 2} as ILesson);
-            server.create("lesson", {lessonId: 6, dayOfWeek: DayOfWeek.Monday, lessonNumber: 5, color: "red", className: "III.C", subjectName: "MAT", classId: 3, subjectId: 1} as ILesson);
-            server.create("lesson", {lessonId: 7, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 1, color: "red", className: "III.C", subjectName: "MAT", classId: 3, subjectId: 1} as ILesson);
+            const class1 = server.create("class", {classId: 1, name: "I.A"} as IClass);
+            const class2 = server.create("class", {classId: 2, name: "II.B"} as IClass);
+            const class3 = server.create("class", {classId: 3, name: "III.C"} as IClass);
+            const class4 = server.create("class", {classId: 4, name: "oktáva A"} as IClass);
+
+            const subject1 = server.create("subject", {subjectId: 1, name: "MAT"} as ISubject);
+            const subject2 = server.create("subject", {subjectId: 2, name: "INF"} as ISubject);
+
+            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Monday, lessonNumber: 3, color: "mustard", className: class1.name, subjectName: subject1.name, classId: class1.classId, subjectId: subject1.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 1, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 2, color: "mustard", className: class1.name, subjectName: subject1.name, classId: class1.classId, subjectId: subject1.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 2, dayOfWeek: DayOfWeek.Friday, lessonNumber: 0, color: "mustard", className: class1.name, subjectName: subject1.name, classId: class1.classId, subjectId: subject1.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 3, dayOfWeek: DayOfWeek.Monday, lessonNumber: 4, color: 'aqua', className: class2.name, subjectName: subject2.name, classId: class2.classId, subjectId: subject2.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 4, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 3, color: 'aqua', className: class2.name, subjectName: subject2.name, classId: class2.classId, subjectId: subject2.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 5, dayOfWeek: DayOfWeek.Wednesday, lessonNumber: 6, color: 'aqua', className: class2.name, subjectName: subject2.name, classId: class2.classId, subjectId: subject2.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 6, dayOfWeek: DayOfWeek.Monday, lessonNumber: 5, color: "red", className: class3.name, subjectName: subject1.name, classId: class3.classId, subjectId: subject1.subjectId} as ILesson);
+            server.create("lesson", {lessonId: 7, dayOfWeek: DayOfWeek.Tuesday, lessonNumber: 1, color: "red", className: class3.name, subjectName: subject1.name, classId: class3.classId, subjectId: subject1.subjectId} as ILesson);
 
             /*for (let day = DayOfWeek.Monday; day <= DayOfWeek.Sunday; day++) {
                 for (let num = 0; num < 7; num++) {
                     server.create("lesson", {lessonId: (day+1)*(num+1), dayOfWeek: day, lessonNumber: num, color: "mustard", className: "I.A", subjectName: "MAT", classId: 1, subjectId: 1} as ILesson);
                 }
             }*/
-
-            server.create("class", {classId: 1, name: "I.A"} as IClass);
-            server.create("class", {classId: 2, name: "II.B"} as IClass);
-            server.create("class", {classId: 3, name: "III.C"} as IClass);
-            server.create("class", {classId: 4, name: "oktáva A"} as IClass);
-
-            server.create("subject", {subjectId: 1, name: "MAT"} as ISubject);
-            server.create("subject", {subjectId: 2, name: "INF"} as ISubject);
 
             const topics = [[{topicId: 1, name: "Funkcie"} as ITopic], //Subject ID 1
                             [{topicId: 2, name: "Python"} as ITopic, {topicId: 3, name: "Hardware"} as ITopic]] as ITopic[][]; //Subject ID 2
@@ -291,11 +291,71 @@ export function makeServer() {
                 return schema.all("commentReply").models.filter(reply => reply.parentCommentId === commentId);
             }, {timing: 300});
 
+            this.put(RectureApi.BASE_API_URL+"/classes/:id", (schema, request) => {
+                const classId = parseInt(request.params.id);
+                const body = (request.requestBody as any) as FormData;
+                const name = body.get("name");
+                if (name == null) return new Response(400);
+                else {
+                    const clazz = schema.findBy("class", {classId: classId});
+                    if (!clazz) return new Response(404);
+                    else {
+                        clazz.update("name", name as string);
+
+                        schema.where("lesson", {classId: classId}).update("className", clazz.name);
+                        schema.where("recording", {classId: classId}).update("className", clazz.name);
+
+                        return new Response(204);
+                    }
+                }
+            }, {timing: 300});
+
+            this.put(RectureApi.BASE_API_URL+"/subjects/:id", (schema, request) => {
+                const subjectId = parseInt(request.params.id);
+                const body = (request.requestBody as any) as FormData;
+                const name = body.get("name");
+                if (name == null) return new Response(400);
+                else {
+                    const subject = schema.findBy("subject", {subjectId: subjectId});
+                    if (!subject) return new Response(404);
+                    else {
+                        subject.update("name", name as string);
+
+                        schema.where("lesson", {subjectId: subjectId}).update("subjectName", subject.name);
+                        schema.where("recording", {subjectId: subjectId}).update("subjectName", subject.name);
+
+                        return new Response(204);
+                    }
+                }
+            }, {timing: 300});
+
             this.del(RectureApi.BASE_API_URL+"/lessons/:id", (schema, request) => {
                 const lessonId = parseInt(request.params.id);
                 const lesson = schema.findBy("lesson", {lessonId: lessonId});
                 if (lesson != null) {
                     lesson.destroy();
+                    return new Response(200);
+                } else {
+                    return new Response(404);
+                }
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/classes/:id", (schema, request) => {
+                const classId = parseInt(request.params.id);
+                const clazz = schema.findBy("class", {classId: classId});
+                if (clazz != null) {
+                    clazz.destroy();
+                    return new Response(200);
+                } else {
+                    return new Response(404);
+                }
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/subjects/:id", (schema, request) => {
+                const subjectId = parseInt(request.params.id);
+                const subject = schema.findBy("subject", {subjectId: subjectId});
+                if (subject != null) {
+                    subject.destroy();
                     return new Response(200);
                 } else {
                     return new Response(404);
