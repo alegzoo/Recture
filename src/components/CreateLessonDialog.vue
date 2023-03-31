@@ -3,7 +3,7 @@
             <template v-slot:activator>
                 <v-btn icon="mdi-checkbox" theme="light"/>
             </template>
-            <v-card class="upload-card">
+            <v-card class="create-lesson-card">
                 <template v-slot:title>
                     <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
                 </template>
@@ -39,7 +39,6 @@
 
                         <v-col cols="4">
                             <v-text-field
-                            class="txt-field-upload"
                             label="Name of the new class"
                             variant="underlined"
                             single-line
@@ -78,7 +77,6 @@
 
                         <v-col cols="4">
                             <v-text-field
-                            class="txt-field-upload"
                             label="Name your new subject"
                             variant="underlined"
                             single-line
