@@ -5,7 +5,7 @@ export class RectureApi {
     //TODO: Change API URL
     public static BASE_API_URL: string = "http://recture.study:81/";
 
-    public static async signIn(email: string, password: string): Promise<ApiResult<null>> {
+    public static async signIn(email: string, password: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("email", email);
         formData.append("password", password);
@@ -13,44 +13,49 @@ export class RectureApi {
         const response = await fetch(this.pathToUrl("auth/signin"), {
             method: "POST",
             credentials: "include",
-            body: formData
+            body: formData,
+            signal: signal
         });
 
         return new ApiResult<null>(response.status);
     }
 
-    public static async signOut(): Promise<ApiResult<null>> {
+    public static async signOut(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/signout"), {
             method: "POST",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         return new ApiResult<null>(response.status);
     }
 
-    public static async refreshToken(): Promise<ApiResult<null>> {
+    public static async refreshToken(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/refreshtoken"), {
             method: "POST",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         return new ApiResult<null>(response.status);
     }
 
-    public static async validateAuthentication(): Promise<ApiResult<null>> {
+    public static async validateAuthentication(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/authenticated"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
-        if (response.status === status.UNAUTHORIZED) return await this.refreshToken();
+        if (response.status === status.UNAUTHORIZED) return await this.refreshToken(signal);
         else return new ApiResult<null>(response.status);
     }
 
-    public static async getAccountInfo(): Promise<ApiResult<IAccount>> {
+    public static async getAccountInfo(signal: AbortSignal | null = null): Promise<ApiResult<IAccount>> {
         const response = await fetch(this.pathToUrl("account"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -63,7 +68,7 @@ export class RectureApi {
 
     public static async getRecordings(page: number, pageSize: number, sort: IRecordingSort, query: string | null = null,
                                 classIds: number[] | null = null, subjectIds: number[] | null = null, topicIds: number[] | null = null,
-                                visibilityFilter: RecordingVisibilityFilter | null = null): Promise<ApiResult<IPage<IRecording>>> {
+                                visibilityFilter: RecordingVisibilityFilter | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IRecording>>> {
         let urlParams = new URLSearchParams();
 
         urlParams.append("page", page.toString());
@@ -77,7 +82,8 @@ export class RectureApi {
 
         const response = await fetch(this.pathToUrl("recordings", urlParams), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -89,10 +95,11 @@ export class RectureApi {
 
     }
 
-    public static async getRecording(id: number): Promise<ApiResult<IRecording>> {
+    public static async getRecording(id: number, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
         const response = await fetch(this.pathToUrl("recordings/"+id), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -103,10 +110,11 @@ export class RectureApi {
         }
     }
 
-    public static async getClasses(): Promise<ApiResult<IClass[]>> {
+    public static async getClasses(signal: AbortSignal | null = null): Promise<ApiResult<IClass[]>> {
         const response = await fetch(this.pathToUrl("classes"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -117,10 +125,11 @@ export class RectureApi {
         }
     }
 
-    public static async getSubjects(): Promise<ApiResult<ISubject[]>> {
+    public static async getSubjects(signal: AbortSignal | null = null): Promise<ApiResult<ISubject[]>> {
         const response = await fetch(this.pathToUrl("subjects"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -131,7 +140,7 @@ export class RectureApi {
         }
     }
 
-    public static async getTopics(classId: number, subjectId: number): Promise<ApiResult<ITopic[]>> {
+    public static async getTopics(classId: number, subjectId: number, signal: AbortSignal | null = null): Promise<ApiResult<ITopic[]>> {
         let urlParams = new URLSearchParams();
 
         urlParams.append("classId", classId.toString());
@@ -139,7 +148,8 @@ export class RectureApi {
 
         const response = await fetch(this.pathToUrl("topics", urlParams), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -150,10 +160,11 @@ export class RectureApi {
         }
     }
 
-    public static async getTimetable(): Promise<ApiResult<ITimetable>> {
+    public static async getTimetable(signal: AbortSignal | null = null): Promise<ApiResult<ITimetable>> {
         const response = await fetch(this.pathToUrl("lessons/timetable"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -165,10 +176,11 @@ export class RectureApi {
         }
     }
 
-    public static async getLessons(): Promise<ApiResult<ILesson[]>> {
+    public static async getLessons(signal: AbortSignal | null = null): Promise<ApiResult<ILesson[]>> {
         const response = await fetch(this.pathToUrl("lessons"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -180,14 +192,15 @@ export class RectureApi {
         }
     }
 
-    public static async getCommentsByRecording(recordingId: number): Promise<ApiResult<IPage<IComment>>> {
+    public static async getCommentsByRecording(recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IComment>>> {
         let urlParams = new URLSearchParams();
 
         urlParams.append("recordingId", recordingId.toString());
 
         const response = await fetch(this.pathToUrl("comments", urlParams), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -199,10 +212,11 @@ export class RectureApi {
         }
     }
 
-    public static async getRepliesByComment(commentId: number): Promise<ApiResult<IPage<ICommentReply>>> {
+    public static async getRepliesByComment(commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<ICommentReply>>> {
         const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         if (response.ok) {
@@ -214,54 +228,59 @@ export class RectureApi {
         }
     }
 
-    public static async renameClass(classId: number, name: string): Promise<ApiResult<null>> {
+    public static async renameClass(classId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("name", name);
 
         const response = await fetch(this.pathToUrl("classes/"+classId), {
             method: "PUT",
             credentials: "include",
-            body: formData
+            body: formData,
+            signal: signal
         });
 
         return new ApiResult(response.status);
     }
 
-    public static async renameSubject(subjectId: number, name: string): Promise<ApiResult<null>> {
+    public static async renameSubject(subjectId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("name", name);
 
         const response = await fetch(this.pathToUrl("subjects/"+subjectId), {
             method: "PUT",
             credentials: "include",
-            body: formData
+            body: formData,
+            signal: signal
         });
 
         return new ApiResult(response.status);
     }
 
-    public static async deleteClass(classId: number): Promise<ApiResult<null>> {
+    public static async deleteClass(classId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId), {
             method: "DELETE",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         return new ApiResult(response.status);
     }
 
-    public static async deleteSubject(subjectId: number): Promise<ApiResult<null>> {
+    public static async deleteSubject(subjectId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("subjects/"+subjectId), {
             method: "DELETE",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         return new ApiResult(response.status);
     }
 
-    public static async deleteLesson(lessonId: number): Promise<ApiResult<null>> {
+    public static async deleteLesson(lessonId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("lessons/"+lessonId), {
             method: "DELETE",
-            credentials: "include"
+            credentials: "include",
+            signal: signal
         });
 
         return new ApiResult(response.status);

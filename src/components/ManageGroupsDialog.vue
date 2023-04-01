@@ -8,7 +8,7 @@
                 <v-row>
                     <v-spacer/>
                     <v-col cols="auto">
-                        <v-btn-toggle v-model="view">
+                        <v-btn-toggle v-model="view" mandatory>
                             <v-btn value="classes">CLASSES</v-btn>
                             <v-btn value="subjects">SUBJECTS</v-btn>
                         </v-btn-toggle>
@@ -68,17 +68,20 @@
     </v-dialog>
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.name+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.name+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.name+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.name+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
+    <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
     <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
         <v-progress-circular color="primary" indeterminate size="64"/>
     </v-overlay>
 </template>
 
 <script lang="ts" setup>
-    //TODO: Create some way of managing topics
+    //TODO: Add some way of managing topics
     import { RectureApi, IClass, ISubject } from '@/api/RectureApi';
     import { ref, watch } from 'vue';
+    import status from 'http-status';
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import InputDialog from './InputDialog.vue';
+    import MessageDialog from './MessageDialog.vue';
 
     const props = defineProps<{
         modelValue?: boolean
@@ -86,7 +89,7 @@
 
     const emit = defineEmits<{
         (e: "update:modelValue", val: boolean): void,
-        (e: "dataUpdated"): void
+        (e: "dataModified"): void
     }>();
 
     const view = ref<"classes" | "subjects" | null>(null);
@@ -94,6 +97,10 @@
 
     const confirmationDialogVisible = ref<boolean>(false);
     const renameDialogVisible = ref<boolean>(false);
+    
+    const errorDialogVisible = ref<boolean>(false);
+    const errorDialogMessage = ref<string>("");
+
     const loadingOverlayVisible = ref<boolean>(false);
 
     const selectedItem = ref<IClass | ISubject | null>(null);
@@ -104,21 +111,25 @@
         if (value === true) view.value = "classes";
     });
 
+    let fetchAbortController = new AbortController();
+
     function loadView(view: "classes" | "subjects" | null) {
+        fetchAbortController.abort();
+        fetchAbortController = new AbortController();
         tableItems.value = null;
         
         if (view === "classes") {
-            RectureApi.getClasses().then(result => {
+            RectureApi.getClasses(fetchAbortController.signal).then(result => {
                 if (result.success && result.data != null) tableItems.value = result.data;
             }).catch(reason => {
-                tableItems.value = [];
+                if (reason.name !== "AbortError") tableItems.value = [];
             });
         } else if (view === "subjects") {
-            RectureApi.getSubjects().then(result => {
+            RectureApi.getSubjects(fetchAbortController.signal).then(result => {
                 if (result.success && result.data != null) tableItems.value = result.data;
             }).catch(reason => {
-                tableItems.value = [];
-            });;
+                if (reason.name !== "AbortError") tableItems.value = [];
+            });
         } else {
             tableItems.value = [];
         }
@@ -138,44 +149,48 @@
         if (!positive) return;
 
         const item = selectedItem.value;
-        //if (tableItems.value != null) tableItems.value = tableItems.value?.filter(val => val !== item);
 
         if ((item as IClass).classId) {
             loadingOverlayVisible.value = true;
             const classId = (item as IClass).classId;
             RectureApi.deleteClass(classId).then(result => {
-                loadingOverlayVisible.value = false;
-                selectedItem.value = null;
                 if (result.success) {
-                    emit("dataUpdated");
+                    emit("dataModified");
                     if (tableItems.value != null) tableItems.value = tableItems.value?.filter(val => val !== item);
-                    //else loadView(view.value);
-                } //else loadView(view.value);
+                } else {
+                    if (result.statusCode == status.CONFLICT) errorDialogMessage.value = "Cannot delete class to which one or more recordings is assigned.";
+                    else errorDialogMessage.value = "Failed to delete class.";
+                    errorDialogVisible.value = true;
+                }
             }).catch(reason => {
+                errorDialogMessage.value = "Failed to delete class.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
                 loadingOverlayVisible.value = false;
                 selectedItem.value = null;
-                //loadView(view.value);
             });
         } else if ((item as ISubject).subjectId) {
             loadingOverlayVisible.value = true;
             const subjectId = (item as ISubject).subjectId;
             RectureApi.deleteSubject(subjectId).then(result => {
-                loadingOverlayVisible.value = false;
-                selectedItem.value = null;
                 if (result.success) {
-                    emit("dataUpdated");
+                    emit("dataModified");
                     if (tableItems.value != null) tableItems.value = tableItems.value?.filter(val => val !== item);
-                    //else loadView(view.value);
-                } //else loadView(view.value);
+                } else {
+                    if (result.statusCode == status.CONFLICT) errorDialogMessage.value = "Cannot delete subject to which one or more recordings is assigned.";
+                    else errorDialogMessage.value = "Failed to delete subject.";
+                    errorDialogVisible.value = true;
+                }
             }).catch(reason => {
+                errorDialogMessage.value = "Failed to delete subject.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
                 loadingOverlayVisible.value = false;
                 selectedItem.value = null;
-                //loadView(view.value);
             });
         } else {
             loadingOverlayVisible.value = false;
             selectedItem.value = null;
-            //loadView(view.value);
         }
     }
 
@@ -188,38 +203,43 @@
             loadingOverlayVisible.value = true;
             const classId = (item as IClass).classId;
             RectureApi.renameClass(classId, input).then(result => {
-                loadingOverlayVisible.value = false;
-                selectedItem.value = null;
                 if (result.success) {
-                    emit("dataUpdated");
+                    emit("dataModified");
                     if (item != null) item.name = input;
-                    //else loadView(view.value);
-                } //else loadView(view.value);
+                } else {
+                    //TODO: Add separate message for incorrect name format
+                    errorDialogMessage.value = "Failed to rename class.";
+                    errorDialogVisible.value = true;
+                }
             }).catch(reason => {
+                errorDialogMessage.value = "Failed to rename class.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
                 loadingOverlayVisible.value = false;
                 selectedItem.value = null;
-                //loadView(view.value);
             });
         } else if ((item as ISubject).subjectId) {
             loadingOverlayVisible.value = true;
             const subjectId = (item as ISubject).subjectId;
             RectureApi.renameSubject(subjectId, input).then(result => {
-                loadingOverlayVisible.value = false;
-                selectedItem.value = null;
                 if (result.success) {
-                    emit("dataUpdated");
+                    emit("dataModified");
                     if (item != null) item.name = input;
-                    //else loadView(view.value);
-                } //else loadView(view.value);
+                } else {
+                    //TODO: Add separate message for incorrect name format
+                    errorDialogMessage.value = "Failed to rename subject.";
+                    errorDialogVisible.value = true;
+                }
             }).catch(reason => {
+                errorDialogMessage.value = "Failed to rename subject.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
                 loadingOverlayVisible.value = false;
                 selectedItem.value = null;
-                //loadView(view.value);
             });
         } else {
             loadingOverlayVisible.value = false;
             selectedItem.value = null;
-            //loadView(view.value);
         }
     }
 </script>
