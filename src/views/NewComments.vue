@@ -3,6 +3,9 @@
         <v-row class="pl-8 mt-10">
                 <p class="text-h4 font-weight-medium">Comments</p>
         </v-row>
+        
+        <TimetableSetupDialog/>
+
         <v-row class="mt-12" fluid align-content="start" align-self="start">
             <v-col cols="8" class="v-col-comments mb-n2">
                 <v-row align-content="center">
@@ -82,6 +85,7 @@
 <script lang="ts" setup>
     import ReplyTextField from '@/components/ReplyTextField.vue'
     import "@/styles/newcomments.scss";
+    import TimetableSetupDialog from '@/components/TimetableSetupDialog.vue';
 
     function showReplyField() {    
     }

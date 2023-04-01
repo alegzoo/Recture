@@ -210,3 +210,21 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
+
+.days-headline{
+    opacity: 50%;
+}
+
+.setup-timetable-card {
+    background-color: #efefef !important;
+    border-radius: 7px !important;
+}
+
+.set-up-timetable {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    background-color: #5cb978;
+    color: white !important;
+    font-size: large;
+    font-weight: bold;
+}
