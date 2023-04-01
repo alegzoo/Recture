@@ -121,12 +121,14 @@
         if (view === "classes") {
             RectureApi.getClasses(fetchAbortController.signal).then(result => {
                 if (result.success && result.data != null) tableItems.value = result.data;
+                else tableItems.value = [];
             }).catch(reason => {
                 if (reason.name !== "AbortError") tableItems.value = [];
             });
         } else if (view === "subjects") {
             RectureApi.getSubjects(fetchAbortController.signal).then(result => {
                 if (result.success && result.data != null) tableItems.value = result.data;
+                else tableItems.value = [];
             }).catch(reason => {
                 if (reason.name !== "AbortError") tableItems.value = [];
             });
