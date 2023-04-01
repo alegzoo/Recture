@@ -93,29 +93,29 @@
 
                     <v-row no-gutters>
                         <v-col align="center">
-                            <v-btn-toggle v-model="toggle_one" divided class="toggle-btns-colors" selected-class="selected">
+                            <v-btn-toggle v-model="selectedColor" divided class="toggle-btns-colors" selected-class="selected" mandatory>
 
-                            <v-btn class="mustard btn-group-colors" size="small"  :active="false" :ripple="false"/>
+                                <v-btn class="mustard btn-group-colors" size="small" value="mustard" :active="false" :ripple="false"/>
 
-                            <v-btn class="aqua btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="aqua btn-group-colors" size="small" value="aqua" :active="false" :ripple="false"/>
 
-                            <v-btn class="steel-blue btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="steel-blue btn-group-colors" size="small" value="steel-blue" :active="false" :ripple="false"/>
 
-                            <v-btn class="red btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="red btn-group-colors" size="small" value="red" :active="false" :ripple="false"/>
 
-                            <v-btn class="grey btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="gray btn-group-colors" size="small" value="gray" :active="false" :ripple="false"/>
 
-                            <v-btn class="rose btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="rose btn-group-colors" size="small" value="rose" :active="false" :ripple="false"/>
 
-                            <v-btn class="melon btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="melon btn-group-colors" size="small" value="melon" :active="false" :ripple="false"/>
 
-                            <v-btn class="blush btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="blush btn-group-colors" size="small" value="blush" :active="false" :ripple="false"/>
 
-                            <v-btn class="crystal-blue btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="crystal-blue btn-group-colors" size="small" value="cystal-blue" :active="false" :ripple="false"/>
 
-                            <v-btn class="canary btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="canary btn-group-colors" size="small" value="canary" :active="false" :ripple="false"/>
 
-                            <v-btn class="orchid btn-group-colors" size="small" :active="false" :ripple="false"/>
+                                <v-btn class="orchid btn-group-colors" size="small" value="orchid" :active="false" :ripple="false"/>
 
                             </v-btn-toggle>
                         </v-col>
@@ -155,15 +155,78 @@
         </v-dialog>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    .create-lesson-card {
+        background-color: #efefef;
+        border-radius: 7px !important;
+    }
 
+    .choose-btns {
+        border: solid 2px black;
+        border-radius: 0px;
+        box-shadow: 3px 3px 0px 0px black;
+    }
+
+    .headline-colors {
+        opacity: 50%;
+    }
+
+    .btn-group-colors {
+        border-color: black !important;
+        border-width: 2px !important;
+        box-shadow: none;
+        transition: border-style 0.2s ease-out, transform 0.1s ease-out, box-shadow 0.2s ease-out;
+    }
+
+    .btn-group-colors:hover {
+        box-shadow: 0px 0px 0px 2px black inset;
+    }
+
+    .btn-group-colors.selected, .btn-group-colors.selected:hover {
+        box-shadow: none;
+        border: solid 4px black !important;
+        transform: scale(1.1);
+        border-style: solid !important;
+        z-index: 100;
+        transition: border-style none, transform 0.1s ease-in, box-shadow 0.2s ease-in;
+    }
+
+    .v-btn-toggle {
+        position: relative;
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        overflow: visible;
+    }
+
+    .copy-btn {
+        font-size: large;
+    }
+
+    .invitation-btn {
+        background-color: #00A6E2;
+        color: white !important;
+        rotate: 90;
+    }
+
+    .create-btn-upload {
+        border-top-right-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+        background-color: #5cb978;
+        color: white !important;
+        font-size: large;
+        font-weight: bold;
+    }
 </style>
 
 <script lang="ts" setup>
     import { ref } from 'vue';
     import "@/styles/lesson-colors.scss";
     import "@/styles/main.scss";
-    const toggle_one = ref<boolean>(false);
+    import { LessonColor } from '@/api/RectureApi';
+
+    const selectedColor = ref<LessonColor | null>(null);
 
     const dialog = ref(false);
     const items = ref([
