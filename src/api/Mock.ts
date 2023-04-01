@@ -344,6 +344,7 @@ export function makeServer() {
                 const classId = parseInt(request.params.id);
                 const clazz = schema.findBy("class", {classId: classId});
                 if (clazz != null) {
+                    schema.where("lesson", {classId: clazz.classId}).destroy();
                     clazz.destroy();
                     return new Response(200);
                 } else {
@@ -355,6 +356,7 @@ export function makeServer() {
                 const subjectId = parseInt(request.params.id);
                 const subject = schema.findBy("subject", {subjectId: subjectId});
                 if (subject != null) {
+                    schema.where("lesson", {subjectId: subject.subjectId}).destroy();
                     subject.destroy();
                     return new Response(200);
                 } else {

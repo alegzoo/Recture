@@ -46,7 +46,7 @@
             </v-col>
         </v-row>
     </v-container>
-    <ManageGroupsDialog v-model="showManageGroupsDialog" @dataUpdated="timetableStore.fetchLessons()"/>
+    <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetableStore.fetchLessons()"/>
 </template>
 
 <style>
