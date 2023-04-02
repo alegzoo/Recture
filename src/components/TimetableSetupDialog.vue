@@ -32,21 +32,21 @@
                         </v-col>
                     </v-row>
 
-                    <v-row no-gutters class="pt-3">
+                    <v-row no-gutters class="pt-5">
                         <v-col class="pl-1">
                             <h4>Number of lessons per day at your school</h4>
                         </v-col>
                     </v-row>
 
-                    <v-row no-gutters class="pt-3">
+                    <v-row no-gutters class="pt-5">
                         <v-spacer/>
-                        <v-col cols="4">
+                        <v-col cols="3">
                             <Spinner v-model="start"/>
                         </v-col>
                         <v-col cols="2" align="center" align-self="center">
                             <v-icon icon="mdi-minus"/>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="3">
                             <Spinner v-model="end"/>
                         </v-col>
                         <v-spacer/>
@@ -54,7 +54,7 @@
                     <v-row no-gutters class="pt-3">
                         <v-spacer/>
                         <v-col cols="4" class="spinner-label">Start</v-col>
-                        <v-col cols="2"/>
+                        <v-col cols="1"/>
                         <v-col cols="4" class="spinner-label">End</v-col>
                         <v-spacer/>
                     </v-row>
