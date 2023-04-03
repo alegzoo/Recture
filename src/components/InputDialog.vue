@@ -1,6 +1,6 @@
 <template>
     <v-dialog :model-value="modelValue" width="500" persistent>
-        <v-card>
+        <v-card class="v-card-rename-dialog">
             <template v-slot:title>
                 <h2 class="pt-3">{{ title }}</h2>
             </template>
@@ -12,16 +12,15 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-text-field v-model="input" :label="inputLabel" class="py-5" hide-details/>
+                        <v-text-field variant="underlined" single-line v-model="input" :label="inputLabel" class="py-5" hide-details/>
                     </v-col>
                 </v-row>
             </v-card-text>
-            <v-divider/>
-            <v-card-actions>
+            <v-card-actions class="pb-5" align-content="center">
                 <v-spacer/>
-                <v-btn variant="text" @click="closeDialog(true)" :color="positiveButtonColor">{{ positiveButtonText }}</v-btn>
+                <v-btn variant="text" class="rename-btn" selected-class="selected" width="215" @click="closeDialog(true)" :color="positiveButtonColor">{{ positiveButtonText }}</v-btn>
                 <v-spacer/>
-                <v-btn variant="text" @click="closeDialog(false)" :color="negativeButtonColor">{{ negativeButtonText }}</v-btn>
+                <v-btn variant="text" width="215" @click="closeDialog(false)" :color="negativeButtonColor">{{ negativeButtonText }}</v-btn>
                 <v-spacer/>
             </v-card-actions>
         </v-card>

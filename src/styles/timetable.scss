@@ -197,8 +197,16 @@
     border-bottom: solid 2px black !important;
 }
 
-.v-btn-toggle .v-btn.selected{
-    border-radius: 4 0 0 4;
-    border: 2px black solid;
+.v-dialog .v-card-rename-dialog{
+    background-color: #efefef;
+    border-radius: 7px !important;
+}
+
+.rename-btn{
     background-color: $recture-yellow;
+    color: black !important;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: 0 3px 0px 0px black !important;
 }

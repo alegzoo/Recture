@@ -8,9 +8,9 @@
                 <v-row>
                     <v-spacer/>
                     <v-col cols="auto">
-                        <v-btn-toggle selected-class="selected" v-model="view" mandatory>
-                            <v-btn variant="plain" value="classes">CLASSES</v-btn>
-                            <v-btn value="subjects">SUBJECTS</v-btn>
+                        <v-btn-toggle v-model="view" mandatory selected-class="selected">
+                            <v-btn variant="flat" value="classes" :active="false" :ripple="false">CLASSES</v-btn>
+                            <v-btn variant="flat" value="subjects" :active="false" :ripple="false">SUBJECTS</v-btn>
                         </v-btn-toggle>
                     </v-col>
                     <v-spacer/>

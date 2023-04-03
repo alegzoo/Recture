@@ -210,3 +210,45 @@
         transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
+
+.save-btn-upload{
+    background-color: #00A6E2;
+    color: white !important;
+    font-size: large;
+    font-weight: bold;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.upload-card{
+    background-color: #efefef;
+}
+
+.left-col-upload{
+    background-color: transparent;
+}
+
+.right-col-upload{
+    background-color: #828282 !important;
+}
+
+.v-sheet-subject{
+    background-color: $recture-yellow !important;
+    border-radius: 3px 0 0 3px !important;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 4px 4px 0px 0px black;
+
+}
+
+.class-chip-comment{
+    background-color: #e24a42;
+    color: white;
+    box-shadow: 4px 4px 0px 0px black;
+}
+
+.subtitles{
+    color: black;
+    opacity: 50%;
+}

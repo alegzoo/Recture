@@ -78,6 +78,9 @@
                             <p class="font-weight-black">{{ accountStore.bio }}</p>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <UploadDialog></UploadDialog>
+                    </v-row>
                 </v-container>
             </v-sheet>
         </v-container>
@@ -92,6 +95,7 @@
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import CreateLessonDialog from '@/components/CreateLessonDialog.vue';
+    import UploadDialog from '@/components/UploadDialog.vue';
     import "@/styles/profile.scss";
 
     const accountStore = useAccountStore();
