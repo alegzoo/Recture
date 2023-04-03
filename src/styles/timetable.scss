@@ -163,3 +163,42 @@
         transform: rotate(0deg);
     }
 }
+
+.manage-dialog-v-card{
+    background-color: #efefef;
+    border-radius: 7px !important;
+}
+
+.rows-items-manage-timetabe{
+    background-color: transparent !important;
+}
+
+.tooltip-manage-timetable div{
+    opacity: 100% !important;
+    background-color: $recture-yellow !important;
+    color: black !important;
+    border: solid 2px black !important;
+    border-radius: 6px !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+
+.v-table td , .v-table th {
+    border: none !important;
+    font-size: 22px;
+}
+
+.v-dialog .v-table .v-table__wrapper tbody > tr{
+    outline: dashed 1px #00000033 !important;
+    overflow: visible !important;
+}
+
+.v-dialog .v-table .v-table__wrapper thead > tr > th{
+    border-bottom: solid 2px black !important;
+}
+
+.v-btn-toggle .v-btn.selected{
+    border-radius: 4 0 0 4;
+    border: 2px black solid;
+    background-color: $recture-yellow;
+}

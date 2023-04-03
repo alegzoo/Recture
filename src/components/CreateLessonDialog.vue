@@ -210,7 +210,11 @@
         rotate: 90;
     }
 
-    .create-btn-upload {
+    .invitation-btn .v-icon{
+        transform: rotate(-45deg) !important;
+    }
+
+   .create-btn-upload {
         border-top-right-radius: 0px !important;
         border-top-left-radius: 0px !important;
         background-color: #5cb978;

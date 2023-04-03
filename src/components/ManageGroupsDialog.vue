@@ -1,6 +1,6 @@
 <template>
     <v-dialog :model-value="modelValue" width="800" persistent>
-        <v-card>
+        <v-card class="manage-dialog-v-card">
             <v-card-title>
                 <h2 class="pa-5">MANAGE CLASSES AND SUBJECTS</h2>
             </v-card-title>
@@ -8,8 +8,8 @@
                 <v-row>
                     <v-spacer/>
                     <v-col cols="auto">
-                        <v-btn-toggle v-model="view" mandatory>
-                            <v-btn value="classes">CLASSES</v-btn>
+                        <v-btn-toggle selected-class="selected" v-model="view" mandatory>
+                            <v-btn variant="plain" value="classes">CLASSES</v-btn>
                             <v-btn value="subjects">SUBJECTS</v-btn>
                         </v-btn-toggle>
                     </v-col>
@@ -17,30 +17,30 @@
                 </v-row>
                 <v-row v-show="tableItems != null">
                     <v-col>
-                        <v-table v-show="tableItems?.length !== 0" class="w-100" fixed-header>
+                        <v-table v-show="tableItems?.length !== 0" class="w-100 rows-items-manage-timetabe" fixed-header>
                             <thead>
                                 <tr>
-                                    <th class="text-left">Name</th>
-                                    <th class="text-right">Actions</th>
+                                    <th class="text-left rows-items-manage-timetabe">Name</th>
+                                    <th class="text-right rows-items-manage-timetabe">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="item in tableItems">
-                                    <td>
-                                        <span>{{ item.name }}</span>
-                                        <v-tooltip text="Rename" location="end">
+                                    <td class="pt-2">
+                                        <span class="font-weight-black">{{ item.name }}</span>
+                                        <v-tooltip text="Rename" class="tooltip-manage-timetable" location="end">
                                             <template v-slot:activator="{ props }">
                                                 <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="showRenameDialog(item)"/>
                                             </template>
                                         </v-tooltip>
                                     </td>
                                     <td class="text-right">
-                                        <v-tooltip text="View members" location="start">
+                                        <v-tooltip class="tooltip-manage-timetable" text="View members" location="start">
                                             <template v-slot:activator="{ props }">
                                                 <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
                                             </template>
                                         </v-tooltip>
-                                        <v-tooltip text="Delete" location="end">
+                                        <v-tooltip class="tooltip-manage-timetable" text="Delete" location="end">
                                             <template v-slot:activator="{ props }">
                                                 <v-btn v-bind="props" variant="plain" icon="mdi-delete" @click="showDeleteDialog(item)"/>
                                             </template>
