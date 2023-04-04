@@ -229,7 +229,7 @@
 }
 
 .right-col-upload{
-    background-color: #828282 !important;
+    background-color: #C8C7C7 !important;
 }
 
 .v-sheet-subject{
@@ -251,4 +251,24 @@
 .subtitles{
     color: black;
     opacity: 50%;
+}
+
+.choose-thematic-unit{
+    border: solid 2px black;
+    border-radius: 0px;
+    box-shadow: 3px 3px 0px 0px black;
+}
+
+.info-icon{
+    opacity: 50%;
+}
+
+.v-sheet-lesson-preview{
+    color: white;
+    border-radius: 20px !important;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    box-shadow: 4px 4px 0px 0px black;
+    height: 300px;
 }
