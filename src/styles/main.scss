@@ -225,7 +225,8 @@
 }
 
 .left-col-upload{
-    background-color: transparent;
+    background-image: url("@/assets/bckg-upload-dialog.png");
+    background-size: cover;
 }
 
 .right-col-upload{
@@ -270,5 +271,34 @@
     border-width: 3px;
     border-color: black;
     box-shadow: 4px 4px 0px 0px black;
-    height: 300px;
+}
+
+.v-col-outline{
+    border-color: black;
+    border-style: dashed;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-width: 2px;
+}
+
+.upload-icon{
+    font-size: 70px;
+}
+
+.choose-a-file-btn{
+    background-color: #00A6E2 !important;
+    border-color: black !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+    font-weight: bold;
+}
+
+.v-row-top-upload{
+    border-bottom-color: black !important;
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+}
+
+.lesson-headline{
+    opacity: 50% !important;
 }

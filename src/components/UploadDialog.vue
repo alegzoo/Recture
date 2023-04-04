@@ -22,7 +22,7 @@
                             <v-row class="pl-1 pt-4" align="center" no-gutters>
                                 
                                 <v-col cols="1">
-                                    <v-sheet class="v-sheet-subject pa-2 pl-4 " :width="85" :height="44"><p class="font-weight-bold">MAT</p></v-sheet>      
+                                    <v-sheet class="v-sheet-subject pa-2 pl-4 " :width="90" :height="44"><p class="font-weight-bold">MAT</p></v-sheet>      
                                 </v-col>
                                 
                                 <v-col class="pl-4">
@@ -102,7 +102,7 @@
                                 <v-col>
                                     <v-textarea
                                     class="pl-2 text-area-description"
-                                    label="Description of the lesson"
+                                    label="Description of the lesson (optional)"
                                     :ripple="false"
                                     :active="false"
                                     auto-grow
@@ -129,17 +129,14 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row no-gutters class="pt-1">
-                                <v-col class="subtitles pl-3" cols="auto">
+                            <v-row no-gutters class="pt-1" align-content="center">
+                                <v-col class="subtitles pl-3" cols="auto" align-self="center">
                                     <h4>Visibility *</h4>
                                 </v-col>
-                            </v-row>
-                            <v-row no-gutters>
-                                <v-col cols="auto" class="subtitles pl-3 pt-2" align-self="center">
-                                    <p class="text-body-2 font-weight-regular">For saving as a concept, leave Visibility on "Private" and get to it later</p>
+                                <v-col cols="auto" class="pl-3" align-self="center">
+                                    <h5 class="subtitles">(For saving as a concept, leave Visibility on "Private" and get back to it later)</h5>
                                 </v-col>
                             </v-row>
-
                             <v-row no-gutters class="pt-2">
                                 <v-col>
                                     <v-radio-group inline>
@@ -151,21 +148,51 @@
                     </v-col>
 
 
-                <v-col cols="5" class="right-col-upload">
+                    <v-col cols="5" class="right-col-upload">
+                        <v-row align="center" class="h-100" align-self="center" justify="center">
 
-                    <v-row>
-                        <v-row justify="center" align="center" no-gutters class="pl-10 pr-10" align-content="center" align-self="center">
-                            <v-col class="v-sheet-lesson-preview" align="center">
-                                <v-row no-gutters>
-                                    <v-col>
-                                        <v-icon></v-icon>
-                                    </v-col>
-                                </v-row>
-                            </v-col>
+                            <v-card :height="300" :width="360" class="v-sheet-lesson-preview">
+                                <v-sheet :height="180" class="w-100" no-gutters>
+                                    <v-row class="h-100 pa-2 v-row-top-upload" no-gutters align="center">
+                                        <v-col class="h-100 v-col-outline">
+
+                                            <v-row no-gutters align-self="center">
+
+                                                <v-col cols="12" align="center" class="pt-3">
+                                                        <v-icon class="upload-icon" icon="mdi-upload"></v-icon>
+                                                </v-col>
+                                                
+                                                <v-col cols="12" align="center">
+                                                        <p class="font-weight-medium">Drop a file or choose a file</p>
+                                                </v-col>
+
+                                                <v-col cols="12" align="center" class="pt-2">
+                                                    <v-btn class="choose-a-file-btn" variant="text">CHOOSE A FILE</v-btn>
+                                                </v-col>
+                                            </v-row>
+                                            
+                                        </v-col>
+                                    </v-row>
+                                </v-sheet>
+
+                                <v-sheet :height="120" class="w-100" no-gutters>
+                                    <v-row class="h-100" no-gutters>
+
+                                        <v-col cols="12" class="pl-3 pt-2">
+                                            <h2 class="lesson-headline">Title of the lesson</h2>
+                                            <p class="font-weight-regular pt-1">28.2.2023</p>
+                                            <p class="font-weight-bold pt-1">I.C</p>
+                                        </v-col>
+
+                                    </v-row>                                
+                                </v-sheet>
+
+                            
+                            </v-card>
+                                                       
                         </v-row>
-                    </v-row>
-                    
-                </v-col>
+                    </v-col>
+
             </v-row>
         </v-card-text>
 
