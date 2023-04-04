@@ -198,7 +198,7 @@
 
 
             <v-row no-gutters height="auto">
-                <v-col align="center">
+                <v-col align="center" align-self="end">
                     <v-btn class="save-btn-upload" width="1100" height="50" variant="text">CREATE</v-btn>
                 </v-col>
             </v-row>

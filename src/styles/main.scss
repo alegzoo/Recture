@@ -225,8 +225,10 @@
 }
 
 .left-col-upload{
-    background-image: url("@/assets/bckg-upload-dialog.png");
-    background-size: cover;
+    //background-image: url("@/assets/bckg-upload-dialog.png");
+    background-color: #efefef;;
+    //background-size: cover !important;
+    //overflow: visible !important;
 }
 
 .right-col-upload{
