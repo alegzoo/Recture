@@ -9,35 +9,24 @@
                 </template>
                 <v-card-text>
                     <v-row align="center" class="px-1" no-gutters>
-                        <v-col cols="6">
-                            <v-menu>
-                                <template v-slot:activator="{ props }">
-                                    <v-btn
-                                    :ripple="false"
-                                    class="choose-btns"
-                                    variant="flat"
-                                    append-icon="mdi-chevron-down"
-                                    v-bind="props"
-                                    >
-                                    Choose a class
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <v-list-item
-                                            v-for="(item, index) in items"
-                                            :key="index"
-                                        >
-                                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
+                        <v-col cols="5 pr-2">
+                            <v-combobox
+                                hide-details
+                                no-gutters
+                                class="choose-selectors"
+                                label="Choose a class"
+                                :items="['I.A', 'II.B', 'III.C', 'oktáva A']"
+                                variant="solo"
+                                density="compact"
+                                single-line
+                            ></v-combobox>
                         </v-col>
 
-                        <v-col cols="2">
+                        <v-col cols="2 pl-9">
                             <h2>or</h2>
                         </v-col>
 
-                        <v-col cols="4">
+                        <v-col cols="5">
                             <v-text-field
                             label="Name of the new class"
                             variant="underlined"
@@ -47,35 +36,24 @@
                     </v-row>
 
                     <v-row align="center" class="px-1" no-gutters>
-                        <v-col cols="6">
-                            <v-menu>
-                                <template v-slot:activator="{ props }">
-                                    <v-btn
-                                    :ripple=false
-                                    variant="flat"
-                                    append-icon="mdi-chevron-down"
-                                    v-bind="props"
-                                    class="choose-btns"
-                                    >
-                                    Choose a subject
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <v-list-item
-                                            v-for="(item, index) in items2"
-                                            :key="index"
-                                        >
-                                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
+                        <v-col cols="5 pr-2">
+                            <v-combobox
+                                hide-details
+                                no-gutters
+                                class="choose-selectors"
+                                label="Choose a subject"
+                                :items="['MAT', 'INF']"
+                                variant="solo"
+                                density="compact"
+                                single-line
+                            ></v-combobox>
                         </v-col>
 
-                        <v-col cols="2">
+                        <v-col cols="2 pl-9">
                             <h2>or</h2>
                         </v-col>
 
-                        <v-col cols="4">
+                        <v-col cols="5">
                             <v-text-field
                             label="Name your new subject"
                             variant="underlined"
@@ -156,16 +134,23 @@
 </template>
 
 <style lang="scss" scoped>
-    .create-lesson-card {
-        background-color: #efefef;
-        border-radius: 7px !important;
-    }
 
-    .choose-btns {
-        border: solid 2px black;
-        border-radius: 0px;
-        box-shadow: 3px 3px 0px 0px black;
+
+    .create-lesson-card{
+        background-color: #efefef;
     }
+    .v-combobox * {
+        box-shadow: none;
+    }
+    .choose-selectors{
+    border: solid 2px black !important;
+    border-radius: 0px !important;
+    box-shadow: 2px 2px 0px 0px black !important;
+    background-color: white !important;
+    font-weight: bold;
+    color: black !important;
+    text-transform: uppercase !important;
+    } 
 
     .headline-colors {
         opacity: 50%;
@@ -211,7 +196,7 @@
     }
 
     .invitation-btn .v-icon{
-        transform: rotate(-45deg) !important;
+        transform: rotate(-45deg);
     }
 
    .create-btn-upload {
@@ -232,15 +217,4 @@
 
     const selectedColor = ref<LessonColor | null>(null);
 
-    const dialog = ref(false);
-    const items = ref([
-        { title: 'I.A' },
-        { title: 'II.B' },
-        { title: 'III.C' },
-        { title: 'oktáva A' }
-    ]);
-    const items2 = ref([
-        { title: 'MAT' },
-        { title: 'INF' },
-    ]);
 </script>

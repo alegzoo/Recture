@@ -33,14 +33,7 @@
                                 </v-btn>
                             </v-col>
 
-                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                                <v-btn 
-                                    variant="text" 
-                                    id="btn-new-theme-unit"  
-                                    append-icon="mdi-plus-circle">
-                                    NEW THEMATIC UNIT
-                                </v-btn>
-                            </v-col>  
+                            <NewThematicUnit></NewThematicUnit>
 
                             <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
                                 <v-btn 
@@ -113,6 +106,7 @@
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
     import SearchBar from '@/components/SearchBar.vue';
+    import NewThematicUnit from '@/components/NewThematicUnitHome.vue.js';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';

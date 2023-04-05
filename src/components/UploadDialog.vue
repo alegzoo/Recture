@@ -54,27 +54,16 @@
 
                                 <v-row align="center" class="px-1 pl-4" no-gutters>
                                     <v-col cols="5">
-                                        <v-menu>
-                                            <template v-slot:activator="{ props }">
-                                                <v-btn
-                                                :ripple=false
-                                                variant="flat"
-                                                append-icon="mdi-chevron-down"
-                                                v-bind="props"
-                                                class="choose-thematic-unit"
-                                                >
-                                                Choose thematic unit
-                                                </v-btn>
-                                            </template>
-                                            <v-list>
-                                                <v-list-item
-                                                        v-for="(item, index) in items"
-                                                        :key="index"
-                                                    >
-                                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                                                </v-list-item>
-                                            </v-list>
-                                        </v-menu>
+                                        <v-combobox
+                                            hide-details
+                                            no-gutters
+                                            class="choose-selectors"
+                                            label="Choose a class"
+                                            :items="['I.A', 'II.B', 'III.C', 'oktáva A']"
+                                            variant="solo"
+                                            density="compact"
+                                            single-line
+                                        ></v-combobox>
                                     </v-col>
 
                                     <v-col class="pl-10" cols="2">
@@ -223,10 +212,10 @@
     }
 
     .left-col-upload{
-        background-image: url("@/assets/bckg-upload-dialog.png");
-        //background-color: #efefef;;
+        //background-image: url("@/assets/bckg-upload-dialog.png");
+        background-color: #efefef;;
         background-size: cover  !important;
-        overflow: visible !important;
+        //overflow: visible !important;
         //background-clip: content-box !important;
     }
 
@@ -255,10 +244,14 @@
         opacity: 50%;
     }
 
-    .choose-thematic-unit{
-        border: solid 2px black;
-        border-radius: 0px;
-        box-shadow: 3px 3px 0px 0px black;
+    .choose-selectors{
+    border: solid 2px black !important;
+    border-radius: 0px !important;
+    box-shadow: 2px 2px 0px 0px black !important;
+    background-color: white !important;
+    font-weight: bold;
+    color: black !important;
+    text-transform: uppercase !important;
     }
 
     .info-icon{
