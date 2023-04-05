@@ -4,9 +4,9 @@
             <v-btn icon="mdi-checkbox" theme="light"/>
         </template>
         <v-card class="upload-card" no-gutters>
-            <v-card-text no-gutters class="pa-0 pl-2">
-                <v-row no-gutters class="pl-3">
-                    <v-col cols="7" class="left-col-upload">
+            <v-card-text no-gutters class="pa-0">
+                <v-row no-gutters class="pa-0">
+                    <v-col cols="7" class="left-col-upload pl-5">
                             <v-row no-gutters>
                                 <v-col cols="auto">
                                     <h1 class="pt-3">UPLOAD</h1>
@@ -144,9 +144,8 @@
                                         <v-radio class="pl-8" label="Private" value="2"></v-radio>
                                     </v-radio-group>
                                 </v-col>
-                            </v-row>
-                    </v-col>
-
+                        </v-row>
+                </v-col>
 
                     <v-col cols="5" class="right-col-upload">
                         <v-row align="center" class="h-100" align-self="center" justify="center">
@@ -193,7 +192,7 @@
                         </v-row>
                     </v-col>
 
-            </v-row>
+                </v-row>
         </v-card-text>
 
 
@@ -224,10 +223,11 @@
     }
 
     .left-col-upload{
-        //background-image: url("@/assets/bckg-upload-dialog.png");
-        background-color: #efefef;;
-        //background-size: cover !important;
-        //overflow: visible !important;
+        background-image: url("@/assets/bckg-upload-dialog.png");
+        //background-color: #efefef;;
+        background-size: cover  !important;
+        overflow: visible !important;
+        //background-clip: content-box !important;
     }
 
     .right-col-upload{
