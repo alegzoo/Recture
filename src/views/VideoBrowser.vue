@@ -27,12 +27,8 @@
                             </v-col>
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
-                            <v-col cols="12" md="auto" align="center">
-                                <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
-                                    UPLOAD
-                                </v-btn>
-                            </v-col>
 
+                            <UploadDialogTimetable/>
                             <NewThematicUnit></NewThematicUnit>
 
                             <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
@@ -106,7 +102,8 @@
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
     import SearchBar from '@/components/SearchBar.vue';
-    import NewThematicUnit from '@/components/NewThematicUnitHome.vue.js';
+    import NewThematicUnit from '@/components/NewThematicUnitHome.vue';
+    import UploadDialogTimetable from '@/components/UploadDialogTimetable.vue';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';

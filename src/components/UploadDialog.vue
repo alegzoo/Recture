@@ -26,7 +26,6 @@
                                 </v-col>
                                 
                                 <v-col class="pl-4">
-                                    
                                     <v-chip class="class-chip-comment px-6" size="x-large" variant="text">I.C</v-chip>
                                 </v-col>
 
@@ -209,6 +208,7 @@
 
     .upload-card{
         background-color: #efefef;
+        border-radius: 6px;
     }
 
     .left-col-upload{
