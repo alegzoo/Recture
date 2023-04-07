@@ -9,6 +9,7 @@
         <v-row no-gutters>
 
             <v-col cols="9">
+
                 <v-row no-gutters>
                     <v-col cols="auto" class="pl-11" align-self="center" align="center">
                         <v-sheet
@@ -19,16 +20,17 @@
                         <h4>MAT</h4>
                         </v-sheet>
                     </v-col>
-                        
-                    <v-col cols="auto" align-self="center" align="center">
+
+                    <v-col cols="auto" class="v-col-thematic-unit" align-self="center" align="center">
                         <v-sheet
                         class="thematic-unit-v-sheet pt-1"
                         :height="35"
-                        :width="100"
+                        :width="90"
                         >
                         <h4>FUNKCIE</h4>
                         </v-sheet>  
                     </v-col>
+
                 </v-row>
                     
                 <v-row no-gutters class="pl-11" md="12" xl="12" lg="12">
@@ -109,7 +111,7 @@
                     </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-5">
+                <v-row no-gutters class="pt-5 v-row-comment">
                     <v-col class="pl-11" cols="1">
                         <v-avatar class="teacher-student-avatar" size="large" image="/student1.png"></v-avatar>
                     </v-col>
@@ -118,13 +120,20 @@
                     </v-col>
                     <v-col align-self="center" class="pl-5" cols="auto">
                         <v-chip class="student-chip">IV.A</v-chip>
-                    </v-col>  
+                    </v-col>
+                    
                 </v-row>
                 
                 <v-row no-gutters class="pt-2 pl-16">
                     <v-col cols="12" class="pl-12">
                         <p>Dobrý deň, chýbala som na dnešnej hodine a rada by som sa opýtala čo by sa stalo ak by namiesto mocniny bola odmocnina v druhom
                         príklade (21:12)</p>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="pt-2 pl-16">
+                    <v-col cols="auto" class="pl-8">
+                        <v-btn :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
                     </v-col>
                 </v-row>
 
@@ -138,13 +147,18 @@
                     <v-col align-self="center" class="pl-5" cols="auto">
                         <v-chip class="student-chip">IV.A</v-chip>
                     </v-col>
-                    
                 </v-row>
                 
                 <v-row no-gutters class="pt-2 pl-16">
                     <v-col cols="12" class="pl-12">
                         <p>Rád by som sa opýtal čo ste mysleli tou poznámkou v čase 37:44 lebo som tomu neporozumel a taktiež prečo bolo na tabuli napísané
                         odmocnina z 3-troch v čase 38:55</p>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="pt-2 pl-16">
+                    <v-col cols="auto" class="pl-8">
+                        <v-btn :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
                     </v-col>
                 </v-row>
 
@@ -241,14 +255,15 @@
     border-style: solid;
 }
 
+.reply-btn{
+    color: black;
+    opacity: 100%;
+}
+
 .v-sheet-line{
     border-bottom: dashed 3px black;
     background-color: transparent;
     opacity: 20%;
-}
-
-.field-add-comment{
-    font-size: 200px !important;
 }
 
 
