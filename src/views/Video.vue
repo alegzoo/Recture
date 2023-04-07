@@ -51,7 +51,7 @@
                     <v-spacer/>
 
                     <v-col class="pt-3 pl-13" cols="auto">
-                        <v-btn variant="text" class="test-yourself-btn" prepend-icon="mdi-check">Test yourself</v-btn>
+                        <v-btn variant="text" :ripple="false" class="test-yourself-btn" prepend-icon="mdi-check-bold">Test yourself</v-btn>
                     </v-col>
 
                 </v-row>
@@ -101,8 +101,11 @@
                     <v-col class="pl-11" cols="1">
                         <v-avatar class="teacher-student-avatar" size="large" image="/jano.png"></v-avatar>
                     </v-col>
-                    <v-col cols="11" class="pl-5">
+                    <v-col cols="10" class="pl-5">
                         <v-textarea class="field-add-comment" label="Add a comment..." variant="outlined" auto-grow row-height="10" rows="2"></v-textarea>
+                    </v-col>
+                    <v-col cols="auto" class="pl-5 pb-5" align-self="end" align="center">
+                        <v-btn variant="text" :ripple="false" class="post-btn" theme="light" icon="mdi-send"></v-btn>
                     </v-col>
                 </v-row>
 
@@ -125,7 +128,7 @@
                     </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-5">
+                <v-row no-gutters class="pt-10">
                     <v-col class="pl-11" cols="auto">
                         <v-avatar class="teacher-student-avatar" size="large" image="/student2.png"></v-avatar>
                     </v-col>
@@ -290,6 +293,11 @@
 }
 
 
+.post-btn{
+    background-color: black;
+    color: white;
+}
+
 </style>
 
 <script lang="ts" setup>
@@ -299,7 +307,6 @@
     import VideoPlayer from '@/components/VideoPlayer.vue';
     import { useRecording, IUsableRecording } from '@/composables/useRecording';
     import { IRecording } from '@/api/RectureApi';
-    import { ref } from 'vue';
 
     const { mdAndUp, lgAndDown } = useDisplay();
 
