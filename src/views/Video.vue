@@ -111,31 +111,50 @@
                     </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-5 v-row-comment">
-                    <v-col class="pl-11" cols="1">
-                        <v-avatar class="teacher-student-avatar" size="large" image="/student1.png"></v-avatar>
-                    </v-col>
-                    <v-col align-self="center" class="pl-5" cols="auto">
-                        <h3>Gabriela Fotová</h3>
-                    </v-col>
-                    <v-col align-self="center" class="pl-5" cols="auto">
-                        <v-chip class="student-chip">IV.A</v-chip>
-                    </v-col>
-                    
-                </v-row>
-                
-                <v-row no-gutters class="pt-2 pl-16">
-                    <v-col cols="12" class="pl-12">
-                        <p>Dobrý deň, chýbala som na dnešnej hodine a rada by som sa opýtala čo by sa stalo ak by namiesto mocniny bola odmocnina v druhom
-                        príklade (21:12)</p>
-                    </v-col>
-                </v-row>
 
-                <v-row no-gutters class="pt-2 pl-16">
-                    <v-col cols="auto" class="pl-8">
-                        <v-btn :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
-                    </v-col>
-                </v-row>
+                
+                <template v-for="comment in comments">
+                    <v-row no-gutters class="pt-5">
+                        <v-col cols="1">
+                            <v-col class="pa-0 pl-11">
+                                <v-avatar class="teacher-student-avatar" size="large" image="/student1.png"></v-avatar>
+                            </v-col>
+                            <v-col class="h-100 pl-12 pa-0" align="center" align-self="center">
+                                <v-divider :class="'v-divider-comment'+(comment === replyingTo?' visible':'')" class="v-divider-comment" vertical :thickness="2"></v-divider>
+                            </v-col>
+                        </v-col>
+
+                        
+
+                        <v-col align-self="center" cols="11">
+                            <v-row no-gutters class="pt-3">
+                                <v-col cols="2" class="pa-0 pl-6">
+                                    <h3>Gabriela Fotová</h3>
+                                </v-col> 
+                                <v-col  class="pa-0 pl-5">
+                                    <v-chip class="student-chip">IV.A</v-chip>
+                                </v-col>
+                            </v-row>
+
+                            <v-row no-gutters>
+                                <v-col class="pa-0 pl-6 pt-4">
+                                    <p>Dobrý deň, chýbala som na dnešnej hodine a rada by som sa opýtala čo by sa stalo ak by namiesto mocniny bola odmocnina v druhom
+                                    príklade (21:12)</p>
+                                </v-col>
+
+                            </v-row>
+
+                            <v-row no-gutters>
+                                <v-col cols="1" class="pa-0 pl-4 pt-3">
+                                    <v-btn @click="showReplyToComment(comment)" :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+
+
+                    </v-row>
+                    <ReplyToComment v-if="comment === replyingTo"></ReplyToComment>
+                </template>
 
                 <v-row no-gutters class="pt-10">
                     <v-col class="pl-11" cols="auto">
@@ -309,8 +328,17 @@
 
 
 .post-btn{
-    background-color: black;
-    color: white;
+    background-color: transparent;
+    color: black;
+}
+
+.v-divider-comment {
+    opacity: 0%;
+}
+
+.v-divider-comment.visible {
+    color: black !important;
+    opacity: 100%;
 }
 
 </style>
@@ -321,8 +349,29 @@
     import { useHomeStore } from '@/stores/useHomeStore';
     import VideoPlayer from '@/components/VideoPlayer.vue';
     import { useRecording, IUsableRecording } from '@/composables/useRecording';
-    import { IRecording } from '@/api/RectureApi';
+    import { IRecording, IComment } from '@/api/RectureApi';
+    import ReplyToComment from '@/components/ReplyToComment.vue';
 
+    import { ref } from "vue"
+
+    function showReplyToComment(comment: IComment) {   
+        replyingTo.value = comment;
+    }
+    const comments = ref<IComment[]>([
+        {
+            commentId: 0,
+            recordingId: 0,
+            userId: 0,
+            userFirstName: "test",
+            userLastName: "test",
+            content: "test",
+            creationTimestamp: 0,
+            lastEditTimestamp: 0
+        }
+    ]);
+    const replyingTo = ref<IComment>();
+
+    
     const { mdAndUp, lgAndDown } = useDisplay();
 
     if (lgAndDown.value) {
