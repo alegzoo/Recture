@@ -230,7 +230,6 @@
         border-style: solid;
         border-width: 2px;
         box-shadow: 4px 4px 0px 0px black;
-
     }
 
     .class-chip-comment{

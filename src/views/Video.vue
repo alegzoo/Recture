@@ -2,9 +2,7 @@
     <v-container fluid class="container-video-player" no-gutters>
         <v-row no-gutters class="pt-1">
             <v-spacer/>
-            <v-col cols="auto">
-                <v-btn id="video-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
-            </v-col>
+            <VideoViewEditDialog/>
         </v-row>
         <v-row no-gutters>
 
@@ -351,6 +349,7 @@
     import { useRecording, IUsableRecording } from '@/composables/useRecording';
     import { IRecording, IComment } from '@/api/RectureApi';
     import ReplyToComment from '@/components/ReplyToComment.vue';
+    import VideoViewEditDialog from '@/components/VideoViewEditDialog.vue';
 
     import { ref } from "vue"
 
