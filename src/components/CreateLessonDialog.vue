@@ -1,8 +1,5 @@
 <template>
-        <v-dialog activator="parent" class="h-100 justify-center" width="630" scroll-strategy="block">
-            <template v-slot:activator>
-                <v-btn icon="mdi-checkbox" theme="light"/>
-            </template>
+        <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" class="h-100 justify-center" width="630" scroll-strategy="block">
             <v-card class="create-lesson-card">
                 <template v-slot:title>
                     <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
@@ -15,7 +12,8 @@
                                 no-gutters
                                 class="choose-selectors"
                                 label="Choose a class"
-                                :items="['I.A', 'II.B', 'III.C', 'oktáva A']"
+                                :items="classes"
+                                item-title="name"
                                 variant="solo"
                                 density="compact"
                                 single-line
@@ -28,7 +26,7 @@
 
                         <v-col cols="5">
                             <v-text-field
-                            label="Name of the new class"
+                            label="Enter name of class to create"
                             variant="underlined"
                             single-line
                             ></v-text-field>
@@ -42,7 +40,8 @@
                                 no-gutters
                                 class="choose-selectors"
                                 label="Choose a subject"
-                                :items="['MAT', 'INF']"
+                                :items="subjects"
+                                item-title="name"
                                 variant="solo"
                                 density="compact"
                                 single-line
@@ -55,7 +54,7 @@
 
                         <v-col cols="5">
                             <v-text-field
-                            label="Name your new subject"
+                            label="Enter name of subject to create"
                             variant="underlined"
                             single-line
                             ></v-text-field>
@@ -64,7 +63,7 @@
 
                     <v-row no-gutters>
                         <v-col align="center" class="pt-5 pb-3">
-                            <h4 class="headline-colors">Color of class in timetable</h4>
+                            <h4 class="headline-colors">Color of lesson in timetable</h4>
                         </v-col>
                     </v-row>
 
@@ -72,29 +71,17 @@
                     <v-row no-gutters>
                         <v-col align="center">
                             <v-btn-toggle v-model="selectedColor" divided class="toggle-btns-colors" selected-class="selected" mandatory>
-
                                 <v-btn class="mustard btn-group-colors" size="small" value="mustard" :active="false" :ripple="false"/>
-
                                 <v-btn class="aqua btn-group-colors" size="small" value="aqua" :active="false" :ripple="false"/>
-
                                 <v-btn class="steel-blue btn-group-colors" size="small" value="steel-blue" :active="false" :ripple="false"/>
-
                                 <v-btn class="red btn-group-colors" size="small" value="red" :active="false" :ripple="false"/>
-
                                 <v-btn class="gray btn-group-colors" size="small" value="gray" :active="false" :ripple="false"/>
-
                                 <v-btn class="rose btn-group-colors" size="small" value="rose" :active="false" :ripple="false"/>
-
                                 <v-btn class="melon btn-group-colors" size="small" value="melon" :active="false" :ripple="false"/>
-
                                 <v-btn class="blush btn-group-colors" size="small" value="blush" :active="false" :ripple="false"/>
-
                                 <v-btn class="crystal-blue btn-group-colors" size="small" value="cystal-blue" :active="false" :ripple="false"/>
-
                                 <v-btn class="canary btn-group-colors" size="small" value="canary" :active="false" :ripple="false"/>
-
                                 <v-btn class="orchid btn-group-colors" size="small" value="orchid" :active="false" :ripple="false"/>
-
                             </v-btn-toggle>
                         </v-col>
                     </v-row>
@@ -124,18 +111,14 @@
 
                 <v-row no-gutters class="pt-4" height="auto">
                     <v-col align="center">
-                        <v-btn class="create-btn-upload" width="630" height="50" variant="text">CREATE</v-btn>
+                        <v-btn class="create-btn-upload" width="630" height="50" variant="text" @click="closeDialog(true)">CREATE</v-btn>
                     </v-col>
                 </v-row>
-
-                
             </v-card>
         </v-dialog>
 </template>
 
 <style lang="scss" scoped>
-
-
     .create-lesson-card{
         background-color: #efefef;
     }
@@ -213,8 +196,33 @@
     import { ref } from 'vue';
     import "@/styles/lesson-colors.scss";
     import "@/styles/main.scss";
-    import { LessonColor } from '@/api/RectureApi';
+    import { IClass, ISubject, LessonColor, RectureApi } from '@/api/RectureApi';
+
+    const props = defineProps<{
+        modelValue?: boolean
+    }>();
+
+    const emit = defineEmits<{
+        (e: "update:modelValue", val: boolean): void
+    }>();
+
+    //TODO: Maybe make reactive and move to composable
+    const subjects = ref<ISubject[]>([]);
+    const classes = ref<IClass[]>([]);
+
+    RectureApi.getSubjects().then(result => {
+        if (result.success && subjects.value != null) subjects.value = result.data as ISubject[];
+    });
+
+    RectureApi.getClasses().then(result => {
+        if (result.success && classes.value != null) classes.value = result.data as IClass[];
+    });
 
     const selectedColor = ref<LessonColor | null>(null);
+
+    function closeDialog(success: boolean) {
+        //TODO: Somehow communicate whether a lesson should be created or not (in case user closes the dialog by clicking outside of it)
+        emit('update:modelValue', false);
+    }
 
 </script>

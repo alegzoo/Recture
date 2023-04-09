@@ -8,7 +8,7 @@
             <v-spacer/>
             
             <v-col cols="auto" align-self="center">
-                <v-btn id="timetable-edit-button" :ripple="false" variant="text" :icon="timetableStore.editing?'mdi-close':'mdi-lead-pencil'" @click="timetableStore.toggleEditing()"/>
+                <v-btn id="timetable-edit-button" :ripple="false" variant="text" :icon="timetableStore.editing?'mdi-close':'mdi-lead-pencil'" :disabled="timetableStore.creating" @click="timetableStore.toggleEditing()"/>
             </v-col>
         </v-row>
 
@@ -21,32 +21,48 @@
 
         <v-row class="flex-grow-1">
             <v-col cols="12" :class="'h-100 d-flex flex-column py-7'+(mdAndUp?' px-10':'')">
-                <TimetableGrid id="timetable-grid" align="stretch" class="flex-grow-1" rounded/>
+                <TimetableGrid id="timetable-grid" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick"/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetableStore.editing" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = !showManageGroupsDialog">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetableStore.idle" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = !showManageGroupsDialog">
                             MANAGE CLASSES AND SUBJECTS
                         </v-btn>
                     </v-col>
 
                     <v-spacer v-show="lgAndUp"/>
 
-                    <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetableStore.editing" append-icon="mdi-plus-circle">
-                            NEW THEMATIC UNIT
-                        </v-btn>
-                    </v-col>
+                    <template v-if="timetableStore.creating">
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button secondary" :ripple="false" @click="timetableStore.stopCreating()">
+                                CANCEL
+                            </v-btn>
+                        </v-col>
 
-                    <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetableStore.editing" append-icon="mdi-plus-circle">
-                            NEW QUESTION SERIES
-                        </v-btn>
-                    </v-col>
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" append-icon="mdi-plus-circle" @click="createLessons()">
+                                CREATE LESSONS
+                            </v-btn>
+                        </v-col>
+                    </template>
+                    <template v-else>
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetableStore.editing" append-icon="mdi-plus-circle">
+                                NEW THEMATIC UNIT
+                            </v-btn>
+                        </v-col>
+
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetableStore.editing" append-icon="mdi-plus-circle">
+                                NEW QUESTION SERIES
+                            </v-btn>
+                        </v-col>
+                    </template>
                 </v-row>
             </v-col>
         </v-row>
     </v-container>
     <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetableStore.fetchLessons()"/>
+    <CreateLessonDialog v-model="showCreateLessonDialog"/>
 </template>
 
 <style>
@@ -55,9 +71,10 @@
 
 <script lang="ts" setup>
     import { ref } from 'vue';
-    import { useTimetableStore } from '@/stores/useTimetableStore';
+    import { ITimetableGridPosition, useTimetableStore } from '@/stores/useTimetableStore';
     import TimetableGrid from '@/components/TimetableGrid.vue';
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
+    import CreateLessonDialog from '@/components/CreateLessonDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     import "@/styles/timetable.scss";
@@ -65,6 +82,7 @@
     const { mdAndUp, lgAndUp } = useDisplay();
 
     const showManageGroupsDialog = ref(false);
+    const showCreateLessonDialog = ref(false);
 
     const timetableStore = useTimetableStore();
     
@@ -72,4 +90,18 @@
     timetableStore.setWeek();
     timetableStore.fetchTimetable();
     timetableStore.fetchLessons();
+
+    function onGridCellClick(cellPosition: ITimetableGridPosition) {
+        if (timetableStore.creating) {
+            timetableStore.toggleCellSelectionStatus(cellPosition);
+        } else {
+            timetableStore.startCreating(cellPosition);
+            showCreateLessonDialog.value = true;
+        }
+    }
+
+    function createLessons() {
+        timetableStore.stopCreating();
+        //TODO: Implement
+    }
 </script>

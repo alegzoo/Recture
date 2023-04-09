@@ -1,47 +1,20 @@
-.mustard{
-    background-color: #f7bd50;
-}
+$lesson-colors: (
+    'mustard': #f7bd50,
+    'aqua': #76c4bf,
+    'steel-blue': #b8bde1,
+    'red': #e24a42,
+    'gray': #acacac,
+    'rose': #f6d2ed,
+    'melon': #f4bbb8,
+    'blush': #ea5782,
+    'crystal-blue': #4eadb9,
+    'canary': #f6f996,
+    'orchid': #ea9bcd,
+    'green': #9beaca
+);
 
-.aqua{
-    background-color: #76c4bf;
-}
-
-.steel-blue{
-    background-color: #b8bde1;
-}
-
-.red{
-    background-color: #e24a42;
-}
-
-.gray{
-    background-color: #acacac;
-}
-
-.rose{
-    background-color: #f6d2ed;
-}
-
-.melon{
-    background-color: #f4bbb8;
-}
-
-.blush{
-    background-color: #ea5782;
-}
-
-.crystal-blue{
-    background-color: #4eadb9;
-}
-
-.canary{
-    background-color: #f6f996;
-}
-
-.orchid{
-    background-color: #ea9bcd;
-}
-
-.green{
-    background-color: #9beaca;
+@each $color, $value in $lesson-colors {
+    .#{$color} {
+        background-color: $value;
+    }
 }

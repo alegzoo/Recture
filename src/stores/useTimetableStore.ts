@@ -1,6 +1,11 @@
 import { DayOfWeek, ILesson, LessonColor, RectureApi } from "@/api/RectureApi";
 import { defineStore } from "pinia"
 
+export interface ITimetableGridPosition {
+    dayOfWeek: DayOfWeek,
+    lessonNumber: number
+}
+
 export const useTimetableStore = defineStore("timetableStore", {
     state: () => ({
         //TODO: Maybe change defaults?
@@ -11,7 +16,8 @@ export const useTimetableStore = defineStore("timetableStore", {
         lessons: [] as ILesson[],
         weekDates: [] as Date[],
 
-        editing: false as boolean,
+        state: "idle" as "idle" | "editing" | "creating",
+        selection: [] as ITimetableGridPosition[],
 
         colors: { //TODO: There has to be a better place to store this
             "mustard": "#FFBE5D",
@@ -27,6 +33,11 @@ export const useTimetableStore = defineStore("timetableStore", {
             "orchid": "#D699CA"
         }
     }),
+    getters: {
+        idle: (state) => state.state === "idle",
+        editing: (state) => state.state === "editing",
+        creating: (state) => state.state === "creating"
+    },
     actions: {
         setWeek(dayOfWeek: Date | null = null) {
             this.weekDates = [] as Date[];
@@ -79,7 +90,31 @@ export const useTimetableStore = defineStore("timetableStore", {
         },
 
         toggleEditing() {
-            this.editing = !this.editing;
+            if (this.state === "idle") this.state = "editing";
+            else if (this.state === "editing") this.state = "idle";
+            else console.error("Attempted to toggle timetable editing state while not in idle or editing state");
+        },
+
+        startCreating(initialSelection: ITimetableGridPosition) {
+            if (this.state === "idle") {
+                this.selection = [initialSelection];
+                this.state = "creating";
+            } else console.error("Attempted to switch into timetable creating state while not in idle state");
+        },
+
+        stopCreating() {
+            if (this.state === "creating") {
+                this.selection = [];
+                this.state = "idle";
+            } else console.error("Attempted to exit timetable creating state while not in creating state");
+        },
+
+        toggleCellSelectionStatus(cellPosition: ITimetableGridPosition) {
+            const searchFunction = (pos: ITimetableGridPosition) => (pos.dayOfWeek === cellPosition.dayOfWeek && pos.lessonNumber === cellPosition.lessonNumber);
+            if (this.selection.find(searchFunction)) {
+                this.selection = this.selection.filter(pos => !searchFunction(pos));
+                if (this.selection.length === 0) this.stopCreating();
+            } else this.selection.push(cellPosition);
         }
     }
 });
