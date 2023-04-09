@@ -27,9 +27,21 @@
                             </v-col>
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
+                            <v-col cols="12" md="auto" align="center">
+                                <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')" @click="showUploadDialog = true">
+                                    UPLOAD
+                                </v-btn>
+                            </v-col>
 
-                            <UploadDialogTimetable/>
-                            <NewThematicUnit></NewThematicUnit>
+                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
+                                <v-btn 
+                                    variant="text" 
+                                    class="btn-new-theme-unit"  
+                                    append-icon="mdi-plus-circle"
+                                    @click="showNewThematicUnitDialog = true">
+                                    NEW THEMATIC UNIT
+                                </v-btn>
+                            </v-col>
 
                             <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
                                 <v-btn 
@@ -84,6 +96,8 @@
                 </v-row>
             </v-col>
         </v-row>
+        <UploadDialogTimetable v-model="showUploadDialog"/>
+        <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
 </template>
 
 <style lang="scss">
@@ -91,7 +105,7 @@
 </style>
 
 <script lang="ts" setup>
-    import { watch } from 'vue';
+    import { ref, watch } from 'vue';
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useVideoBrowserStore } from '@/stores/useVideoBrowserStore';
     import { IRecordingSort, RecordingVisibilityFilter } from '@/api/RectureApi';
@@ -102,13 +116,16 @@
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
     import SearchBar from '@/components/SearchBar.vue';
-    import NewThematicUnit from '@/components/NewThematicUnitHome.vue';
+    import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
     import UploadDialogTimetable from '@/components/UploadDialogTimetable.vue';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';
 
     const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
+
+    const showUploadDialog = ref<boolean>(false);
+    const showNewThematicUnitDialog = ref<boolean>(false);
 
     const homeStore = useHomeStore();
     const accountStore = useAccountStore();

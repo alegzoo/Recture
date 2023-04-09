@@ -1,15 +1,5 @@
 <template>
-        <v-dialog activator="parent" class="h-100 justify-center" width="550" scroll-strategy="block">
-            <template v-slot:activator>
-                <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                    <v-btn 
-                        variant="text" 
-                        class="btn-new-theme-unit"  
-                        append-icon="mdi-plus-circle">
-                        NEW THEMATIC UNIT
-                    </v-btn>
-                </v-col>  
-            </template>
+        <v-dialog class="h-100 justify-center" width="550" scroll-strategy="block">
             <v-card class="new-theme-unit-card">
                 <template v-slot:title>
                     <h2 class="pt-3 pl-1">NEW THEMATIC UNIT</h2>
@@ -22,11 +12,10 @@
                         </v-col>
                     </v-row>
 
-
                     <v-row no-gutters>
                         <v-col no-gutters>
                             <v-col cols="12" class="pl-7 pb-10 pr-7">
-                                <v-combobox
+                                <v-select
                                     hide-details
                                     no-gutters
                                     class="choose-selectors"
@@ -35,13 +24,13 @@
                                     variant="solo"
                                     density="comfortable"
                                     single-line
-                                ></v-combobox>
+                                ></v-select>
                             </v-col>
                         </v-col>
 
                         <v-col no-gutters>
                             <v-col cols="12" class="pl-7 pb-10 pr-6">
-                                <v-combobox
+                                <v-select
                                     hide-details
                                     no-gutters
                                     class="choose-selectors"
@@ -50,7 +39,7 @@
                                     variant="solo"
                                     density="comfortable"
                                     single-line
-                                ></v-combobox>
+                                ></v-select>
                             </v-col>
                         </v-col>
                     </v-row>
@@ -65,7 +54,6 @@
                 </v-row>
             </v-card>
         </v-dialog>
-
 </template>
 
 <style lang="scss" scoped>
@@ -80,7 +68,7 @@
     border-radius: 7px !important;
 }
 
-.choose-selectors{
+.choose-selectors {
     border: solid 2px black !important;
     border-radius: 0px !important;
     box-shadow: 2px 2px 0px 0px black !important;
@@ -88,12 +76,6 @@
     font-weight: bold;
     color: black !important;
     text-transform: uppercase !important;
-}
-
-
-.v-combobox .v-label *{
-    opacity: 100% !important;
-    color: black !important;
 }
 
 .create-btn-new-thematic-unit{

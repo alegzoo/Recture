@@ -17,8 +17,6 @@
 
                 <v-spacer></v-spacer>
 
-                <CreateLessonDialog/>
-
                 <v-col :cols="mdAndUp?'auto':12" align="center" align-self="start">
                     <v-btn id="profile-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
                 </v-col>
@@ -94,7 +92,6 @@
 <script lang="ts" setup>
     import { useAccountStore } from '@/stores/useAccountStore';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
-    import CreateLessonDialog from '@/components/CreateLessonDialog.vue';
     import UploadDialog from '@/components/UploadDialog.vue';
     import "@/styles/profile.scss";
 

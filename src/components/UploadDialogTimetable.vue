@@ -1,15 +1,8 @@
 <template>
-    <v-dialog activator="parent" class="h-100 justify-center" width="1200" scroll-strategy="block">
-        <template v-slot:activator>
-            <v-col cols="12" md="auto" align="center">
-                <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-download" :class="'px-12'+(mdAndUp?'':' mb-2')">
-                    UPLOAD
-                </v-btn>
-            </v-col>
-        </template>
+    <v-dialog class="h-100 justify-center" width="1200" scroll-strategy="block">
         <v-card class="upload-timetable-card">
-            <v-card-text no-gutters class="pa-0">
-                <v-row no-gutters>
+            <v-card-text class="pa-0 d-flex flex-column">
+                <v-row class="flex-grow-0" no-gutters>
                     <v-col cols="6" class="pl-7 pt-3" align-self="center">
                         <h1>YOUR TIMETABLE</h1>
                     </v-col>
@@ -30,7 +23,7 @@
 
                 </v-row>
 
-                <v-row no-gutters class="pt-1">
+                <v-row class="flex-grow-0 pt-1" no-gutters>
                     <v-col align-self="center" cols="auto" class="pl-7">
                         <v-icon class="info-icon" icon="mdi-information"></v-icon>
                     </v-col>
@@ -40,13 +33,11 @@
                     </v-col>
                 </v-row>
 
-                <v-row>
-                    <v-col>
-                        <TimetableGrid/>
+                <v-row class="flex-grow-1" no-gutters>
+                    <v-col class="pa-8">
+                        <TimetableGrid :standalone="true" class="h-100"/>
                     </v-col>
                 </v-row>
-
-            
             </v-card-text>
         </v-card>
     </v-dialog>
@@ -54,28 +45,21 @@
 
 
 <style lang="scss" scoped>
-
-.upload-timetable-card{
-    background-color: #efefef;
+    .upload-timetable-card {
+        min-height: 60vh;
+        background-color: #efefef;
     }
 
-.headline-colors {
+    .headline-colors {
         opacity: 50%;
     }
 
-.info-icon{
-    opacity: 20%;
-}
-
+    .info-icon {
+        opacity: 20%;
+    }
 </style>
 
-
-
-
 <script lang="ts" setup>
-
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import TimetableGrid from '@/components/TimetableGrid.vue';
-    const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
-
 </script>

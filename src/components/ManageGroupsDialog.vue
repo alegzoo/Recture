@@ -17,36 +17,18 @@
                 </v-row>
                 <v-row v-show="tableItems != null">
                     <v-col>
-                        <v-table v-show="tableItems?.length !== 0" class="w-100 rows-items-manage-timetabe" fixed-header>
+                        <v-table v-show="tableItems?.length !== 0" class="w-100 rows-items-manage-timetable" fixed-header>
                             <thead>
                                 <tr>
-                                    <th class="text-left rows-items-manage-timetabe">Name</th>
-                                    <th class="text-right rows-items-manage-timetabe">Actions</th>
+                                    <th class="text-left rows-items-manage-timetable">Name</th>
+                                    <th class="text-right rows-items-manage-timetable">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr v-for="item in tableItems">
-                                    <td class="pt-2">
-                                        <span class="font-weight-black">{{ item.name }}</span>
-                                        <v-tooltip text="Rename" class="tooltip-manage-timetable" location="end">
-                                            <template v-slot:activator="{ props }">
-                                                <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="showRenameDialog(item)"/>
-                                            </template>
-                                        </v-tooltip>
-                                    </td>
-                                    <td class="text-right">
-                                        <v-tooltip class="tooltip-manage-timetable" text="View members" location="start">
-                                            <template v-slot:activator="{ props }">
-                                                <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
-                                            </template>
-                                        </v-tooltip>
-                                        <v-tooltip class="tooltip-manage-timetable" text="Delete" location="end">
-                                            <template v-slot:activator="{ props }">
-                                                <v-btn v-bind="props" variant="plain" icon="mdi-delete" @click="showDeleteDialog(item)"/>
-                                            </template>
-                                        </v-tooltip>
-                                    </td>
-                                </tr>
+                            <tbody v-if="view === 'classes'">
+                                <GroupRow v-for="item in tableItems" :key="(item as IClass).classId" :group="(item as IClass)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"/>
+                            </tbody>
+                            <tbody v-else-if="view === 'subjects'">
+                                <GroupRow v-for="item in tableItems" :key="(item as ISubject).subjectId" :group="(item as ISubject)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"/>
                             </tbody>
                         </v-table>
                         <p v-show="tableItems?.length === 0" class="w-100 py-5 text-h6 text-center">No data</p>
@@ -82,6 +64,7 @@
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import InputDialog from './InputDialog.vue';
     import MessageDialog from './MessageDialog.vue';
+    import GroupRow from './GroupRow.vue';
 
     const props = defineProps<{
         modelValue?: boolean
