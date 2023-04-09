@@ -1,7 +1,7 @@
 <template>
     <v-col :class="{'timetable-grid-cell': true, 'selected': selected}">
         <v-row no-gutters class="h-100">
-            <v-col :class="{'text-right': selected}" :align-self="selected?'end':'center'">
+            <v-col align-self="center">
                 <template v-if="selected">
                     <v-icon icon="mdi-check" size="32"/>
                 </template>

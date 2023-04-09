@@ -10,6 +10,7 @@
                 </v-row>
             </v-col>
         </v-row>
+        <!-- TODO: Fix bug: If a row is fully filled with lessons or selected cells then it shrinks -->
         <template v-for="(visible, day) in timetableStore.daysOfWeek">
             <v-row class="timetable-grid-row" v-if="visible" no-gutters>
                 <v-col class="timetable-grid-header">
@@ -96,29 +97,41 @@
             border: solid 2px black;
         }
 
-        &.idle .timetable-grid-cell:hover .v-row {
+        .timetable-grid-cell:hover .v-row {
             box-shadow: 0px 0px 0px 2px black inset, -5px -5px 0px 0px black inset;
             transition: box-shadow 0.1s linear;
         }
 
-        .timetable-grid-cell:not(.timetable-lesson, .selected) .v-row > * {
-            opacity: 0%;
-            transition: opacity 0.1s linear;
+        &.idle, &.editing {
+            .timetable-grid-cell:not(.timetable-lesson) .v-row > * {
+                opacity: 0%;
+                transition: opacity none;
+            }
         }
 
-        &.idle .timetable-grid-cell:not(.timetable-lesson, .selected):hover .v-row > * {
+        &.idle .timetable-grid-cell:not(.timetable-lesson):hover .v-row > * {
             opacity: 30%;
             transition: opacity 0.1s linear;
         }
 
+        &.creating .timetable-grid-cell:not(.timetable-lesson, .selected) .v-row > * {
+            opacity: 0%;
+            transition: opacity none;
+        }
+
         &.creating .timetable-grid-cell.selected {
+            position: relative;
+
             .v-row > * {
                 opacity: 100%;
-                transition: opacity 0.1s linear;
+                transition: opacity none;
                 padding: 0px 10px 10px 0px;
             }
 
             .v-icon {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
                 background-color: $recture-bright-blue;
                 border: solid 2px black;
             }
@@ -158,6 +171,21 @@
 
         .timetable-grid-cell:last-child, .timetable-grid-header:last-child {
             border-right: none;
+        }
+    }
+
+    @keyframes edit-shake {
+        0% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(1deg);
+        }
+        75% {
+            transform: rotate(-1deg);
+        }
+        100% {
+            transform: rotate(0deg);
         }
     }
 </style>

@@ -1,125 +1,143 @@
 <template>
-        <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" class="h-100 justify-center" width="630" scroll-strategy="block">
-            <v-card class="create-lesson-card">
-                <template v-slot:title>
-                    <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
-                </template>
-                <v-card-text>
-                    <v-row align="center" class="px-1" no-gutters>
-                        <v-col cols="5 pr-2">
-                            <v-combobox
-                                hide-details
-                                no-gutters
-                                class="choose-selectors"
-                                label="Choose a class"
-                                :items="classes"
-                                item-title="name"
-                                variant="solo"
-                                density="compact"
-                                single-line
-                            ></v-combobox>
-                        </v-col>
-
-                        <v-col cols="2 pl-9">
-                            <h2>or</h2>
-                        </v-col>
-
-                        <v-col cols="5">
-                            <v-text-field
-                            label="Enter name of class to create"
-                            variant="underlined"
+    <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" class="h-100 justify-center" width="630" scroll-strategy="block">
+        <v-card class="create-lesson-card">
+            <template v-slot:title>
+                <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
+            </template>
+            <v-card-text>
+                <v-row align="center" class="px-1" no-gutters>
+                    <v-col cols="5 pr-2">
+                        <v-combobox
+                            hide-details
+                            no-gutters
+                            class="choose-selectors"
+                            label="Choose a class"
+                            :items="classes"
+                            v-model="selectedClass"
+                            item-title="name"
+                            variant="solo"
+                            density="compact"
                             single-line
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
+                        ></v-combobox>
+                    </v-col>
 
-                    <v-row align="center" class="px-1" no-gutters>
-                        <v-col cols="5 pr-2">
-                            <v-combobox
-                                hide-details
-                                no-gutters
-                                class="choose-selectors"
-                                label="Choose a subject"
-                                :items="subjects"
-                                item-title="name"
-                                variant="solo"
-                                density="compact"
-                                single-line
-                            ></v-combobox>
-                        </v-col>
+                    <v-col cols="2 pl-9">
+                        <h2>or</h2>
+                    </v-col>
 
-                        <v-col cols="2 pl-9">
-                            <h2>or</h2>
-                        </v-col>
-
-                        <v-col cols="5">
-                            <v-text-field
-                            label="Enter name of subject to create"
-                            variant="underlined"
-                            single-line
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-
-                    <v-row no-gutters>
-                        <v-col align="center" class="pt-5 pb-3">
-                            <h4 class="headline-colors">Color of lesson in timetable</h4>
-                        </v-col>
-                    </v-row>
-
-
-                    <v-row no-gutters>
-                        <v-col align="center">
-                            <v-btn-toggle v-model="selectedColor" divided class="toggle-btns-colors" selected-class="selected" mandatory>
-                                <v-btn class="mustard btn-group-colors" size="small" value="mustard" :active="false" :ripple="false"/>
-                                <v-btn class="aqua btn-group-colors" size="small" value="aqua" :active="false" :ripple="false"/>
-                                <v-btn class="steel-blue btn-group-colors" size="small" value="steel-blue" :active="false" :ripple="false"/>
-                                <v-btn class="red btn-group-colors" size="small" value="red" :active="false" :ripple="false"/>
-                                <v-btn class="gray btn-group-colors" size="small" value="gray" :active="false" :ripple="false"/>
-                                <v-btn class="rose btn-group-colors" size="small" value="rose" :active="false" :ripple="false"/>
-                                <v-btn class="melon btn-group-colors" size="small" value="melon" :active="false" :ripple="false"/>
-                                <v-btn class="blush btn-group-colors" size="small" value="blush" :active="false" :ripple="false"/>
-                                <v-btn class="crystal-blue btn-group-colors" size="small" value="cystal-blue" :active="false" :ripple="false"/>
-                                <v-btn class="canary btn-group-colors" size="small" value="canary" :active="false" :ripple="false"/>
-                                <v-btn class="orchid btn-group-colors" size="small" value="orchid" :active="false" :ripple="false"/>
-                            </v-btn-toggle>
-                        </v-col>
-                    </v-row>
-
-                    <v-row no-gutters class="pt-10">
-                        <v-col cols="6" class="headline-colors pl-1">
-                            <h4>Code for students to connect</h4>
-                        </v-col>
-                    </v-row>
-
-                    <v-row no-gutters class="px-1">
-                        <v-col cols="auto" align-self="center">
-                            <div class="text-h4 font-weight-bold">#7UWBKL</div>
-                        </v-col>
-
-                        <v-col align-self="center" cols="auto" class="pl-1">
-                            <v-btn variant="plain" icon="mdi-content-copy" class="copy-btn" :ripple="false"/>
-                        </v-col>
-
-                        <v-spacer></v-spacer>
-
-                        <v-col cols="auto" align-self="center">
-                            <v-btn variant="text" class="invitation-btn" append-icon="mdi-send" theme="light" :ripple="false">SEND INVITATION</v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-
-                <v-row no-gutters class="pt-4" height="auto">
-                    <v-col align="center">
-                        <v-btn class="create-btn-upload" width="630" height="50" variant="text" @click="closeDialog(true)">CREATE</v-btn>
+                    <v-col cols="5">
+                        <v-text-field
+                        v-model="newClassName"
+                        label="Enter name of class to create"
+                        variant="underlined"
+                        single-line
+                        ></v-text-field>
                     </v-col>
                 </v-row>
-            </v-card>
-        </v-dialog>
-</template>
+
+                <v-row align="center" class="px-1" no-gutters>
+                    <v-col cols="5 pr-2">
+                        <v-combobox
+                            hide-details
+                            no-gutters
+                            class="choose-selectors"
+                            label="Choose a subject"
+                            :items="subjects"
+                            v-model="selectedSubject"
+                            item-title="name"
+                            variant="solo"
+                            density="compact"
+                            single-line
+                        ></v-combobox>
+                    </v-col>
+
+                    <v-col cols="2 pl-9">
+                        <h2>or</h2>
+                    </v-col>
+
+                    <v-col cols="5">
+                        <v-text-field
+                        v-model="newSubjectName"
+                        label="Enter name of subject to create"
+                        variant="underlined"
+                        single-line
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters>
+                    <v-col align="center" class="pt-5 pb-3">
+                        <h4 class="headline-colors">Color of lesson in timetable</h4>
+                    </v-col>
+                </v-row>
+
+
+                <v-row no-gutters>
+                    <v-col align="center">
+                        <v-btn-toggle v-model="selectedColor" divided class="toggle-btns-colors" selected-class="selected" mandatory>
+                            <v-btn class="mustard btn-group-colors" size="small" value="mustard" :active="false" :ripple="false"/>
+                            <v-btn class="aqua btn-group-colors" size="small" value="aqua" :active="false" :ripple="false"/>
+                            <v-btn class="steel-blue btn-group-colors" size="small" value="steel-blue" :active="false" :ripple="false"/>
+                            <v-btn class="red btn-group-colors" size="small" value="red" :active="false" :ripple="false"/>
+                            <v-btn class="gray btn-group-colors" size="small" value="gray" :active="false" :ripple="false"/>
+                            <v-btn class="rose btn-group-colors" size="small" value="rose" :active="false" :ripple="false"/>
+                            <v-btn class="melon btn-group-colors" size="small" value="melon" :active="false" :ripple="false"/>
+                            <v-btn class="blush btn-group-colors" size="small" value="blush" :active="false" :ripple="false"/>
+                            <v-btn class="crystal-blue btn-group-colors" size="small" value="cystal-blue" :active="false" :ripple="false"/>
+                            <v-btn class="canary btn-group-colors" size="small" value="canary" :active="false" :ripple="false"/>
+                            <v-btn class="orchid btn-group-colors" size="small" value="orchid" :active="false" :ripple="false"/>
+                        </v-btn-toggle>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="pt-10">
+                    <v-col cols="6" class="headline-colors pl-1">
+                        <h4>Code for students to connect</h4>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="px-1">
+                    <v-col cols="auto" align-self="center">
+                        <div class="text-h4 font-weight-bold">{{ inviteCode }}</div>
+                    </v-col>
+
+                    <v-col align-self="center" cols="auto" class="pl-1">
+                        <v-btn variant="plain" icon="mdi-content-copy" class="copy-btn" :ripple="false" @click="copyCodeToClipboard"/>
+                    </v-col>
+
+                    <v-spacer></v-spacer>
+
+                    <v-col cols="auto" align-self="center">
+                        <v-btn variant="text" class="invitation-btn" append-icon="mdi-send" theme="light" :ripple="false">SEND INVITATION</v-btn>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+
+            <v-alert v-show="alertBody !== null" density="compact" :type="alertType" align="left" :text="(alertBody as string)" class="mx-5 my-2">
+                <template v-slot:append>
+                    <v-btn icon="mdi-close" class="w-100 h-100" variant="text" @click="alertBody = null"/>
+                </template>
+            </v-alert>
+
+            <v-row no-gutters class="pt-4" height="auto">
+                <v-col align="center">
+                    <v-btn class="continue-button" width="630" height="50" variant="text" @click="closeDialog(true)">CONTINUE</v-btn>
+                </v-col>
+            </v-row>
+        </v-card>
+
+        <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
+            <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
+        </v-overlay>
+    </v-dialog>
+</template> 
 
 <style lang="scss" scoped>
-    .create-lesson-card{
+    .v-dialog {
+        z-index: 210 !important;
+    }
+
+    .create-lesson-card {
         background-color: #efefef;
     }
     .v-combobox * {
@@ -155,7 +173,7 @@
         border: solid 4px black !important;
         transform: scale(1.1);
         border-style: solid !important;
-        z-index: 100;
+        z-index: 210;
         transition: border-style none, transform 0.1s ease-in, box-shadow 0.2s ease-in;
     }
 
@@ -178,11 +196,11 @@
         rotate: 90;
     }
 
-    .invitation-btn .v-icon{
+    .invitation-btn .v-icon {
         transform: rotate(-45deg);
     }
 
-   .create-btn-upload {
+   .continue-button {
         border-top-right-radius: 0px !important;
         border-top-left-radius: 0px !important;
         background-color: #5cb978;
@@ -193,36 +211,147 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import "@/styles/lesson-colors.scss";
     import "@/styles/main.scss";
     import { IClass, ISubject, LessonColor, RectureApi } from '@/api/RectureApi';
+
+    export interface ICreateLessonDialogResult {
+        success: boolean,
+        class: IClass | string | null,
+        subject: IClass | string | null,
+        lessonColor: LessonColor | null
+    }
 
     const props = defineProps<{
         modelValue?: boolean
     }>();
 
     const emit = defineEmits<{
-        (e: "update:modelValue", val: boolean): void
+        (e: "update:modelValue", val: boolean): void,
+        (e: "dialogExit", result: ICreateLessonDialogResult): void
     }>();
 
+    
+    const dialogSuccess = ref<boolean>(false);
+
     //TODO: Maybe make reactive and move to composable
-    const subjects = ref<ISubject[]>([]);
     const classes = ref<IClass[]>([]);
+    const subjects = ref<ISubject[]>([]);
 
-    RectureApi.getSubjects().then(result => {
-        if (result.success && subjects.value != null) subjects.value = result.data as ISubject[];
-    });
-
-    RectureApi.getClasses().then(result => {
-        if (result.success && classes.value != null) classes.value = result.data as IClass[];
-    });
+    const selectedClass = ref<IClass | null>(null);
+    const selectedSubject = ref<IClass | null>(null);
+    const newClassName = ref<string | null>(null);
+    const newSubjectName = ref<string | null>(null);
 
     const selectedColor = ref<LessonColor | null>(null);
 
+    const inviteCode = ref<string | null>(null);
+
+    const loadingOverlayVisible = ref<boolean>(false);
+
+    const alertType = ref<"success" | "error">("error");
+    const alertBody = ref<string | null>(null);
+
+    watch(() => props.modelValue, value => {
+        if (value === true) initialize();
+        else {
+            if (dialogSuccess.value === true) {
+                emit('dialogExit', {
+                    success: true,
+                    class: selectedClass.value != null ? selectedClass.value : newClassName.value,
+                    subject: selectedSubject.value != null ? selectedSubject.value : newSubjectName.value,
+                    lessonColor: selectedColor.value
+                });
+            } else {
+                emit('dialogExit', {
+                    success: false,
+                    class: null,
+                    subject: null,
+                    lessonColor: null
+                });
+            }
+        }
+    });
+
+    watch(selectedClass, value => {
+        if (value != null) newClassName.value = null;
+    });
+
+    watch(selectedSubject, value => {
+        if (value != null) newSubjectName.value = null;
+    });
+
+    watch(newClassName, value => {
+        if (value != null) selectedClass.value = null;
+    });
+
+    watch(newSubjectName, value => {
+        if (value != null) selectedSubject.value = null;
+    });
+
+    function initialize() {
+        dialogSuccess.value = false;
+
+        classes.value = [];
+        subjects.value = [];
+
+        selectedClass.value = null;
+        selectedSubject.value = null;
+        newClassName.value = null;
+        newSubjectName.value = null;
+
+        selectedColor.value = null;
+
+        inviteCode.value = null;
+
+        loadingOverlayVisible.value = true;
+
+        alertType.value = "error";
+        alertBody.value = null;
+
+        Promise.all(
+            [
+                RectureApi.getClasses().then(result => {
+                    if (result.success && classes.value != null) {
+                        classes.value = result.data as IClass[];
+                    } else return Promise.reject();
+                }),
+                RectureApi.getSubjects().then(result => {
+                    if (result.success && subjects.value != null) {
+                        subjects.value = result.data as ISubject[];
+                    } else return Promise.reject();
+                })
+            ]
+        ).then(value => {
+            loadingOverlayVisible.value = false;
+        }).catch(reason => {
+            closeDialog(false);
+        });
+    }
+
     function closeDialog(success: boolean) {
+        if (success && ((selectedClass.value == null && newClassName.value == null) || (selectedSubject.value == null && newSubjectName.value == null) || (selectedColor.value == null))) {
+            alertType.value = "error";
+            alertBody.value = "Fill out all fields to continue!";
+            return;
+        }
+
+        dialogSuccess.value = success;
         //TODO: Somehow communicate whether a lesson should be created or not (in case user closes the dialog by clicking outside of it)
         emit('update:modelValue', false);
+    }
+
+    function copyCodeToClipboard() {
+        //TODO: Check if it works once HTTPS is enabled
+        if (navigator.clipboard && inviteCode.value != null) {
+            navigator.clipboard.writeText(inviteCode.value);
+            alertType.value = "success";
+            alertBody.value = "Copied to clipboard!";
+        } else {
+            alertType.value = "error";
+            alertBody.value = "Failed to copy!";
+        }
     }
 
 </script>
