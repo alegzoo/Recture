@@ -41,16 +41,16 @@
     padding-left: 8px;
 }
 
-.manage-dialog-v-card{
+.manage-dialog-v-card {
     background-color: #efefef;
     border-radius: 7px !important;
 }
 
-.rows-items-manage-timetabe{
+.rows-items-manage-timetable {
     background-color: transparent !important;
 }
 
-.tooltip-manage-timetable div{
+.tooltip-manage-timetable div {
     opacity: 100% !important;
     background-color: $recture-yellow !important;
     color: black !important;
@@ -65,12 +65,12 @@
     font-size: 22px;
 }
 
-.v-dialog .v-table .v-table__wrapper tbody > tr{
+.v-dialog .v-table .v-table__wrapper tbody > tr {
     outline: dashed 1px #00000033 !important;
     overflow: visible !important;
 }
 
-.v-dialog .v-table .v-table__wrapper thead > tr > th{
+.v-dialog .v-table .v-table__wrapper thead > tr > th {
     border-bottom: solid 2px black !important;
 }
 
@@ -88,6 +88,6 @@
     box-shadow: 0 3px 0px 0px black !important;
 }
 
-#timetable-grid, .creating-button {
+.timetable-grid, .creating-button {
     z-index: 200 !important;
 }

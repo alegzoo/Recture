@@ -1,5 +1,5 @@
 <template>
-    <v-container :class="{'pa-0': true, 'idle': timetableStore.idle, 'editing': timetableStore.editing, 'creating': timetableStore.creating}" fluid>
+    <v-container :class="{'timetable-grid': true, 'pa-0': true, 'idle': timetableStore.idle, 'editing': timetableStore.editing, 'creating': timetableStore.creating}" fluid>
         <v-row class="timetable-grid-row" no-gutters>
             <v-col class="timetable-grid-header"></v-col>
             <v-col class="timetable-grid-header" v-for="i in timetableStore.lessonsPerDay">
@@ -24,7 +24,7 @@
                 <template v-for="i in timetableStore.lessonsPerDay">
                     <template v-for="lesson in [timetableStore.lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
                         <TimetableLesson v-if="lesson != null" :lesson="lesson"/>
-                        <TimetableCell v-else :selected="timetableStore.selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
+                        <TimetableCell v-else :selected="timetableStore.selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!standalone" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
                     </template>
                 </template>
             </v-row>
@@ -36,7 +36,7 @@
     //TODO: Maybe make this style block scoped
     @import "@/styles/constants.scss";
 
-    #timetable-grid {
+    .timetable-grid {
         background-color: white;
         border-radius: 15px;
         border: solid 2px black;
@@ -191,6 +191,7 @@
 </style>
 
 <script lang="ts" setup>
+    import { onMounted } from 'vue';
     import { ITimetableGridPosition, useTimetableStore } from '@/stores/useTimetableStore';
     import { DayOfWeek } from '@/api/RectureApi';
     import TimetableCell from './TimetableCell.vue';
@@ -198,7 +199,22 @@
 
     const timetableStore = useTimetableStore();
 
+    const props = withDefaults(defineProps<{
+        standalone: boolean
+    }>(), {
+        standalone: false
+    });
+
     const emit = defineEmits<{
         (e: "timetableCellClick", cellPosition: ITimetableGridPosition): void
     }>();
+
+    onMounted(() => {
+        if (props.standalone === true) {
+            timetableStore.$reset();
+            timetableStore.setWeek();
+            timetableStore.fetchTimetable();
+            timetableStore.fetchLessons();
+        }
+    });
 </script>

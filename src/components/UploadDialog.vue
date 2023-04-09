@@ -1,8 +1,5 @@
 <template>
-    <v-dialog activator="parent" class="h-100 justify-center" width="1100" scroll-strategy="block" no-gutters>
-        <template v-slot:activator>
-            <v-btn icon="mdi-checkbox" theme="light"/>
-        </template>
+    <v-dialog class="h-100 justify-center" width="1100" scroll-strategy="block" no-gutters>
         <v-card class="upload-card" no-gutters>
             <v-card-text no-gutters class="pa-0">
                 <v-row no-gutters class="pa-0">
@@ -53,7 +50,7 @@
 
                                 <v-row align="center" class="px-1 pl-4" no-gutters>
                                     <v-col cols="5">
-                                        <v-combobox
+                                        <v-select
                                             hide-details
                                             no-gutters
                                             class="choose-selectors"
@@ -62,7 +59,7 @@
                                             variant="solo"
                                             density="compact"
                                             single-line
-                                        ></v-combobox>
+                                        ></v-select>
                                     </v-col>
 
                                     <v-col class="pl-10" cols="2">
@@ -182,8 +179,6 @@
 
                 </v-row>
         </v-card-text>
-
-
             <v-row no-gutters height="auto">
                 <v-col align="center" align-self="end">
                     <v-btn class="save-btn-upload" width="1100" height="50" variant="text">CREATE</v-btn>
@@ -242,16 +237,6 @@
     .subtitles{
         color: black;
         opacity: 50%;
-    }
-
-    .choose-selectors{
-    border: solid 2px black !important;
-    border-radius: 0px !important;
-    box-shadow: 2px 2px 0px 0px black !important;
-    background-color: white !important;
-    font-weight: bold;
-    color: black !important;
-    text-transform: uppercase !important;
     }
 
     .info-icon{

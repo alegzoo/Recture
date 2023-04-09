@@ -21,7 +21,7 @@
 
         <v-row class="flex-grow-1">
             <v-col cols="12" :class="'h-100 d-flex flex-column py-7'+(mdAndUp?' px-10':'')">
-                <TimetableGrid id="timetable-grid" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick"/>
+                <TimetableGrid align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick"/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
                         <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetableStore.idle" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = !showManageGroupsDialog">

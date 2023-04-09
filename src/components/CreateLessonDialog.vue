@@ -7,10 +7,9 @@
             <v-card-text>
                 <v-row align="center" class="px-1" no-gutters>
                     <v-col cols="5 pr-2">
-                        <v-combobox
+                        <v-select
                             hide-details
                             no-gutters
-                            class="choose-selectors"
                             label="Choose a class"
                             :items="classes"
                             v-model="selectedClass"
@@ -18,7 +17,7 @@
                             variant="solo"
                             density="compact"
                             single-line
-                        ></v-combobox>
+                        ></v-select>
                     </v-col>
 
                     <v-col cols="2 pl-9">
@@ -37,10 +36,9 @@
 
                 <v-row align="center" class="px-1" no-gutters>
                     <v-col cols="5 pr-2">
-                        <v-combobox
+                        <v-select
                             hide-details
                             no-gutters
-                            class="choose-selectors"
                             label="Choose a subject"
                             :items="subjects"
                             v-model="selectedSubject"
@@ -48,7 +46,7 @@
                             variant="solo"
                             density="compact"
                             single-line
-                        ></v-combobox>
+                        ></v-select>
                     </v-col>
 
                     <v-col cols="2 pl-9">
@@ -140,18 +138,6 @@
     .create-lesson-card {
         background-color: #efefef;
     }
-    .v-combobox * {
-        box-shadow: none;
-    }
-    .choose-selectors{
-    border: solid 2px black !important;
-    border-radius: 0px !important;
-    box-shadow: 2px 2px 0px 0px black !important;
-    background-color: white !important;
-    font-weight: bold;
-    color: black !important;
-    text-transform: uppercase !important;
-    } 
 
     .headline-colors {
         opacity: 50%;
