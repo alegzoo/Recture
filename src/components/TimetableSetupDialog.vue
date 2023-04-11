@@ -62,7 +62,7 @@
 
                 <v-row class="pt-4" height="auto" no-gutters>
                     <v-col align="center">
-                        <v-btn class="apply-button" width="450" height="50" variant="text">APPLY</v-btn>
+                        <v-btn class="apply-button" width="450" height="50" variant="text">CREATE</v-btn>
                     </v-col>
                 </v-row>
         </v-card>
