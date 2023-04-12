@@ -7,7 +7,16 @@
         </template>
         <v-card class="video-edit-card">
             <template v-slot:title>
-                <h2 class="pt-2">DEFINIČNÝ OBOR</h2>
+                <v-row no-gutters>
+                    <v-col class="pa-0">
+                        <h2 class="pt-2">DEFINIČNÝ OBOR</h2>
+                    </v-col>
+                    <v-spacer/>
+                    <v-col cols="auto">
+                        <v-btn icon="mdi-trash-can-outline" variant="plain"/>
+                    </v-col>
+                </v-row>
+                
             </template>
             <v-card-text no-gutters class="pa-0">
 
