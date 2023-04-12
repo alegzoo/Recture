@@ -47,7 +47,8 @@
                                 <v-btn 
                                     variant="text" 
                                     id="btn-new-question-series" 
-                                    append-icon="mdi-plus-circle">
+                                    append-icon="mdi-plus-circle"
+                                    @click="showNewQuestionSeriesDialog = true">
                                     NEW QUESTION SERIES
                                 </v-btn>
                             </v-col>
@@ -98,6 +99,7 @@
         </v-row>
         <UploadDialogTimetable v-model="showUploadDialog"/>
         <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
+        <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
 </template>
 
 <style lang="scss">
@@ -118,6 +120,7 @@
     import SearchBar from '@/components/SearchBar.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
     import UploadDialogTimetable from '@/components/UploadDialogTimetable.vue';
+    import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';
@@ -126,6 +129,7 @@
 
     const showUploadDialog = ref<boolean>(false);
     const showNewThematicUnitDialog = ref<boolean>(false);
+    const showNewQuestionSeriesDialog = ref<boolean>(false);
 
     const homeStore = useHomeStore();
     const accountStore = useAccountStore();
