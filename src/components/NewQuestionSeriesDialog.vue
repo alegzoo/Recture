@@ -1,38 +1,59 @@
 <template>
     <v-dialog class="h-100 justify-center" width="1000" scroll-strategy="block">
         <v-card class="new-question-series-card">
-
-            <v-sheet :height="55" :width="1000" class="v-sheet-header" no-gutters>
-                <v-row no-gutters class="pt-2" align-self="center" align="start">
-                    <v-col cols="4" align-self="center" class="pa-0" align="start">
-                        <h2 class="header-title pl-5">Definičný obor</h2>
-                    </v-col>
-                    <v-col cols="4" align-self="center" align="center">
-                        <v-chip class="subject-chip-header" size="large">MAT</v-chip>
-                    </v-col>
-                    <v-col cols="4" justify="center" align-self="center" align="end" class="pr-5">
-                        <p class="text-h6 header-date">5.4.2023</p>
+            <template v-slot:title>
+                <v-row no-gutters>
+                    <v-col class="pa-0">
+                        <h2 class="pt-3">NEW QUESTION SERIES</h2>
                     </v-col>
                 </v-row>
-            </v-sheet>
+                
+            </template>
 
-            
-            <v-card-text no-gutters class="pa-0 pt-2">
-                <v-row no-gutters class="pt-2">
-                    <v-col cols="4" align-self="center" class="pa-0" align="start">
-                        <h2 class="pl-5">NEW QUESTION SERIES</h2>
+            <v-card-text no-gutters class="pa-0 pt-4">
+
+                <v-row no-gutters>
+                    <v-col class="pl-6">
+                        <h4 class="subtitles">Lessons chosen</h4>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="pl-6 pt-2" align-self="center" align="center">
+                    <v-col  cols="auto" class="pa-0">
+                        <v-icon class="info-icon" icon="mdi-information" ></v-icon>
+                    </v-col>
+
+                    <v-col cols="auto" class="pa-0 pl-1">
+                        <h5 class="subtitles">You can add this question series to another lessons too just by clicking Edit in the right corner of the clicked lesson</h5>
+                    </v-col>
+                </v-row>
+
+
+                <v-row no-gutters align-content="center" class="pt-5">
+                    <v-col cols="2" class="pa-0 pl-6" align="start" align-self="start">
+                        <v-sheet class="v-sheet-lesson-name pl-5 pt-2" :height="40" :width="170"><p class="font-weight-bold">Definičný obor</p></v-sheet>
+                    </v-col>
+
+                    <v-col cols="1" class="pa-0" align="start" align-self="start">
+                        <v-sheet class="v-sheet-subject pl-6 pt-2" :height="40" :width="120"><p class="font-weight-bold">MAT</p></v-sheet>
+                    </v-col>
+
+                    <v-col cols="auto" class="pa-0" align="start" align-self="start">
+                        <v-sheet class="v-sheet-class pl-5 pt-2" :height="40" :width="80"><p class="font-weight-bold">I.C</p></v-sheet>
+                    </v-col>
+
+
+                </v-row>
+
+                <v-row no-gutters class="pt-7">
+                    <v-col cols="12">
+                        <v-sheet class="pt-2 v-divider-under-title" :thickness="2"/>
                     </v-col>
                 </v-row>
 
                 <v-row no-gutters>
                     <v-col cols="12" class="px-5">
                         <v-text-field variant="underlined" single-line hide-details label="Title"></v-text-field>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="pt-7">
-                    <v-col cols="12">
-                        <v-sheet class="pt-2 v-divider-under-title" :thickness="2"/>
                     </v-col>
                 </v-row>
 
@@ -109,6 +130,7 @@
 <style lang="scss" scoped>
 @import "@/styles/constants.scss";
 @import "@/styles/mixins.scss";
+@import "@/styles/lesson-colors.scss";
 
 .new-question-series-card{
     background-color: #efefef;
@@ -178,6 +200,39 @@
     border-width: 2px;
 }
 
+.subtitles{
+    color: black;
+    opacity: 50%;
+}
+
+.v-sheet-lesson-name{
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    background-color: black;
+    color: white;
+}
+
+.v-sheet-subject{
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    background-color: $recture-yellow;
+    color: black;
+    border: black 2px solid;
+}
+
+.v-sheet-class{
+    background-color: #e24a42;
+    border: black 2px solid;
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    color: white;
+}
+
+.info-icon{
+    color: black;
+    opacity: 50%;
+    font-size: large;
+}
 </style>
     
 <script lang="ts" setup>
