@@ -59,12 +59,17 @@
     background-position: -200% 0px, -100% 0px;
     transition: all 0.15s ease-in-out;
     box-shadow: 0px 2px 0px 0px black;
+    border-top: 2px black solid;
 }
 
 #sidebar .v-list-item .v-icon {
     filter: none;
     transition: filter 0.15s ease-out;
 }
+
+#sidebar .v-list-item.active:first-child {
+    border-top: none;
+}    
 
 #sidebar .v-list-item:hover .v-icon {
     filter: drop-shadow(2px 2px 0px $recture-yellow);

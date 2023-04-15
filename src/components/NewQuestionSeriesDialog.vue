@@ -29,89 +29,97 @@
                 </v-row>
 
 
-                <v-row no-gutters align-content="center" class="pt-5">
-                    <v-col cols="2" class="pa-0 pl-6" align="start" align-self="start">
-                        <v-sheet class="v-sheet-lesson-name pl-5 pt-2" :height="40" :width="170"><p class="font-weight-bold">Definičný obor</p></v-sheet>
+                <v-row no-gutters class="pt-2 pb-3">
+                    <v-col cols="2" class="pa-0 pl-6" align="start" align-self="center">
+                        <v-sheet no-gutters class="v-sheet-lesson-name pl-5 pt-2" :height="40" :width="170"><p class="font-weight-bold">Definičný obor</p></v-sheet>
                     </v-col>
 
-                    <v-col cols="1" class="pa-0" align="start" align-self="start">
-                        <v-sheet class="v-sheet-subject pl-6 pt-2" :height="40" :width="120"><p class="font-weight-bold">MAT</p></v-sheet>
+                    <v-col cols="1" class="pa-0" align="start" align-self="center">
+                        <v-sheet class="v-sheet-subject pl-7 pt-2" :height="40" :width="120"><p class="font-weight-bold">MAT</p></v-sheet>
                     </v-col>
 
-                    <v-col cols="auto" class="pa-0" align="start" align-self="start">
-                        <v-sheet class="v-sheet-class pl-5 pt-2" :height="40" :width="80"><p class="font-weight-bold">I.C</p></v-sheet>
+                    <v-col cols="1" class="pa-0" align="start" align-self="center">
+                        <v-sheet no-gutters class="v-sheet-class pl-9 pt-2" :height="40" :width="120"><p class="font-weight-bold">I.C</p></v-sheet>
                     </v-col>
 
+                    <v-col cols="1" class="pa-0" align="center" align-self="center">
+                        <v-sheet no-gutters class="v-sheet-thematic-unit pt-2" :height="40" :width="120"><p class="font-weight-bold">FUNKCIE</p></v-sheet>
+                    </v-col>
 
+                    <v-col cols="1" class="pa-0 pl-10" align="center" align-self="center">
+                        <v-btn icon="mdi-close" :ripple="false" variant="plain"></v-btn>
+                    </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-7">
-                    <v-col cols="12">
-                        <v-sheet class="pt-2 v-divider-under-title" :thickness="2"/>
-                    </v-col>
-                </v-row>
+            <v-container no-gutters class="h-100 questions-making-section">
+
+                    <v-row no-gutters>
+                        <v-col cols="12" class="pa-0 pl-2 pr-5">
+                            <v-text-field class="title-field" variant="underlined" label="Title of your question series..." single-line hide-details></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row no-gutters class="pt-7 pb-5">
+                        <v-row no-gutters>
+                            <v-col cols="1">
+                                <v-row no-gutters>
+                                    <v-col class="pa-0" align="center">
+                                        <h2>1.</h2>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+
+                            <v-col cols="11" class="pr-5">
+                                <v-sheet class="v-sheet-question">
+                                    <v-col class="pa-0">
+                                        <v-sheet class="v-sheet-question-2">
+                                            
+
+                                            <v-row no-gutters>
+                                            <v-col cols="12" class="pa-0 pt-4 px-4">
+                                                    <v-textarea variant="outlined" rows="1" label="Your question" row-height="5" auto-grow hide-details></v-textarea>
+                                                </v-col>  
+                                            </v-row>
+                                        
+                                            <v-row no-gutters class="pt-4">
+                                                <v-col cols="auto" class="pl-6 pr-3" align-self="center" align="center">
+                                                    <v-radio value="0" hide-details color="success"/>
+                                                </v-col>
+
+                                                <v-col class="pr-0" align-self="center" align="center">
+                                                    <v-textarea variant="outlined" label="First option" rows="1" row-height="5" auto-grow hide-details></v-textarea>
+                                                </v-col>
+
+                                                <v-col cols="auto" class="pa-0 px-2" disabled align-self="center" align="center">
+                                                    <v-btn :disabled="true" icon="mdi-close" variant="plain"/>
+                                                </v-col>
+                                            </v-row>
+
+                                            <v-row no-gutters class="pt-4">
+                                                <NewOptionQuestionSeries/>
+                                            </v-row>
+
+                                            <v-row no-gutters class="pl-1 pt-1 pb-1">
+                                                <v-col class="pa-0">
+                                                    <v-btn variant="flat" :ripple="false" icon="mdi-plus"/>
+                                                </v-col>
+                                            </v-row>  
+                                        </v-sheet>
+                                    </v-col>
+                                </v-sheet>
+                            </v-col>
+
+
+                        </v-row>
+                    </v-row>
 
                 <v-row no-gutters>
-                    <v-col cols="12" class="px-5">
-                        <v-text-field variant="underlined" single-line hide-details label="Title"></v-text-field>
+                    <v-col class="pa-0 pt-8 pl-4 pb-4">
+                        <v-btn icon="mdi-plus" :ripple="false" class="new-question-btn" variant="flat"></v-btn>
                     </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-7 pb-5">
-                    <v-row no-gutters>
-                        <v-col cols="1">
-                            <v-row no-gutters>
-                                <v-col class="pa-0" align="center">
-                                    <h2>1.</h2>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-
-                        <v-col cols="11" class="pr-5">
-                            <v-sheet class="v-sheet-question">
-                                <v-col class="pa-0">
-                                    <v-sheet class="v-sheet-question-2">
-                                        
-
-                                        <v-row no-gutters>
-                                           <v-col cols="12" class="pa-0 pt-4 px-4">
-                                                <v-textarea variant="outlined" rows="1" label="Your question" row-height="5" auto-grow hide-details></v-textarea>
-                                            </v-col>  
-                                        </v-row>
-                                       
-                                        <v-row no-gutters class="pt-4">
-                                            <v-col cols="auto" class="pa-0 pl-2" align-self="center" align="center">
-                                                <v-radio value="0" hide-details color="success"/>
-                                            </v-col>
-
-                                            <v-col cols="auto" class="pa-0 pr-3" align-self="center" align="center">
-                                                <v-radio valie="1" hide-details />
-                                            </v-col>
-
-                                            <v-col class="pr-4" align-self="center" align="center">
-                                                <v-textarea variant="outlined" label="First option" rows="1" row-height="5" auto-grow hide-details></v-textarea>
-                                            </v-col>
-                                        </v-row>
-
-                                        <v-row no-gutters class="pl-1 pt-1 pb-1">
-                                            <v-col class="pa-0">
-                                                <v-btn variant="flat" :ripple="false" icon="mdi-plus"/>
-                                            </v-col>
-                                        </v-row>  
-                                    </v-sheet>
-                                </v-col>
-                            </v-sheet>
-                        </v-col>
-
-
-                    </v-row>
-                </v-row>
-
-            <v-row no-gutters>
-                <v-col class="pa-0 pt-8 pl-4 pb-4">
-                    <v-btn icon="mdi-plus" :ripple="false" class="new-question-btn" variant="flat"></v-btn>
-                </v-col>
-            </v-row>
+            </v-container>
 
 
             </v-card-text>
@@ -175,6 +183,11 @@
     border-color: black;
 }
 
+
+.v-sheet-question:hover{
+    box-shadow: 4px 4px 0px 0px black;
+}
+
 .v-sheet-question-2{
     background-color: white;
     border-radius: 6px !important;
@@ -233,9 +246,26 @@
     opacity: 50%;
     font-size: large;
 }
+
+.v-sheet-thematic-unit{
+    background-color: white;
+    color: black;
+    border: black 2px solid;
+    border-radius: 9999px;
+}
+
+.questions-making-section{
+    background-color: #afafaf;
+}
+
+.title-field * {
+    font-size: 20px;
+}
+
 </style>
     
 <script lang="ts" setup>
 
+import NewOptionQuestionSeries from '@/components/NewOptionQuestionSeries.vue';
 
 </script>
