@@ -198,10 +198,10 @@
     border-color: transparent;
 }
 
-#filter-button {
+.filter-button {
     border-radius: 9999px;
     background-color: black;
-    color: white;
+    color: white !important;
     box-shadow: none;
 }
 

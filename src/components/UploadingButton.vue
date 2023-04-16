@@ -9,7 +9,6 @@
                 class="uploading-btn"
                 v-bind="props"
                 icon="mdi-upload"
-                rounded
                 :ripple="false"
                 align-content="center"
             >
@@ -38,8 +37,9 @@
                     <v-chip class="class-chip-comment px-5" size="medium" variant="text">I.C</v-chip>
                 </v-col>
                 <v-col cols="auto" class="pl-1 pa-0 pr-1" align="start" align-self="center">
-                    <v-btn variant="plain" icon="mdi-close"></v-btn>
+                    <v-btn @click="showCancelUploadingLessonDialog" variant="plain" icon="mdi-close"/>
                 </v-col>
+
             </v-row>
 
             <UploadingNewLesson/>
@@ -94,9 +94,13 @@
 import { ref, watch } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 import UploadingNewLesson from '@/components/UploadingNewLesson.vue';
+import CancelUploadingLessonDialog from '@/components/CancelUploadingLessonDialog.vue';
 
 const { mdAndUp } = useDisplay();
-
 const menu = ref(false);
+
+const showCancelUploadingLessonDialog = ref<boolean>(false);
+const CancelUploadingLessonDialogVisible = ref<boolean>(false);
+
 
 </script>

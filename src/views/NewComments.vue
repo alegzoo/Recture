@@ -3,8 +3,6 @@
         <v-row class="pl-8 mt-10">
                 <p class="text-h4 font-weight-medium">Comments</p>
         </v-row>
-        
-        <TimetableSetupDialog/>
 
         <v-row class="mt-12" fluid align-content="start" align-self="start">
             <v-col cols="8" class="v-col-comments mb-n2">
@@ -25,7 +23,7 @@
                         <h4 class="time-label">8 hours ago</h4>
                     </v-col>
                     <v-spacer></v-spacer>
-                        <v-btn icon="mdi-dots-horizontal" :ripple="false" variant="plain" class="reply-ignore-dots-buttons"></v-btn>
+                        <EditNewCommentsCard/>
                 </v-row>
             
                 <v-row class="mt-3 ml-16 mr-10" align-content="center">
@@ -68,11 +66,13 @@
                 </v-row>
                 <v-icon icon="mdi-play" class="play-icon"/>
             </v-col>
-            <v-container class="pa-0" fluid no-gutters>
-                <v-row>
-                    <img class="comment-bottom w-100" src="@/assets/comment_bottom.svg"/>
+            <v-container fluid no-gutters class="pa-0">
+                <v-row class="pb-1">
+                    <v-img class="comment-bottom" src="@/assets/comment_bottom_6.svg"/>
                 </v-row>
-                <reply-text-field :comment-id="0"></reply-text-field>
+                <v-container no-gutters class="w-100 v-container-comment pb-7" fluid>
+                    <ReplyTextField :comment-id="0"/>
+                </v-container>
             </v-container>
         </v-row>
 </v-container>
@@ -86,6 +86,7 @@
     import ReplyTextField from '@/components/ReplyTextField.vue'
     import "@/styles/newcomments.scss";
     import TimetableSetupDialog from '@/components/TimetableSetupDialog.vue';
+    import EditNewCommentsCard from '@/components/EditNewCommentsCard.vue';
 
     function showReplyField() {    
     }

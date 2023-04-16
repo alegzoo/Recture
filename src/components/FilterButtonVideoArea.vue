@@ -6,14 +6,15 @@
     >
         <template v-slot:activator="{ props }">
             <v-btn
-                id="filter-button"
+                class="filter-button"
                 v-bind="props"
                 append-icon="mdi-filter-outline"
+                variant="text"
                 rounded
                 :ripple="false"
                 align-content="center"
             >
-                Filter
+            Filter
             </v-btn>
         </template>
 
