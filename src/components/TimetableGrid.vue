@@ -1,30 +1,30 @@
 <template>
-    <v-container :class="{'timetable-grid': true, 'pa-0': true, 'idle': timetableStore.idle, 'editing': timetableStore.editing, 'creating': timetableStore.creating}" fluid>
+    <v-container :class="{'timetable-grid': true, 'pa-0': true, 'idle': timetable.idle.value, 'editing': timetable.editing.value, 'creating': timetable.creating.value, 'selecting': timetable.selecting.value}" fluid>
         <v-row class="timetable-grid-row" no-gutters>
             <v-col class="timetable-grid-header"></v-col>
-            <v-col class="timetable-grid-header" v-for="i in timetableStore.lessonsPerDay">
+            <v-col class="timetable-grid-header" v-for="i in timetable.lessonsPerDay.value">
                 <v-row no-gutters class="h-100">
                     <v-col align-self="center">
-                        <p>{{ (timetableStore.firstLessonNumber+i-1)+["th", "st", "nd", "rd", "th"][Math.min((timetableStore.firstLessonNumber+i-1)%10, 4)] }}</p>
+                        <p>{{ (timetable.firstLessonNumber.value+i-1)+["th", "st", "nd", "rd", "th"][Math.min((timetable.firstLessonNumber.value+i-1)%10, 4)] }}</p>
                     </v-col>
                 </v-row>
             </v-col>
         </v-row>
         <!-- TODO: Fix bug: If a row is fully filled with lessons or selected cells then it shrinks -->
-        <template v-for="(visible, day) in timetableStore.daysOfWeek">
+        <template v-for="(visible, day) in timetable.daysOfWeek.value">
             <v-row class="timetable-grid-row" v-if="visible" no-gutters>
                 <v-col class="timetable-grid-header">
                     <v-row no-gutters class="h-100">
                         <v-col align-self="center">
-                            <p>{{ DayOfWeek[day].substring(0, 3).toLocaleUpperCase() }}</p>
-                            <p>{{ timetableStore.weekDates[day].toLocaleDateString(undefined, {month: "numeric", day: "numeric"}).toLocaleUpperCase() }}</p>
+                            <p>{{ DayOfWeek[day as number].substring(0, 3).toLocaleUpperCase() }}</p>
+                            <p>{{ timetable.weekDates.value[day].toLocaleDateString(undefined, {month: "numeric", day: "numeric"}).toLocaleUpperCase() }}</p>
                         </v-col>
                     </v-row>
                 </v-col>
-                <template v-for="i in timetableStore.lessonsPerDay">
-                    <template v-for="lesson in [timetableStore.lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
-                        <TimetableLesson v-if="lesson != null" :lesson="lesson"/>
-                        <TimetableCell v-else :selected="timetableStore.selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!standalone" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
+                <template v-for="i in timetable.lessonsPerDay.value">
+                    <template v-for="lesson in [timetable.lessons.value.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
+                        <TimetableLesson v-if="lesson != null" :lesson="lesson" :editing="timetable.editing.value" @delete-button-clicked="timetable.deleteLesson(lesson)"/>
+                        <TimetableCell v-else :selected="timetable.selection.value.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!timetable.selecting.value" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
                     </template>
                 </template>
             </v-row>
@@ -66,7 +66,11 @@
             }
         }
 
-        .timetable-grid-cell.timetable-lesson {
+        &:not(.selecting) .timetable-grid-cell.timetable-lesson {
+            cursor: default;
+        }
+
+        &.selecting .timetable-grid-cell:not(.timetable-lesson) {
             cursor: default;
         }
 
@@ -192,17 +196,16 @@
 
 <script lang="ts" setup>
     import { onMounted } from 'vue';
-    import { ITimetableGridPosition, useTimetableStore } from '@/stores/useTimetableStore';
+    import { IUsableTimetable, ITimetableGridPosition } from '@/composables/useTimetable';
     import { DayOfWeek } from '@/api/RectureApi';
     import TimetableCell from './TimetableCell.vue';
     import TimetableLesson from './TimetableLesson.vue';
 
-    const timetableStore = useTimetableStore();
-
     const props = withDefaults(defineProps<{
-        standalone: boolean
+        timetable: IUsableTimetable,
+        initOnMounted: boolean
     }>(), {
-        standalone: false
+        initOnMounted: false
     });
 
     const emit = defineEmits<{
@@ -210,11 +213,10 @@
     }>();
 
     onMounted(() => {
-        if (props.standalone === true) {
-            timetableStore.$reset();
-            timetableStore.setWeek();
-            timetableStore.fetchTimetable();
-            timetableStore.fetchLessons();
+        if (props.initOnMounted === true) {
+            props.timetable.setWeek();
+            props.timetable.fetchTimetable();
+            props.timetable.fetchLessons();
         }
     });
 </script>

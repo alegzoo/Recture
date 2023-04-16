@@ -4,7 +4,7 @@
             <v-card-text class="pa-0 d-flex flex-column">
                 <v-row class="flex-grow-0" no-gutters>
                     <v-col cols="6" class="pl-7 pt-3" align-self="center">
-                        <h1>YOUR TIMETABLE</h1>
+                        <h1>UPLOAD RECORDING</h1>
                     </v-col>
 
                     <v-spacer/>
@@ -24,18 +24,18 @@
                 </v-row>
 
                 <v-row class="flex-grow-0 pt-1" no-gutters>
-                    <v-col align-self="center" cols="auto" class="pl-7">
-                        <v-icon class="info-icon" icon="mdi-information"></v-icon>
+                    <v-col align="center" align-self="center" cols="auto" class="pl-7">
+                        <v-icon class="info-icon h-100" icon="mdi-information"></v-icon>
                     </v-col>
 
-                    <v-col cols="auto" class="pl-2 headline-colors">
-                        <p class="headline-colors font-weight-bold">Choose a lesson you want to upload</p>
+                    <v-col align="center" align-self="center" cols="auto" class="pl-2">
+                        <p class="headline-colors font-weight-bold">Select the recording's lesson to continue</p>
                     </v-col>
                 </v-row>
 
                 <v-row class="flex-grow-1" no-gutters>
                     <v-col class="pa-8">
-                        <TimetableGrid :standalone="true" class="h-100"/>
+                        <TimetableGrid :timetable="timetable" :init-on-mounted="true" class="h-100"/>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -50,16 +50,15 @@
         background-color: #efefef;
     }
 
-    .headline-colors {
-        opacity: 50%;
-    }
-
-    .info-icon {
-        opacity: 20%;
+    .headline-colors, .info-icon::before {
+        color: black;
+        opacity: 35%;
     }
 </style>
 
 <script lang="ts" setup>
-    import { useDisplay } from 'vuetify/lib/framework.mjs';
     import TimetableGrid from '@/components/TimetableGrid.vue';
+    import { useTimetable } from '@/composables/useTimetable';
+
+    const timetable = useTimetable("selecting");
 </script>

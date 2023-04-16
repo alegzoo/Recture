@@ -1,6 +1,6 @@
 <template>
     <v-col class="timetable-grid-cell timetable-lesson">
-        <v-icon v-show="timetableStore.editing" size="24" icon="mdi-close" @click="deleteSelf()"/>
+        <v-icon v-show="editing" size="24" icon="mdi-close" @click="emit('deleteButtonClicked')"/>
         <v-row no-gutters class="h-100" :style="'background-color:'+timetableStore.colors[lesson.color]">
             <v-col align-self="center">
                 <p>{{ lesson.subjectName }}</p>
@@ -15,12 +15,13 @@
     import { useTimetableStore } from '@/stores/useTimetableStore';
 
     const props = defineProps<{
-        lesson: ILesson
+        lesson: ILesson,
+        editing: boolean
+    }>();
+
+    const emit = defineEmits<{
+        (e: "deleteButtonClicked"): void
     }>();
 
     const timetableStore = useTimetableStore();
-
-    function deleteSelf() {
-        timetableStore.deleteLesson(props.lesson);
-    }
 </script>
