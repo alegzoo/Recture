@@ -44,11 +44,13 @@
 
 #sidebar .v-list-item {
     margin: 0px;
+    border-style: solid;
+    border-width: 2px 0px 2px 0px;
+    border-color: transparent;
     border-radius: 0px;
     background: linear-gradient(to right, transparent 50%, black 50%), linear-gradient(to right, transparent 50%, $recture-yellow 50%);
     background-size: 200% 100%, 200% 100%;
     background-position: 0px 0px, 0px 0px;
-    box-shadow: none;
     opacity: 100%;
     transition: all 0.15s ease-in-out;
     overflow: visible;
@@ -57,19 +59,18 @@
 #sidebar .v-list-item.active {
     background-color: $recture-yellow;
     background-position: -200% 0px, -100% 0px;
+    border-color: black;
     transition: all 0.15s ease-in-out;
-    box-shadow: 0px 2px 0px 0px black;
-    border-top: 2px black solid;
 }
+
+#sidebar .v-list-item.active:first-child {
+    border-top-color: transparent;
+}    
 
 #sidebar .v-list-item .v-icon {
     filter: none;
     transition: filter 0.15s ease-out;
 }
-
-#sidebar .v-list-item.active:first-child {
-    border-top: none;
-}    
 
 #sidebar .v-list-item:hover .v-icon {
     filter: drop-shadow(2px 2px 0px $recture-yellow);
