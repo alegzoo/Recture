@@ -1,6 +1,6 @@
 <template>
     <v-col class="timetable-grid-cell timetable-lesson">
-        <v-icon v-show="editing" size="24" icon="mdi-close" @click="emit('deleteButtonClicked')"/>
+        <v-icon v-show="editing" size="24" icon="mdi-close" @click="emit('deleteButtonClick')"/>
         <v-row no-gutters class="h-100" :style="'background-color:'+timetableStore.colors[lesson.color]">
             <v-col align-self="center">
                 <p>{{ lesson.subjectName }}</p>
@@ -20,7 +20,7 @@
     }>();
 
     const emit = defineEmits<{
-        (e: "deleteButtonClicked"): void
+        (e: "deleteButtonClick"): void
     }>();
 
     const timetableStore = useTimetableStore();

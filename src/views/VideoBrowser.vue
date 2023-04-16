@@ -97,7 +97,7 @@
                 </v-row>
             </v-col>
         </v-row>
-        <UploadDialogTimetable v-model="showUploadDialog"/>
+        <UploadDialog v-model="showUploadDialog"/>
         <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
         <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
 </template>
@@ -118,8 +118,8 @@
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
     import VideoBox from '@/components/VideoBox.vue';
     import SearchBar from '@/components/SearchBar.vue';
+    import UploadDialog from '@/components/UploadDialog.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
-    import UploadDialogTimetable from '@/components/UploadDialogTimetable.vue';
     import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
     
     import "@/styles/videobrowser.scss";

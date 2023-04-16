@@ -17,13 +17,13 @@
                     <v-row no-gutters class="h-100">
                         <v-col align-self="center">
                             <p>{{ DayOfWeek[day as number].substring(0, 3).toLocaleUpperCase() }}</p>
-                            <p>{{ timetable.weekDates.value[day].toLocaleDateString(undefined, {month: "numeric", day: "numeric"}).toLocaleUpperCase() }}</p>
+                            <p>{{ timetable.getFormattedWeekDate(day) }}</p>
                         </v-col>
                     </v-row>
                 </v-col>
                 <template v-for="i in timetable.lessonsPerDay.value">
                     <template v-for="lesson in [timetable.lessons.value.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
-                        <TimetableLesson v-if="lesson != null" :lesson="lesson" :editing="timetable.editing.value" @delete-button-clicked="timetable.deleteLesson(lesson)"/>
+                        <TimetableLesson v-if="lesson != null" :lesson="lesson" :editing="timetable.editing.value" @delete-button-click="timetable.deleteLesson(lesson)" @click="emit('timetableLessonClick', lesson, timetable.weekDates.value[day])"/>
                         <TimetableCell v-else :selected="timetable.selection.value.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!timetable.selecting.value" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
                     </template>
                 </template>
@@ -197,7 +197,7 @@
 <script lang="ts" setup>
     import { onMounted } from 'vue';
     import { IUsableTimetable, ITimetableGridPosition } from '@/composables/useTimetable';
-    import { DayOfWeek } from '@/api/RectureApi';
+    import { DayOfWeek, ILesson } from '@/api/RectureApi';
     import TimetableCell from './TimetableCell.vue';
     import TimetableLesson from './TimetableLesson.vue';
 
@@ -209,7 +209,8 @@
     });
 
     const emit = defineEmits<{
-        (e: "timetableCellClick", cellPosition: ITimetableGridPosition): void
+        (e: "timetableCellClick", cellPosition: ITimetableGridPosition): void,
+        (e: "timetableLessonClick", lesson: ILesson, date: Date): void
     }>();
 
     onMounted(() => {

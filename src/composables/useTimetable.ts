@@ -1,4 +1,5 @@
 import { DayOfWeek, ILesson, RectureApi } from '@/api/RectureApi';
+import status from 'http-status';
 import { ref, reactive, computed, Ref, ComputedRef } from 'vue';
 
 export interface IUsableTimetable {
@@ -17,6 +18,8 @@ export interface IUsableTimetable {
     selecting: ComputedRef<boolean>,
 
     setWeek(dayOfWeek?: Date | null): void,
+    setRelativeWeek(relativeWeekNumber: number): void,
+    getFormattedWeekDate(dayOfWeek: DayOfWeek, year?: "numeric" | "2-digit" | undefined, month?: "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined, day?: "numeric" | "2-digit" | undefined): string,
     fetchTimetable(): void,
     fetchLessons(): void,
     deleteLesson(lesson: ILesson): void,
@@ -54,18 +57,30 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
         if (dayOfWeek == null) dayOfWeek = new Date();
         else dayOfWeek = new Date(dayOfWeek);
 
-        dayOfWeek.setDate(dayOfWeek.getDate()+2);
+        dayOfWeek.setHours(0, 0, 0, 0);
 
         let day = dayOfWeek.getDay();
         let diff = dayOfWeek.getDate() - day + (day == 0 ? -6:1);
         dayOfWeek.setDate(diff);
 
         for (let i = 0; i < 7; i++) {
-            let date = new Date();
-            date.setDate(dayOfWeek.getDate() + i);
-            date.setHours(0, 0, 0, 0);
+            let date = new Date(dayOfWeek);
+            date.setDate(date.getDate() + i);
             weekDates.value[i] = date;
         }
+    }
+
+    function setRelativeWeek(relativeWeekNumber: number): void {
+        if (weekDates.value.length > 0) {
+            let date = new Date(weekDates.value[0]);
+            date.setDate(date.getDate() + relativeWeekNumber*7);
+            setWeek(date);
+        }
+        //TODO: Maybe throw exception on failure?
+    }
+
+    function getFormattedWeekDate(dayOfWeek: DayOfWeek, year: "numeric" | "2-digit" | undefined = undefined, month: "numeric" | "2-digit" | "long" | "short" | "narrow" | undefined = "numeric", day: "numeric" | "2-digit" | undefined = "numeric"): string {
+        return weekDates.value[dayOfWeek].toLocaleDateString(undefined, {year: year, month: month, day: day}).toLocaleUpperCase()
     }
 
     function fetchTimetable(): void {
@@ -93,7 +108,7 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
     function deleteLesson(lesson: ILesson): void {
         lessons.value = lessons.value.filter(item => item !== lesson);
         RectureApi.deleteLesson(lesson.lessonId).then(result => {
-            if (!result.success) lessons.value.push(lesson);
+            if (!result.success && result.statusCode !== status.NOT_FOUND) lessons.value.push(lesson);
         }).catch(reason => {
             lessons.value.push(lesson);
         });
@@ -127,5 +142,5 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
         } else selection.value.push(cellPosition);
     }
     
-    return { daysOfWeek, lessonsPerDay, firstLessonNumber, lessons, weekDates, state, selection, idle, editing, creating, selecting, setWeek, fetchTimetable, fetchLessons, deleteLesson, toggleEditing, startCreating, stopCreating, toggleCellSelectionStatus }
+    return { daysOfWeek, lessonsPerDay, firstLessonNumber, lessons, weekDates, state, selection, idle, editing, creating, selecting, setWeek, setRelativeWeek, getFormattedWeekDate, fetchTimetable, fetchLessons, deleteLesson, toggleEditing, startCreating, stopCreating, toggleCellSelectionStatus }
 }
