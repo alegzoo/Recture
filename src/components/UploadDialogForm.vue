@@ -5,7 +5,7 @@
                 <v-col cols="7" class="left-col-upload pl-5">
                     <v-row no-gutters>
                         <v-col cols="auto">
-                            <h1 class="pt-3">UPLOAD</h1>
+                            <h1 class="pt-3 pl-1">UPLOAD</h1>
                         </v-col>
                     </v-row>
 
@@ -15,7 +15,7 @@
                         </v-col>
                     </v-row>
 
-                    <v-row class="pl-1 pt-4" align="center" no-gutters>
+                    <v-row class="pl-4 pt-4 subject-class-component" align="center" no-gutters>
                         <v-col cols="auto" class="pr-0">
                             <v-row class="subject-sheet pa-0">
                                 <v-col cols="auto" align="center" align-self="center" class="py-2">{{ subjectName }}</v-col>
@@ -215,20 +215,20 @@
     }
 
     .subject-sheet {
-        border: solid 2px black;
         box-shadow: 4px 4px 0px 0px black;
         background-color: $recture-yellow !important;
         border-radius: 3px 9999px 9999px 3px !important;
         color: black;
+        border: 2px black solid;
     }
+
+
 
     .class-sheet {
         background-color: #e24a42;
-        border-style: solid;
-        border-width: 0px 0px 0px 2px;
-        border-color: black;
         border-radius: 9999px !important;
         color: white;
+        border: -2px black solid;
     }
 
     .subtitles {
@@ -246,7 +246,7 @@
         border-style: solid;
         border-width: 3px;
         border-color: black;
-        box-shadow: 4px 4px 0px 0px black;
+        box-shadow: 3px 3px 0px 0px black;
     }
 
     .v-col-outline{

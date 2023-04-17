@@ -37,7 +37,7 @@
                     <v-chip class="class-chip-comment px-5" size="medium" variant="text">I.C</v-chip>
                 </v-col>
                 <v-col cols="auto" class="pl-1 pa-0 pr-1" align="start" align-self="center">
-                    <v-btn @click="showCancelUploadingLessonDialog" variant="plain" icon="mdi-close"/>
+                    <v-btn @click="showCancelUploadingLessonDialog= true" variant="plain" icon="mdi-close"/>
                 </v-col>
 
             </v-row>

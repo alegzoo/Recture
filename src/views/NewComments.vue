@@ -34,7 +34,7 @@
                 </v-row>
                 <v-row class="mt-3 ml-15 mr-10 mb-2" align-content="center">
                     <v-col cols="auto">
-                        <v-btn @click="showReplyField" variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
+                        <v-btn @click="defaultField = (false)" variant="plain" class="reply-ignore-dots-buttons" :ripple="false">
                             REPLY
                         </v-btn>
                     </v-col>
@@ -67,12 +67,23 @@
                 <v-icon icon="mdi-play" class="play-icon"/>
             </v-col>
             <v-container fluid no-gutters class="pa-0">
+            
+            <template v-if="defaultField=(true)">
+                <v-row class="pb-1">
+                    <v-img class="comment-bottom" src="@/assets/comment_bottom_default.svg"/>
+                </v-row>
+            </template>    
+
+            <template  v-else="defaultField=(false)">
                 <v-row class="pb-1">
                     <v-img class="comment-bottom" src="@/assets/comment_bottom_6.svg"/>
                 </v-row>
+
                 <v-container no-gutters class="w-100 v-container-comment pb-7" fluid>
                     <ReplyTextField :comment-id="0"/>
                 </v-container>
+            </template>
+
             </v-container>
         </v-row>
 </v-container>
@@ -83,11 +94,14 @@
 </style>
 
 <script lang="ts" setup>
+    import { ref } from 'vue';   
     import ReplyTextField from '@/components/ReplyTextField.vue'
     import "@/styles/newcomments.scss";
     import TimetableSetupDialog from '@/components/TimetableSetupDialog.vue';
     import EditNewCommentsCard from '@/components/EditNewCommentsCard.vue';
 
-    function showReplyField() {    
+    function showReplyTextField() {    
     }
+
+    const defaultField = ref<boolean>(true);
 </script>

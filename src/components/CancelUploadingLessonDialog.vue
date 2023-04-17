@@ -1,5 +1,5 @@
 <template>
-    <v-dialog class="h-100 justify-center" width="300" scroll-strategy="block">
+    <v-dialog v-model="showCancelUploadingLessonDialog" class="h-100 justify-center" width="300" scroll-strategy="block">
         <v-card class="new-question-series-card">
             <template v-slot:title>
                 <v-row no-gutters>
@@ -31,7 +31,7 @@
 </style>
 
 <script lang="ts" setup>
-
-
+import { ref } from 'vue';
+const showCancelUploadingLessonDialog = ref<boolean>(false);
 
 </script>

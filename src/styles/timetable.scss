@@ -91,3 +91,21 @@
 .timetable-grid, .creating-button {
     z-index: 200 !important;
 }
+
+.btns-classes-subjects{
+    background-color: white !important;
+    border: 2px black solid !important;
+    box-shadow: 0 4px 0px 0px black !important;
+}
+
+.btns-classes-subjects .selected{
+    background-color: $recture-yellow !important;
+    border-radius: 0px !important;
+    box-shadow: 0 4px 0px 0px black !important;
+}
+
+.classes{
+    border-right-width: 2px !important;
+    border-right-style: solid !important;
+    border-right-color: black !important;
+}
