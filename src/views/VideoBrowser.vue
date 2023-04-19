@@ -38,6 +38,7 @@
                                     variant="text" 
                                     class="btn-new-theme-unit"  
                                     append-icon="mdi-plus-circle"
+                                    rounded
                                     @click="showNewThematicUnitDialog = true">
                                     NEW THEMATIC UNIT
                                 </v-btn>

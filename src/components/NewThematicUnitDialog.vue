@@ -18,7 +18,7 @@
                                 <v-select
                                     hide-details
                                     no-gutters
-                                    class="choose-selectors"
+                                    class="choose-selectors-them-unit"
                                     label="Choose a subject"
                                     :items="['MAT', 'INF']"
                                     variant="solo"
@@ -33,7 +33,7 @@
                                 <v-select
                                     hide-details
                                     no-gutters
-                                    class="choose-selectors"
+                                    class="choose-selectors-them-unit"
                                     label="Choose a class"
                                     :items="['I.A', 'II.B', 'III.C', 'oktáva A']"
                                     variant="solo"
@@ -68,7 +68,7 @@
     border-radius: 7px !important;
 }
 
-.choose-selectors {
+.choose-selectors-them-unit {
     border: solid 2px black !important;
     border-radius: 0px !important;
     box-shadow: 2px 2px 0px 0px black !important;

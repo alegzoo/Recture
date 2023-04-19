@@ -19,7 +19,7 @@
                         <v-col cols="auto" class="pr-0">
                             <v-row class="subject-sheet pa-0">
                                 <v-col cols="auto" align="center" align-self="center" class="py-2">{{ subjectName }}</v-col>
-                                <v-col cols="auto" align="center" align-self="center" class="class-sheet px-5 py-2">{{ className }}</v-col>
+                                <v-col cols="auto" align="center" align-self="center" class="class-sheet px-5 py-2">{{ className }}</v-col>                                
                             </v-row>      
                         </v-col>
                     </v-row>
@@ -45,18 +45,18 @@
                     <v-row>
 
                         <v-row align="center" class="px-1 pl-4" no-gutters>
-                            <v-col cols="5">
+                            <v-col cols="5" class="v-col-selectors pa-0" align-self="center" justify-center>
                                 <v-select
-                                    hide-details
-                                    no-gutters
-                                    class="choose-selectors"
-                                    label="Choose a thematic unit"
-                                    :items="topics"
-                                    item-title="name"
-                                    variant="solo"
-                                    density="compact"
-                                    single-line
-                                ></v-select>
+                                hide-details
+                                no-gutters
+                                class="choose-selectors-upload"
+                                label="Choose a thematic unit"
+                                :items="topics"
+                                item-title="name"
+                                density="compact"
+                                variant="solo"
+                                single-line
+                                ></v-select> 
                             </v-col>
 
                             <v-col class="pl-10" cols="2">
@@ -228,7 +228,7 @@
         background-color: #e24a42;
         border-radius: 9999px !important;
         color: white;
-        border: -2px black solid;
+        border: 2px black solid;
     }
 
     .subtitles {
@@ -278,6 +278,21 @@
     .lesson-headline{
         opacity: 50% !important;
     }
+
+    .choose-selectors-upload{
+    border: solid 2px black !important;
+    border-radius: 0px !important;
+    box-shadow: 2px 2px 0px 0px black !important;
+    background-color: white !important;
+    font-weight: bold;
+    color: black !important;
+    text-transform: uppercase !important;
+    }
+
+    .v-col-selectors * {
+        //background-color: red !important;
+    }
+
 </style>
 
 

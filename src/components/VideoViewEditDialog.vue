@@ -69,7 +69,7 @@
                             <v-combobox
                                 hide-details
                                 no-gutters
-                                class="choose-selectors"
+                                class="choose-selectors-video-view-edit"
                                 label="Choose thematic unit"
                                 :items="['Definičný obor', 'Obor hodnôt', 'Vlastnosti funkcií', 'Lineárna funkcia', 'Kvadratické funkcie','Goniometrické funkcie','Inverzné funkcie', 'Priesečnik grafov lineárnych funkcií',]"
                                 variant="solo"
@@ -213,7 +213,7 @@
         border-radius: 6px;
     }
 
-    .choose-selectors{
+    .choose-selectors-video-view-edit{
     border: solid 2px black !important;
     border-radius: 0px !important;
     box-shadow: 2px 2px 0px 0px black !important;

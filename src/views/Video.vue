@@ -8,27 +8,9 @@
 
             <v-col cols="9">
 
-                <v-row no-gutters>
-                    <v-col cols="auto" class="pl-11" align-self="center" align="center">
-                        <v-sheet
-                        class="subject-v-sheet pt-1"
-                        :height="35"
-                        :width="60"
-                        >
-                        <h4>MAT</h4>
-                        </v-sheet>
-                    </v-col>
-
-                    <v-col cols="auto" class="v-col-thematic-unit" align-self="center" align="center">
-                        <v-sheet
-                        class="thematic-unit-v-sheet pt-1"
-                        :height="35"
-                        :width="90"
-                        >
-                        <h4>FUNKCIE</h4>
-                        </v-sheet>  
-                    </v-col>
-
+                <v-row no-gutters class="pl-11" align="center" align-self="center">
+                    <v-col cols="auto" align="center" align-self="center" class="subject-v-sheet px-4 py-1"><h4>MAT</h4></v-col>
+                    <v-col cols="auto" class="thematic-unit-v-sheet px-4 py-1" align-self="center" align="center"><h4>FUNKCIE</h4></v-col>
                 </v-row>
                     
                 <v-row no-gutters class="pl-11" md="12" xl="12" lg="12">
@@ -76,6 +58,11 @@
                 <v-row no-gutters class="pt-5">
                     <v-col class="pl-11" cols="12">
                         <p v-if="recordingComposable?.recording.value?.description != null">{{ recordingComposable?.recording.value?.description }}</p>
+                    </v-col>
+                </v-row>
+
+                <v-row no-gutters class="pt-5">
+                    <v-col class="pl-11" cols="12">
                     </v-col>
                 </v-row>
                     
@@ -250,20 +237,23 @@
 }
 
 .subject-v-sheet{
-    border-top-right-radius: 6px;
+    //border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     background-color: $recture-yellow;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
+    border-right: 0px;
+    border-right: none;
+    border-left: black 1px solid;
+    border-top: black 1px solid;
 }
 
 .thematic-unit-v-sheet{
     border-top-right-radius: 6px;
     background-color: white;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
+    border-left: black 1px solid;
+    border-top: black 1px solid;
+    border-right: black 1px solid;
+    border-bottom: none;
+
 }
 
 .teacher-student-avatar{
