@@ -131,42 +131,16 @@
 
                 <v-col cols="5" class="right-col-upload">
                     <v-row align="center" class="h-100" align-self="center" justify="center">
+                        <v-card :width="360" class="upload-card">
+                            <UploadFileInput class="w-100"/>
 
-                        <v-card :height="300" :width="360" class="v-sheet-lesson-preview">
-                            <v-sheet :height="180" class="w-100" no-gutters>
-                                <v-row class="h-100 pa-2 v-row-top-upload" no-gutters align="center">
-                                    <v-col class="h-100 v-col-outline">
-
-                                        <v-row no-gutters align-self="center">
-
-                                            <v-col cols="12" align="center" class="pt-3">
-                                                    <v-icon class="upload-icon" icon="mdi-upload"></v-icon>
-                                            </v-col>
-                                            
-                                            <v-col cols="12" align="center">
-                                                    <p class="font-weight-medium">Drop a file or choose a file</p>
-                                            </v-col>
-
-                                            <v-col cols="12" align="center" class="pt-2">
-                                                <v-btn class="choose-a-file-btn" variant="text">CHOOSE A FILE</v-btn>
-                                            </v-col>
-                                        </v-row>
-                                        
-                                    </v-col>
-                                </v-row>
-                            </v-sheet>
-
-                            <v-sheet :height="120" class="w-100" no-gutters>
-                                <v-row class="h-100" no-gutters>
-
-                                    <v-col cols="12" class="pl-3 pt-2">
-                                        <h2 class="lesson-headline">Title of the lesson</h2>
-                                        <p class="font-weight-regular pt-1">28.2.2023</p>
-                                        <p class="font-weight-bold pt-1">I.C</p>
-                                    </v-col>
-
-                                </v-row>                                
-                            </v-sheet>
+                            <v-row class="w-100" no-gutters>
+                                <v-col cols="12" class="px-3 py-2">
+                                    <h2 class="lesson-headline">Title of the lesson</h2>
+                                    <p class="font-weight-regular pt-1">28.2.2023</p>
+                                    <p class="font-weight-bold pt-1">I.C</p>
+                                </v-col>
+                            </v-row>                                
                         </v-card>                     
                     </v-row>
                 </v-col>
@@ -222,8 +196,6 @@
         border: 2px black solid;
     }
 
-
-
     .class-sheet {
         background-color: #e24a42;
         border-radius: 9999px !important;
@@ -240,8 +212,9 @@
         opacity: 50%;
     }
 
-    .v-sheet-lesson-preview {
-        color: white;
+    .upload-card {
+        background-color: white;
+        color: black;
         border-radius: 20px !important;
         border-style: solid;
         border-width: 3px;
@@ -249,58 +222,28 @@
         box-shadow: 3px 3px 0px 0px black;
     }
 
-    .v-col-outline{
-        border-color: black;
-        border-style: dashed;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-width: 2px;
-    }
-
-    .upload-icon{
-        font-size: 70px;
-    }
-
-    .choose-a-file-btn{
-        background-color: #00A6E2 !important;
-        border-color: black !important;
-        border-width: 2px !important;
-        border-style: solid !important;
-        font-weight: bold;
-    }
-
-    .v-row-top-upload{
-        border-bottom-color: black !important;
-        border-bottom-width: 2px !important;
-        border-bottom-style: solid !important;
-    }
-
-    .lesson-headline{
+    .lesson-headline {
         opacity: 50% !important;
     }
 
-    .choose-selectors-upload{
-    border: solid 2px black !important;
-    border-radius: 0px !important;
-    box-shadow: 2px 2px 0px 0px black !important;
-    background-color: white !important;
-    font-weight: bold;
-    color: black !important;
-    text-transform: uppercase !important;
+    .choose-selectors-upload {
+        border: solid 2px black !important;
+        border-radius: 0px !important;
+        box-shadow: 2px 2px 0px 0px black !important;
+        background-color: white !important;
+        font-weight: bold;
+        color: black !important;
+        text-transform: uppercase !important;
     }
-
-    .v-col-selectors * {
-        //background-color: red !important;
-    }
-
 </style>
 
 
 <script lang="ts" setup>
     import { ref, computed } from 'vue';
+    import { ILesson, ITopic, RectureApi } from '@/api/RectureApi';
+    import UploadFileInput from './UploadFileInput.vue';
 
     import "@/styles/main.scss";
-    import { ILesson, ITopic, RectureApi } from '@/api/RectureApi';
 
     const props = defineProps<{
         lesson: ILesson,
