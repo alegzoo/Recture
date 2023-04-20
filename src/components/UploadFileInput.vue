@@ -1,6 +1,6 @@
 <template>
     <v-container class="pa-2" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop">
-        <input type="file" ref="fileInput" @change="onFileInputChange" accept=".mp4,.webm" hidden/>
+        <input type="file" ref="fileInput" @change="onFileInputChange" :accept="allowedExtensionsCommaSeparated" hidden/>
         <v-row align-self="center" class="py-3" no-gutters>
             <v-col cols="12" align="center">
                 <v-icon icon="mdi-upload"></v-icon>
@@ -51,7 +51,7 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref, computed } from 'vue';
+    import { ref, computed, reactive } from 'vue';
 
     const props = defineProps<{
         modelValue?: File | null
@@ -69,6 +69,9 @@
     const dropText = computed<string>(() => dragging.value ? "Drop file" : (selectedFile.value != null ? selectedFile.value.name : "Drop a file here or select a file"));
     const dropTitle = computed<string | undefined>(() => selectedFile.value != null ? selectedFile.value.name : undefined);
     const fileUrl = ref<string | null>(null);
+
+    const allowedExtensions = reactive<string[]>([".mp4", ".webm"]);
+    const allowedExtensionsCommaSeparated = computed<string>(() => allowedExtensions.join(","));
 
     function onFileInputChange(e: Event) : void {
         if (fileInput.value?.files?.length === 1) {
@@ -92,11 +95,22 @@
         e.preventDefault();
 
         const files = e.dataTransfer?.files;
-        if (files != null && files.length === 1 && fileInput.value != null) {
+        if (files != null && files.length === 1 && verifyFileExtension(files[0]) && fileInput.value != null) {
             fileInput.value.files = files;
             onFileInputChange(e);
         }
 
         dragging.value = false;
+    }
+
+    function verifyFileExtension(file: File | undefined) {
+        if (file == undefined) return false;
+
+        const fileName = file.name;
+        for (let i = 0; i < allowedExtensions.length; i++) {
+            if (file.name.endsWith(allowedExtensions[i])) return true;
+        }
+
+        return false;
     }
 </script>

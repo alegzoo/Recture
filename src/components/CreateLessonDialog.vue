@@ -5,61 +5,15 @@
                 <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
             </template>
             <v-card-text>
-                <v-row align="center" class="px-1" no-gutters>
-                    <v-col cols="5 pr-2">
-                        <v-select
-                            hide-details
-                            no-gutters
-                            label="Choose a class"
-                            :items="classes"
-                            v-model="selectedClass"
-                            item-title="name"
-                            variant="solo"
-                            density="compact"
-                            single-line
-                        ></v-select>
-                    </v-col>
-
-                    <v-col cols="2 pl-9">
-                        <h2>or</h2>
-                    </v-col>
-
-                    <v-col cols="5">
-                        <v-text-field
-                        v-model="newClassName"
-                        label="Enter name of class to create"
-                        variant="underlined"
-                        single-line
-                        ></v-text-field>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <SelectOrCreateInput v-model="selectedClass" select-label="Choose a class" field-label="Enter name of class to create" :items="classes" item-title="name"/>
                     </v-col>
                 </v-row>
 
-                <v-row align="center" class="px-1" no-gutters>
-                    <v-col cols="5 pr-2">
-                        <v-select
-                            hide-details
-                            no-gutters
-                            label="Choose a subject"
-                            :items="subjects"
-                            v-model="selectedSubject"
-                            item-title="name"
-                            variant="solo"
-                            density="compact"
-                            single-line
-                        ></v-select>
-                    </v-col>
-
-                    <v-col cols="2 pl-9">
-                        <h2>or</h2>
-                    </v-col>
-
-                    <v-col cols="5">
-                        <v-text-field
-                        v-model="newSubjectName"
-                        label="Enter name of subject to create"
-                        variant="underlined"
-                        single-line
-                        ></v-text-field>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <SelectOrCreateInput v-model="selectedSubject" select-label="Choose a subject" field-label="Enter name of subject to create" :items="subjects" item-title="name"/>
                     </v-col>
                 </v-row>
 
@@ -201,11 +155,12 @@
     import "@/styles/lesson-colors.scss";
     import "@/styles/main.scss";
     import { IClass, ISubject, LessonColor, RectureApi } from '@/api/RectureApi';
+    import SelectOrCreateInput from './SelectOrCreateInput.vue';
 
     export interface ICreateLessonDialogResult {
         success: boolean,
-        class: IClass | string | null,
-        subject: IClass | string | null,
+        class: IClass | string | undefined,
+        subject: IClass | string | undefined,
         lessonColor: LessonColor | null
     }
 
@@ -225,10 +180,8 @@
     const classes = ref<IClass[]>([]);
     const subjects = ref<ISubject[]>([]);
 
-    const selectedClass = ref<IClass | null>(null);
-    const selectedSubject = ref<IClass | null>(null);
-    const newClassName = ref<string | null>(null);
-    const newSubjectName = ref<string | null>(null);
+    const selectedClass = ref<IClass | string | undefined>(undefined);
+    const selectedSubject = ref<IClass | string | undefined>(undefined);
 
     const selectedColor = ref<LessonColor | null>(null);
 
@@ -245,35 +198,19 @@
             if (dialogSuccess.value === true) {
                 emit('dialogExit', {
                     success: true,
-                    class: selectedClass.value != null ? selectedClass.value : newClassName.value,
-                    subject: selectedSubject.value != null ? selectedSubject.value : newSubjectName.value,
+                    class: selectedClass.value,
+                    subject: selectedSubject.value,
                     lessonColor: selectedColor.value
                 });
             } else {
                 emit('dialogExit', {
                     success: false,
-                    class: null,
-                    subject: null,
+                    class: undefined,
+                    subject: undefined,
                     lessonColor: null
                 });
             }
         }
-    });
-
-    watch(selectedClass, value => {
-        if (value != null) newClassName.value = null;
-    });
-
-    watch(selectedSubject, value => {
-        if (value != null) newSubjectName.value = null;
-    });
-
-    watch(newClassName, value => {
-        if (value != null) selectedClass.value = null;
-    });
-
-    watch(newSubjectName, value => {
-        if (value != null) selectedSubject.value = null;
     });
 
     function initialize() {
@@ -282,10 +219,8 @@
         classes.value = [];
         subjects.value = [];
 
-        selectedClass.value = null;
-        selectedSubject.value = null;
-        newClassName.value = null;
-        newSubjectName.value = null;
+        selectedClass.value = undefined;
+        selectedSubject.value = undefined;
 
         selectedColor.value = null;
 
@@ -317,7 +252,7 @@
     }
 
     function closeDialog(success: boolean) {
-        if (success && ((selectedClass.value == null && newClassName.value == null) || (selectedSubject.value == null && newSubjectName.value == null) || (selectedColor.value == null))) {
+        if (success && ((selectedClass.value == null) || (selectedSubject.value == null) || (selectedColor.value == null))) {
             alertType.value = "error";
             alertBody.value = "Fill out all fields to continue!";
             return;

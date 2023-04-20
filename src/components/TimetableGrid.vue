@@ -203,7 +203,7 @@
 
     const props = withDefaults(defineProps<{
         timetable: IUsableTimetable,
-        initOnMounted: boolean
+        initOnMounted?: boolean
     }>(), {
         initOnMounted: false
     });
