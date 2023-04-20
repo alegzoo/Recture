@@ -15,7 +15,7 @@
                         </v-col>
                     </v-row>
 
-                    <v-row class="pl-4 pt-4" align="center" no-gutters>
+                    <v-row class="pl-4 pt-5" align="center" no-gutters>
                         <v-col cols="auto" class="pr-0">
                             <v-row class="subject-class-row pa-0">
                                 <v-col cols="auto" align="center" align-self="center" class="py-2">{{ subjectName }}</v-col>
@@ -38,7 +38,7 @@
 
                     <v-row no-gutters class="pt-5">
                         <v-col class="subtitles pl-1">
-                            <h4>Thematic unit *</h4>
+                            <h4>Thematic unit</h4>
                         </v-col>
                     </v-row>
 
@@ -50,7 +50,7 @@
 
                     <v-row>
                         <v-col cols="12" class="pl-5 pr-11">
-                            <v-text-field v-model="title" variant="underlined" single-line label="Title of the lesson *"></v-text-field>
+                            <v-text-field v-model="title" variant="underlined" single-line label="Title of the lesson"></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -72,33 +72,37 @@
 
                     <v-row no-gutters class="pt-3">
                         <v-col class="subtitles pl-2">
-                            <h4>Comments *</h4>
+                            <h4>Comments</h4>
                         </v-col>
                     </v-row>
 
                     <v-row no-gutters class="pt-3">
                         <v-col>
-                            <v-radio-group v-model="commentsAllowed" inline>
+                            <v-radio-group v-model="commentsAllowed" hide-details inline>
                                 <v-radio label="Allow" :value="true"></v-radio>
                                 <v-radio class="pl-8" label="Deny" :value="false"></v-radio>
                             </v-radio-group>
                         </v-col>
                     </v-row>
 
-                    <v-row no-gutters class="pt-1" align-content="center">
+                    <v-row no-gutters class="pt-5" align-content="center">
                         <v-col class="subtitles pl-3" cols="auto" align-self="center">
                             <h4>Visibility *</h4>
                         </v-col>
-                        <v-col cols="auto" class="pl-3" align-self="center">
-                            <h5 class="subtitles">(To save as a concept, leave Visibility on "Private" and get back to it later)</h5>
-                        </v-col>
                     </v-row>
-                    <v-row no-gutters class="pt-2">
+                    
+                    <v-row no-gutters class="pt-3">
                         <v-col>
-                            <v-radio-group v-model="published" inline>
+                            <v-radio-group v-model="published" hide-details inline>
                                 <v-radio label="Public" :value="true"></v-radio>
                                 <v-radio class="pl-8" label="Private" :value="false"></v-radio>
                             </v-radio-group>
+                        </v-col>
+                    </v-row>
+
+                    <v-row no-gutters class="py-5">
+                        <v-col class="pl-3" align-self="center">
+                            <h5 class="subtitles">* To save the recording as a concept, set visibility to "Private" and get back to it later.</h5>
                         </v-col>
                     </v-row>
                 </v-col>
