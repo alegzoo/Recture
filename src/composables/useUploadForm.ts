@@ -7,6 +7,7 @@ export interface IUsableUploadForm {
     selectedTopic: Ref<ITopic | string | undefined>,
     commentsAllowed: Ref<boolean | undefined>,
     published: Ref<boolean | undefined>,
+    file: Ref<File | null>,
 
     className: Ref<string>,
     subjectName: Ref<string>,
@@ -14,7 +15,8 @@ export interface IUsableUploadForm {
 
     topics: Ref<ITopic[]>,
 
-    fetchTopics(): void
+    fetchTopics(): void,
+    setFile(file: File): void
 }
 
 export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
@@ -23,6 +25,7 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
     const selectedTopic = ref<ITopic | string | undefined>(undefined);
     const commentsAllowed = ref<boolean | undefined>(undefined);
     const published = ref<boolean | undefined>(undefined);
+    const file = ref<File | null>(null);
 
     const className = computed<string>(() => lesson.className);
     const subjectName = computed<string>(() => lesson.subjectName);
@@ -37,5 +40,9 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
         });
     }
 
-    return { title, description, selectedTopic, commentsAllowed, published, className, subjectName, dateString, topics, fetchTopics };
+    function setFile(val: File | null) {
+        file.value = val;
+    }
+
+    return { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics, fetchTopics, setFile };
 }

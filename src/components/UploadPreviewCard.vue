@@ -1,6 +1,6 @@
 <template>
     <v-card :width="360">
-        <UploadFileInput class="w-100"/>
+        <UploadFileInput class="w-100" @file-select="(file) => emit('fileSelect', file)"/>
 
         <v-row class="w-100" no-gutters>
             <v-col cols="12" class="px-3 py-2">
@@ -48,6 +48,10 @@
         title: string,
         lesson: ILesson,
         dateString: string
+    }>();
+
+    const emit = defineEmits<{
+        (e: "fileSelect", val: File | null): void
     }>();
 
     const titleBlank = computed<boolean>(() => props.title.length === 0);

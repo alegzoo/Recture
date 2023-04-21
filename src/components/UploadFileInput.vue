@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pa-2" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop">
+    <v-container :class="{'pa-2': true, 'dragging': dragging}" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop">
         <input type="file" ref="fileInput" @change="onFileInputChange" :accept="allowedExtensionsCommaSeparated" hidden/>
         <v-row align-self="center" class="py-3" no-gutters>
             <v-col cols="12" align="center">
@@ -18,12 +18,20 @@
 </template>
 
 <style lang="scss" scoped>
+    @use "sass:color";
     @import "@/styles/constants.scss";
 
     .v-row {
+        background-color: transparent;
         border: dashed 2px black;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+        transition: background-color 0.1s linear;
+    }
+
+    .v-container.dragging .v-row {
+        background-color: color.change($recture-bright-blue, $alpha: 0.1);
+        transition: background-color 0.1s linear;
     }
 
     .v-container {
@@ -53,12 +61,8 @@
 <script lang="ts" setup>
     import { ref, computed, reactive } from 'vue';
 
-    const props = defineProps<{
-        modelValue?: File | null
-    }>();
-
     const emit = defineEmits<{
-        (e: "update:modelValue", val: File | null): void
+        (e: "fileSelect", file: File | null): void
     }>();
 
     const fileInput = ref<HTMLInputElement>();
@@ -70,20 +74,26 @@
     const dropTitle = computed<string | undefined>(() => selectedFile.value != null ? selectedFile.value.name : undefined);
     const fileUrl = ref<string | null>(null);
 
-    const allowedExtensions = reactive<string[]>([".mp4", ".webm"]);
-    const allowedExtensionsCommaSeparated = computed<string>(() => allowedExtensions.join(","));
+    const allowedFileTypes = reactive<string[]>(["video/mp4", "video/webm"]);
+    const allowedExtensionsCommaSeparated = ref<string>(".mp4,.webm");
 
     function onFileInputChange(e: Event) : void {
         if (fileInput.value?.files?.length === 1) {
             selectedFile.value = fileInput.value.files[0];
             fileUrl.value = URL.createObjectURL(selectedFile.value);
-            emit("update:modelValue", selectedFile.value);
-        } else emit("update:modelValue", null);
+            emit("fileSelect", selectedFile.value);
+        } else emit("fileSelect", null);
     }
 
     function onDragOver(e: DragEvent): void {
         e.preventDefault();
-        dragging.value = true;
+
+        if (e.dataTransfer?.items.length === 1) {
+            const item = e.dataTransfer?.items[0];
+            dragging.value = item != null && item.kind === "file" && verifyMimeType(item.type);
+        } else {
+            dragging.value = false;
+        }
     }
 
     function onDragLeave(e: DragEvent): void {
@@ -95,7 +105,7 @@
         e.preventDefault();
 
         const files = e.dataTransfer?.files;
-        if (files != null && files.length === 1 && verifyFileExtension(files[0]) && fileInput.value != null) {
+        if (files != null && files.length === 1 && verifyFileType(files[0]) && fileInput.value != null) {
             fileInput.value.files = files;
             onFileInputChange(e);
         }
@@ -103,14 +113,12 @@
         dragging.value = false;
     }
 
-    function verifyFileExtension(file: File | undefined) {
-        if (file == undefined) return false;
+    function verifyFileType(file: File | null | undefined) {
+        if (file == null) return false;
+        else return verifyMimeType(file.type);
+    }
 
-        const fileName = file.name;
-        for (let i = 0; i < allowedExtensions.length; i++) {
-            if (file.name.endsWith(allowedExtensions[i])) return true;
-        }
-
-        return false;
+    function verifyMimeType(type: string) {
+        return allowedFileTypes.includes(type);
     }
 </script>

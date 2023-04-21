@@ -109,7 +109,7 @@
 
                 <v-col cols="5" class="right-col-upload">
                     <v-row align="center" class="h-100" align-self="center" justify="center">
-                        <UploadPreviewCard :title="title" :lesson="lesson" :date-string="dateString"/>
+                        <UploadPreviewCard :title="title" :lesson="lesson" :date-string="dateString" @file-select="uploadForm.setFile"/>
                     </v-row>
                 </v-col>
             </v-row>
@@ -189,8 +189,7 @@
 
 
 <script lang="ts" setup>
-    import { ref, computed, toRefs } from 'vue';
-    import { ILesson, ITopic, RectureApi } from '@/api/RectureApi';
+    import { ILesson } from '@/api/RectureApi';
     import { useUploadForm } from '@/composables/useUploadForm';
     import UploadPreviewCard from './UploadPreviewCard.vue';
     import SelectOrCreateInput from './SelectOrCreateInput.vue';
@@ -205,6 +204,6 @@
     const uploadForm = useUploadForm(props.lesson, props.date);
     uploadForm.fetchTopics();
 
-    const { title, description, selectedTopic, commentsAllowed, published, className, subjectName, dateString, topics } = toRefs(uploadForm);
+    const { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics } = uploadForm;
 
 </script>
