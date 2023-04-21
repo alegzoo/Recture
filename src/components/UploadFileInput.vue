@@ -74,7 +74,7 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref, computed, reactive } from 'vue';
+    import { ref, computed, reactive, onBeforeUnmount } from 'vue';
 
     const emit = defineEmits<{
         (e: "fileSelect", file: File | null): void
@@ -99,8 +99,10 @@
         if (fileInput.value?.files?.length === 1) {
             selectedFile.value = fileInput.value.files[0];
             fileUrl.value = URL.createObjectURL(selectedFile.value);
-            video.value?.load();
-            video.value?.fastSeek(10);
+            if (video.value) {
+                video.value.load();
+                video.value.currentTime = 10;
+            }
             emit("fileSelect", selectedFile.value);
         } else {
             emit("fileSelect", null);
@@ -126,14 +128,13 @@
 
     function onDrop(e: DragEvent): void {
         e.preventDefault();
+        dragging.value = false;
 
         const files = e.dataTransfer?.files;
         if (files != null && files.length === 1 && verifyFileType(files[0]) && fileInput.value != null) {
             fileInput.value.files = files;
             onFileInputChange(e);
         }
-
-        dragging.value = false;
     }
 
     function verifyFileType(file: File | null | undefined) {
@@ -144,4 +145,8 @@
     function verifyMimeType(type: string) {
         return allowedFileTypes.includes(type);
     }
+
+    onBeforeUnmount(() => {
+        if (fileUrl.value) URL.revokeObjectURL(fileUrl.value);
+    });
 </script>
