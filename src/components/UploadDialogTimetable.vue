@@ -1,5 +1,5 @@
 <template>
-    <v-card class="upload-timetable-card">
+    <v-card>
         <v-card-text class="pa-0 d-flex flex-column">
             <v-row class="flex-grow-0" no-gutters>
                 <v-col cols="6" class="pl-7 pt-3" align-self="center">
@@ -43,7 +43,7 @@
 
 
 <style lang="scss" scoped>
-    .upload-timetable-card {
+    .v-card {
         min-height: 60vh;
         background-color: #efefef;
     }

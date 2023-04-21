@@ -40,7 +40,7 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
         });
     }
 
-    function setFile(val: File | null) {
+    function setFile(val: File | null) : void {
         file.value = val;
     }
 

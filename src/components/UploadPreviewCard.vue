@@ -3,7 +3,7 @@
         <UploadFileInput class="w-100" @file-select="(file) => emit('fileSelect', file)"/>
 
         <v-row class="w-100" no-gutters>
-            <v-col cols="12" class="px-3 py-2">
+            <v-col cols="12" class="text-left px-3 py-2">
                 <h2 :class="{'blank': titleBlank}">{{ titleString }}</h2>
                 <p class="font-weight-regular pt-1">{{ dateString }}</p>
                 <p class="font-weight-bold pt-1">{{ lesson.className }}</p>
