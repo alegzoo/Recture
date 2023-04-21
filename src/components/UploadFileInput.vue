@@ -1,6 +1,9 @@
 <template>
     <v-container :class="{'pa-2': true, 'dragging': dragging}" @dragover="onDragOver" @dragleave="onDragLeave" @drop="onDrop">
         <input type="file" ref="fileInput" @change="onFileInputChange" :accept="allowedExtensionsCommaSeparated" hidden/>
+        <video v-show="fileUrl" ref="video" :controls="false" muted loop>
+            <source v-if="fileUrl" :src="fileUrl"/>
+        </video>
         <v-row align-self="center" class="py-3" no-gutters>
             <v-col cols="12" align="center">
                 <v-icon icon="mdi-upload"></v-icon>
@@ -35,6 +38,7 @@
     }
 
     .v-container {
+        position: relative;
         border-bottom-color: black !important;
         border-bottom-width: 2px !important;
         border-bottom-style: solid !important;
@@ -56,6 +60,17 @@
         border: solid 2px black;
         font-weight: bold;
     }
+
+    video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 30%;
+    }
 </style>
 
 <script lang="ts" setup>
@@ -66,6 +81,7 @@
     }>();
 
     const fileInput = ref<HTMLInputElement>();
+    const video = ref<HTMLVideoElement>();
 
     const selectedFile = ref<File | null>();
 
@@ -78,11 +94,18 @@
     const allowedExtensionsCommaSeparated = ref<string>(".mp4,.webm");
 
     function onFileInputChange(e: Event) : void {
+        if (fileUrl.value != null) URL.revokeObjectURL(fileUrl.value);
+        
         if (fileInput.value?.files?.length === 1) {
             selectedFile.value = fileInput.value.files[0];
             fileUrl.value = URL.createObjectURL(selectedFile.value);
+            video.value?.load();
+            video.value?.fastSeek(10);
             emit("fileSelect", selectedFile.value);
-        } else emit("fileSelect", null);
+        } else {
+            emit("fileSelect", null);
+            fileUrl.value = null;
+        }
     }
 
     function onDragOver(e: DragEvent): void {
