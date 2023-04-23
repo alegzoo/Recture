@@ -17,6 +17,7 @@ const routes = [
         children: [
             {
                 path: '',
+                name: 'videoBrowser',
                 component: VideoBrowser,
                 meta: { requiresAuth: true }
             }
