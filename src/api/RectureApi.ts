@@ -66,6 +66,21 @@ export class RectureApi {
         }
     }
 
+    public static async getUserInfo(userId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPublicUserInfo>> {
+        const response = await fetch(this.pathToUrl("users/"+userId), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPublicUserInfo;
+            return new ApiResult<IPublicUserInfo>(response.status, data);
+        } else {
+            return new ApiResult<IPublicUserInfo>(response.status);
+        }
+    }
+
     public static async getRecordings(page: number, pageSize: number, sort: IRecordingSort, query: string | null = null,
                                 classIds: number[] | null = null, subjectIds: number[] | null = null, topicIds: number[] | null = null,
                                 visibilityFilter: RecordingVisibilityFilter | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IRecording>>> {
@@ -331,6 +346,17 @@ export interface IAccount {
     email: string
     userType: UserType
     emailConfirmed: boolean
+    firstName: string
+    lastName: string
+    bio: string | null
+    organization: string | null
+    avatar: string
+}
+
+export interface IPublicUserInfo {
+    userId: number
+    email: string
+    userType: UserType
     firstName: string
     lastName: string
     bio: string | null

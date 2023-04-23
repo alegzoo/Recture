@@ -1,33 +1,41 @@
 <template>
-    <v-container fluid class="container-video-player" no-gutters>
+    <v-container fluid>
         <v-row no-gutters class="pt-1">
             <v-spacer/>
             <VideoViewEditDialog/>
         </v-row>
         <v-row no-gutters>
-
-            <v-col cols="9">
-
-                <v-row no-gutters class="pl-11" align="center" align-self="center">
-                    <v-col cols="auto" align="center" align-self="center" class="subject-v-sheet px-4 py-1"><h4>MAT</h4></v-col>
-                    <v-col cols="auto" class="thematic-unit-v-sheet px-4 py-1" align-self="center" align="center"><h4>FUNKCIE</h4></v-col>
+            <v-col :class="{'pl-11': smAndUp, 'pr-11': sm}">
+                <v-row no-gutters align="center" align-self="center">
+                    <v-col cols="auto">
+                        <div class="video-header" no-gutters>
+                            <h4 class="px-4 py-1">
+                                {{ recording?.subjectName }}
+                            </h4>
+                            <h4  class="px-4 py-1">
+                                {{ recording?.topicName }}
+                            </h4>
+                        </div>
+                    </v-col>
                 </v-row>
                     
-                <v-row no-gutters class="pl-11" md="12" xl="12" lg="12">
-                    <v-col>
-                        <VideoPlayer class="v-col-video" :recording="(recordingComposable?.recording.value as IRecording | null)"/>
+                <v-row no-gutters md="12" xl="12" lg="12">
+                    <v-col class="v-col-video">
+                        <div class="w-100 d-flex flex-shrink-1">
+                            <video ref="video" autoplay controls style="width: 100%; height: auto;">
+                                <source v-if="recording != null" v-for="source in recording.sources" :src="source.sourceUrl" :type="source.mimeType"/>
+                            </video>
+                        </div>
                     </v-col>
                 </v-row>
 
-
-                <v-row no-gutters class="pl-11">
-
-                    <v-col align-self="center" cols="1">
-                        <p class="mt-3">{{ recordingComposable?.recordingDate.value }}</p>
+                <v-row no-gutters>
+                    <v-col align-self="center" cols="auto">
+                        <p class="mt-3">{{ recordingDate }}</p>
                     </v-col>
 
-                    <v-col align-self="center" align="center" cols="1" class="pl-4 pt-2">
-                        <v-chip variant="text" class="chip-class px-4">IV.A</v-chip>
+                    <v-col align-self="center" align="center" cols="auto" class="pl-4 pt-2">
+                        <v-chip variant="text" class="chip-class px-4">{{ recording?.className }}</v-chip>
                     </v-col>
 
                     <v-spacer/>
@@ -39,344 +47,185 @@
                 </v-row>
 
                 <v-row no-gutters>
-                    <v-col class="pl-11">
-                        <h1 class="video-title" >{{ recordingComposable?.recording.value?.title }}</h1>
+                    <v-col>
+                        <h1 class="video-title" >{{ recording?.title }}</h1>
                     </v-col>
-                </v-row>
-                    
+                </v-row> 
 
-                <v-row no-gutters class="pt-3">
-                    <v-col class="pl-11" cols="1">
-                        <v-avatar class="teacher-student-avatar" size="large" image="/jano.png"></v-avatar>
-                    </v-col>
+                <v-row no-gutters>
+                    <v-col cols="auto" class="author-link" @click="visitAuthorProfile">
+                        <v-row no-gutters>
+                            <v-col cols="auto">
+                                <v-avatar size="large" :image="author?.avatar"/>
+                            </v-col>
 
-                    <v-col align-self="center" class="pl-5" cols="auto" align="center">
-                        <h3>Jano Učiteľ</h3>
+                            <v-col align-self="center" class="pl-5" cols="auto" align="center">
+                                <h3>{{ authorFullName }}</h3>
+                            </v-col>
+                        </v-row>
                     </v-col>
                 </v-row>
                         
                 <v-row no-gutters class="pt-5">
-                    <v-col class="pl-11" cols="12">
-                        <p v-if="recordingComposable?.recording.value?.description != null">{{ recordingComposable?.recording.value?.description }}</p>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="pt-5">
-                    <v-col class="pl-11" cols="12">
+                    <v-col cols="12">
+                        <p v-if="recording?.description != null">{{ recording.description }}</p>
                     </v-col>
                 </v-row>
                     
-                <v-row no-gutters class="pt-5">
+                <v-row v-if="recording === null" no-gutters class="pt-5">
                     <v-col>
-                        <v-alert v-if="recordingComposable !== undefined && (recordingComposable === null || recordingComposable.recording.value === null)" density="compact" type="error" align="left" text="Failed to load recording." class="mt-5"/>
+                        <v-alert density="compact" type="error" align="left" text="Failed to load recording." class="mt-5"/>
                     </v-col>
                 </v-row>
                                 
                 <v-row no-gutters class="pt-2">
-                    <v-col class="pl-11" cols="12">
-                        <v-sheet class="v-sheet-line"/>
+                    <v-col cols="12">
+                        <v-divider/>
                     </v-col>
                 </v-row>
 
-                <v-row no-gutters class="pt-5">
-                    <v-col class="pl-11" cols="2">
-                        <h3>2 comments</h3>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="pt-5">
-                    <v-col class="pl-11" cols="1">
-                        <v-avatar class="teacher-student-avatar" size="large" image="/jano.png"></v-avatar>
-                    </v-col>
-                    <v-col cols="10" class="pl-5">
-                        <v-textarea class="field-add-comment" label="Add a comment..." variant="outlined" auto-grow row-height="10" rows="2"></v-textarea>
-                    </v-col>
-                    <v-col cols="auto" class="pl-5 pb-5" align-self="end" align="center">
-                        <v-btn variant="text" :ripple="false" class="post-btn" theme="light" icon="mdi-send"></v-btn>
-                    </v-col>
-                </v-row>
-
-
-                
-                <template v-for="comment in comments">
-                    <v-row no-gutters class="pt-5">
-                        <v-col cols="1">
-                            <v-col class="pa-0 pl-11">
-                                <v-avatar class="teacher-student-avatar" size="large" image="/student1.png"></v-avatar>
-                            </v-col>
-                            <v-col class="h-100 pl-12 pa-0" align="center" align-self="center">
-                                <v-divider :class="'v-divider-comment'+(comment === replyingTo?' visible':'')" class="v-divider-comment" vertical :thickness="2"></v-divider>
-                            </v-col>
-                        </v-col>
-
-                        
-
-                        <v-col align-self="center" cols="11">
-                            <v-row no-gutters class="pt-3">
-                                <v-col cols="2" class="pa-0 pl-6">
-                                    <h3>Gabriela Fotová</h3>
-                                </v-col> 
-                                <v-col  class="pa-0 pl-5">
-                                    <v-chip class="student-chip">IV.A</v-chip>
-                                </v-col>
-                            </v-row>
-
-                            <v-row no-gutters>
-                                <v-col class="pa-0 pl-6 pt-4">
-                                    <p>Dobrý deň, chýbala som na dnešnej hodine a rada by som sa opýtala čo by sa stalo ak by namiesto mocniny bola odmocnina v druhom
-                                    príklade (21:12)</p>
-                                </v-col>
-
-                            </v-row>
-
-                            <v-row no-gutters>
-                                <v-col cols="1" class="pa-0 pl-4 pt-3">
-                                    <v-btn @click="showReplyToComment(comment)" :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-
-
-                    </v-row>
-                    <ReplyToComment v-if="comment === replyingTo"></ReplyToComment>
-                </template>
-
-                <v-row no-gutters class="pt-10">
-                    <v-col class="pl-11" cols="auto">
-                        <v-avatar class="teacher-student-avatar" size="large" image="/student2.png"></v-avatar>
-                    </v-col>
-                    <v-col align-self="center" class="pl-5" cols="auto">
-                        <h3>Daniel Jachab</h3>
-                    </v-col>
-                    <v-col align-self="center" class="pl-5" cols="auto">
-                        <v-chip class="student-chip">IV.A</v-chip>
-                    </v-col>
-                </v-row>
-                
-                <v-row no-gutters class="pt-2 pl-16">
-                    <v-col cols="12" class="pl-12">
-                        <p>Rád by som sa opýtal čo ste mysleli tou poznámkou v čase 37:44 lebo som tomu neporozumel a taktiež prečo bolo na tabuli napísané
-                        odmocnina z 3-troch v čase 38:55</p>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="pt-2 pl-16">
-                    <v-col cols="auto" class="pl-8">
-                        <v-btn :ripple="false" class="reply-btn" variant="plain">Reply</v-btn>
-                    </v-col>
-                </v-row>
-
+                <VideoCommentSection/>
             </v-col>
 
-            <v-col cols="3" class="pt-4">
+            <v-col v-show="mdAndUp" cols="3" class="pt-4">
                 <v-row no-gutters class="pl-5">
-                    <v-list class="v-list" active-class="active" :ripple="false" mandatory>
-                        <v-list-item :ripple="false" value="1">Definičný obor</v-list-item>
-                        <v-list-item :ripple="false" value="2">Obor hodnôt</v-list-item>
-                        <v-list-item :ripple="false" value="3">Vlastnosti funkcií</v-list-item>
-                        <v-list-item :ripple="false" value="4">Lineárna funkcia</v-list-item>
-                        <v-list-item :ripple="false" value="5">Kvadratické funkcie</v-list-item>
-                        <v-list-item :ripple="false" value="6">Goniometrické funkcie</v-list-item>
-                        <v-list-item :ripple="false" value="7">Inverzné funkcie</v-list-item>
-                        <v-list-item :ripple="false" value="8">Priesečník grafov lineárnych funkcií</v-list-item>
-
-                    </v-list>
+                    <RelatedVideoList :recording="recording"/>
                 </v-row>
-                
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <style lang="scss" scoped>
-@import "@/styles/constants.scss";
-@import "@/styles/mixins.scss";
-    
- .container-video-player{
-    background-image: url("@/assets/bg_pattern.png");
-    background-size: cover;
- }
+    @import "@/styles/constants.scss";
+    @import "@/styles/mixins.scss";
 
-.test-yourself-btn{
-    background-color: $recture-yellow;
-    border-width: 2px;
-    border-color: black;
-    border-radius: 0px !important;
-    font-weight: bold;
-    border-style: solid;
-    @include elevated-button(4px, 4px, 1px);
-}
+    .v-container {
+        background-image: url("@/assets/bg_pattern.png");
+        background-size: cover;
+    }
 
-.video-title {
-    font-family: 'Clash Display', sans-serif;
-    font-size: 36px;
-    font-weight: 600;
-    -webkit-text-fill-color: white;
-    -webkit-text-stroke-color: black;
-    -webkit-text-stroke: 1px;
-    text-shadow: 2px 2px 0px black;
-}
+    .test-yourself-btn {
+        background-color: $recture-yellow;
+        border-width: 2px;
+        border-color: black;
+        border-radius: 0px !important;
+        font-weight: bold;
+        border-style: solid;
+        @include elevated-button(4px, 4px, 1px);
+    }
 
-
-.chip-class{
-    background-color: black;
-    color: white;
-    font-weight: bold;
-    border-width: 0px;
-}
-
-.v-col-video{
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-right-color: black;
-    border-radius: 0px !important;
-    border-left-style: solid;
-    border-right-style: solid;
-    box-shadow: 3px 3px 0px 0px black !important;
-
-}
-
-.subject-v-sheet{
-    //border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    background-color: $recture-yellow;
-    border-right: 0px;
-    border-right: none;
-    border-left: black 1px solid;
-    border-top: black 1px solid;
-}
-
-.thematic-unit-v-sheet{
-    border-top-right-radius: 6px;
-    background-color: white;
-    border-left: black 1px solid;
-    border-top: black 1px solid;
-    border-right: black 1px solid;
-    border-bottom: none;
-
-}
-
-.teacher-student-avatar{
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-}
-
-.reply-btn{
-    color: black;
-    opacity: 100%;
-}
-
-.v-sheet-line{
-    border-bottom: dashed 3px black;
-    background-color: transparent;
-    opacity: 20%;
-}
+    .video-title {
+        font-family: 'Clash Display', sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+        -webkit-text-fill-color: white;
+        -webkit-text-stroke-color: black;
+        -webkit-text-stroke: 1px;
+        text-shadow: 2px 2px 0px black;
+    }
 
 
-.student-chip{
-    background-color: $recture-red;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    box-shadow: 3px 3px 0px 0px black;
-}
+    .chip-class {
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        border-width: 0px;
+    }
 
+    .v-col-video {
+        border: solid 2px black;
+        box-shadow: 3px 3px 0px 0px black;
+    }
 
-#video-edit-icon {
-    @include elevated-button(3px, 3px, 1px);
-    background-color: $recture-yellow;
-    color: black;
-    border-radius: 0px;
-    border-color: black;
-    border-style: solid;
-    border-width: 2px;
-}
+    .video-header {
+        background-color: white;
+        border-style: solid;
+        border-width: 2px 2px 0px 2px;
+        border-color: black;
+        border-radius: 8px 8px 0px 0px;
+        overflow: hidden;
+    }
 
-.v-list{
-    background-color: transparent;
-}
+    .video-header > * {
+        display: inline-block;
+        height: 100%;
+    }
 
-.v-list-item.active{
-  font-size: 25px !important;
-  font-weight: bold !important;
-}
+    .video-header > *:first-child {
+        background-color: $recture-yellow;
+        border: none;
+        border-radius: 0px 8px 0px 0px;
+        box-shadow: 0px 0px 0px 2px black;
+    }
 
-.v-list-item:hover{
-    font-weight: bold !important;
-}
+    .video-header > *:last-child {
+        border: none;
+    }
 
-.v-list-item:hover :deep(.v-list-item__overlay) {
-    opacity: 0;
-}
+    .v-avatar {
+        border-width: 2px;
+        border-color: black;
+        border-style: solid;
+    }
 
-.v-list-item.active :deep(.v-list-item__overlay) {
-    opacity: 0;
-}
+    .author-link {
+        cursor: pointer;
+    }
 
-
-.post-btn{
-    background-color: transparent;
-    color: black;
-}
-
-.v-divider-comment {
-    opacity: 0%;
-}
-
-.v-divider-comment.visible {
-    color: black !important;
-    opacity: 100%;
-}
-
+    .v-divider {
+        border-top: dashed 3px black;
+        opacity: 20%;
+    }
 </style>
 
 <script lang="ts" setup>
+    import { ref, Ref, watch, onMounted } from "vue"
+
+    import router from '@/router';
     import { useRoute } from 'vue-router';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useHomeStore } from '@/stores/useHomeStore';
-    import VideoPlayer from '@/components/VideoPlayer.vue';
-    import { useRecording, IUsableRecording } from '@/composables/useRecording';
-    import { IRecording, IComment } from '@/api/RectureApi';
-    import ReplyToComment from '@/components/ReplyToComment.vue';
+    import { useRecording } from '@/composables/useRecording';
     import VideoViewEditDialog from '@/components/VideoViewEditDialog.vue';
-
-    import { ref } from "vue"
-
-    function showReplyToComment(comment: IComment) {   
-        replyingTo.value = comment;
-    }
-    const comments = ref<IComment[]>([
-        {
-            commentId: 0,
-            recordingId: 0,
-            userId: 0,
-            userFirstName: "test",
-            userLastName: "test",
-            content: "test",
-            creationTimestamp: 0,
-            lastEditTimestamp: 0
-        }
-    ]);
-    const replyingTo = ref<IComment>();
-
+    import VideoCommentSection from '@/components/VideoCommentSection.vue';
+    import RelatedVideoList from '@/components/RelatedVideoList.vue';
     
-    const { mdAndUp, lgAndDown } = useDisplay();
+    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();
+
+    const video = ref<HTMLVideoElement>();
 
     if (lgAndDown.value) {
         const homeStore = useHomeStore();
         homeStore.sidebarVisible = false;
     }
 
-    const router = useRoute();
+    const route = useRoute();
 
-    let recordingComposable = undefined as IUsableRecording | null | undefined;
-    const recordingIdParam = router.params.id as string | string[] | number;
+    const recordingComposable = useRecording();
+    const { recording, author, recordingDate, authorFullName } = recordingComposable;
 
-    if (typeof recordingIdParam === "string" || recordingIdParam instanceof String) {
-        recordingComposable = useRecording(parseInt(recordingIdParam as string));
-        recordingComposable.fetchAll();
-    }  else {
-        recordingComposable = null;
+    onMounted(() => updateRecording());
+    watch(() => route.params.id, () => updateRecording());
+
+    function updateRecording() : void {
+        if (route.params.id instanceof String || typeof route.params.id === "string") {
+            recordingComposable.use(parseInt(route.params.id as string));
+        } else {
+            recordingComposable.use(undefined);
+        }
+
+        recordingComposable.fetchAll().then(() => {
+            if (video.value != null) {
+                video.value.load();
+                video.value.play();
+            }
+        });
+    }
+
+    function visitAuthorProfile() : void {
+        if (author.value != null) {
+            router.push({ name: "user", params: {userId: author.value.userId } });
+        }
     }
 </script>
