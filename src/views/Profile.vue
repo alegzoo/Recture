@@ -172,7 +172,7 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref, computed, onMounted } from 'vue';
+    import { ref, computed, watch, onMounted } from 'vue';
     import { useAccountStore, IAccountStore } from '@/stores/useAccountStore';
     import { IPublicUserInfo, RectureApi } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
@@ -192,6 +192,7 @@
 
     const route = useRoute();
 
+    watch(() => route.params.userId, () => initialize());
     onMounted(() => initialize());
 
     function initialize() {
