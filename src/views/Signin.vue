@@ -12,7 +12,7 @@
                     <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="mb-5" />
                     <v-btn variant="outlined" type="submit" :disabled="submitDisabled" :loading="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
                     <br/>
-                    <router-link to="/signup">No account? Sign up!</router-link>
+                    <router-link to="/signup">No account? Create one now for free!</router-link>
                 </v-form>
             </v-col>
             <v-col/>
