@@ -28,4 +28,4 @@ app.mount('#app');
 
 //TODO: Remove later?
 import { makeServer } from './api/Mock';
-//makeServer();
+makeServer();
