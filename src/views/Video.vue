@@ -225,7 +225,7 @@
 
     function visitAuthorProfile() : void {
         if (author.value != null) {
-            router.push({ name: "user", params: { userId: author.value.userId } });
+            router.push({ name: "profile", params: { userId: author.value.userId } });
         }
     }
 </script>

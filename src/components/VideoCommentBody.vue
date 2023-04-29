@@ -120,7 +120,7 @@
     const postedByTeacher = computed<boolean>(() => props.authorUserType === "TEACHER");
     const deleteableByCurrentUser = computed<boolean>(() => accountStore.userType === "TEACHER" || props.authorId === accountStore.userId);
 
-    const taggedUserLink = computed(() => props.taggedUserId != null ? ("/user/"+props.taggedUserId) : null);
+    const taggedUserLink = computed(() => props.taggedUserId != null ? ("/profile/"+props.taggedUserId) : null);
 
     const dateText = computed<string | null>(() => {
         if (props.creationTimestamp == null) return null;
@@ -147,7 +147,7 @@
 
     function visitAuthorProfile() : void {
         if (props.authorId != null) {
-            router.push({ name: "user", params: { userId: props.authorId } });
+            router.push({ name: "profile", params: { userId: props.authorId } });
         }
     }
 </script>
