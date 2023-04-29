@@ -2,19 +2,19 @@
     <tr>
         <td class="pt-2">
             <span class="font-weight-black">{{ group.name }}</span>
-            <v-tooltip text="Rename" class="tooltip-manage-timetable" location="end">
+            <v-tooltip text="Rename" location="end">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
                 </template>
             </v-tooltip>
         </td>
         <td class="text-right">
-            <v-tooltip class="tooltip-manage-timetable" text="View members" location="start">
+            <v-tooltip text="View members" location="start">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
                 </template>
             </v-tooltip>
-            <v-tooltip class="tooltip-manage-timetable" text="Delete" location="end">
+            <v-tooltip text="Delete" location="end">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-delete" @click="emit('delete')"/>
                 </template>

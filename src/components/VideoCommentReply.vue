@@ -1,40 +1,50 @@
 <template>
-    <v-row no-gutters class="pt-2">
-        <v-col class="pa-0 pl-11" cols="1">
-            <v-avatar class="teacher-student-avatar" size="large" image="/jano.png"></v-avatar>
-        </v-col>
-        <v-col class="pa-0 pl-6 pt-1" cols="10">
-            <v-textarea class="field-add-comment" label="Your reply..." variant="outlined" auto-grow row-height="10" rows="1"></v-textarea>
-        </v-col>
-        <v-col cols="1" class="pa-0 pb-3" align-self="end" align="center">
-            <v-btn variant="text" :ripple="false" class="post-btn" theme="light" icon="mdi-send"></v-btn>
-        </v-col>
-    </v-row>
-    <v-row no-gutters>
-        <v-spacer/>
-        <v-col align-self="center" align="center" cols="3" class="pr-1">
-            <v-btn class="cancel-btn-comment" variant="text">Cancel</v-btn>
+    <v-row>
+        <v-col>
+            <VideoCommentBody :author-id="authorId" :avatar="authorAvatar" :author-full-name="authorFullName" :author-user-type="authorUserType" :tagged-user-id="taggedReplyAuthorId" :tagged-user-full-name="taggedReplyAuthorFullName" :content="reply.content" :creation-timestamp="reply.creationTimestamp" @reply-button-click="() => emit('replyButtonClick')" @delete-button-click="() => emit('deleteButtonClick')"/>
         </v-col>
     </v-row>
 </template>
 
 <style lang="scss" scoped>
-
-.teacher-student-avatar{
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-}
-
-.cancel-btn-comment{
-    background-color: black;
-    color: white;
-}
-
-
+    .v-col {
+        padding-left: 80px;
+    }
 </style>
 
 <script lang="ts" setup>
+    import { ref, computed, onMounted } from 'vue';
+    import { ICommentReply, IPublicUserInfo, RectureApi, UserType } from '@/api/RectureApi';
+    import VideoCommentBody from './VideoCommentBody.vue';
 
+    const props = defineProps<{
+        reply: ICommentReply
+    }>();
 
+    const emit = defineEmits<{
+        (e: "replyButtonClick"): void,
+        (e: "deleteButtonClick"): void
+    }>();
+
+    const author = ref<IPublicUserInfo | undefined>(undefined);
+    
+    const authorId = computed<number | null>(() => author.value != null ? author.value.userId : null);
+    const authorAvatar = computed<string | null>(() => author.value != null ? author.value.avatar : null);
+    const authorFullName = computed<string | null>(() => author.value != null ? (author.value.firstName+" "+author.value.lastName) : null);
+    const authorUserType = computed<UserType | null>(() => author.value != null ? author.value.userType : null);
+
+    const taggedReplyAuthorId = computed<number | null>(() => props.reply.taggedReplyId != null ? props.reply.taggedReplyId : null);
+    const taggedReplyAuthorFullName = computed<string | null>(() => (props.reply.taggedReplyUserFirstName != null && props.reply.taggedReplyUserLastName != null) ? (props.reply.taggedReplyUserFirstName+" "+props.reply.taggedReplyUserLastName) : null);
+
+    onMounted(() => {
+        fetchAuthorInfo();
+    });
+
+    function fetchAuthorInfo() {
+        author.value = undefined;
+
+        RectureApi.getUserInfo(props.reply.userId).then((result) => {
+            if (result.success && result.data != null) author.value = result.data;
+        });
+    }
 </script>

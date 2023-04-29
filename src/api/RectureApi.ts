@@ -207,8 +207,10 @@ export class RectureApi {
         }
     }
 
-    public static async getCommentsByRecording(recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IComment>>> {
+    public static async getCommentsByRecording(page: number, pageSize: number, recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IComment>>> {
         let urlParams = new URLSearchParams();
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
 
         urlParams.append("recordingId", recordingId.toString());
 
@@ -227,8 +229,12 @@ export class RectureApi {
         }
     }
 
-    public static async getRepliesByComment(commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<ICommentReply>>> {
-        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
+    public static async getRepliesByComment(page: number, pageSize: number, commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<ICommentReply>>> {
+        let urlParams = new URLSearchParams();
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies", urlParams), {
             method: "GET",
             credentials: "include",
             signal: signal
@@ -301,6 +307,69 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async deleteComment(commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("comments/"+commentId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteReply(replyId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("comments/replies/"+replyId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async createComment(recordingId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<IComment>> {
+        let formData = new FormData();
+        formData.append("recordingId", recordingId.toString());
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("comments"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IComment;
+            
+            return new ApiResult<IComment>(response.status, data);
+        } else {
+            return new ApiResult<IComment>(response.status);
+        }
+    }
+
+    public static async createCommentReply(commentId: number, content: string, taggedReplyId: number | null, signal: AbortSignal | null = null): Promise<ApiResult<ICommentReply>> {
+        let formData = new FormData();
+        formData.append("commentId", commentId.toString());
+        if (taggedReplyId != null) formData.append("taggedReplyId", taggedReplyId.toString());
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ICommentReply;
+            
+            return new ApiResult<ICommentReply>(response.status, data);
+        } else {
+            return new ApiResult<ICommentReply>(response.status);
+        }
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -369,6 +438,7 @@ export interface IRecording {
     title: string
     description: string | null
     published: boolean
+    comments: number
     notifications: number
     teacherId: number
     classId: number
@@ -438,6 +508,10 @@ export interface ICommentReply {
     userId: number
     userFirstName: string
     userLastName: string
+    taggedReplyId: number | null
+    taggedReplyUserId: number | null
+    taggedReplyUserFirstName: string | null
+    taggedReplyUserLastName: string | null
     content: string
     creationTimestamp: number
     lastEditTimestamp: number | null

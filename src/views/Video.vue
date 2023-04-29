@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <v-container :fluid="lgAndDown">
         <v-row no-gutters class="pt-1">
             <v-spacer/>
             <VideoViewEditDialog/>
@@ -84,7 +84,7 @@
                     </v-col>
                 </v-row>
 
-                <VideoCommentSection/>
+                <VideoCommentSection :recording="recording"/>
             </v-col>
 
             <v-col v-show="mdAndUp" cols="3" class="pt-4">
@@ -225,7 +225,7 @@
 
     function visitAuthorProfile() : void {
         if (author.value != null) {
-            router.push({ name: "user", params: {userId: author.value.userId } });
+            router.push({ name: "user", params: { userId: author.value.userId } });
         }
     }
 </script>
