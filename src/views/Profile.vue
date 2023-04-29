@@ -12,7 +12,7 @@
                 </v-col>
 
                 <v-col :cols="mdAndUp?'auto':12" align-self="center" :class="mdAndUp?'pl-10':'pa-5'">
-                    <p :class="'text-h2 text-md-h3 profile-name'+(mdAndUp?' text-left':' text-center')">{{ accountStore.fullName }}</p>
+                    <p :class="'text-h2 font-weight-bold profile-name'+(mdAndUp?' text-left':' text-center')">{{ accountStore.fullName }}</p>
                 </v-col>
 
                 <v-spacer></v-spacer>
@@ -145,7 +145,6 @@
 </template>
 
 <style>
-
 
 </style>
 
