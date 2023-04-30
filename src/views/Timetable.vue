@@ -29,7 +29,7 @@
                         </v-btn>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="showManageThematicUnitsDialog = true">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-folder-edit" @click="showManageThematicUnitsDialog = true">
                             MANAGE THEMATIC UNITS
                         </v-btn>
                     </v-col>
