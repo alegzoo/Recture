@@ -411,6 +411,28 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async createTopic(classId: number, subjectId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<ITopic>> {
+        let formData = new FormData();
+        formData.append("classId", classId.toString());
+        formData.append("subjectId", subjectId.toString());
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("topics"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ITopic;
+            
+            return new ApiResult<ITopic>(response.status, data);
+        } else {
+            return new ApiResult<ITopic>(response.status);
+        }
+    }
+
     public static async createComment(recordingId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<IComment>> {
         let formData = new FormData();
         formData.append("recordingId", recordingId.toString());

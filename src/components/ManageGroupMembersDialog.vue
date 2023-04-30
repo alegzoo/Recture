@@ -44,8 +44,8 @@
     </v-dialog>
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'KICK USER &quot;'+selectedUserFullName+'&quot;'" :message="'Are you sure you want to remove &quot;'+selectedUserFullName+'&quot; from &quot;'+group?.name+'&quot;? This action is irreversible.'" positiveButtonText="Kick" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
-    <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
-        <v-progress-circular color="primary" indeterminate size="64"/>
+    <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
+        <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
     </v-overlay>
 </template>
 

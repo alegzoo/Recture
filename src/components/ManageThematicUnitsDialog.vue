@@ -71,8 +71,8 @@
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.name+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.name+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.name+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.name+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
-    <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
-        <v-progress-circular color="primary" indeterminate size="64"/>
+    <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
+        <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
     </v-overlay>
 </template>
 

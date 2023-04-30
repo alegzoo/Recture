@@ -78,7 +78,7 @@
             </v-row>
         </v-card>
 
-        <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
+        <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
             <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
         </v-overlay>
     </v-dialog>
