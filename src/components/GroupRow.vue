@@ -11,7 +11,7 @@
         <td class="text-right">
             <v-tooltip v-if="showViewMembersButton" text="View members" location="start">
                 <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
+                    <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple" @click="emit('viewMembers')"/>
                 </template>
             </v-tooltip>
             <v-tooltip text="Delete" :location="showViewMembersButton?'end':'start'">
@@ -35,6 +35,7 @@
 
     const emit = defineEmits<{
         (e: "rename"): void,
-        (e: "delete"): void
+        (e: "delete"): void,
+        (e: "viewMembers"): void
     }>();
 </script>

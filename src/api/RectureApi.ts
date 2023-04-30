@@ -81,6 +81,46 @@ export class RectureApi {
         }
     }
 
+    public static async getStudentsByClass(classId: number, page: number, pageSize: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IPublicUserInfo>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("classes/"+classId+"/students", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IPublicUserInfo>;
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status);
+        }
+    }
+
+    public static async getStudentsBySubject(subjectId: number, page: number, pageSize: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IPublicUserInfo>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId+"/students", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IPublicUserInfo>;
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status);
+        }
+    }
+
     public static async getRecordings(page: number, pageSize: number, sort: IRecordingSort, query: string | null = null,
                                 classIds: number[] | null = null, subjectIds: number[] | null = null, topicIds: number[] | null = null,
                                 visibilityFilter: RecordingVisibilityFilter | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IRecording>>> {
@@ -285,6 +325,26 @@ export class RectureApi {
             method: "PUT",
             credentials: "include",
             body: formData,
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async removeStudentFromClass(classId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("classes/"+classId+"/students/"+userId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async removeStudentFromSubject(subjectId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId+"/students/"+userId), {
+            method: "DELETE",
+            credentials: "include",
             signal: signal
         });
 

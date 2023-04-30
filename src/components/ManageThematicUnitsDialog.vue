@@ -40,11 +40,11 @@
                 </v-row>
                 <v-row v-show="tableItems != null">
                     <v-col>
-                        <v-table v-show="tableItems?.length !== 0" class="w-100" fixed-header>
+                        <v-table v-show="tableItems?.length !== 0" class="w-100 rows-items-manage-timetable" fixed-header>
                             <thead>
                                 <tr>
-                                    <th class="text-left">Name</th>
-                                    <th class="text-right">Actions</th>
+                                    <th class="text-left rows-items-manage-timetable">Name</th>
+                                    <th class="text-right rows-items-manage-timetable">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,10 +158,10 @@
                     } else return Promise.reject();
                 })
             ]
-        ).then(value => {
-            loadingOverlayVisible.value = false;
-        }).catch(reason => {
+        ).catch(reason => {
             closeDialog();
+        }).finally(() => {
+            loadingOverlayVisible.value = false;
         });
     }
 

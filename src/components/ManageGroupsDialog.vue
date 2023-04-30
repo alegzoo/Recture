@@ -25,10 +25,10 @@
                                 </tr>
                             </thead>
                             <tbody v-if="view === 'classes'">
-                                <GroupRow v-for="item in tableItems" :key="(item as IClass).classId" :group="(item as IClass)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"/>
+                                <GroupRow v-for="item in tableItems" :key="(item as IClass).classId" :group="(item as IClass)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)" @view-members="showManageMembersDialog(item)"/>
                             </tbody>
                             <tbody v-else-if="view === 'subjects'">
-                                <GroupRow v-for="item in tableItems" :key="(item as ISubject).subjectId" :group="(item as ISubject)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"/>
+                                <GroupRow v-for="item in tableItems" :key="(item as ISubject).subjectId" :group="(item as ISubject)" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)" @view-members="showManageMembersDialog(item)"/>
                             </tbody>
                         </v-table>
                         <p v-show="tableItems?.length === 0" class="w-100 py-5 text-h6 text-center">No data</p>
@@ -50,6 +50,7 @@
     </v-dialog>
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.name+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.name+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.name+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.name+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
+    <ManageGroupMembersDialog v-model="manageMembersDialogVisible" :group="selectedItem"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
     <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
         <v-progress-circular color="primary" indeterminate size="64"/>
@@ -64,6 +65,7 @@
     import InputDialog from './InputDialog.vue';
     import MessageDialog from './MessageDialog.vue';
     import GroupRow from './GroupRow.vue';
+    import ManageGroupMembersDialog from './ManageGroupMembersDialog.vue';
 
     const props = defineProps<{
         modelValue?: boolean
@@ -79,6 +81,7 @@
 
     const confirmationDialogVisible = ref<boolean>(false);
     const renameDialogVisible = ref<boolean>(false);
+    const manageMembersDialogVisible = ref<boolean>(false);
     
     const errorDialogVisible = ref<boolean>(false);
     const errorDialogMessage = ref<string>("");
@@ -127,6 +130,11 @@
     function showRenameDialog(item: IClass | ISubject) {
         selectedItem.value = item;
         renameDialogVisible.value = true;
+    }
+
+    function showManageMembersDialog(item: IClass | ISubject) {
+        selectedItem.value = item;
+        manageMembersDialogVisible.value = true;
     }
 
     function confirmationDialogOptionSelected(positive: boolean) {
