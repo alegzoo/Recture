@@ -346,6 +346,22 @@ export function makeServer() {
                 }
             }, {timing: 300});
 
+            this.put(RectureApi.BASE_API_URL+"/topics/:id", (schema, request) => {
+                const topicId = parseInt(request.params.id);
+                const body = (request.requestBody as any) as FormData;
+                const name = body.get("name");
+                if (name == null) return new Response(400);
+                else {
+                    const topic = schema.findBy("topic", {topicId: topicId});
+                    if (!topic) return new Response(404);
+                    else {
+                        topic.update("name", name as string);
+
+                        return new Response(204);
+                    }
+                }
+            }, {timing: 300});
+
             this.del(RectureApi.BASE_API_URL+"/lessons/:id", (schema, request) => {
                 const lessonId = parseInt(request.params.id);
                 const lesson = schema.findBy("lesson", {lessonId: lessonId});
@@ -375,6 +391,17 @@ export function makeServer() {
                 if (subject != null) {
                     schema.where("lesson", {subjectId: subject.subjectId}).destroy();
                     subject.destroy();
+                    return new Response(200);
+                } else {
+                    return new Response(404);
+                }
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/topics/:id", (schema, request) => {
+                const topicId = parseInt(request.params.id);
+                const topic = schema.findBy("topic", {topicId: topicId});
+                if (topic != null) {
+                    topic.destroy();
                     return new Response(200);
                 } else {
                     return new Response(404);

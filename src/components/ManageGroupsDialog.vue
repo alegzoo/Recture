@@ -57,7 +57,6 @@
 </template>
 
 <script lang="ts" setup>
-    //TODO: Add some way of managing topics
     import { RectureApi, IClass, ISubject } from '@/api/RectureApi';
     import { ref, watch } from 'vue';
     import status from 'http-status';
@@ -180,7 +179,13 @@
     }
 
     function renameDialogInputEntered(positive: boolean, input: string) {
-        if (!positive || input.trim().length === 0) return;
+        if (!positive) return;
+
+        if (input.trim().length === 0) {
+            errorDialogMessage.value = "The name you entered is invalid.";
+            errorDialogVisible.value = true;
+            return;
+        }
 
         const item = selectedItem.value;
 

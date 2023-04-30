@@ -9,12 +9,12 @@
             </v-tooltip>
         </td>
         <td class="text-right">
-            <v-tooltip text="View members" location="start">
+            <v-tooltip v-if="showViewMembersButton" text="View members" location="start">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
                 </template>
             </v-tooltip>
-            <v-tooltip text="Delete" location="end">
+            <v-tooltip text="Delete" :location="showViewMembersButton?'end':'start'">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-delete" @click="emit('delete')"/>
                 </template>
@@ -24,11 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-    import { IClass, ISubject } from '@/api/RectureApi';
+    import { IClass, ISubject, ITopic } from '@/api/RectureApi';
 
-    const props = defineProps<{
-        group: IClass | ISubject
-    }>();
+    const props = withDefaults(defineProps<{
+        group: IClass | ISubject | ITopic,
+        showViewMembersButton?: boolean
+    }>(), {
+        showViewMembersButton: true
+    });
 
     const emit = defineEmits<{
         (e: "rename"): void,

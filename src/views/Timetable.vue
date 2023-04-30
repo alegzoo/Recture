@@ -24,8 +24,13 @@
                 <TimetableGrid :timetable="timetable" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick"/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = !showManageGroupsDialog">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = true">
                             MANAGE CLASSES AND SUBJECTS
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="auto">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="showManageThematicUnitsDialog = true">
+                            MANAGE THEMATIC UNITS
                         </v-btn>
                     </v-col>
 
@@ -63,6 +68,7 @@
     </v-container>
     <v-overlay v-model="timetable.creating.value" persistent z-index="190"></v-overlay>
     <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetable.fetchLessons()"/>
+    <ManageThematicUnitsDialog v-model="showManageThematicUnitsDialog"/>
     <CreateLessonDialog v-model="showCreateLessonDialog" @dialog-exit="onCreateLessonDialogExit"/>
 </template>
 
@@ -75,6 +81,7 @@
     import { ITimetableGridPosition, useTimetable } from '@/composables/useTimetable';
     import TimetableGrid from '@/components/TimetableGrid.vue';
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
+    import ManageThematicUnitsDialog from '@/components/ManageThematicUnitsDialog.vue';
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
@@ -82,8 +89,9 @@
 
     const { mdAndUp, lgAndUp } = useDisplay();
 
-    const showManageGroupsDialog = ref(false);
-    const showCreateLessonDialog = ref(false);
+    const showManageGroupsDialog = ref<boolean>(false);
+    const showManageThematicUnitsDialog = ref<boolean>(false);
+    const showCreateLessonDialog = ref<boolean>(false);
 
     const createLessonsButtonText = computed<string>(() => timetable.selection.value.length > 1?`CREATE ${timetable.selection.value.length} LESSONS`:'CREATE LESSON');
 

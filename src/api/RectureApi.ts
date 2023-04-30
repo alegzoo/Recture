@@ -277,6 +277,20 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async renameTopic(topicId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("topics/"+topicId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async deleteClass(classId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId), {
             method: "DELETE",
@@ -289,6 +303,16 @@ export class RectureApi {
 
     public static async deleteSubject(subjectId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("subjects/"+subjectId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteTopic(topicId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("topics/"+topicId), {
             method: "DELETE",
             credentials: "include",
             signal: signal
