@@ -1,6 +1,6 @@
-import { DayOfWeek, ILesson, RectureApi } from '@/api/RectureApi';
+import { ApiResult, DayOfWeek, ILesson, ITopic, RectureApi } from '@/api/RectureApi';
+import { ref, computed, Ref, ComputedRef } from 'vue';
 import status from 'http-status';
-import { ref, reactive, computed, Ref, ComputedRef } from 'vue';
 
 export interface IUsableTimetable {
     daysOfWeek: Ref<boolean[]>,
@@ -23,6 +23,7 @@ export interface IUsableTimetable {
     fetchTimetable(): void,
     fetchLessons(): void,
     deleteLesson(lesson: ILesson): void,
+    createSelectedLessons(lessonColor: string, classId: number | undefined, subjectId: number | undefined): Promise<ApiResult<ILesson>[]>,
     toggleEditing(): void,
     startCreating(initialSelection: ITimetableGridPosition): void,
     stopCreating(): void,
@@ -114,6 +115,25 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
         });
     }
 
+    function createSelectedLessons(lessonColor: string, classId: number | undefined, subjectId: number | undefined): Promise<ApiResult<ILesson>[]> {
+        if (classId == undefined || subjectId == undefined) throw new Error("classId or subjectId was undefined while trying to create lessons");
+        
+        const promises = [] as Promise<ApiResult<ILesson>>[];
+
+        selection.value.forEach(pos => {
+            const p = RectureApi.createLesson(pos.dayOfWeek, pos.lessonNumber, lessonColor, classId, subjectId);
+            p.then(result => {
+                if (!result.success) return Promise.reject();
+                else if (result.data != null) {
+                    lessons.value.push(result.data);
+                }
+            });
+            promises.push(p);
+        });
+
+        return Promise.all(promises);
+    }
+
     function toggleEditing(): void {
         if (state.value === "idle") state.value = "editing";
         else if (state.value === "editing") state.value = "idle";
@@ -142,5 +162,5 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
         } else selection.value.push(cellPosition);
     }
     
-    return { daysOfWeek, lessonsPerDay, firstLessonNumber, lessons, weekDates, state, selection, idle, editing, creating, selecting, setWeek, setRelativeWeek, getFormattedWeekDate, fetchTimetable, fetchLessons, deleteLesson, toggleEditing, startCreating, stopCreating, toggleCellSelectionStatus }
+    return { daysOfWeek, lessonsPerDay, firstLessonNumber, lessons, weekDates, state, selection, idle, editing, creating, selecting, setWeek, setRelativeWeek, getFormattedWeekDate, fetchTimetable, fetchLessons, deleteLesson, createSelectedLessons, toggleEditing, startCreating, stopCreating, toggleCellSelectionStatus }
 }

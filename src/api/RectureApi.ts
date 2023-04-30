@@ -411,6 +411,46 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async createClass(name: string, signal: AbortSignal | null = null): Promise<ApiResult<IClass>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("classes"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IClass;
+            
+            return new ApiResult<IClass>(response.status, data);
+        } else {
+            return new ApiResult<IClass>(response.status);
+        }
+    }
+
+    public static async createSubject(name: string, signal: AbortSignal | null = null): Promise<ApiResult<ISubject>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("subjects"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ISubject;
+            
+            return new ApiResult<ISubject>(response.status, data);
+        } else {
+            return new ApiResult<ISubject>(response.status);
+        }
+    }
+
     public static async createTopic(classId: number, subjectId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<ITopic>> {
         let formData = new FormData();
         formData.append("classId", classId.toString());
@@ -430,6 +470,30 @@ export class RectureApi {
             return new ApiResult<ITopic>(response.status, data);
         } else {
             return new ApiResult<ITopic>(response.status);
+        }
+    }
+
+    public static async createLesson(dayOfWeek: DayOfWeek, lessonNumber: number, lessonColor: string, classId: number, subjectId: number, signal: AbortSignal | null = null): Promise<ApiResult<ILesson>> {
+        let formData = new FormData();
+        formData.append("dayOfWeek", dayOfWeek.toString());
+        formData.append("lessonNumber", lessonNumber.toString());
+        formData.append("lessonColor", lessonColor);
+        formData.append("classId", classId.toString());
+        formData.append("subjectId", subjectId.toString());
+
+        const response = await fetch(this.pathToUrl("lessons"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ILesson;
+            
+            return new ApiResult<ILesson>(response.status, data);
+        } else {
+            return new ApiResult<ILesson>(response.status);
         }
     }
 

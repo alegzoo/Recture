@@ -38,7 +38,7 @@
 
                     <template v-if="timetable.creating.value">
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button secondary creating-button" :ripple="false" @click="timetable.stopCreating()">
+                            <v-btn variant="text" class="footer-button secondary creating-button" :ripple="false" @click="cancelLessonCreation()">
                                 CANCEL
                             </v-btn>
                         </v-col>
@@ -66,26 +66,29 @@
             </v-col>
         </v-row>
     </v-container>
-    <v-overlay v-model="timetable.creating.value" persistent z-index="190"></v-overlay>
+    <v-overlay v-model="timetable.creating.value" persistent z-index="190"/>
     <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetable.fetchLessons()"/>
     <ManageThematicUnitsDialog v-model="showManageThematicUnitsDialog"/>
     <CreateLessonDialog v-model="showCreateLessonDialog" @dialog-exit="onCreateLessonDialogExit"/>
+    <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
+    <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
+        <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
+    </v-overlay>
 </template>
-
-<style>
-
-</style>
 
 <script lang="ts" setup>
     import { ref, computed } from 'vue';
+    import { RectureApi, IClass, ISubject, LessonColor } from '@/api/RectureApi';
     import { ITimetableGridPosition, useTimetable } from '@/composables/useTimetable';
     import TimetableGrid from '@/components/TimetableGrid.vue';
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
     import ManageThematicUnitsDialog from '@/components/ManageThematicUnitsDialog.vue';
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
+    import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     import "@/styles/timetable.scss";
+import { stopCoverage } from 'v8';
 
     const { mdAndUp, lgAndUp } = useDisplay();
 
@@ -94,6 +97,12 @@
     const showCreateLessonDialog = ref<boolean>(false);
 
     const createLessonsButtonText = computed<string>(() => timetable.selection.value.length > 1?`CREATE ${timetable.selection.value.length} LESSONS`:'CREATE LESSON');
+    const createLessonDialogResult = ref<ICreateLessonDialogResult | null>(null);
+
+    const errorDialogVisible = ref<boolean>(false);
+    const errorDialogMessage = ref<string>("");
+
+    const loadingOverlayVisible = ref<boolean>(false);
 
     const timetable = useTimetable();
     
@@ -111,11 +120,82 @@
     }
 
     function createLessons() {
+        if (createLessonDialogResult.value == null || createLessonDialogResult.value.class == null || createLessonDialogResult.value.subject == null || createLessonDialogResult.value.lessonColor == null) {
+            timetable.stopCreating();
+            return;
+        }
+
+        const classValue = createLessonDialogResult.value.class as IClass | string;
+        const subjectValue = createLessonDialogResult.value.subject as ISubject | string;
+        const lessonColor = createLessonDialogResult.value.lessonColor as LessonColor;
+
+        let lessonClass = null as IClass | null;
+        let lessonSubject = null as ISubject | null;
+
+        const promises = [];
+
+        if (classValue instanceof String || typeof classValue === "string") {
+            const classPromise = RectureApi.createClass(classValue as string);
+            classPromise.then(result => {
+                if (result.success && result.data != null) lessonClass = result.data;
+                else return Promise.reject();
+            });
+            promises.push(classPromise);
+        } else {
+            lessonClass = classValue as IClass;
+        }
+
+        if (subjectValue instanceof String || typeof subjectValue === "string") {
+            const subjectPromise = RectureApi.createSubject(subjectValue as string);
+            subjectPromise.then(result => {
+                if (result.success && result.data != null) lessonSubject = result.data;
+                else return Promise.reject();
+            });
+            promises.push(subjectPromise);
+        } else {
+            lessonSubject = subjectValue as ISubject;
+        }
+
+        loadingOverlayVisible.value = true;
+
+        if (promises.length > 0) {
+            Promise.all(promises).then(() => {
+                timetable.createSelectedLessons(lessonColor, lessonClass?.classId, lessonSubject?.subjectId).catch(() => {
+                    errorDialogMessage.value = "Failed to create lessons.";
+                    errorDialogVisible.value = true;
+                }).finally(() => {
+                    loadingOverlayVisible.value = false;
+
+                    timetable.stopCreating();
+                    createLessonDialogResult.value = null;
+                });
+            }).catch(reason => {
+                errorDialogMessage.value = "Failed to create lessons.";
+                errorDialogVisible.value = true;
+                loadingOverlayVisible.value = false;
+
+                timetable.stopCreating();
+                createLessonDialogResult.value = null;
+            });
+        } else {
+            timetable.createSelectedLessons(lessonColor, lessonClass?.classId, lessonSubject?.subjectId).catch(() => {
+                errorDialogMessage.value = "Failed to create lessons.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
+                loadingOverlayVisible.value = false;
+                timetable.stopCreating();
+                createLessonDialogResult.value = null;
+            });
+        }
+    }
+
+    function cancelLessonCreation() {
         timetable.stopCreating();
-        //TODO: Implement
+        createLessonDialogResult.value = null;
     }
 
     function onCreateLessonDialogExit(result: ICreateLessonDialogResult) {
-        if (!result.success) timetable.stopCreating();
+        if (result.success) createLessonDialogResult.value = result;
+        else timetable.stopCreating();
     }
 </script>
