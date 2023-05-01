@@ -411,6 +411,33 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async createRecording(file: File, lessonId: number, topicId: number, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("lessonId", lessonId.toString());
+        formData.append("topicId", topicId.toString());
+        formData.append("title", title.toString());
+        if (description != null) formData.append("description", description.toString());
+        formData.append("published", published.toString());
+        formData.append("commentsAllowed", commentsAllowed.toString());
+        if (recordingTimestamp != null) formData.append("recordingDate", recordingTimestamp.toString());
+
+        const response = await fetch(this.pathToUrl("recordings"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IRecording;
+            
+            return new ApiResult<IRecording>(response.status, data);
+        } else {
+            return new ApiResult<IRecording>(response.status);
+        }
+    }
+
     public static async createClass(name: string, signal: AbortSignal | null = null): Promise<ApiResult<IClass>> {
         let formData = new FormData();
         formData.append("name", name);

@@ -1,7 +1,7 @@
 <template>
     <v-dialog :model-value="modelValue" @update:model-value="(value) => emit('update:modelValue', value)" class="h-100 justify-center" width="1200" scroll-strategy="block">
         <UploadDialogTimetable v-if="modelValue === true && state === 'timetable'" @lesson-selected="onTimetableLessonSelected"/>
-        <UploadDialogForm v-else-if="modelValue === true && state === 'form'" :lesson="(selectedLesson as ILesson)" :date="(selectedDate as Date)"/> 
+        <UploadDialogForm v-else-if="modelValue === true && state === 'form'" :lesson="(selectedLesson as ILesson)" :date="(selectedDate as Date)" @upload-start="emit('update:modelValue', false)"/> 
     </v-dialog>
 </template>
 

@@ -16,7 +16,8 @@ export interface IUsableUploadForm {
     topics: Ref<ITopic[]>,
 
     fetchTopics(): void,
-    setFile(file: File): void
+    setFile(file: File): void,
+    validateForm(): boolean
 }
 
 export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
@@ -44,5 +45,15 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
         file.value = val;
     }
 
-    return { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics, fetchTopics, setFile };
+    function validateForm(): boolean {
+        if (title.value.trim().length == 0) return false;
+        if (selectedTopic.value == null) return false;
+        if (commentsAllowed.value == null) return false;
+        if (published.value == null) return false;
+        if (file.value == null) return false;
+
+        return true;
+    }
+
+    return { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics, fetchTopics, setFile, validateForm };
 }
