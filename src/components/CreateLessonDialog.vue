@@ -28,13 +28,13 @@
                         <v-btn-toggle v-model="selectedColor" selected-class="selected" divided mandatory>
                             <v-btn class="mustard" size="small" value="mustard" :active="false" :ripple="false"/>
                             <v-btn class="aqua" size="small" value="aqua" :active="false" :ripple="false"/>
-                            <v-btn class="steel-blue" size="small" value="steel-blue" :active="false" :ripple="false"/>
+                            <v-btn class="steel-blue" size="small" value="steel_blue" :active="false" :ripple="false"/>
                             <v-btn class="red" size="small" value="red" :active="false" :ripple="false"/>
                             <v-btn class="gray" size="small" value="gray" :active="false" :ripple="false"/>
                             <v-btn class="rose" size="small" value="rose" :active="false" :ripple="false"/>
                             <v-btn class="melon" size="small" value="melon" :active="false" :ripple="false"/>
                             <v-btn class="blush" size="small" value="blush" :active="false" :ripple="false"/>
-                            <v-btn class="crystal-blue" size="small" value="cystal-blue" :active="false" :ripple="false"/>
+                            <v-btn class="crystal-blue" size="small" value="cystal_blue" :active="false" :ripple="false"/>
                             <v-btn class="canary" size="small" value="canary" :active="false" :ripple="false"/>
                             <v-btn class="orchid" size="small" value="orchid" :active="false" :ripple="false"/>
                         </v-btn-toggle>
