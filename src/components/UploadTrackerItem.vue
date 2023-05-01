@@ -16,7 +16,7 @@
                 </template>
             </v-btn>
             <v-icon v-else-if="state === 'success'" icon="mdi-check"/>
-            <v-icon v-else-if="state === 'error'" icon="mdi-alert-circle"/>
+            <v-icon v-else-if="state === 'error' || state === 'aborted'" icon="mdi-alert-circle"/>
         </v-col>
     </v-row>
 </template>
@@ -27,7 +27,7 @@
     }
 
     .state {
-        opacity: 50%;
+        color: rgba(0, 0, 0, 0.5);
         font-size: 0.9em;
         line-height: 0.9em;
     }
@@ -55,7 +55,7 @@
         (e: "cancelButtonClick"): void
     }>();
 
-    const state = ref<"uploading" | "success" | "error">("uploading");
+    const state = ref<"uploading" | "success" | "error" | "aborted">("uploading");
     const mouseOver = ref<boolean>(false);
 
     const stateText = computed<string>(() => {
@@ -63,6 +63,7 @@
             case "uploading": return "Uploading...";
             case "success": return "Upload complete!";
             case "error": return "Upload failed.";
+            case "aborted": return "Upload aborted."
         }
     })
 
@@ -71,10 +72,12 @@
 
     function subscribeToPromise() {
         state.value = "uploading";
-        props.upload.promise.then(() => {
-            state.value = "success";
-        }).catch(() => {
-            state.value = "error";
+        props.upload.promise.then(result => {
+            if (result.success) state.value = "success";
+            else state.value = "error";
+        }).catch(reason => {
+            if (reason.name === "AbortError") state.value = "aborted";
+            else state.value = "error";
         });
     }
 </script>

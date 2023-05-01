@@ -4,7 +4,7 @@
         icon
     >
         <template v-slot:default>
-            <v-badge :model-value="badgeVisible" :content="badgeContent" color="recture-light-red" floating>
+            <v-badge :model-value="badgeVisible" :content="uploadStore.uploadsInProgress" color="recture-light-red" floating>
                 <v-icon icon="mdi-upload"/>
             </v-badge>
         </template>
@@ -25,6 +25,5 @@
 
     const uploadStore = useUploadStore();
 
-    const badgeVisible = computed<boolean>(() => uploadStore.uploadsInProgress.length > 0);
-    const badgeContent = computed<number>(() => uploadStore.uploadsInProgress.length);
+    const badgeVisible = computed<boolean>(() => uploadStore.uploadsInProgress > 0);
 </script>
