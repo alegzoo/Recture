@@ -51,13 +51,13 @@
                     </template>
                     <template v-else>
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="showNewThematicUnitDialog = true">
                                 NEW THEMATIC UNIT
                             </v-btn>
                         </v-col>
 
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="showNewQuestionSeriesDialog = true">
                                 NEW QUESTION SERIES
                             </v-btn>
                         </v-col>
@@ -70,6 +70,8 @@
     <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetable.fetchLessons()"/>
     <ManageThematicUnitsDialog v-model="showManageThematicUnitsDialog"/>
     <CreateLessonDialog v-model="showCreateLessonDialog" @dialog-exit="onCreateLessonDialogExit"/>
+    <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
+    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
     <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
         <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
@@ -84,17 +86,20 @@
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
     import ManageThematicUnitsDialog from '@/components/ManageThematicUnitsDialog.vue';
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
+    import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
+    import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
     import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     import "@/styles/timetable.scss";
-import { stopCoverage } from 'v8';
 
     const { mdAndUp, lgAndUp } = useDisplay();
 
     const showManageGroupsDialog = ref<boolean>(false);
     const showManageThematicUnitsDialog = ref<boolean>(false);
     const showCreateLessonDialog = ref<boolean>(false);
+    const showNewThematicUnitDialog = ref<boolean>(false);
+    const showNewQuestionSeriesDialog = ref<boolean>(false);
 
     const createLessonsButtonText = computed<string>(() => timetable.selection.value.length > 1?`CREATE ${timetable.selection.value.length} LESSONS`:'CREATE LESSON');
     const createLessonDialogResult = ref<ICreateLessonDialogResult | null>(null);
