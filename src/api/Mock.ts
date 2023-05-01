@@ -1,10 +1,11 @@
 import { createServer, Model, Response } from "miragejs"
-import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType, IComment, ICommentReply } from "./RectureApi";
+import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType, IComment, ICommentReply, IPublicUserInfo } from "./RectureApi";
 
 //TODO: Exclude both library and code from production
 export function makeServer() {
     const mockModels = {
         account: Model.extend({userId: 0, email: "", userType: "TEACHER", emailConfirmed: false, firstName: "", lastName: "", bio: "", organization: "", avatar: ""} as IAccount),
+        publicUserInfo: Model.extend({userId: 0, email: "", userType: "TEACHER", firstName: "", lastName: "", bio: "", organization: "", avatar: ""} as IPublicUserInfo), 
         lesson: Model.extend({lessonId: 0, dayOfWeek: DayOfWeek.Monday, lessonNumber: 1, color: "mustard", className: "", subjectName: "", classId: 1, subjectId: 1} as ILesson),
         recording: Model.extend({recordingId: 0,
             title: "",
@@ -37,6 +38,7 @@ export function makeServer() {
   
         models: {
             account: Model,
+            publicUserInfo: Model,
             lesson: Model,
             recording: Model,
             class: Model,
@@ -58,6 +60,17 @@ export function makeServer() {
                 organization: "GJAR",
                 avatar: "/jano.png"
             } as IAccount);
+
+            server.create("publicUserInfo", {
+                userId: 1,
+                email: "jancislovy@gmail.com",
+                userType: "TEACHER",
+                firstName: "Jano",
+                lastName: "Číslový",
+                bio: "Ahoj. Volám sa Ján Číslový a som učiteľom informatiky a matematiky na škole GJAR. Okrem toho že rád vzdelávam a vyučujem, mám kopec voľnočasových aktivít pri ktorých si vetrám hlavu! Či už ide o horské bicyklovanie, alebo beh aj rád sledujem športy v televízii. Ak chceš držať krok s tým čo robím vo svojom voľnom čase, môžeš ma nájsť aj na instagrame pod menom @jan_cislovy. Prajem ti príjemné vzdelávanie. PS: Ak by si mal otázku ohľadom nejakej časti v nahrávke, naváhaj mi napísať!",
+                organization: "GJAR",
+                avatar: "/jano.png"
+            } as IPublicUserInfo);
 
             const class1 = server.create("class", {classId: 1, name: "I.A"} as IClass);
             const class2 = server.create("class", {classId: 2, name: "II.B"} as IClass);
@@ -189,6 +202,10 @@ export function makeServer() {
 
             this.get(RectureApi.BASE_API_URL+"/account", (schema) => {
                 return schema.first("account")?.attrs as IAccount;
+            }, {timing: 200});
+
+            this.get(RectureApi.BASE_API_URL+"/users/:id", (schema, request) => {
+                return schema.first("publicUserInfo")?.attrs as IPublicUserInfo;
             }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/recordings", (schema, request) => {
@@ -329,6 +346,22 @@ export function makeServer() {
                 }
             }, {timing: 300});
 
+            this.put(RectureApi.BASE_API_URL+"/topics/:id", (schema, request) => {
+                const topicId = parseInt(request.params.id);
+                const body = (request.requestBody as any) as FormData;
+                const name = body.get("name");
+                if (name == null) return new Response(400);
+                else {
+                    const topic = schema.findBy("topic", {topicId: topicId});
+                    if (!topic) return new Response(404);
+                    else {
+                        topic.update("name", name as string);
+
+                        return new Response(204);
+                    }
+                }
+            }, {timing: 300});
+
             this.del(RectureApi.BASE_API_URL+"/lessons/:id", (schema, request) => {
                 const lessonId = parseInt(request.params.id);
                 const lesson = schema.findBy("lesson", {lessonId: lessonId});
@@ -358,6 +391,17 @@ export function makeServer() {
                 if (subject != null) {
                     schema.where("lesson", {subjectId: subject.subjectId}).destroy();
                     subject.destroy();
+                    return new Response(200);
+                } else {
+                    return new Response(404);
+                }
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/topics/:id", (schema, request) => {
+                const topicId = parseInt(request.params.id);
+                const topic = schema.findBy("topic", {topicId: topicId});
+                if (topic != null) {
+                    topic.destroy();
                     return new Response(200);
                 } else {
                     return new Response(404);

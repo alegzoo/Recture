@@ -122,8 +122,11 @@
                 </v-row>
             </v-form>
         </v-card-text>
+        <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
+            <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
+        </v-overlay>
     </v-card>
-
+    <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
 </template>
 
 <style lang="scss" scoped>
@@ -178,10 +181,12 @@
 
 <script lang="ts" setup>
     import { ref, reactive, watch } from 'vue';
-    import { ILesson } from '@/api/RectureApi';
+    import { ILesson, ITopic, RectureApi } from '@/api/RectureApi';
+    import { useUploadStore } from '@/stores/useUploadStore';
     import { useUploadForm } from '@/composables/useUploadForm';
     import UploadPreviewCard from './UploadPreviewCard.vue';
     import SelectOrCreateInput from './SelectOrCreateInput.vue';
+    import MessageDialog from './MessageDialog.vue';
 
     import "@/styles/main.scss";
 
@@ -189,6 +194,12 @@
         lesson: ILesson,
         date: Date
     }>();
+
+    const emit = defineEmits<{
+        (e: "uploadStart"): void
+    }>();
+
+    const uploadStore = useUploadStore();
 
     const uploadForm = useUploadForm(props.lesson, props.date);
     uploadForm.fetchTopics();
@@ -203,14 +214,41 @@
         else return "Please select one of the options.";
     })]);
 
+    const loadingOverlayVisible = ref<boolean>(false);
+
     const showFileAlert = ref<boolean>(false);
+
+    const errorDialogVisible = ref<boolean>(false);
+    const errorDialogMessage = ref<string>("");
 
     watch(file, () => validateFile(false));
 
     function submitHandler() : void {
-        //TODO: Validate entire form before continuing
-        if (!validateFile()) return;
-        //TODO: Implement
+        if (!validateFile() || !uploadForm.validateForm()) return;
+
+        if (selectedTopic.value instanceof String || typeof selectedTopic.value === "string") {
+            loadingOverlayVisible.value = true;
+            RectureApi.createTopic(props.lesson.classId, props.lesson.subjectId, selectedTopic.value as string).then(result => {
+                if (result.success && result.data != null) uploadRecording(result.data);
+                else {
+                    errorDialogMessage.value = "Failed to create thematic unit.";
+                    errorDialogVisible.value = true;
+                }
+            }).catch(reason => {
+                errorDialogMessage.value = "Failed to create thematic unit.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
+                loadingOverlayVisible.value = false;
+            });
+        } else {
+            uploadRecording(selectedTopic.value as ITopic);
+        }
+    }
+
+    function uploadRecording(topic: ITopic): void {
+        const desc = (uploadForm.description.value.trim().length > 0 ? uploadForm.description.value : null) as string | null;
+        uploadStore.uploadRecording(file.value as File, props.lesson, topic, title.value, desc, published.value as boolean, commentsAllowed.value as boolean, props.date.getTime());
+        emit("uploadStart");
     }
 
     function validateFile(showAlertOnFailure: boolean = true) : boolean {

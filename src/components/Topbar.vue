@@ -3,7 +3,7 @@
         <v-container id="topbar-panel" fluid>
             <v-row no-gutters align-content="center" justify="center" class="h-100 overflow-hidden">
                 <v-col :cols="smAndUp?3:''" align-self="center" class="h-100">
-                    <FloatingAvatar v-show="router.currentRoute.value.name !== 'profile' && smAndUp"/>
+                    <FloatingAvatar v-show="router.currentRoute.value.name === 'videoBrowser' && smAndUp"/>
                 </v-col>
                 <v-col :cols="smAndUp?'':6" align="center" align-self="center">
                     <v-responsive width="165" :aspect-ratio="1">
@@ -15,7 +15,8 @@
                 <v-col :cols="smAndUp?3:''" align-self="center" class="h-100">
                     <v-row no-gutters align-content="center" justify="center" class="h-100">
                         <v-col align="center" align-self="center">
-                            <UploadingButtonVue/>
+                            <UploadTrackerMenuButton id="upload-tracker-menu-button"/>
+                            <UploadTrackerMenu activator="#upload-tracker-menu-button"/>
                         </v-col>
                         <v-col cols="auto" align="right" align-self="center" class="h-100">
                             <v-sheet width="60" height="60" align="center" class="rounded-bs-pill" theme="dark">
@@ -34,9 +35,14 @@
 </style>
 
 <script lang="ts" setup>
+    import { ref } from 'vue';
     import router from '@/router';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import FloatingAvatar from './FloatingAvatar.vue';
-    import UploadingButtonVue from './UploadingButton.vue';
+    import UploadTrackerMenu from './UploadTrackerMenu.vue';
+    import UploadTrackerMenuButton from './UploadTrackerMenuButton.vue';
+
+    const activatorProps = ref<boolean>(false);
+
     const { smAndUp } = useDisplay();
 </script>

@@ -18,6 +18,7 @@ const routes = [
         children: [
             {
                 path: '',
+                name: 'videoBrowser',
                 component: VideoBrowser,
                 meta: { requiresAuth: true }
             }
@@ -35,7 +36,7 @@ const routes = [
         ]
     },
     {
-        path: '/profile',
+        path: '/profile/:userId?',
         component: Home,
         children: [
             {

@@ -1,8 +1,8 @@
 <template>
     <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" class="h-100 justify-center" width="630" scroll-strategy="block">
-        <v-card class="create-lesson-card">
+        <v-card>
             <template v-slot:title>
-                <h2 class="pt-3 pl-1">CREATE A LESSON</h2>
+                <h2 class="pt-3">CREATE A LESSON</h2>
             </template>
             <v-card-text>
                 <v-row no-gutters>
@@ -19,31 +19,30 @@
 
                 <v-row no-gutters>
                     <v-col align="center" class="pt-5 pb-3">
-                        <h4 class="headline-colors">Color of lesson in timetable</h4>
+                        <h4 class="subtle">Color of lesson in timetable</h4>
                     </v-col>
                 </v-row>
 
-
                 <v-row no-gutters>
                     <v-col align="center">
-                        <v-btn-toggle v-model="selectedColor" divided class="toggle-btns-colors" selected-class="selected" mandatory>
-                            <v-btn class="mustard btn-group-colors" size="small" value="mustard" :active="false" :ripple="false"/>
-                            <v-btn class="aqua btn-group-colors" size="small" value="aqua" :active="false" :ripple="false"/>
-                            <v-btn class="steel-blue btn-group-colors" size="small" value="steel-blue" :active="false" :ripple="false"/>
-                            <v-btn class="red btn-group-colors" size="small" value="red" :active="false" :ripple="false"/>
-                            <v-btn class="gray btn-group-colors" size="small" value="gray" :active="false" :ripple="false"/>
-                            <v-btn class="rose btn-group-colors" size="small" value="rose" :active="false" :ripple="false"/>
-                            <v-btn class="melon btn-group-colors" size="small" value="melon" :active="false" :ripple="false"/>
-                            <v-btn class="blush btn-group-colors" size="small" value="blush" :active="false" :ripple="false"/>
-                            <v-btn class="crystal-blue btn-group-colors" size="small" value="cystal-blue" :active="false" :ripple="false"/>
-                            <v-btn class="canary btn-group-colors" size="small" value="canary" :active="false" :ripple="false"/>
-                            <v-btn class="orchid btn-group-colors" size="small" value="orchid" :active="false" :ripple="false"/>
+                        <v-btn-toggle v-model="selectedColor" selected-class="selected" divided mandatory>
+                            <v-btn class="mustard" size="small" value="mustard" :active="false" :ripple="false"/>
+                            <v-btn class="aqua" size="small" value="aqua" :active="false" :ripple="false"/>
+                            <v-btn class="steel-blue" size="small" value="steel_blue" :active="false" :ripple="false"/>
+                            <v-btn class="red" size="small" value="red" :active="false" :ripple="false"/>
+                            <v-btn class="gray" size="small" value="gray" :active="false" :ripple="false"/>
+                            <v-btn class="rose" size="small" value="rose" :active="false" :ripple="false"/>
+                            <v-btn class="melon" size="small" value="melon" :active="false" :ripple="false"/>
+                            <v-btn class="blush" size="small" value="blush" :active="false" :ripple="false"/>
+                            <v-btn class="crystal-blue" size="small" value="cystal_blue" :active="false" :ripple="false"/>
+                            <v-btn class="canary" size="small" value="canary" :active="false" :ripple="false"/>
+                            <v-btn class="orchid" size="small" value="orchid" :active="false" :ripple="false"/>
                         </v-btn-toggle>
                     </v-col>
                 </v-row>
 
                 <v-row no-gutters class="pt-10">
-                    <v-col cols="6" class="headline-colors pl-1">
+                    <v-col cols="6" class="subtle">
                         <h4>Code for students to connect</h4>
                     </v-col>
                 </v-row>
@@ -53,7 +52,7 @@
                         <div class="text-h4 font-weight-bold">{{ inviteCode }}</div>
                     </v-col>
 
-                    <v-col align-self="center" cols="auto" class="pl-1">
+                    <v-col align-self="center" cols="auto">
                         <v-btn variant="plain" icon="mdi-content-copy" class="copy-btn" :ripple="false" @click="copyCodeToClipboard"/>
                     </v-col>
 
@@ -78,7 +77,7 @@
             </v-row>
         </v-card>
 
-        <v-overlay :model-value="loadingOverlayVisible" class="align-center justify-center" contained>
+        <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
             <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
         </v-overlay>
     </v-dialog>
@@ -89,26 +88,26 @@
         z-index: 210 !important;
     }
 
-    .create-lesson-card {
+    .v-card {
         background-color: #efefef;
     }
 
-    .headline-colors {
+    .subtle {
         opacity: 50%;
     }
 
-    .btn-group-colors {
+    .v-btn-toggle .v-btn {
         border-color: black !important;
         border-width: 2px !important;
         box-shadow: none;
         transition: border-style 0.2s ease-out, transform 0.1s ease-out, box-shadow 0.2s ease-out;
     }
 
-    .btn-group-colors:hover {
+    .v-btn-toggle .v-btn:hover {
         box-shadow: 0px 0px 0px 2px black inset;
     }
 
-    .btn-group-colors.selected, .btn-group-colors.selected:hover {
+    .v-btn-toggle .v-btn.selected, .v-btn-toggle .v-btn.selected:hover {
         box-shadow: none;
         border: solid 4px black !important;
         transform: scale(1.1);
@@ -172,7 +171,6 @@
         (e: "update:modelValue", val: boolean): void,
         (e: "dialogExit", result: ICreateLessonDialogResult): void
     }>();
-
     
     const dialogSuccess = ref<boolean>(false);
 

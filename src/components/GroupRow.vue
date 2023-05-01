@@ -2,19 +2,19 @@
     <tr>
         <td class="pt-2">
             <span class="font-weight-black">{{ group.name }}</span>
-            <v-tooltip text="Rename" class="tooltip-manage-timetable" location="end">
+            <v-tooltip text="Rename" location="end">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
                 </template>
             </v-tooltip>
         </td>
         <td class="text-right">
-            <v-tooltip class="tooltip-manage-timetable" text="View members" location="start">
+            <v-tooltip v-if="showViewMembersButton" text="View members" location="start">
                 <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple"/>
+                    <v-btn v-bind="props" variant="plain" icon="mdi-account-multiple" @click="emit('viewMembers')"/>
                 </template>
             </v-tooltip>
-            <v-tooltip class="tooltip-manage-timetable" text="Delete" location="end">
+            <v-tooltip text="Delete" :location="showViewMembersButton?'end':'start'">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-delete" @click="emit('delete')"/>
                 </template>
@@ -24,14 +24,18 @@
 </template>
 
 <script lang="ts" setup>
-    import { IClass, ISubject } from '@/api/RectureApi';
+    import { IClass, ISubject, ITopic } from '@/api/RectureApi';
 
-    const props = defineProps<{
-        group: IClass | ISubject
-    }>();
+    const props = withDefaults(defineProps<{
+        group: IClass | ISubject | ITopic,
+        showViewMembersButton?: boolean
+    }>(), {
+        showViewMembersButton: true
+    });
 
     const emit = defineEmits<{
         (e: "rename"): void,
-        (e: "delete"): void
+        (e: "delete"): void,
+        (e: "viewMembers"): void
     }>();
 </script>

@@ -33,7 +33,29 @@ export default createVuetify({
                     success: '#66BB6A',
                     'on-success': '#000000',
                     warning: '#FFA726',
-                    'on-warning': '#000000'
+                    'on-warning': '#000000',
+
+                    //Custom colors
+                    'recture-cadet-blue': '#9CBBC4',
+                    'recture-yellow': '#FFD900',
+                    'recture-red': '#FF0000',
+                    'recture-light-red': '#E24A42',
+                    'recture-bright-blue': '#00A6E2',
+                    'recture-gray': '#CCCCCC',
+
+                    //Lesson colors
+                    'mustard': '#f7bd50',
+                    'aqua': '#76c4bf',
+                    'steel_blue': '#b8bde1',
+                    'red': '#e24a42',
+                    'gray': '#acacac',
+                    'rose': '#f6d2ed',
+                    'melon': '#f4bbb8',
+                    'blush': '#ea5782',
+                    'crystal_blue': '#4eadb9',
+                    'canary': '#f6f996',
+                    'orchid': '#ea9bcd',
+                    'green': '#9beaca'
                 }
             },
             dark: {
@@ -54,7 +76,29 @@ export default createVuetify({
                     success: '#66BB6A',
                     'on-success': '#FFFFFF',
                     warning: '#FFA726',
-                    'on-warning': '#FFFFFF'
+                    'on-warning': '#FFFFFF',
+                    
+                    //Custom colors
+                    'recture-cadet-blue': '#9CBBC4',
+                    'recture-yellow': '#FFD900',
+                    'recture-red': '#FF0000',
+                    'recture-light-red': '#E24A42',
+                    'recture-bright-blue': '#00A6E2',
+                    'recture-gray': '#CCCCCC',
+
+                    //Lesson colors
+                    'mustard': '#f7bd50',
+                    'aqua': '#76c4bf',
+                    'steel_blue': '#b8bde1',
+                    'red': '#e24a42',
+                    'gray': '#acacac',
+                    'rose': '#f6d2ed',
+                    'melon': '#f4bbb8',
+                    'blush': '#ea5782',
+                    'crystal_blue': '#4eadb9',
+                    'canary': '#f6f996',
+                    'orchid': '#ea9bcd',
+                    'green': '#9beaca'
                 }
             }
         },

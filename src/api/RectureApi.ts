@@ -66,6 +66,61 @@ export class RectureApi {
         }
     }
 
+    public static async getUserInfo(userId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPublicUserInfo>> {
+        const response = await fetch(this.pathToUrl("users/"+userId), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPublicUserInfo;
+            return new ApiResult<IPublicUserInfo>(response.status, data);
+        } else {
+            return new ApiResult<IPublicUserInfo>(response.status);
+        }
+    }
+
+    public static async getStudentsByClass(classId: number, page: number, pageSize: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IPublicUserInfo>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("classes/"+classId+"/students", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IPublicUserInfo>;
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status);
+        }
+    }
+
+    public static async getStudentsBySubject(subjectId: number, page: number, pageSize: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IPublicUserInfo>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId+"/students", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IPublicUserInfo>;
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IPublicUserInfo>>(response.status);
+        }
+    }
+
     public static async getRecordings(page: number, pageSize: number, sort: IRecordingSort, query: string | null = null,
                                 classIds: number[] | null = null, subjectIds: number[] | null = null, topicIds: number[] | null = null,
                                 visibilityFilter: RecordingVisibilityFilter | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IRecording>>> {
@@ -192,8 +247,10 @@ export class RectureApi {
         }
     }
 
-    public static async getCommentsByRecording(recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IComment>>> {
+    public static async getCommentsByRecording(page: number, pageSize: number, recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IComment>>> {
         let urlParams = new URLSearchParams();
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
 
         urlParams.append("recordingId", recordingId.toString());
 
@@ -212,8 +269,12 @@ export class RectureApi {
         }
     }
 
-    public static async getRepliesByComment(commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<ICommentReply>>> {
-        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
+    public static async getRepliesByComment(page: number, pageSize: number, commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<ICommentReply>>> {
+        let urlParams = new URLSearchParams();
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies", urlParams), {
             method: "GET",
             credentials: "include",
             signal: signal
@@ -256,6 +317,40 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async renameTopic(topicId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("topics/"+topicId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async removeStudentFromClass(classId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("classes/"+classId+"/students/"+userId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async removeStudentFromSubject(subjectId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("subjects/"+subjectId+"/students/"+userId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async deleteClass(classId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId), {
             method: "DELETE",
@@ -276,6 +371,16 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async deleteTopic(topicId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("topics/"+topicId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async deleteLesson(lessonId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("lessons/"+lessonId), {
             method: "DELETE",
@@ -284,6 +389,182 @@ export class RectureApi {
         });
 
         return new ApiResult(response.status);
+    }
+
+    public static async deleteComment(commentId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("comments/"+commentId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteReply(replyId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("comments/replies/"+replyId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async createRecording(file: File, lessonId: number, topicId: number, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("lessonId", lessonId.toString());
+        formData.append("topicId", topicId.toString());
+        formData.append("title", title.toString());
+        if (description != null) formData.append("description", description.toString());
+        formData.append("published", published.toString());
+        formData.append("commentsAllowed", commentsAllowed.toString());
+        if (recordingTimestamp != null) formData.append("recordingDate", recordingTimestamp.toString());
+
+        const response = await fetch(this.pathToUrl("recordings"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IRecording;
+            
+            return new ApiResult<IRecording>(response.status, data);
+        } else {
+            return new ApiResult<IRecording>(response.status);
+        }
+    }
+
+    public static async createClass(name: string, signal: AbortSignal | null = null): Promise<ApiResult<IClass>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("classes"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IClass;
+            
+            return new ApiResult<IClass>(response.status, data);
+        } else {
+            return new ApiResult<IClass>(response.status);
+        }
+    }
+
+    public static async createSubject(name: string, signal: AbortSignal | null = null): Promise<ApiResult<ISubject>> {
+        let formData = new FormData();
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("subjects"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ISubject;
+            
+            return new ApiResult<ISubject>(response.status, data);
+        } else {
+            return new ApiResult<ISubject>(response.status);
+        }
+    }
+
+    public static async createTopic(classId: number, subjectId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<ITopic>> {
+        let formData = new FormData();
+        formData.append("classId", classId.toString());
+        formData.append("subjectId", subjectId.toString());
+        formData.append("name", name);
+
+        const response = await fetch(this.pathToUrl("topics"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ITopic;
+            
+            return new ApiResult<ITopic>(response.status, data);
+        } else {
+            return new ApiResult<ITopic>(response.status);
+        }
+    }
+
+    public static async createLesson(dayOfWeek: DayOfWeek, lessonNumber: number, lessonColor: string, classId: number, subjectId: number, signal: AbortSignal | null = null): Promise<ApiResult<ILesson>> {
+        let formData = new FormData();
+        formData.append("dayOfWeek", dayOfWeek.toString());
+        formData.append("lessonNumber", lessonNumber.toString());
+        formData.append("lessonColor", lessonColor);
+        formData.append("classId", classId.toString());
+        formData.append("subjectId", subjectId.toString());
+
+        const response = await fetch(this.pathToUrl("lessons"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ILesson;
+            
+            return new ApiResult<ILesson>(response.status, data);
+        } else {
+            return new ApiResult<ILesson>(response.status);
+        }
+    }
+
+    public static async createComment(recordingId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<IComment>> {
+        let formData = new FormData();
+        formData.append("recordingId", recordingId.toString());
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("comments"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IComment;
+            
+            return new ApiResult<IComment>(response.status, data);
+        } else {
+            return new ApiResult<IComment>(response.status);
+        }
+    }
+
+    public static async createCommentReply(commentId: number, content: string, taggedReplyId: number | null, signal: AbortSignal | null = null): Promise<ApiResult<ICommentReply>> {
+        let formData = new FormData();
+        formData.append("commentId", commentId.toString());
+        if (taggedReplyId != null) formData.append("taggedReplyId", taggedReplyId.toString());
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("comments/"+commentId+"/replies"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as ICommentReply;
+            
+            return new ApiResult<ICommentReply>(response.status, data);
+        } else {
+            return new ApiResult<ICommentReply>(response.status);
+        }
     }
 
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
@@ -338,11 +619,23 @@ export interface IAccount {
     avatar: string
 }
 
+export interface IPublicUserInfo {
+    userId: number
+    email: string
+    userType: UserType
+    firstName: string
+    lastName: string
+    bio: string | null
+    organization: string | null
+    avatar: string
+}
+
 export interface IRecording {
     recordingId: number
     title: string
     description: string | null
     published: boolean
+    comments: number
     notifications: number
     teacherId: number
     classId: number
@@ -412,6 +705,10 @@ export interface ICommentReply {
     userId: number
     userFirstName: string
     userLastName: string
+    taggedReplyId: number | null
+    taggedReplyUserId: number | null
+    taggedReplyUserFirstName: string | null
+    taggedReplyUserLastName: string | null
     content: string
     creationTimestamp: number
     lastEditTimestamp: number | null
