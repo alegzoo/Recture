@@ -1,6 +1,7 @@
 // Composables
 import Home from '@/views/Home.vue'
 import Signin from '@/views/Signin.vue'
+import SignUp from '@/views/SignUp.vue'
 import VideoBrowser from '@/views/VideoBrowser.vue'
 import Video from '@/views/Video.vue'
 import NotFound from '@/views/NotFound.vue'
@@ -72,6 +73,15 @@ const routes = [
         path: "/signin",
         name: "signin",
         component: Signin,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/signup",
+        name: "signup",
+        component: SignUp,
         meta: { requiresAuth: false },
         beforeEnter: () => {
             lastSuccessfulAuthCheckTimestamp = 0;
