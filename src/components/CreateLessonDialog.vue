@@ -72,7 +72,7 @@
 
             <v-row no-gutters class="pt-4" height="auto">
                 <v-col align="center">
-                    <v-btn class="continue-button" width="630" height="50" variant="text" @click="closeDialog(true)">CONTINUE</v-btn>
+                    <v-btn class="continue-button w-100" height="50" variant="text" @click="closeDialog(true)">CONTINUE</v-btn>
                 </v-col>
             </v-row>
         </v-card>
@@ -93,7 +93,7 @@
     }
 
     .subtle {
-        opacity: 50%;
+        color: rgba(0, 0, 0, 0.5);
     }
 
     .v-btn-toggle .v-btn {
@@ -118,10 +118,7 @@
 
     .v-btn-toggle {
         position: relative;
-        border-top-left-radius: 0px !important;
-        border-bottom-left-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
-        border-top-right-radius: 0px !important;
+        border-radius: 0px !important;
         overflow: visible;
     }
 
@@ -140,8 +137,7 @@
     }
 
    .continue-button {
-        border-top-right-radius: 0px !important;
-        border-top-left-radius: 0px !important;
+        border-radius: 0px !important;
         background-color: #5cb978;
         color: white !important;
         font-size: large;

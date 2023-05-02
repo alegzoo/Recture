@@ -21,15 +21,15 @@
 
         <v-row class="flex-grow-1">
             <v-col cols="12" :class="'h-100 d-flex flex-column py-7'+(mdAndUp?' px-10':'')">
-                <TimetableGrid :timetable="timetable" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick"/>
+                <TimetableGrid :timetable="timetable" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick" @timetable-lesson-share-button-click="showShareDialog"/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="showManageGroupsDialog = true">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="manageGroupsDialogVisible = true">
                             MANAGE CLASSES AND SUBJECTS
                         </v-btn>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-folder-edit" @click="showManageThematicUnitsDialog = true">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-folder-edit" @click="manageThematicUnitsDialogVisible = true">
                             MANAGE THEMATIC UNITS
                         </v-btn>
                     </v-col>
@@ -51,13 +51,13 @@
                     </template>
                     <template v-else>
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="showNewThematicUnitDialog = true">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="newThematicUnitDialogVisible = true">
                                 NEW THEMATIC UNIT
                             </v-btn>
                         </v-col>
 
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="showNewQuestionSeriesDialog = true">
+                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="newQuestionSeriesDialogVisible = true">
                                 NEW QUESTION SERIES
                             </v-btn>
                         </v-col>
@@ -67,11 +67,12 @@
         </v-row>
     </v-container>
     <v-overlay v-model="timetable.creating.value" persistent z-index="190"/>
-    <ManageGroupsDialog v-model="showManageGroupsDialog" @dataModified="timetable.fetchLessons()"/>
-    <ManageThematicUnitsDialog v-model="showManageThematicUnitsDialog"/>
-    <CreateLessonDialog v-model="showCreateLessonDialog" @dialog-exit="onCreateLessonDialogExit"/>
-    <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
-    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
+    <ManageGroupsDialog v-model="manageGroupsDialogVisible" @dataModified="timetable.fetchLessons()"/>
+    <ManageThematicUnitsDialog v-model="manageThematicUnitsDialogVisible"/>
+    <CreateLessonDialog v-model="createLessonDialogVisible" @dialog-exit="onCreateLessonDialogExit"/>
+    <NewThematicUnitDialog v-model="newThematicUnitDialogVisible"/>
+    <NewQuestionSeriesDialog v-model="newQuestionSeriesDialogVisible"/>
+    <CreateInvitationDialog v-model="shareDialogVisible" :lesson="shareDialogLesson"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
     <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
         <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
@@ -80,7 +81,7 @@
 
 <script lang="ts" setup>
     import { ref, computed } from 'vue';
-    import { RectureApi, IClass, ISubject, LessonColor } from '@/api/RectureApi';
+    import { RectureApi, IClass, ISubject, LessonColor, ILesson } from '@/api/RectureApi';
     import { ITimetableGridPosition, useTimetable } from '@/composables/useTimetable';
     import TimetableGrid from '@/components/TimetableGrid.vue';
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
@@ -88,6 +89,7 @@
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
     import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
+    import CreateInvitationDialog from '@/components/CreateInvitationDialog.vue';
     import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
@@ -95,11 +97,14 @@
 
     const { mdAndUp, lgAndUp } = useDisplay();
 
-    const showManageGroupsDialog = ref<boolean>(false);
-    const showManageThematicUnitsDialog = ref<boolean>(false);
-    const showCreateLessonDialog = ref<boolean>(false);
-    const showNewThematicUnitDialog = ref<boolean>(false);
-    const showNewQuestionSeriesDialog = ref<boolean>(false);
+    const manageGroupsDialogVisible = ref<boolean>(false);
+    const manageThematicUnitsDialogVisible = ref<boolean>(false);
+    const createLessonDialogVisible = ref<boolean>(false);
+    const newThematicUnitDialogVisible = ref<boolean>(false);
+    const newQuestionSeriesDialogVisible = ref<boolean>(false);
+    const shareDialogVisible = ref<boolean>(false);
+
+    const shareDialogLesson = ref<ILesson | null>(null);
 
     const createLessonsButtonText = computed<string>(() => timetable.selection.value.length > 1?`CREATE ${timetable.selection.value.length} LESSONS`:'CREATE LESSON');
     const createLessonDialogResult = ref<ICreateLessonDialogResult | null>(null);
@@ -120,7 +125,7 @@
             timetable.toggleCellSelectionStatus(cellPosition);
         } else {
             timetable.startCreating(cellPosition);
-            showCreateLessonDialog.value = true;
+            createLessonDialogVisible.value = true;
         }
     }
 
@@ -202,5 +207,10 @@
     function onCreateLessonDialogExit(result: ICreateLessonDialogResult) {
         if (result.success) createLessonDialogResult.value = result;
         else timetable.stopCreating();
+    }
+
+    function showShareDialog(lesson: ILesson) {
+        shareDialogLesson.value = lesson;
+        shareDialogVisible.value = true;
     }
 </script>
