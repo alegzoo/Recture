@@ -2,7 +2,10 @@
     <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" width="600" scroll-strategy="block" :persistent="creatingInvitation">
         <v-card>
             <template v-slot:title>
-                <h2 class="pt-3">CREATE INVITATION</h2>
+                <div class="pt-3 d-flex">
+                <h2 class="d-flex flex-grow-1">CREATE INVITATION</h2>
+                <v-btn variant="plain" class="d-flex flex-grow-0" @click="manageInvitationsDialogVisible = true">VIEW ALL INVITATIONS</v-btn>
+                </div>
             </template>
             <v-card-text no-gutters class="pa-0">
                 <v-form validate-on="input" @submit.prevent="submitHandler">
@@ -64,6 +67,7 @@
             </v-overlay>
         </v-card>
     </v-dialog>
+    <ManageInvitationsDialog v-model="manageInvitationsDialogVisible"/>
     <InvitationCreatedDialog v-model="invitationCreatedDialogVisible" :subject-name="subjectName" :class-name="className" :code="createdInvitation?.code" :link="createdInvitation?.link" @update:model-value="onInvitationCreatedDialogToggled"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
 </template>
@@ -91,8 +95,9 @@
     import { RectureApi, ILesson, IInvitation } from '@/api/RectureApi';
     import SquareCheckbox from './SquareCheckbox.vue';
     import SubjectClassLabel from './SubjectClassLabel.vue';
-    import MessageDialog from './MessageDialog.vue';
+    import ManageInvitationsDialog from './ManageInvitationsDialog.vue';
     import InvitationCreatedDialog from './InvitationCreatedDialog.vue';
+    import MessageDialog from './MessageDialog.vue';
 
     const props = defineProps<{
         modelValue?: boolean,
@@ -110,6 +115,8 @@
     const maximumUses = ref<string | null>(null);
 
     const creatingInvitation = ref<boolean>(false);
+
+    const manageInvitationsDialogVisible = ref<boolean>(false);
 
     const createdInvitation = ref<IInvitation | null>(null);
     const invitationCreatedDialogVisible = ref<boolean>(false);
