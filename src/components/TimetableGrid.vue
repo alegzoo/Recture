@@ -1,17 +1,17 @@
 <template>
-    <v-container :class="{'timetable-grid': true, 'pa-0': true, 'idle': timetable.idle.value, 'editing': timetable.editing.value, 'creating': timetable.creating.value, 'selecting': timetable.selecting.value}" fluid>
+    <v-container :class="{'timetable-grid': true, 'pa-0': true, 'idle': idle, 'editing': editing, 'creating': creating, 'selecting': selecting}" fluid>
         <v-row class="timetable-grid-row" no-gutters>
             <v-col class="timetable-grid-header"></v-col>
-            <v-col class="timetable-grid-header" v-for="i in timetable.lessonsPerDay.value">
+            <v-col class="timetable-grid-header" v-for="i in lessonsPerDay">
                 <v-row no-gutters class="h-100">
                     <v-col align-self="center">
-                        <p>{{ (timetable.firstLessonNumber.value+i-1)+["th", "st", "nd", "rd", "th"][Math.min((timetable.firstLessonNumber.value+i-1)%10, 4)] }}</p>
+                        <p>{{ (firstLessonNumber+i-1)+["th", "st", "nd", "rd", "th"][Math.min((firstLessonNumber+i-1)%10, 4)] }}</p>
                     </v-col>
                 </v-row>
             </v-col>
         </v-row>
         <!-- TODO: Fix bug: If a row is fully filled with lessons or selected cells then it shrinks -->
-        <template v-for="(visible, day) in timetable.daysOfWeek.value">
+        <template v-for="(visible, day) in daysOfWeek">
             <v-row class="timetable-grid-row" v-if="visible" no-gutters>
                 <v-col class="timetable-grid-header">
                     <v-row no-gutters class="h-100">
@@ -21,10 +21,10 @@
                         </v-col>
                     </v-row>
                 </v-col>
-                <template v-for="i in timetable.lessonsPerDay.value">
-                    <template v-for="lesson in [timetable.lessons.value.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
-                        <TimetableLesson v-if="lesson != null" :lesson="lesson" :editing="timetable.editing.value" @delete-button-click="timetable.deleteLesson(lesson)" @click="emit('timetableLessonClick', lesson, timetable.weekDates.value[day])"/>
-                        <TimetableCell v-else :selected="timetable.selection.value.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!timetable.selecting.value" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
+                <template v-for="i in lessonsPerDay">
+                    <template v-for="lesson in [lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
+                        <TimetableLesson v-if="lesson != null" :lesson="lesson" :idle="idle" :editing="editing" @delete-button-click="timetable.deleteLesson(lesson)" @click="emit('timetableLessonClick', lesson, weekDates[day])" @share-button-click="emit('timetableLessonShareButtonClick', lesson)"/>
+                        <TimetableCell v-else :selected="selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!selecting" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
                     </template>
                 </template>
             </v-row>
@@ -208,9 +208,12 @@
         initOnMounted: false
     });
 
+    const { idle, editing, creating, selecting, lessons, selection, lessonsPerDay, daysOfWeek, firstLessonNumber, weekDates } = props.timetable;
+
     const emit = defineEmits<{
         (e: "timetableCellClick", cellPosition: ITimetableGridPosition): void,
-        (e: "timetableLessonClick", lesson: ILesson, date: Date): void
+        (e: "timetableLessonClick", lesson: ILesson, date: Date): void,
+        (e: "timetableLessonShareButtonClick", lesson: ILesson): void
     }>();
 
     onMounted(() => {

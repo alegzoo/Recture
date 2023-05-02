@@ -5,7 +5,7 @@
         </v-col>
     </v-row>
 
-    <v-row no-gutters class="pt-5">
+    <v-row v-if="props.recording != null && props.recording.commentsAllowed" no-gutters class="pt-5">
         <v-col cols="auto">
             <v-avatar size="large" :image="(accountStore.avatar as string)"></v-avatar>
         </v-col>
@@ -17,8 +17,15 @@
         </v-col>
     </v-row>
     
-    <template v-if="comments != null">
+    <template v-if="props.recording != null && props.recording.commentsAllowed && comments != null">
         <VideoComment v-for="comment in comments" :key="comment.commentId" :comment="comment" @delete-button-click="() => onCommentDeleteButtonClicked(comment)"/>
+    </template>
+    <template v-else-if="props.recording != null && !props.recording.commentsAllowed">
+        <v-row>
+            <v-col>
+                Comments are disabled for this video.
+            </v-col>
+        </v-row>
     </template>
     <template v-else-if="comments === undefined">
         <v-row>
@@ -76,8 +83,13 @@
 
     const accountStore = useAccountStore();
 
-    onMounted(() => fetchComments());
-    watch(() => props.recording, () => fetchComments());
+    onMounted(() => initialize());
+    watch(() => props.recording, () => initialize());
+
+    function initialize() {
+        if (props.recording != null && props.recording.commentsAllowed) fetchComments();
+        else comments.value = [];
+    }
 
     function fetchComments() : void {
         //comments.value = undefined;

@@ -289,6 +289,26 @@ export class RectureApi {
         }
     }
 
+    public static async getInvitations(page: number, pageSize: number, signal: AbortSignal | null = null): Promise<ApiResult<IPage<IInvitation>>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("page", page.toString());
+        urlParams.append("size", pageSize.toString());
+
+        const response = await fetch(this.pathToUrl("invitations", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPage<IInvitation>;
+            return new ApiResult<IPage<IInvitation>>(response.status, data);
+        } else {
+            return new ApiResult<IPage<IInvitation>>(response.status);
+        }
+    }
+
     public static async renameClass(classId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("name", name);
@@ -567,6 +587,29 @@ export class RectureApi {
         }
     }
 
+    public static async createInvitation(classId: number, subjectId: number, uses: number | null, expirationTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IInvitation>> {
+        let formData = new FormData();
+        formData.append("classId", classId.toString());
+        formData.append("subjectId", subjectId.toString());
+        if (uses != null) formData.append("uses", uses.toString());
+        if (expirationTimestamp != null) formData.append("expirationTimestamp", expirationTimestamp.toString());
+
+        const response = await fetch(this.pathToUrl("invitations"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IInvitation;
+            
+            return new ApiResult<IInvitation>(response.status, data);
+        } else {
+            return new ApiResult<IInvitation>(response.status);
+        }
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -635,6 +678,7 @@ export interface IRecording {
     title: string
     description: string | null
     published: boolean
+    commentsAllowed: boolean
     comments: number
     notifications: number
     teacherId: number
@@ -712,6 +756,17 @@ export interface ICommentReply {
     content: string
     creationTimestamp: number
     lastEditTimestamp: number | null
+}
+
+export interface IInvitation {
+    invitationId: number,
+    code: string,
+    link: string,
+    classId: number,
+    subjectId: number,
+    remainingUses: number,
+    creationTimestamp: number,
+    expirationTimestamp: number
 }
 
 export interface IRecordingSort {
