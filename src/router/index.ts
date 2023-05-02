@@ -1,7 +1,6 @@
 // Composables
 import Home from '@/views/Home.vue'
 import Signin from '@/views/Signin.vue'
-import SignUp from '@/views/SignUp.vue'
 import VideoBrowser from '@/views/VideoBrowser.vue'
 import Video from '@/views/Video.vue'
 import NotFound from '@/views/NotFound.vue'
@@ -10,6 +9,10 @@ import Timetable from '@/views/Timetable.vue'
 import NewComments from '@/views/NewComments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { RectureApi } from '@/api/RectureApi'
+import SignUpTeacherVue from '@/views/SignUpTeacher.vue'
+import SignUpStudentVue from '@/views/SignUpStudent.vue'
+import SignUpSelectVue from '@/views/SignUpSelect.vue'
+
 
 const routes = [
     {
@@ -79,9 +82,27 @@ const routes = [
         }
     },
     {
-        path: "/signup",
-        name: "signup",
-        component: SignUp,
+        path: "/signup/select",
+        name: "signup_select",
+        component: SignUpSelectVue,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/signup/teacher",
+        name: "signup_teacher",
+        component: SignUpTeacherVue,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/signup/student",
+        name: "signup_student",
+        component: SignUpStudentVue,
         meta: { requiresAuth: false },
         beforeEnter: () => {
             lastSuccessfulAuthCheckTimestamp = 0;

@@ -136,6 +136,7 @@
     .v-col-video {
         border: solid 2px black;
         box-shadow: 3px 3px 0px 0px black;
+        margin-left: -2px;
     }
 
     .video-header {
@@ -145,6 +146,7 @@
         border-color: black;
         border-radius: 8px 8px 0px 0px;
         overflow: hidden;
+        margin-left: -2px;
     }
 
     .video-header > * {

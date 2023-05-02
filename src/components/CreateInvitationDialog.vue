@@ -40,7 +40,7 @@
                                         :disabled="!timeLimited"
                                     />
                                 </v-col>
-                                <v-col class="pt-0">
+                                <v-col class="pt-1">
                                     <v-text-field
                                         v-model="maximumUses"
                                         variant="underlined"
