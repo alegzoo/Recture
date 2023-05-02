@@ -431,6 +431,16 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async deleteInvitation(invitationId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("invitations/"+invitationId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async createRecording(file: File, lessonId: number, topicId: number, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
         let formData = new FormData();
         formData.append("file", file);
@@ -762,11 +772,13 @@ export interface IInvitation {
     invitationId: number,
     code: string,
     link: string,
+    className: string,
+    subjectName: string,
     classId: number,
     subjectId: number,
-    remainingUses: number,
+    remainingUses: number | null,
     creationTimestamp: number,
-    expirationTimestamp: number
+    expirationTimestamp: number | null
 }
 
 export interface IRecordingSort {

@@ -9,10 +9,10 @@
         </v-row>
 
         <v-row id="subject-button-row" class="mx-9">
-            <v-btn-toggle v-if="videoBrowserStore.subjectsLoading" id="subject-button-toggle">
+            <v-btn-toggle v-if="videoBrowserStore.subjectsLoading" id="subject-button-toggle" class="w-100">
                 <SubjectButton v-for="size in skeletonSubjects.sizes.value" class="skeleton" :style="'width: '+size+'px;'" :subject="null"/>
             </v-btn-toggle>
-            <v-btn-toggle v-else id="subject-button-toggle" selected-class="selected" v-model="videoBrowserStore.selectedSubject" mandatory>
+            <v-btn-toggle v-else id="subject-button-toggle" class="w-100" selected-class="selected" v-model="videoBrowserStore.selectedSubject" mandatory>
                 <SubjectButton v-for="subject in videoBrowserStore.subjects" :key="subject.subjectId" :subject="subject"/>
             </v-btn-toggle>
         </v-row>
