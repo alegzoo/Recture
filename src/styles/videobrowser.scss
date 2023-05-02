@@ -105,6 +105,8 @@
 
 #subject-button-toggle {
     height: 36px;
+    overflow-x: auto;
+    scrollbar-width: thin;
 }
 
 #subject-button-toggle .v-btn {
