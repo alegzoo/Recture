@@ -635,6 +635,7 @@ export interface IRecording {
     title: string
     description: string | null
     published: boolean
+    commentsAllowed: boolean
     comments: number
     notifications: number
     teacherId: number
