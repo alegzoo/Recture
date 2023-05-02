@@ -42,7 +42,7 @@
 }
 
 .manage-dialog-v-card {
-    background-color: #efefef;
+    background-color: #efefef !important;
     border-radius: 7px !important;
 }
 
@@ -98,4 +98,8 @@
     border-right-width: 2px !important;
     border-right-style: solid !important;
     border-right-color: black !important;
+}
+
+.manage-thematic-units-v-card{
+    background-color: #efefef !important;
 }

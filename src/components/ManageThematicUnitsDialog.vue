@@ -1,6 +1,6 @@
 <template>
     <v-dialog :model-value="modelValue" width="800" persistent>
-        <v-card>
+        <v-card class="manage-thematic-units-v-card">
             <v-card-title>
                 <h2 class="pa-5">MANAGE THEMATIC UNITS</h2>
             </v-card-title>
