@@ -14,6 +14,7 @@
                             label="Choose a class"
                             v-model="selectedClass"
                             :items="classes"
+                            :disabled="classes.length === 0"
                             item-title="name"
                             return-object
                             variant="solo"
@@ -29,6 +30,7 @@
                             label="Choose a subject"
                             v-model="selectedSubject"
                             :items="subjects"
+                            :disabled="subjects.length === 0"
                             item-title="name"
                             return-object
                             variant="solo"
@@ -66,14 +68,14 @@
                 <v-spacer/>
                 <v-btn variant="text" @click="closeDialog">Close</v-btn>
             </v-card-actions>
+            <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
+                <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
+            </v-overlay>
         </v-card>
     </v-dialog>
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.name+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.name+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.name+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.name+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
-    <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
-        <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
-    </v-overlay>
 </template>
 
 <script lang="ts" setup>
@@ -115,9 +117,10 @@
 
     const { mdAndUp } = useDisplay(); 
 
-    watch(() => props.modelValue, () => initialize());
+    watch(() => props.modelValue, () => {
+        if (props.modelValue === true) initialize();
+    });
     watch([selectedClass, selectedSubject], () => loadTopics());
-    onMounted(() => initialize());
 
     let fetchAbortController = new AbortController();
 
@@ -141,9 +144,20 @@
     }
 
     function initialize() {
+        classes.value = [];
+        subjects.value = [];
+
         tableItems.value = [];
         selectedClass.value = null;
         selectedSubject.value = null;
+
+        confirmationDialogVisible.value = false;
+        renameDialogVisible.value = false;
+
+        errorDialogVisible.value = false;
+        errorDialogMessage.value = "";
+
+        loadingOverlayVisible.value = true;
         
         Promise.all(
             [
@@ -159,7 +173,10 @@
                 })
             ]
         ).catch(reason => {
-            closeDialog();
+            classes.value = [];
+            subjects.value = [];
+            errorDialogMessage.value = "Failed to load data";
+            errorDialogVisible.value = true;
         }).finally(() => {
             loadingOverlayVisible.value = false;
         });
