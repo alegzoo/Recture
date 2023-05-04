@@ -178,7 +178,7 @@
 
     function submitHandler() : void {
         if (start.value == undefined || end.value == undefined || start.value < 0 || end.value < start.value) {
-            errorDialogMessage.value = "End day must be greater than start date and both must be positive integers.";
+            errorDialogMessage.value = "End day must be greater than start day and both must be positive integers.";
             errorDialogVisible.value = true;
             return;
         }
