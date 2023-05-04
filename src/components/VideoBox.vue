@@ -3,7 +3,7 @@
         <v-img :src="recording.thumbnail" :aspect-ratio="16/9" class="video-box-thumbnail flex-grow-0" cover/>
         <v-container class="video-box-info-area pa-0 flex-grow-1">
             <v-row class="h-100">
-                <v-col cols="8">
+                <v-col>
                     <v-container>
                         <v-row>
                             <v-col cols="12" class="video-box-title py-0 pt-1" :title="recording.title">{{ recording.title }}</v-col>
@@ -16,8 +16,8 @@
                         </v-row>
                     </v-container>
                 </v-col>
-                <v-col>
-                    
+                <v-col v-show="props.recording.quizAvailable === true" cols="auto" align="center" align-self="center" class="px-7">
+                    <v-icon icon="mdi-help-box-multiple-outline" title="This recording contains a quiz." size="48"/>
                 </v-col>
             </v-row>
         </v-container>

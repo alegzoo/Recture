@@ -691,6 +691,7 @@ export interface IRecording {
     commentsAllowed: boolean
     comments: number
     notifications: number
+    quizAvailable: boolean
     teacherId: number
     classId: number
     className: string
