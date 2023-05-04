@@ -94,6 +94,8 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
                 lessonsPerDay.value = result.data.lessonsPerDay;
                 firstLessonNumber.value = result.data.firstLessonNumber;
             }
+        }).catch(reason => {
+            //TODO: Maybe log error
         });
     }
 
@@ -103,6 +105,8 @@ export function useTimetable(initialState: TimetableState = "idle") : IUsableTim
             if (result.success && result.data != null) {
                 lessons.value = result.data;
             }
+        }).catch(reason => {
+            //TODO: Maybe log error
         });
     }
 

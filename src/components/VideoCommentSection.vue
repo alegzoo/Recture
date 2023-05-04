@@ -131,6 +131,8 @@
             if (result.success) {
                 if (comments.value != null) comments.value = comments.value.filter(item => item.commentId !== comment.commentId);
             }
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 </script>

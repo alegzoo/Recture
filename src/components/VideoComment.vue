@@ -77,6 +77,8 @@
 
         RectureApi.getUserInfo(props.comment.userId).then((result) => {
             if (result.success && result.data != null) author.value = result.data; 
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 
@@ -97,6 +99,8 @@
                 if (result.data.pages === 0 || page+1 === result.data.pages) allRepliesLoaded.value = true;
                 else allRepliesLoaded.value = false;
             }
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 
@@ -133,6 +137,8 @@
             if (result.success) {
                 if (replies.value != null) replies.value = replies.value.filter(item => item.replyId !== reply.replyId);
             }
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 

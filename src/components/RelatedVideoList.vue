@@ -42,6 +42,8 @@
             RectureApi.getRecordings(0, 100, { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Ascending }, null, null, null, [props.recording.topicId], null, null).then((result) => {
                 //TODO: Maybe show error if !result.success or exception or if props.recording == null
                 if (result.success && result.data != null) recordings.value = result.data.data;
+            }).catch(reason => {
+                //TODO: Maybe show error
             });
         }
     }

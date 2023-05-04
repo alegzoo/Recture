@@ -222,6 +222,8 @@
                 video.value.load();
                 video.value.play();
             }
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 

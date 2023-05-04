@@ -38,6 +38,8 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
         RectureApi.getTopics(lesson.classId, lesson.subjectId).then(result => {
             if (result.success && result.data != null) topics.value = result.data;
             //TODO: Maybe show error on unsuccessful result/exception
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 

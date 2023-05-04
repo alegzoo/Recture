@@ -45,6 +45,8 @@
 
         RectureApi.getUserInfo(props.reply.userId).then((result) => {
             if (result.success && result.data != null) author.value = result.data;
+        }).catch(reason => {
+            //TODO: Maybe show error
         });
     }
 </script>

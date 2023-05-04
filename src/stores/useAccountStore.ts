@@ -45,6 +45,8 @@ export const useAccountStore = defineStore("accountStore", {
                 if (response.success && response.data != null) {
                     this.loadData(response.data);
                 }
+            }).catch(reason => {
+                //TODO: Maybe log error
             });
         }
     }
