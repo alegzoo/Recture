@@ -3,8 +3,8 @@
         <v-card>
             <template v-slot:title>
                 <div class="pt-3 d-flex">
-                <h2 class="d-flex flex-grow-1">CREATE INVITATION</h2>
-                <v-btn variant="plain" class="d-flex flex-grow-0" @click="manageInvitationsDialogVisible = true">VIEW ALL INVITATIONS</v-btn>
+                    <h2 class="d-flex flex-grow-1">CREATE INVITATION</h2>
+                    <v-btn variant="plain" class="d-flex flex-grow-0" @click="manageInvitationsDialogVisible = true">VIEW ALL INVITATIONS</v-btn>
                 </div>
             </template>
             <v-card-text no-gutters class="pa-0">

@@ -351,6 +351,22 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async updateTimetable(daysOfWeek: boolean[], lessonsPerDay: number, firstLessonNumber: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("daysOfWeek", daysOfWeek.join(","));
+        formData.append("lessonsPerDay", lessonsPerDay.toString());
+        formData.append("firstLessonNumber", firstLessonNumber.toString());
+
+        const response = await fetch(this.pathToUrl("lessons/timetable"), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async removeStudentFromClass(classId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId+"/students/"+userId), {
             method: "DELETE",

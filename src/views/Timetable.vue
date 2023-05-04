@@ -1,8 +1,11 @@
 <template>
     <v-container class="timetable-container px-6 h-100 d-flex flex-column" fluid>
         <v-row class="mt-1 pr-3 flex-grow-0">
-            <v-col align-self="start">
-                <p id="your-timetable-text" class="text-h4 font-weight-medium">Your timetable</p>
+            <v-col cols="auto" align="start" class="d-flex">
+                <p id="your-timetable-text" class="text-h4 font-weight-medium d-flex align-self-center">Your timetable</p>
+            </v-col>
+            <v-col cols="auto" class="d-flex px-0">
+                <v-btn class="d-flex align-self-center" variant="plain" icon="mdi-cog" size="28" :ripple="false" @click="timetableSetupDialogVisible = true"/>
             </v-col>
 
             <v-spacer/>
@@ -67,6 +70,7 @@
         </v-row>
     </v-container>
     <v-overlay v-model="timetable.creating.value" persistent z-index="190"/>
+    <TimetableSetupDialog v-model="timetableSetupDialogVisible" @dataModified="timetable.fetchTimetable()"/>
     <ManageGroupsDialog v-model="manageGroupsDialogVisible" @dataModified="timetable.fetchLessons()"/>
     <ManageThematicUnitsDialog v-model="manageThematicUnitsDialogVisible"/>
     <CreateLessonDialog v-model="createLessonDialogVisible" @dialog-exit="onCreateLessonDialogExit"/>
@@ -84,6 +88,7 @@
     import { RectureApi, IClass, ISubject, LessonColor, ILesson } from '@/api/RectureApi';
     import { ITimetableGridPosition, useTimetable } from '@/composables/useTimetable';
     import TimetableGrid from '@/components/TimetableGrid.vue';
+    import TimetableSetupDialog from '@/components/TimetableSetupDialog.vue';
     import ManageGroupsDialog from '@/components/ManageGroupsDialog.vue';
     import ManageThematicUnitsDialog from '@/components/ManageThematicUnitsDialog.vue';
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
@@ -97,6 +102,7 @@
 
     const { mdAndUp, lgAndUp } = useDisplay();
 
+    const timetableSetupDialogVisible = ref<boolean>(false);
     const manageGroupsDialogVisible = ref<boolean>(false);
     const manageThematicUnitsDialogVisible = ref<boolean>(false);
     const createLessonDialogVisible = ref<boolean>(false);
