@@ -81,6 +81,7 @@
 
         .timetable-lesson {
             position: relative;
+            outline: none;
 
             .v-icon {
                 position: absolute;
@@ -98,7 +99,7 @@
             animation-duration: 0.4s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
-            border: solid 2px black;
+            outline: solid 2px black;
         }
 
         .timetable-grid-cell:hover .v-row {
