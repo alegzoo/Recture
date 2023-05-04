@@ -22,9 +22,9 @@
                     </v-row>
                 </v-col>
                 <template v-for="i in lessonsPerDay">
-                    <template v-for="lesson in [lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
+                    <template v-for="lesson in [lessons.find((item, index, array) => item.dayOfWeek === day && item.lessonNumber === i+firstLessonNumber-1)]" :key="lesson?.lessonId"> <!-- TODO: This is hella jank, maybe change the way it works? -->
                         <TimetableLesson v-if="lesson != null" :lesson="lesson" :idle="idle" :editing="editing" @delete-button-click="timetable.deleteLesson(lesson)" @click="emit('timetableLessonClick', lesson, weekDates[day])" @share-button-click="emit('timetableLessonShareButtonClick', lesson)"/>
-                        <TimetableCell v-else :selected="selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i-1).length > 0" :interactive="!selecting" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
+                        <TimetableCell v-else :selected="selection.filter(item => item.dayOfWeek === day && item.lessonNumber === i+firstLessonNumber-1).length > 0" :interactive="!selecting" @click="emit('timetableCellClick', { dayOfWeek: day, lessonNumber: i+firstLessonNumber-1 })"/> <!-- TODO: Setting selected is also pretty damn jank -->
                     </template>
                 </template>
             </v-row>
