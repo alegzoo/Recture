@@ -10,7 +10,7 @@
             
             <v-col cols="4" align="center" class="v-col-signup-form pa-0" align-self="end">
                 <v-form validate-on="input" class="px-12" no-gutters>
-                    <v-img src="@/assets/signup_form_logo2.svg" class="my-8" style="height: 200px;"/>
+                    <v-img src="@/assets/signup_form_logo2.svg" class="my-3" style="height: 200px;"/>
                     <v-text-field class="textfield-edit py-2" label="First name" variant="plain" single-line hide-details/>
                     <v-col class="pa-0 textfield-form"/>
                     <v-text-field class="textfield-edit py-2" label="Last name" variant="plain" single-line hide-details/>
@@ -20,6 +20,8 @@
                     <v-text-field class="textfield-edit py-2" label="Password" :rules="[validatePassword]" variant="plain" single-line hide-details :type="showPassword?'text':'password'" :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'" @click:append-inner="showPassword = !showPassword"/>
                     <v-col class="pa-0 textfield-form"/>
                     <v-text-field class="textfield-edit py-2" label="Password again" :rules="[validatePassword]" variant="plain" single-line hide-details :type="showPassword?'text':'password'" :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'" @click:append-inner="showPassword = !showPassword"/>
+                    <v-col class="pa-0 textfield-form"/>
+                    <v-text-field class="textfield-edit py-2" label="School (optional)" variant="plain" single-line hide-details/>
                     <v-col class="pa-0 textfield-form"/>
 
                     <v-row no-gutters class="pt-2">
