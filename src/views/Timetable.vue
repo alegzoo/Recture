@@ -129,7 +129,7 @@
     function onGridCellClick(cellPosition: ITimetableGridPosition) {
         if (timetable.creating.value) {
             timetable.toggleCellSelectionStatus(cellPosition);
-        } else {
+        } else if (timetable.idle.value) {
             timetable.startCreating(cellPosition);
             createLessonDialogVisible.value = true;
         }
