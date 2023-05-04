@@ -1,8 +1,8 @@
 <template>
-    <v-dialog activator="parent" class="h-100 justify-center" width="700" scroll-strategy="block">
-        <template v-slot:activator>
+    <v-dialog class="h-100 justify-center" width="700" scroll-strategy="block">
+        <template v-slot:activator="{ props }">
             <v-col cols="auto">
-                <v-btn id="video-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
+                <v-btn v-bind="props" id="video-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
             </v-col>
         </template>
         <v-card class="video-edit-card">
