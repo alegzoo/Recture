@@ -154,21 +154,21 @@
                 } else {
                     daysOfWeek.value = [true, true, true, true, true, false, false];
                     start.value = 0;
-                    end.value= 7;
+                    end.value = 7;
                     errorDialogMessage.value = "Failed to load timetable data.";
                     errorDialogVisible.value = true;
                 }
             } else {
                 daysOfWeek.value = [true, true, true, true, true, false, false];
                 start.value = 0;
-                end.value= 7;
+                end.value = 7;
                 errorDialogMessage.value = "Failed to load timetable data.";
                 errorDialogVisible.value = true;
             }
         }).catch(reason => {
             daysOfWeek.value = [true, true, true, true, true, false, false];
             start.value = 0;
-            end.value= 7;
+            end.value = 7;
             errorDialogMessage.value = "Failed to load timetable data.";
             errorDialogVisible.value = true;
         }).finally(() => {
@@ -178,7 +178,7 @@
 
     function submitHandler() : void {
         if (start.value == undefined || end.value == undefined || start.value < 0 || end.value < start.value) {
-            errorDialogMessage.value = "End day must be greater than start day and both must be positive integers.";
+            errorDialogMessage.value = "End must be greater than or equal to start and both must be non-negative integers.";
             errorDialogVisible.value = true;
             return;
         }
