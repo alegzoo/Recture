@@ -18,11 +18,6 @@
                             <UploadTrackerMenuButton id="upload-tracker-menu-button"/>
                             <UploadTrackerMenu activator="#upload-tracker-menu-button"/>
                         </v-col>
-                        <v-col cols="auto" align="right" align-self="center" class="h-100">
-                            <v-sheet width="60" height="60" align="center" class="rounded-bs-pill" theme="dark">
-                                <v-icon icon="mdi-message-text-outline" class="ml-3 pt-5" style="color: white;"></v-icon>
-                            </v-sheet>
-                        </v-col>
                     </v-row>
                 </v-col>
             </v-row>
