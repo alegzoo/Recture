@@ -68,7 +68,7 @@
         </v-card>
     </v-dialog>
     <ManageInvitationsDialog v-model="manageInvitationsDialogVisible"/>
-    <InvitationCreatedDialog v-model="invitationCreatedDialogVisible" :subject-name="subjectName" :class-name="className" :code="createdInvitation?.code" :link="createdInvitation?.link" @update:model-value="onInvitationCreatedDialogToggled"/>
+    <InvitationCreatedDialog v-model="invitationCreatedDialogVisible" :subject-name="subjectName" :class-name="className" :code="invitationCode" :link="invitationLink" @update:model-value="onInvitationCreatedDialogToggled"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
 </template>
 
@@ -126,6 +126,8 @@
 
     const subjectName = computed<string>(() => props.lesson != null ? props.lesson.subjectName : "");
     const className = computed<string>(() => props.lesson != null ? props.lesson.className : "");
+    const invitationCode = computed<string>(() => createdInvitation.value != null ? createdInvitation.value.code : "");
+    const invitationLink = computed<string>(() => createdInvitation.value != null ? createdInvitation.value.link : "");
 
     watch(() => [props.modelValue, props.lesson], () => {
         if (props.modelValue === true) initialize();

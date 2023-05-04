@@ -95,8 +95,8 @@
         modelValue?: boolean,
         subjectName: string,
         className: string,
-        code: string | undefined,
-        link: string | undefined
+        code: string,
+        link: string
     }>();
 
     const emit = defineEmits<{
@@ -118,7 +118,7 @@
 
     function copyCodeToClipboard() {
         //TODO: Check if it works once HTTPS is enabled
-        if (navigator.clipboard && props.code != null) {
+        if (navigator.clipboard && props.code) {
             navigator.clipboard.writeText(props.code);
             alertType.value = "success";
             alertBody.value = "Copied code to clipboard!";
@@ -130,7 +130,7 @@
 
     function copyLinkToClipboard() {
         //TODO: Check if it works once HTTPS is enabled
-        if (navigator.clipboard && props.link != null) {
+        if (navigator.clipboard && props.link) {
             navigator.clipboard.writeText(props.link);
             alertType.value = "success";
             alertBody.value = "Copied link to clipboard!";
