@@ -141,7 +141,16 @@
 
                     </v-sheet>
                     <v-row align="center" justify="start" class="pt-10 pb-5" no-gutters>
-                        <NewConditionDialog/>
+                        <v-col cols="auto">
+                            <NewConditionDialog/>
+                            <v-tooltip
+                            activator="parent"
+                            location="end"
+                            class="new-condition-tooltip"
+                            >Create new condition
+                            </v-tooltip>
+                        </v-col>
+                        
                     </v-row>
                 </v-container>
             </template>

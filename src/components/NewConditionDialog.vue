@@ -1,7 +1,7 @@
 <template>
     <v-dialog activator="parent" class="h-100 justify-center" width="700" scroll-strategy="block">
-        <template v-slot:activator>
-            <v-col cols="1">
+        <template v-slot:activator="{ props }">
+            <v-col cols="auto">
                 <v-btn icon="mdi-plus" class="plus-condition-btn" variant="flat"></v-btn>
             </v-col>
         </template>
