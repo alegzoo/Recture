@@ -21,6 +21,12 @@
                     <template v-if="!showingOnlyPublicInfo">
                         <v-col :cols="mdAndUp?'auto':12" align="center" align-self="start">
                             <v-btn id="profile-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
+                            <v-tooltip
+                            activator="parent"
+                            location="end"
+                            class="edit-tooltip"
+                            >Edit
+                            </v-tooltip>
                         </v-col>
                     </template>
                 </v-row>

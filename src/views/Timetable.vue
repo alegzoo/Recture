@@ -6,12 +6,24 @@
             </v-col>
             <v-col cols="auto" class="d-flex px-0">
                 <v-btn class="d-flex align-self-center" variant="plain" icon="mdi-cog" size="28" :ripple="false" @click="timetableSetupDialogVisible = true"/>
+                <v-tooltip
+                    activator="parent"
+                    location="end"
+                    class="edit-tooltip2"
+                    >Edit set-up
+                </v-tooltip>
             </v-col>
 
             <v-spacer/>
             
             <v-col cols="auto" align-self="center">
                 <v-btn id="timetable-edit-button" :ripple="false" variant="text" :icon="timetable.editing.value?'mdi-close':'mdi-lead-pencil'" :disabled="timetable.creating.value" @click="timetable.toggleEditing()"/>
+                <v-tooltip
+                    activator="parent"
+                    location="end"
+                    class="edit-tooltip1"
+                    >Edit timetable
+                </v-tooltip>
             </v-col>
         </v-row>
 
