@@ -103,7 +103,7 @@
         }
 
         .timetable-grid-cell:hover .v-row {
-            box-shadow: 0px 0px 0px 2px black inset, -5px -5px 0px 0px black inset;
+            box-shadow: 0px 0px 0px 3px black inset, -3px -3px 0px 0px black inset;
             transition: box-shadow 0.1s linear;
         }
 

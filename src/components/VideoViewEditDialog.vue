@@ -95,12 +95,33 @@
                 </v-row>
 
                 <v-row>
-                    <v-col cols="12" class="pl-9 pt-6 pr-11">
-                        <v-text-field variant="underlined" single-line label="Title of the lesson *"></v-text-field>
-                    </v-col>
-                </v-row>
+                    <v-row align="center" class=" px-1 pt-6 pl-3" no-gutters>
+                        <v-col cols="5" class=" pa-0 pl-6">
+                            <v-combobox
+                                hide-details
+                                no-gutters
+                                class="choose-selectors-video-view-edit"
+                                label="Choose question series"
+                                :items="['Definičný obor - preskúšanie 1']"
+                                variant="solo"
+                                density="compact"
+                                single-line
+                            ></v-combobox>
+                        </v-col>
 
-                <v-row no-gutters class="pt-3 pr-8">
+                        <v-col class="pl-12" cols="2">
+                            <h2>or</h2>
+                        </v-col>
+
+                        <v-col align="start" class="pa-0" cols="5">
+                            <v-btn :ripple="false" class="px-10 new-q-series-btn" variant="text" @click="showNewQuestionSeriesDialog = true">NEW QUESTION SERIES</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-row>
+                
+
+
+                <v-row no-gutters class="pt-12 pr-8">
                     <v-col class="pl-4">
                         <v-textarea
                         class="pl-2 text-area-description"
@@ -155,6 +176,7 @@
             </v-row>
         </v-card>
     </v-dialog>
+    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
 
 </template>
 
@@ -223,8 +245,21 @@
     text-transform: uppercase !important;
     }
 
+.new-q-series-btn{
+    @include elevated-button(4px, 4px, 2px);
+    background-color: $recture-yellow;
+    color: black;
+    border: 2px black solid;
+    border-radius: 0px;
+}
+
 </style>
 
 <script lang="ts" setup>
+    import NewQuestionSeriesDialog from './NewQuestionSeriesDialog.vue';
+    import { ref } from 'vue';
+    
+    const showNewQuestionSeriesDialog = ref<boolean>(false);
+
 
 </script>

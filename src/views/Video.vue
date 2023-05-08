@@ -41,7 +41,7 @@
                     <v-spacer/>
 
                     <v-col class="pt-3 pl-13" cols="auto">
-                        <v-btn variant="text" :ripple="false" class="test-yourself-btn" prepend-icon="mdi-check-bold">Test yourself</v-btn>
+                        <v-btn variant="text" @click="showTestYourselDialog = true" :ripple="false" class="test-yourself-btn" prepend-icon="mdi-check-bold">Test yourself</v-btn>
                     </v-col>
 
                 </v-row>
@@ -94,6 +94,7 @@
             </v-col>
         </v-row>
     </v-container>
+    <TestYourselfDialog v-model="showTestYourselDialog"/>
 </template>
 
 <style lang="scss" scoped>
@@ -192,8 +193,10 @@
     import VideoViewEditDialog from '@/components/VideoViewEditDialog.vue';
     import VideoCommentSection from '@/components/VideoCommentSection.vue';
     import RelatedVideoList from '@/components/RelatedVideoList.vue';
+    import TestYourselfDialog from '@/components/TestYourselfDialog.vue';
     
-    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();
+    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();    
+    const showTestYourselDialog = ref<boolean>(false);
 
     const video = ref<HTMLVideoElement>();
 
