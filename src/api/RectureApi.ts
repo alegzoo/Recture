@@ -30,6 +30,25 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
+    public static async signUp(email: string, firstName: string, lastName: string, organization: string | null, password: string, userType: UserType, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("email", email);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        if (organization != null) formData.append("organization", organization);
+        formData.append("password", password);
+        formData.append("userType", userType);
+
+        const response = await fetch(this.pathToUrl("auth/signup"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async requestPasswordReset(email: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("email", email);

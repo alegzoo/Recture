@@ -9,9 +9,7 @@ import Timetable from '@/views/Timetable.vue'
 import NewComments from '@/views/NewComments.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { RectureApi } from '@/api/RectureApi'
-import SignUpTeacherVue from '@/views/SignUpTeacher.vue'
-import SignUpStudentVue from '@/views/SignUpStudent.vue'
-import SignUpSelectVue from '@/views/SignUpSelect.vue'
+import Signup from '@/views/Signup.vue'
 import RequestPasswordReset from '@/views/RequestPasswordReset.vue'
 import PasswordReset from '@/views/PasswordReset.vue'
 import ResendVerificationLink from '@/views/ResendVerificationLink.vue'
@@ -85,27 +83,9 @@ const routes = [
         }
     },
     {
-        path: "/signup/select",
-        name: "signup_select",
-        component: SignUpSelectVue,
-        meta: { requiresAuth: false },
-        beforeEnter: () => {
-            lastSuccessfulAuthCheckTimestamp = 0;
-        }
-    },
-    {
-        path: "/signup/teacher",
-        name: "signup_teacher",
-        component: SignUpTeacherVue,
-        meta: { requiresAuth: false },
-        beforeEnter: () => {
-            lastSuccessfulAuthCheckTimestamp = 0;
-        }
-    },
-    {
-        path: "/signup/student",
-        name: "signup_student",
-        component: SignUpStudentVue,
+        path: "/signup",
+        name: "signup",
+        component: Signup,
         meta: { requiresAuth: false },
         beforeEnter: () => {
             lastSuccessfulAuthCheckTimestamp = 0;
