@@ -7,13 +7,13 @@
             <v-card-text>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <SelectOrCreateInput v-model="selectedClass" select-label="Choose a class" field-label="Enter name of class to create" :items="classes" item-title="name"/>
+                        <SelectOrCreateInput v-model="selectedClass" select-label="Choose a class" field-label="Enter new name of the class" :items="classes" item-title="name"/>
                     </v-col>
                 </v-row>
 
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <SelectOrCreateInput v-model="selectedSubject" select-label="Choose a subject" field-label="Enter name of subject to create" :items="subjects" item-title="name"/>
+                        <SelectOrCreateInput v-model="selectedSubject" select-label="Choose a subject" field-label="Enter new name of the subject" :items="subjects" item-title="name"/>
                     </v-col>
                 </v-row>
 
@@ -38,28 +38,6 @@
                             <v-btn class="canary" size="small" value="canary" :active="false" :ripple="false"/>
                             <v-btn class="orchid" size="small" value="orchid" :active="false" :ripple="false"/>
                         </v-btn-toggle>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="pt-10">
-                    <v-col cols="6" class="subtle">
-                        <h4>Code for students to connect</h4>
-                    </v-col>
-                </v-row>
-
-                <v-row no-gutters class="px-1">
-                    <v-col cols="auto" align-self="center">
-                        <div class="text-h4 font-weight-bold">{{ inviteCode }}</div>
-                    </v-col>
-
-                    <v-col align-self="center" cols="auto">
-                        <v-btn variant="plain" icon="mdi-content-copy" class="copy-btn" :ripple="false" @click="copyCodeToClipboard"/>
-                    </v-col>
-
-                    <v-spacer></v-spacer>
-
-                    <v-col cols="auto" align-self="center">
-                        <v-btn variant="text" class="invitation-btn" append-icon="mdi-send" theme="light" :ripple="false">SEND INVITATION</v-btn>
                     </v-col>
                 </v-row>
             </v-card-text>
