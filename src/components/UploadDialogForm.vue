@@ -130,11 +130,8 @@
     @import "@/styles/constants.scss";
 
     .form-column {
-        //background-image: url("@/assets/bckg-upload-dialog.png");
         background-color: #efefef;
         background-size: cover  !important;
-        //overflow: visible !important;
-        //background-clip: content-box !important;
     }
 
     .file-column {

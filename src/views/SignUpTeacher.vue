@@ -10,7 +10,7 @@
             
             <v-col cols="4" align="center" class="v-col-signup-form pa-0" align-self="end">
                 <v-form validate-on="input" class="px-12" no-gutters>
-                    <v-img src="@/assets/signup_form_logo2.svg" class="my-3" style="height: 200px;"/>
+                    <v-img src="@/assets/combined_recture_logo.svg" class="my-3" style="height: 200px;"/>
                     <v-text-field class="textfield-edit py-2" label="First name" variant="plain" single-line hide-details/>
                     <v-col class="pa-0 textfield-form"/>
                     <v-text-field class="textfield-edit py-2" label="Last name" variant="plain" single-line hide-details/>
@@ -80,7 +80,7 @@
 }
 
 .v-col-signup-form{
-    background-image: url("@/assets/bg_signup4.svg");
+    background-image: url("@/assets/bg_signup.svg");
     background-size: 120%;
     border: 2px black solid;
     border-bottom: none;
