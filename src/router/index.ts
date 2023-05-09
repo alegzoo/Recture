@@ -12,7 +12,8 @@ import { RectureApi } from '@/api/RectureApi'
 import SignUpTeacherVue from '@/views/SignUpTeacher.vue'
 import SignUpStudentVue from '@/views/SignUpStudent.vue'
 import SignUpSelectVue from '@/views/SignUpSelect.vue'
-
+import RequestPasswordReset from '@/views/RequestPasswordReset.vue'
+import PasswordReset from '@/views/PasswordReset.vue'
 
 const routes = [
     {
@@ -112,7 +113,25 @@ const routes = [
         path: "/:pathMatch(.*)*",
         component: NotFound,
         meta: { requiresAuth: false }
-    }
+    },
+    {
+        path: "/reset",
+        name: "request_password_reset",
+        component: RequestPasswordReset,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/reset/:code",
+        name: "reset_password",
+        component: PasswordReset,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
 ];
 
 const router = createRouter({
