@@ -206,6 +206,10 @@ export function makeServer() {
                 return new Response(202);
             }, {timing: 50});
 
+            this.post(RectureApi.BASE_API_URL+"/auth/verify", (schema, request) => {
+                return new Response(202);
+            }, {timing: 50});
+
             this.get(RectureApi.BASE_API_URL+"/auth/authenticated", (schema, request) => {
                 return new Response(200);
             }, {timing: 50});
@@ -321,6 +325,10 @@ export function makeServer() {
             this.put(RectureApi.BASE_API_URL+"/auth/password/reset", (schema, request) => {
                 return new Response(204);
             }, {timing: 50});
+
+            this.put(RectureApi.BASE_API_URL+"/auth/verify", (schema, request) => {
+                return new Response(204);
+            }, {timing: 500});
 
             this.put(RectureApi.BASE_API_URL+"/classes/:id", (schema, request) => {
                 const classId = parseInt(request.params.id);
