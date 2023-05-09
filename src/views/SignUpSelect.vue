@@ -6,10 +6,10 @@
                     <h1>I want to create an account as a</h1>
                 </v-col>       
                 <v-row no-gutters>
-                    <v-col class="pa-0 pr-10 pt-4" align="end">
+                    <v-col class="pa-0 pr-10 pt-4" align="right">
                         <v-btn to="/signup/teacher" :ripple="false" :width="200" :height="50" variant="text">Teacher</v-btn>
                     </v-col>
-                    <v-col class="pa-0 pl-10 pt-4" align="start">
+                    <v-col class="pa-0 pl-10 pt-4" align="left">
                         <v-btn to="/signup/student" :ripple="false" :width="200" :height="50" variant="text">Student</v-btn>
                     </v-col>
                 </v-row>

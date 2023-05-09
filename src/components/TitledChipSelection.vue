@@ -1,7 +1,7 @@
 <template>
     <v-row no-gutters>
         <v-col cols="12">
-            <h5>{{ title }}</h5>
+            <h5 class="title">{{ title }}</h5>
         </v-col>
     </v-row>
     <v-row no-gutters>
@@ -15,7 +15,7 @@
                 <!-- TODO: Maybe add key to v-for? -->
                 <v-chip v-for="chip in data" class="px-4" :value="chip" selected-class="selected" :ripple="false" variant="outlined" append-icon="mdi-close-circle-outline">{{ chip.name }}</v-chip>
             </v-chip-group>
-            <p v-else>{{ emptyMessage }}</p>
+            <p class="title" v-else>{{ emptyMessage }}</p>
         </v-col>
     </v-row>
 </template>
@@ -47,6 +47,8 @@
     });
 </script>
   
-<style scoped>
-  
+<style lang="scss" scoped>
+.title{
+    color: black;
+}
 </style>
