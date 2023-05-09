@@ -9,8 +9,8 @@
                 <v-tooltip
                     activator="parent"
                     location="end"
-                    class="edit-tooltip2"
-                    >Edit set-up
+                    class="spiked-tl"
+                    >Set up timetable
                 </v-tooltip>
             </v-col>
 
@@ -21,8 +21,8 @@
                 <v-tooltip
                     activator="parent"
                     location="end"
-                    class="edit-tooltip1"
-                    >Edit timetable
+                    class="spiked-tr"
+                    >Edit lessons
                 </v-tooltip>
             </v-col>
         </v-row>

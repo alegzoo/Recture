@@ -39,11 +39,6 @@
     .v-row:last-child {
         border-bottom: none;
     }
-
-    .uploading-tooltip div {
-    border-radius: 0px 6px 6px 6px !important;
-    box-shadow: 2px 2px 0px 0px black;
-}
 </style>
 
 <script lang="ts" setup>

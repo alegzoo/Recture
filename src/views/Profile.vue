@@ -24,7 +24,7 @@
                             <v-tooltip
                             activator="parent"
                             location="end"
-                            class="edit-tooltip"
+                            class="spiked-tr"
                             >Edit
                             </v-tooltip>
                         </v-col>
@@ -152,7 +152,7 @@
                             <v-tooltip
                             activator="parent"
                             location="end"
-                            class="new-condition-tooltip"
+                            class="spiked-tl"
                             >Create new condition
                             </v-tooltip>
                         </v-col>

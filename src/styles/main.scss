@@ -39,6 +39,14 @@
     font-size: 16px !important;
 }
 
+.v-tooltip.spiked-tl div {
+    border-top-left-radius: 0px !important;
+}
+
+.v-tooltip.spiked-tr div {
+    border-top-right-radius: 0px !important;
+}
+
 #sidebar, #topbar {
     background-color: transparent;
 }
@@ -91,11 +99,6 @@
     border-top-color: black;
     border-top-width: 2px;
     opacity: 20%;
-}
-
-.sidebar-button-tooltip div {
-    border-radius: 0px 6px 6px 6px !important;
-    box-shadow: 2px 2px 0px 0px black;
 }
 
 #topbar {

@@ -4,7 +4,7 @@
         <v-tooltip
             activator="parent"
             location="end"
-            class="sidebar-button-tooltip"
+            class="spiked-tl"
             >{{ text }}
         </v-tooltip>
     </v-list-item>
