@@ -1,5 +1,9 @@
 @import "./constants.scss";
 
+html, body {
+    background-color: $recture-cadet-blue;
+}
+
 .v-theme--dark .v-btn, .v-theme--dark.v-btn {
     color: white;
 }
