@@ -13,6 +13,8 @@
                     <v-btn variant="outlined" type="submit" :disabled="submitDisabled" :loading="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
                     <br/>
                     <router-link to="/signup/select">No account? Create one now for free!</router-link>
+                    <br/>
+                    <router-link to="/reset">Forgot password?</router-link>
                 </v-form>
             </v-col>
             <v-col/>
@@ -58,7 +60,9 @@
         RectureApi.signIn(email.value, password.value)
             .then((result) => {
                 if (result.success) {
-                    router.push("/");
+                    router.push("/").catch(reason => {
+                        console.error(reason);
+                    });
                 } else if (result.statusCode === status.UNAUTHORIZED || result.statusCode === status.BAD_REQUEST) {
                     alertBody.value = "Incorrect username or password.";
                 } else if (result.statusCode === status.NOT_FOUND) {

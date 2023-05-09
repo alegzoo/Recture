@@ -147,7 +147,9 @@
 
     function visitAuthorProfile() : void {
         if (props.authorId != null) {
-            router.push({ name: "profile", params: { userId: props.authorId } });
+            router.push({ name: "profile", params: { userId: props.authorId } }).catch(reason => {
+                console.error(reason);
+            });
         }
     }
 </script>
