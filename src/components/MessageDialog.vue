@@ -1,17 +1,15 @@
 <template>
     <v-dialog :model-value="modelValue" width="500" persistent>
-        <v-card class="v-card">
+        <v-card>
             <template v-slot:title>
                 <h2 class="pt-3">{{ title }}</h2>
             </template>
             <v-card-text class="pb-3">
                 <span>{{ message }}</span>
             </v-card-text>
-                <v-col class="pa-0 pb-4 px-4" cols="auto" align="center">
-                    <v-card-actions>
-                        <v-btn class="ok-btn" variant="text" @click="closeDialog()" :color="closeButtonColor">{{ closeButtonText }}</v-btn>
-                    </v-card-actions>    
-                </v-col>
+            <v-card-actions class="px-5 pb-5">
+                <v-btn variant="flat" class="w-100" @click="closeDialog()" :color="closeButtonColor">{{ closeButtonText }}</v-btn>
+            </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
@@ -40,19 +38,16 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/constants.scss";
+    @import "@/styles/constants.scss";
 
+    .v-card {
+        background-color: #efefef;
+    }
 
-.v-card{
-    background-color: #efefef;
-}
-
-
-.ok-btn{
-    width: 999px;
-    background-color: $recture-yellow;
-    color: black !important;
-    border: 2px solid black;
-    box-shadow: 0px 3px 0px 0px;
-}
+    .v-btn {
+        background-color: $recture-yellow;
+        color: black !important;
+        border: solid 2px black;
+        box-shadow: 0px 3px 0px 0px black;
+    }
 </style>

@@ -7,13 +7,13 @@
             <v-card-text>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <SelectOrCreateInput v-model="selectedClass" select-label="Choose a class" field-label="Enter new name of the class" :items="classes" item-title="name"/>
+                        <SelectOrCreateInput v-model="selectedClass" select-label="Choose a class" field-label="Enter name of class to create" :items="classes" item-title="name"/>
                     </v-col>
                 </v-row>
 
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <SelectOrCreateInput v-model="selectedSubject" select-label="Choose a subject" field-label="Enter new name of the subject" :items="subjects" item-title="name"/>
+                        <SelectOrCreateInput v-model="selectedSubject" select-label="Choose a subject" field-label="Enter name of subject to create" :items="subjects" item-title="name"/>
                     </v-col>
                 </v-row>
 

@@ -48,7 +48,7 @@
 
                         <v-row>
                             <v-col cols="12" class="pl-5 pr-11">
-                                <v-text-field v-model="title" :rules="formRules" variant="underlined" single-line label="Title of the lesson"></v-text-field>
+                                <v-text-field v-model="title" :rules="formRules" variant="underlined" single-line label="Title"></v-text-field>
                             </v-col>
                         </v-row>
 
@@ -57,7 +57,7 @@
                                 <v-textarea
                                     v-model="description"
                                     class="pl-2 text-area-description"
-                                    label="Description of the lesson (optional)"
+                                    label="Description (optional)"
                                     :ripple="false"
                                     :active="false"
                                     auto-grow
