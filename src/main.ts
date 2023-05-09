@@ -26,6 +26,7 @@ app.use(createPinia());
 
 app.mount('#app');
 
-//TODO: Remove later?
 import { makeServer } from './api/Mock';
-makeServer();
+
+//Start Mirage mock API server in development environment
+if (process.env.NODE_ENV === "development") makeServer();
