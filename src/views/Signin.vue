@@ -7,25 +7,21 @@
                     <v-img src="@/assets/recture_logo.svg" id="signin-logo" class="my-10" style="height: 60px;"/>
                     <v-img src="@/assets/typeface_recture_logo.svg" alt="typeface-logo" class="my-10" style="height: 60px;"/>
                     <p class="my-10">Sign in to start!</p>
-                    <v-text-field single-line v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2" variant="solo"/>
+                    <v-text-field single-line v-model="email" :disabled="submitDisabled" :rules="[validateEmail]" label="Email" class="mb-2" variant="solo" type="email"/>
                     <v-text-field single-line v-model="password" :disabled="submitDisabled" :rules="[validatePassword]" label="Password" class="mb-2" variant="solo" :type="showPassword?'text':'password'" :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'" @click:append-inner="showPassword = !showPassword"/>
 
-                    <v-row :class="{'mb-8': true, 'mt-n5': smAndUp}" no-gutters>
-                        <v-col align="left">
-                            <router-link to="/reset">Forgot password?</router-link>
-                        </v-col>
-                    </v-row>
+                    <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="mb-5"/>
+                    <v-alert v-show="verifyEmailAlertVisible" density="compact" type="warning" align="left" class="mb-5">
+                        <template v-slot:text>
+                            You must verify your email before signing in. <router-link to="/verify">Resend verification link</router-link>
+                        </template>
+                    </v-alert>
 
-                    <v-alert v-show="alertBody !== null" density="compact" type="error" align="left" :text="(alertBody as string)" class="my-0"/>
-
-                    <v-row class="mt-8" no-gutters>
-                        <v-col align="left" class="py-0">
-                            <router-link to="/signup/select">No account? Create one now for free!</router-link>
-                        </v-col>
-                        <v-col align="right" class="py-0">
-                            <v-btn variant="outlined" type="submit" :disabled="submitDisabled" :loading="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
-                        </v-col>
-                    </v-row>
+                    <v-btn variant="outlined" type="submit" :disabled="submitDisabled" :loading="submitDisabled" class="mb-5" theme="none">Sign in</v-btn>
+                    <br/>
+                    <router-link to="/reset">Forgot password?</router-link>
+                    <p class="my-10"></p>
+                    <router-link to="/signup/select">No account? Create one now for free!</router-link>
                 </v-form>
             </v-col>
             <v-spacer/>
@@ -50,11 +46,10 @@
     const password = ref<string>("");
 
     const alertBody = ref<string|null>(null);
+    const verifyEmailAlertVisible = ref<boolean>(false);
     const submitDisabled = ref<boolean>(false);
 
     const showPassword = ref<boolean>(false);
-
-    const { smAndUp } = useDisplay();
 
     function validateEmail(email: string): boolean | string {
         if (email.length > 0) return true;
@@ -70,6 +65,7 @@
         if (validateEmail(email.value) !== true || validatePassword(password.value) !== true) return;
 
         alertBody.value = null;
+        verifyEmailAlertVisible.value = false;
         submitDisabled.value = true;
         RectureApi.signIn(email.value, password.value)
             .then((result) => {
@@ -81,6 +77,8 @@
                     alertBody.value = "Incorrect username or password.";
                 } else if (result.statusCode === status.NOT_FOUND) {
                     alertBody.value = "This account does not exist.";
+                } else if (result.statusCode === status.CONFLICT) {
+                    verifyEmailAlertVisible.value = true;
                 } else {
                     alertBody.value = "An error has occurred.";
                 }

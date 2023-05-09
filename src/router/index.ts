@@ -14,6 +14,8 @@ import SignUpStudentVue from '@/views/SignUpStudent.vue'
 import SignUpSelectVue from '@/views/SignUpSelect.vue'
 import RequestPasswordReset from '@/views/RequestPasswordReset.vue'
 import PasswordReset from '@/views/PasswordReset.vue'
+import ResendVerificationLink from '@/views/ResendVerificationLink.vue'
+import VerifyEmail from '@/views/VerifyEmail.vue'
 
 const routes = [
     {
@@ -127,6 +129,24 @@ const routes = [
         path: "/reset/:code",
         name: "reset_password",
         component: PasswordReset,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/verify",
+        name: "resend_verification_link",
+        component: ResendVerificationLink,
+        meta: { requiresAuth: false },
+        beforeEnter: () => {
+            lastSuccessfulAuthCheckTimestamp = 0;
+        }
+    },
+    {
+        path: "/verify/:code",
+        name: "verify_email",
+        component: VerifyEmail,
         meta: { requiresAuth: false },
         beforeEnter: () => {
             lastSuccessfulAuthCheckTimestamp = 0;

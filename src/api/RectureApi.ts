@@ -59,6 +59,34 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
+    public static async resendVerificationLink(email: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("email", email);
+
+        const response = await fetch(this.pathToUrl("auth/verify"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async verifyEmail(code: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("code", code);
+
+        const response = await fetch(this.pathToUrl("auth/verify"), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async refreshToken(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/refreshtoken"), {
             method: "POST",
