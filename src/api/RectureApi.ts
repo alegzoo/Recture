@@ -30,6 +30,35 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
+    public static async requestPasswordReset(email: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("email", email);
+
+        const response = await fetch(this.pathToUrl("auth/password/reset"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async resetPassword(password: string, code: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("password", password);
+        formData.append("code", code);
+
+        const response = await fetch(this.pathToUrl("auth/password/reset"), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async refreshToken(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/refreshtoken"), {
             method: "POST",
