@@ -366,6 +366,25 @@ export class RectureApi {
         }
     }
 
+    public static async getPoliciesByTeacher(teacherId: number, signal: AbortSignal | null = null): Promise<ApiResult<IPolicy[]>> {
+        let urlParams = new URLSearchParams();
+
+        urlParams.append("teacherId", teacherId.toString());
+
+        const response = await fetch(this.pathToUrl("policies", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPolicy[];
+            return new ApiResult<IPolicy[]>(response.status, data);
+        } else {
+            return new ApiResult<IPolicy[]>(response.status);
+        }
+    }
+
     public static async renameClass(classId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("name", name);
@@ -693,6 +712,27 @@ export class RectureApi {
         }
     }
 
+    public static async createPolicy(title: string, content: string, signal: AbortSignal | null = null): Promise<ApiResult<IPolicy>> {
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("policies"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IPolicy;
+            
+            return new ApiResult<IPolicy>(response.status, data);
+        } else {
+            return new ApiResult<IPolicy>(response.status);
+        }
+    }
+
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
         if (params != null) url += "?" + params;
@@ -853,6 +893,12 @@ export interface IInvitation {
     remainingUses: number | null,
     creationTimestamp: number,
     expirationTimestamp: number | null
+}
+
+export interface IPolicy {
+    policyId: number,
+    title: string,
+    content: string
 }
 
 export interface IRecordingSort {
