@@ -403,6 +403,21 @@ export class RectureApi {
         }
     }
 
+    public static async getQuizById(quizId: number, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz>> {
+        const response = await fetch(this.pathToUrl("quizzes/"+quizId), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IQuiz;
+            return new ApiResult<IQuiz>(response.status, data);
+        } else {
+            return new ApiResult<IQuiz>(response.status);
+        }
+    }
+
     public static async renameClass(classId: number, name: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
         formData.append("name", name);
@@ -929,19 +944,19 @@ export interface IPolicy {
     content: string
 }
 
-export interface IQuizInfo {
-    quizId: number,
-    title: string,
-    subjectId: number,
-    subjectName: string
-}
-
 export interface IQuiz {
     quizId: number,
     title: string,
     subjectId: number,
     subjectName: string,
     questions: IQuizQuestion[]
+}
+
+export interface IQuizInfo {
+    quizId: number,
+    title: string,
+    subjectId: number,
+    subjectName: string
 }
 
 export interface IQuizQuestion {

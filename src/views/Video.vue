@@ -41,7 +41,7 @@
                     <v-spacer/>
 
                     <v-col class="pt-3 pl-13" cols="auto">
-                        <v-btn variant="text" @click="showTestYourselDialog = true" :ripple="false" class="test-yourself-btn" prepend-icon="mdi-check-bold">Test yourself</v-btn>
+                        <v-btn variant="text" :ripple="false" prepend-icon="mdi-check-bold" :disabled="recording?.quizId == null" class="test-yourself-btn" @click="testYourselfDialogVisible = true">Test yourself</v-btn>
                     </v-col>
 
                 </v-row>
@@ -94,7 +94,7 @@
             </v-col>
         </v-row>
     </v-container>
-    <TestYourselfDialog v-model="showTestYourselDialog"/>
+    <TestYourselfDialog v-model="testYourselfDialogVisible" :quiz-id="recording?.quizId"/>
 </template>
 
 <style lang="scss" scoped>
@@ -104,16 +104,6 @@
     .v-container {
         background-image: url("@/assets/bg_pattern.png");
         background-size: cover;
-    }
-
-    .test-yourself-btn {
-        background-color: $recture-yellow;
-        border-width: 2px;
-        border-color: black;
-        border-radius: 0px !important;
-        font-weight: bold;
-        border-style: solid;
-        @include elevated-button(4px, 4px, 1px);
     }
 
     .video-title {
@@ -126,6 +116,15 @@
         text-shadow: 2px 2px 0px black;
     }
 
+    .test-yourself-btn {
+        background-color: $recture-yellow;
+        border-width: 2px;
+        border-color: black;
+        border-radius: 0px !important;
+        font-weight: bold;
+        border-style: solid;
+        @include elevated-button(4px, 4px, 1px);
+    }
 
     .chip-class {
         background-color: black;
@@ -183,7 +182,7 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref, Ref, watch, onMounted } from "vue"
+    import { ref, watch, onMounted } from "vue";
 
     import router from '@/router';
     import { useRoute } from 'vue-router';
@@ -195,8 +194,9 @@
     import RelatedVideoList from '@/components/RelatedVideoList.vue';
     import TestYourselfDialog from '@/components/TestYourselfDialog.vue';
     
-    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();    
-    const showTestYourselDialog = ref<boolean>(false);
+    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();
+
+    const testYourselfDialogVisible = ref<boolean>(false);
 
     const video = ref<HTMLVideoElement>();
 

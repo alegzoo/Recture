@@ -17,17 +17,9 @@
                             />
                         </v-col>
                     </v-row>
-            
-            
-
             </v-card-text>
-
         </v-card>
-
     </v-dialog>
-    
-
-
 </template>
 
 <style lang="scss" scoped>

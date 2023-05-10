@@ -1,5 +1,5 @@
 import { createServer, Model, Response } from "miragejs"
-import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType, IComment, ICommentReply, IPublicUserInfo } from "./RectureApi";
+import { RectureApi, DayOfWeek, IAccount, IRecording, IMediaSource, IClass, ISubject, ITopic, ILesson, ITimetable, RecordingVisibilityFilter, IPage, UserType, IComment, ICommentReply, IPublicUserInfo, IQuiz } from "./RectureApi";
 
 //TODO: Exclude both library and code from production
 export function makeServer() {
@@ -270,6 +270,69 @@ export function makeServer() {
                 const recording = schema.findBy("recording", {"recordingId": id})?.attrs;
                 if (recording != null) return recording;
                 else return new Response(404);
+            }, {timing: 200});
+
+            this.get(RectureApi.BASE_API_URL+"/quizzes/:id", (schema, request) => {
+                return {
+                    quizId: 1,
+                    subjectId: 1,
+                    subjectName: "MAT",
+                    title: "Test quiz",
+                    questions: [
+                        {
+                            questionId: 1,
+                            content: "What year is it?",
+                            answers: [
+                                {
+                                    answerId: 1,
+                                    content: "2019",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 2,
+                                    content: "2023",
+                                    correct: true
+                                },
+                                {
+                                    answerId: 3,
+                                    content: "1729",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 4,
+                                    content: "2052",
+                                    correct: false
+                                }
+                            ]
+                        },
+                        {
+                            questionId: 2,
+                            content: "Who is the current president of the United States of America?",
+                            answers: [
+                                {
+                                    answerId: 5,
+                                    content: "Donald Trump",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 6,
+                                    content: "Barrack Obama",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 7,
+                                    content: "Hunter Biden",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 8,
+                                    content: "Joe Biden",
+                                    correct: true
+                                }
+                            ]
+                        }
+                    ]
+                } as IQuiz;
             }, {timing: 200});
 
             this.get(RectureApi.BASE_API_URL+"/classes", (schema) => {
