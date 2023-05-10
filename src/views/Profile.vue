@@ -20,7 +20,7 @@
 
                     <template v-if="!showingOnlyPublicInfo">
                         <v-col :cols="mdAndUp?'auto':12" align="center" align-self="start">
-                            <v-btn id="profile-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
+                            <v-btn @click="ProfileEditDialogVisible = true" id="profile-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
                             <v-tooltip
                             activator="parent"
                             location="end"
@@ -28,7 +28,10 @@
                             >Edit profile
                             </v-tooltip>
                         </v-col>
+                        
                     </template>
+                    <ProfileEditDialog v-model="ProfileEditDialogVisible"/>
+
                 </v-row>
 
                 <v-sheet class="h-100" id="profile-v-sheet" background-color="transparent">
@@ -104,6 +107,7 @@
 
                 <TeacherPoliciesSection v-if="userInfo.userType === 'TEACHER' && userInfo.userId != null" :teacher-id="userInfo.userId" :editable="!showingOnlyPublicInfo"/>
             </v-container>
+
         </template>
         <template v-else-if="userInfo === undefined">
             <v-row>
@@ -124,6 +128,7 @@
             </v-row>
         </template>
     </v-container>
+
 </template>
 
 <style>
@@ -137,6 +142,7 @@
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useRoute } from 'vue-router';
     import TeacherPoliciesSection from '@/components/TeacherPoliciesSection.vue';
+    import ProfileEditDialog from '@/components/ProfileEditDialog.vue';
 
     import "@/styles/profile.scss";
 
@@ -144,6 +150,8 @@
 
     const userInfo = ref<IPublicUserInfo | IAccountStore | undefined | null>(undefined);
     const showingOnlyPublicInfo = ref<boolean>(true);
+    const ProfileEditDialogVisible = ref<boolean>(false);
+
 
     const userFullName = computed<string | null>(() => userInfo.value != null ? (userInfo.value.firstName+" "+userInfo.value.lastName) : null);
 
