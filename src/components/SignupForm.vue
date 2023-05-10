@@ -6,14 +6,16 @@
 
         <v-col v-show="!lgAndUp" cols="2"/>
         
-        <v-col align="center" class="form-column pa-0" align-self="end">
+        <v-col class="form-column pa-0" align-self="end">
             <v-form validate-on="input" @submit.prevent="submitHandler" class="w-100 h-100 px-12 d-flex flex-column" no-gutters>
-                <v-img src="@/assets/combined_recture_logo.svg" class="flex-shrink-1" :aspect-ratio="10"/>
+                <v-col cols="0"/>
+                <v-img src="@/assets/recture_typeface_logo_2.svg" :max-width="200" class="flex-shrink-5" :aspect-ratio="10"/>
 
+                <v-col sm="0"/>
                 <v-text-field v-model="firstName" class="py-2 flex-grow-0" label="First name" :rules="[validateField]" variant="plain" single-line hide-details/>
                 <v-text-field v-model="lastName" class="py-2 flex-grow-0" label="Last name" :rules="[validateField]" variant="plain" single-line hide-details/>
                 <v-text-field v-model="email" class="py-2 flex-grow-0" label="Email" :rules="[validateField]" variant="plain" single-line hide-details/>
-                <v-text-field v-model="password" class="py-2 flex-grow-0" label="Password" :rules="[validateField]" variant="plain" single-line hide-details :type="showPassword?'text':'password'" :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'" @click:append-inner="showPassword = !showPassword"/>
+                <v-text-field v-model="password" class="py-2 flex-grow-0 password-field" label="Password" :rules="[validateField]" variant="plain" single-line hide-details :type="showPassword?'text':'password'" :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'" @click:append-inner="showPassword = !showPassword"/>
                 <v-text-field v-model="organization" class="py-2 flex-grow-0" label="School / organization (optional)" variant="plain" single-line hide-details/>
 
                 <div class="d-flex flex-grow-0">
@@ -35,7 +37,7 @@
             </v-form>
         </v-col>
 
-        <v-col cols="2" lg="1" xl="2"/>
+        <v-col class="pa-0" cols="2" lg="2"/>
 
         <v-overlay v-model="creatingAccount" class="align-center justify-center" contained persistent>
             <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
@@ -67,9 +69,9 @@
     .form-column{
         background-image: url("@/assets/bg_signup.svg");
         background-size: cover;
-        height: 90%;
-        min-height: 90%;
-        max-height: 90%;
+        height: 95%;
+        min-height: 95%;
+        max-height: 95%;
         border: 2px black solid;
         border-bottom: none;
         box-shadow: 5px 5px 0px 0px black;

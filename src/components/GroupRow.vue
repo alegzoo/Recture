@@ -4,7 +4,7 @@
             <span class="font-weight-black">{{ group.name }}</span>
             <v-tooltip text="Rename" location="end">
                 <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
+                    <v-btn :ripple="false" v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
                 </template>
             </v-tooltip>
         </td>

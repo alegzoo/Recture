@@ -49,8 +49,6 @@
                         </v-btn>
                     </v-col>
 
-                    <v-spacer v-show="lgAndUp"/>
-
                     <template v-if="timetable.creating.value">
                         <v-col cols="auto">
                             <v-btn variant="text" class="footer-button secondary creating-button" :ripple="false" @click="cancelLessonCreation()">
@@ -66,11 +64,11 @@
                     </template>
                     <template v-else>
 
-                        <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="newQuestionSeriesDialogVisible = true">
-                                NEW QUESTION SERIES
-                            </v-btn>
-                        </v-col>
+                    <v-col cols="auto">
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetable.editing.value" prepend-icon="mdi-folder-question" @click="ManageQuestionSeriesVisible = true">
+                            MANAGE QUESTION SERIES
+                        </v-btn>
+                    </v-col>
                     </template>
                 </v-row>
             </v-col>
@@ -81,10 +79,14 @@
     <ManageGroupsDialog v-model="manageGroupsDialogVisible" @dataModified="timetable.fetchLessons()"/>
     <ManageThematicUnitsDialog v-model="manageThematicUnitsDialogVisible"/>
     <CreateLessonDialog v-model="createLessonDialogVisible" @dialog-exit="onCreateLessonDialogExit"/>
+
     <NewThematicUnitDialog v-model="newThematicUnitDialogVisible"/>
-    <NewQuestionSeriesDialog v-model="newQuestionSeriesDialogVisible"/>
+    
     <CreateInvitationDialog v-model="shareDialogVisible" :lesson="shareDialogLesson"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
+
+    <ManageQuestionSeries v-model="ManageQuestionSeriesVisible"/>
+
     <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
         <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
     </v-overlay>
@@ -100,10 +102,11 @@
     import ManageThematicUnitsDialog from '@/components/ManageThematicUnitsDialog.vue';
     import CreateLessonDialog, { ICreateLessonDialogResult } from '@/components/CreateLessonDialog.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
-    import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
     import CreateInvitationDialog from '@/components/CreateInvitationDialog.vue';
     import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+    import ManageQuestionSeries from '@/components/ManageQuestionSeries.vue';
 
     import "@/styles/timetable.scss";
 
@@ -114,7 +117,9 @@
     const manageThematicUnitsDialogVisible = ref<boolean>(false);
     const createLessonDialogVisible = ref<boolean>(false);
     const newThematicUnitDialogVisible = ref<boolean>(false);
-    const newQuestionSeriesDialogVisible = ref<boolean>(false);
+
+    const ManageQuestionSeriesVisible = ref<boolean>(false);
+
     const shareDialogVisible = ref<boolean>(false);
 
     const shareDialogLesson = ref<ILesson | null>(null);

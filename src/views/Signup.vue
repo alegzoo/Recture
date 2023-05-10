@@ -1,5 +1,5 @@
 <template>
-    <v-container class="h-100 pa-0" fluid no-gutters>
+    <v-container class="h-100 pa-0 container" fluid no-gutters>
         <SignupForm v-if="userType != null" :user-type="userType"/>
 
         <template v-else>
