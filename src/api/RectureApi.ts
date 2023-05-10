@@ -2,8 +2,7 @@ import status from "http-status";
 
 export class RectureApi {
 
-    //TODO: Change API URL
-    public static BASE_API_URL: string = "http://recture.study:81/";
+    public static BASE_API_URL: string = "https://api.recture.study/";
 
     public static async signIn(email: string, password: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
@@ -544,6 +543,16 @@ export class RectureApi {
 
     public static async deleteInvitation(invitationId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("invitations/"+invitationId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deletePolicy(policyId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("policies/"+policyId), {
             method: "DELETE",
             credentials: "include",
             signal: signal

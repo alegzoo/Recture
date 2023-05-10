@@ -53,7 +53,7 @@
                             </v-col>
                         </v-row>
 
-                        <v-row class="pt-5" align="left" no-gutters align-self="center">
+                        <v-row class="pt-5" align="start" no-gutters align-self="center">
                             <v-col class="pl-1">
                                 <v-combobox
                                 hide-details
