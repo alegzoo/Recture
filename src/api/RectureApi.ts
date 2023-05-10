@@ -832,7 +832,7 @@ export interface IRecording {
     commentsAllowed: boolean
     comments: number
     notifications: number
-    quizAvailable: boolean
+    quizId: number
     teacherId: number
     classId: number
     className: string
@@ -927,6 +927,24 @@ export interface IPolicy {
     policyId: number,
     title: string,
     content: string
+}
+
+export interface IQuiz {
+    quizId: number,
+    title: string,
+    subjectId: number,
+    subjectName: string,
+    questions: IQuizQuestion[]
+}
+
+export interface IQuizQuestion {
+    answerId: number,
+    content: string,
+    correct: boolean
+}
+
+export interface IQuizAnswer {
+    
 }
 
 export interface IRecordingSort {

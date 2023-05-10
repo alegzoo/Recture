@@ -16,7 +16,7 @@
                         </v-row>
                     </v-container>
                 </v-col>
-                <v-col v-show="props.recording.quizAvailable === true" cols="auto" align="center" align-self="center" class="px-7">
+                <v-col v-show="props.recording.quizId != null" cols="auto" align="center" align-self="center" class="px-7">
                     <v-icon icon="mdi-help-box-multiple-outline" title="This recording contains a quiz." size="48"/>
                 </v-col>
             </v-row>
