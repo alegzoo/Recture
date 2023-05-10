@@ -105,6 +105,39 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
+    public static async changePassword(password: string, oldPassword: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("password", password);
+        formData.append("oldPassword", oldPassword);
+
+        const response = await fetch(this.pathToUrl("auth/password"), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async updateProfile(firstName: string | null, lastName: string | null, bio: string | null, organization: string | null, avatar: File | null, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        if (firstName != null) formData.append("firstName", firstName);
+        if (lastName != null) formData.append("lastName", lastName);
+        if (bio != null) formData.append("bio", bio);
+        if (organization != null) formData.append("organization", organization);
+        if (avatar != null) formData.append("avatar", avatar);
+
+        const response = await fetch(this.pathToUrl("account/update_profile"), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async refreshToken(signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("auth/refreshtoken"), {
             method: "POST",

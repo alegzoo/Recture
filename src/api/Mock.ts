@@ -395,9 +395,17 @@ export function makeServer() {
 
             this.put(RectureApi.BASE_API_URL+"/auth/password/reset", (schema, request) => {
                 return new Response(204);
-            }, {timing: 50});
+            }, {timing: 1000});
+
+            this.put(RectureApi.BASE_API_URL+"/auth/password", (schema, request) => {
+                return new Response(204);
+            }, {timing: 1000});
 
             this.put(RectureApi.BASE_API_URL+"/auth/verify", (schema, request) => {
+                return new Response(204);
+            }, {timing: 500});
+
+            this.put(RectureApi.BASE_API_URL+"/account/update_profile", (schema, request) => {
                 return new Response(204);
             }, {timing: 500});
 
