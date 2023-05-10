@@ -945,13 +945,15 @@ export interface IQuiz {
 }
 
 export interface IQuizQuestion {
-    answerId: number,
+    questionId: number,
     content: string,
-    correct: boolean
+    answers: IQuizAnswer[]
 }
 
 export interface IQuizAnswer {
-    
+    answerId: number,
+    content: string,
+    correct: boolean
 }
 
 export interface IRecordingSort {
