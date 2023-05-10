@@ -2,9 +2,16 @@
     <v-dialog width="700" persistent>
         <v-card class="edit-profile-card">
             <v-card-title>
-                <v-col class="pa-0 pl-3 pt-3">
-                    <h2>PROFILE EDIT</h2>
-                </v-col>                
+                <v-row class="pa-0 pl-3 pt-3">
+                    <v-col cols="auto" align-self="center">
+                        <h2>PROFILE EDIT</h2>
+                    </v-col> 
+                    <v-spacer/>
+                    <v-col cols="auto" class="pr-5" align-self="center">
+                        <v-icon :size="50" icon="mdi-card-account-details"></v-icon>
+                    </v-col>
+                </v-row>
+                             
             </v-card-title>      
             <v-card-text no-gutters>
                     <v-row class="pa-0 pl-4 pt-3 subtle">
