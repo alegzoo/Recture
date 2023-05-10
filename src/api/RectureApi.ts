@@ -929,6 +929,13 @@ export interface IPolicy {
     content: string
 }
 
+export interface IQuizInfo {
+    quizId: number,
+    title: string,
+    subjectId: number,
+    subjectName: string
+}
+
 export interface IQuiz {
     quizId: number,
     title: string,
