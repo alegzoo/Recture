@@ -1,19 +1,20 @@
 // Composables
-import Home from '@/views/Home.vue'
-import Signin from '@/views/Signin.vue'
-import VideoBrowser from '@/views/VideoBrowser.vue'
-import Video from '@/views/Video.vue'
-import NotFound from '@/views/NotFound.vue'
-import Profile from '@/views/Profile.vue'
-import Timetable from '@/views/Timetable.vue'
-import NewComments from '@/views/NewComments.vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import { RectureApi } from '@/api/RectureApi'
-import Signup from '@/views/Signup.vue'
-import RequestPasswordReset from '@/views/RequestPasswordReset.vue'
-import PasswordReset from '@/views/PasswordReset.vue'
-import ResendVerificationLink from '@/views/ResendVerificationLink.vue'
-import VerifyEmail from '@/views/VerifyEmail.vue'
+import Home from '@/views/Home.vue';
+import Signin from '@/views/Signin.vue';
+import VideoBrowser from '@/views/VideoBrowser.vue';
+import Video from '@/views/Video.vue';
+import NotFound from '@/views/NotFound.vue';
+import Profile from '@/views/Profile.vue';
+import Timetable from '@/views/Timetable.vue';
+import NewComments from '@/views/NewComments.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { RectureApi } from '@/api/RectureApi';
+import Signup from '@/views/Signup.vue';
+import RequestPasswordReset from '@/views/RequestPasswordReset.vue';
+import PasswordReset from '@/views/PasswordReset.vue';
+import ResendVerificationLink from '@/views/ResendVerificationLink.vue';
+import VerifyEmail from '@/views/VerifyEmail.vue';
+import UseInvitation from '@/views/UseInvitation.vue';
 
 const routes = [
     {
@@ -132,6 +133,12 @@ const routes = [
             lastSuccessfulAuthCheckTimestamp = 0;
         }
     },
+    {
+        path: "/join/:code",
+        name: "use_invitation",
+        component: UseInvitation,
+        meta: { requiresAuth: true }
+    }
 ];
 
 const router = createRouter({

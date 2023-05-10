@@ -126,6 +126,20 @@ export class RectureApi {
         else return new ApiResult<null>(response.status);
     }
 
+    public static async useInvitation(code: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("code", code);
+
+        const response = await fetch(this.pathToUrl("invitations/use"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async getAccountInfo(signal: AbortSignal | null = null): Promise<ApiResult<IAccount>> {
         const response = await fetch(this.pathToUrl("account"), {
             method: "GET",
