@@ -123,7 +123,7 @@
                 totalPages.value = result.data.pages;
             } else tableItems.value = null;
         }).catch(reason => {
-            emit('update:modelValue', false);
+            if (reason.name !== "AbortError") emit('update:modelValue', false);
         }).finally(() => {
             loadingOverlayVisible.value = false;
         });

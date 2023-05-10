@@ -97,8 +97,8 @@
     const subjects = ref<ISubject[]>([]);
 
     const title = ref<string>("");
-    const selectedClass = ref<IClass | null>(null);
-    const selectedSubject = ref<ISubject | null>(null);
+    const selectedClass = ref<IClass | undefined>(undefined);
+    const selectedSubject = ref<ISubject | undefined>(undefined);
 
     const loadingOverlayVisible = ref<boolean>(false);
     const topicBeingCreated = ref<boolean>(false);
@@ -118,8 +118,8 @@
         subjects.value = [];
 
         title.value = "";
-        selectedClass.value = null;
-        selectedSubject.value = null;
+        selectedClass.value = undefined;
+        selectedSubject.value = undefined;
 
         loadingOverlayVisible.value = true;
         topicBeingCreated.value = false;
@@ -130,13 +130,13 @@
         Promise.all(
             [
                 RectureApi.getClasses().then(result => {
-                    if (result.success && classes.value != null) {
-                        classes.value = result.data as IClass[];
+                    if (result.success && result.data != null) {
+                        classes.value = result.data;
                     } else return Promise.reject();
                 }),
                 RectureApi.getSubjects().then(result => {
-                    if (result.success && subjects.value != null) {
-                        subjects.value = result.data as ISubject[];
+                    if (result.success && result.data != null) {
+                        subjects.value = result.data;
                     } else return Promise.reject();
                 })
             ]
@@ -152,7 +152,7 @@
         else return "Must not be blank.";
     }
 
-    function validateSelect(selectedItem: IClass | ISubject | null): boolean | string {
+    function validateSelect(selectedItem: IClass | ISubject | undefined): boolean | string {
         if (selectedItem != null) return true;
         else return "An item must be selected.";
     }

@@ -76,7 +76,7 @@
 
             <template  v-else="defaultField=(false)">
                 <v-row class="pb-1">
-                    <v-img class="comment-bottom" src="@/assets/comment_bottom_6.svg"/>
+                    <v-img class="comment-bottom" src="@/assets/comment_bottom.svg"/>
                 </v-row>
 
                 <v-container no-gutters class="w-100 v-container-comment pb-7" fluid>

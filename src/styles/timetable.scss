@@ -55,51 +55,28 @@
     font-size: 22px;
 }
 
-.v-dialog .v-table .v-table__wrapper tbody > tr {
-    outline: dashed 1px #00000033 !important;
-    overflow: visible !important;
-}
-
-.v-dialog .v-table .v-table__wrapper thead > tr > th {
-    border-bottom: solid 2px black !important;
-}
-
-.v-dialog .v-card-rename-dialog {
-    background-color: #efefef;
-    border-radius: 7px !important;
-}
-
-.rename-btn {
-    background-color: $recture-yellow;
-    color: black !important;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-    box-shadow: 0 3px 0px 0px black !important;
-}
-
 .timetable-grid, .creating-button {
     z-index: 200 !important;
 }
 
-.btns-classes-subjects{
+.btns-classes-subjects {
     background-color: white !important;
     border: 2px black solid !important;
     box-shadow: 0 4px 0px 0px black !important;
 }
 
-.btns-classes-subjects .selected{
+.btns-classes-subjects .selected {
     background-color: $recture-yellow !important;
     border-radius: 0px !important;
     box-shadow: 0 4px 0px 0px black !important;
 }
 
-.classes{
+.classes {
     border-right-width: 2px !important;
     border-right-style: solid !important;
     border-right-color: black !important;
 }
 
-.manage-thematic-units-v-card{
+.manage-thematic-units-v-card {
     background-color: #efefef !important;
 }

@@ -140,8 +140,8 @@
     const classes = ref<IClass[]>([]);
     const subjects = ref<ISubject[]>([]);
 
-    const selectedClass = ref<IClass | null>(null);
-    const selectedSubject = ref<ISubject | null>(null);
+    const selectedClass = ref<IClass | undefined>(undefined);
+    const selectedSubject = ref<ISubject | undefined>(undefined);
     const tableItems = ref<(ITopic)[] | null>([]);
 
     const confirmationDialogVisible = ref<boolean>(false);
@@ -189,8 +189,8 @@
         subjects.value = [];
 
         tableItems.value = [];
-        selectedClass.value = null;
-        selectedSubject.value = null;
+        selectedClass.value = undefined;
+        selectedSubject.value = undefined;
 
         confirmationDialogVisible.value = false;
         renameDialogVisible.value = false;
@@ -203,13 +203,13 @@
         Promise.all(
             [
                 RectureApi.getClasses().then(result => {
-                    if (result.success && classes.value != null) {
-                        classes.value = result.data as IClass[];
+                    if (result.success && result.data != null) {
+                        classes.value = result.data;
                     } else return Promise.reject();
                 }),
                 RectureApi.getSubjects().then(result => {
-                    if (result.success && subjects.value != null) {
-                        subjects.value = result.data as ISubject[];
+                    if (result.success && result.data != null) {
+                        subjects.value = result.data;
                     } else return Promise.reject();
                 })
             ]

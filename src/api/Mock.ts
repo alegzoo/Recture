@@ -198,6 +198,10 @@ export function makeServer() {
                 return new Response(200);
             }, {timing: 200});
 
+            this.post(RectureApi.BASE_API_URL+"/auth/signup", (schema, request) => {
+                return new Response(202);
+            }, {timing: 1000});
+
             this.post(RectureApi.BASE_API_URL+"/auth/refreshtoken", (schema, request) => {
                 return new Response(200);
             }, {timing: 50});

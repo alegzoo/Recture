@@ -18,7 +18,7 @@
             </v-card-text>
             <v-card-actions class="pb-5" align-content="center">
                 <v-spacer/>
-                <v-btn variant="text" class="rename-btn" selected-class="selected" width="215" @click="closeDialog(true)" :color="positiveButtonColor">{{ positiveButtonText }}</v-btn>
+                <v-btn variant="flat" class="positive-button" width="215" @click="closeDialog(true)" :color="positiveButtonColor">{{ positiveButtonText }}</v-btn>
                 <v-spacer/>
                 <v-btn variant="text" width="215" @click="closeDialog(false)" :color="negativeButtonColor">{{ negativeButtonText }}</v-btn>
                 <v-spacer/>
@@ -26,6 +26,30 @@
         </v-card>
     </v-dialog>
 </template>
+
+<style lang="scss" scoped>
+    @import "@/styles/constants.scss";
+
+    .v-table:deep(.v-table__wrapper tbody > tr) {
+        outline: dashed 1px #00000033 !important;
+        overflow: visible !important;
+    }
+
+    .v-table:deep(.v-table__wrapper thead > tr > th) {
+        border-bottom: solid 2px black !important;
+    }
+
+    .v-card {
+        background-color: #efefef;
+    }
+
+    .positive-button {
+        background-color: $recture-yellow;
+        color: black !important;
+        border: solid 2px black;
+        box-shadow: 0px 3px 0px 0px black !important;
+    }
+</style>
 
 <script lang="ts" setup>
     import { ref, watch } from 'vue';
@@ -45,7 +69,7 @@
         inputLabel: "",
         positiveButtonText: "Confirm",
         negativeButtonText: "Cancel",
-        positiveButtonColor: "#00AA00",
+        positiveButtonColor: undefined,
         negativeButtonColor: undefined
     });
 

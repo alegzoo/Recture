@@ -21,7 +21,7 @@
                     <br/>
                     <router-link to="/reset">Forgot password?</router-link>
                     <p class="my-10"></p>
-                    <router-link to="/signup/select">No account? Create one now for free!</router-link>
+                    <router-link to="/signup">No account? Create one now for free!</router-link>
                 </v-form>
             </v-col>
             <v-spacer/>
@@ -38,7 +38,6 @@
     import status from "http-status";
     import router from '@/router';
     import { ref } from 'vue';
-    import { useDisplay } from 'vuetify/lib/framework.mjs';
 
     import "@/styles/signin.scss";
     
