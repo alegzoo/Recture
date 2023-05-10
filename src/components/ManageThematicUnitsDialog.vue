@@ -1,13 +1,27 @@
 <template>
-    <v-dialog :model-value="modelValue" width="800" persistent>
+    <v-dialog :model-value="modelValue" width="750" persistent>
         <v-card class="manage-thematic-units-v-card">
             <v-card-title>
-                <h2 class="pa-5">MANAGE THEMATIC UNITS</h2>
+                <v-row no-gutters align="center" align-self="center" class="pt-3">
+                    <v-col>
+                        <h2 class="pl-3">MANAGE THEMATIC UNITS</h2>
+                    </v-col>
+                    <v-spacer/>
+                    <v-col cols="auto" class="pr-3" align-self="center" align="center">
+                        <v-btn @click="showNewThematicUnitDialog = true" class="plus-btn" icon="mdi-plus" variant="flat"></v-btn>
+                            <v-tooltip
+                                activator="parent"
+                                location="left"
+                                class="spiked-tr"
+                                >Create new thematic unit
+                            </v-tooltip>
+                    </v-col>
+                </v-row>
+                
             </v-card-title>
             <v-card-text>
-                <v-row>
-                    <v-spacer v-show="mdAndUp"/>
-                    <v-col cols="12" sm="6" md="5">
+                <v-row class="pt-4">
+                    <v-col cols="6" class="pl-4">
                         <v-select
                             hide-details
                             no-gutters
@@ -22,8 +36,7 @@
                             single-line
                         />
                     </v-col>
-                    <v-spacer v-show="mdAndUp"/>
-                    <v-col cols="12" sm="6" md="5">
+                    <v-col cols="6">
                         <v-select
                             hide-details
                             no-gutters
@@ -38,7 +51,7 @@
                             single-line
                         />
                     </v-col>
-                    <v-spacer v-show="mdAndUp"/>
+                    
                 </v-row>
                 <v-row v-show="tableItems != null">
                     <v-col>
@@ -76,7 +89,31 @@
     <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.name+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.name+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
     <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.name+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.name+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
+    <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
 </template>
+
+<style lang="scss" scoped>
+@import "@/styles/constants.scss";
+@import "@/styles/mixins.scss";
+
+
+.plus-btn{
+    //@include elevated-button(3px, 3px, 1px);
+    background-color: $recture-yellow;
+    color: black;
+    border-radius: 9999px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.plus-btn .v-icon{
+    font-size: 100px;
+}
+
+</style>
+
+
 
 <script lang="ts" setup>
     import { RectureApi, IClass, ISubject, ITopic } from '@/api/RectureApi';
@@ -87,6 +124,10 @@
     import MessageDialog from './MessageDialog.vue';
     import GroupRow from './GroupRow.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
+    import NewThematicUnitDialog from './NewThematicUnitDialog.vue';
+
+    
+    const showNewThematicUnitDialog = ref<boolean>(false);
 
     const props = defineProps<{
         modelValue?: boolean

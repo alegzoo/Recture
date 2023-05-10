@@ -65,11 +65,6 @@
                         </v-col>
                     </template>
                     <template v-else>
-                        <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="newThematicUnitDialogVisible = true">
-                                NEW THEMATIC UNIT
-                            </v-btn>
-                        </v-col>
 
                         <v-col cols="auto">
                             <v-btn variant="text" class="footer-button plus-button" :ripple="false" :disabled="timetable.editing.value" append-icon="mdi-plus-circle" @click="newQuestionSeriesDialogVisible = true">

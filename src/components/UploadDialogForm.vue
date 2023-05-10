@@ -41,12 +41,43 @@
                         </v-row>
 
                         <v-row>
-                            <v-col cols="12" class="py-0 pl-5 pr-11">
+                            <v-col cols="12" class="py-0 pl-4 pr-11">
                                 <SelectOrCreateInput v-model="selectedTopic" select-label="Choose a thematic unit" field-label="Enter name of thematic unit to create" :items="topics" item-title="name" :mandatory="true"/>
                             </v-col>
                         </v-row>
 
-                        <v-row>
+
+                        <v-row no-gutters class="pt-8">
+                            <v-col class="subtle pl-1">
+                                <h4>Question series</h4>
+                            </v-col>
+                        </v-row>
+
+                        <v-row class="pt-5" align="left" no-gutters align-self="center">
+                            <v-col class="pl-1">
+                                <v-combobox
+                                hide-details
+                                no-gutters
+                                class="choose-selectors-upload-form"
+                                label="Choose question series"
+                                :items="['Definičný obor - preskúšanie 1']"
+                                variant="solo"
+                                density="compact"
+                                single-line
+                                />
+                            </v-col>
+
+                            <v-col cols="auto" align="start" class="px-8" align-self="center">
+                                <h2>or</h2>
+                            </v-col>
+
+                            <v-col class="pa-0 pr-7" align="center" align-self="center">
+                                <v-btn :ripple="false" class=" px-13 new-q-series-btn" variant="text" @click="showNewQuestionSeriesDialog = true">NEW QUESTION SERIES</v-btn>
+                            </v-col>
+
+                        </v-row>
+
+                        <v-row class="pt-3">
                             <v-col cols="12" class="pl-5 pr-11">
                                 <v-text-field v-model="title" :rules="formRules" variant="underlined" single-line label="Title of the lesson"></v-text-field>
                             </v-col>
@@ -124,10 +155,12 @@
         </v-overlay>
     </v-card>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
+    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
 </template>
 
 <style lang="scss" scoped>
     @import "@/styles/constants.scss";
+    @import "@/styles/mixins.scss";
 
     .form-column {
         //background-image: url("@/assets/bckg-upload-dialog.png");
@@ -152,6 +185,24 @@
         font-weight: bold;
         border-radius: 0px;
     }
+
+    .choose-selectors-upload-form{
+    border: solid 2px black !important;
+    border-radius: 0px !important;
+    box-shadow: 2px 2px 0px 0px black !important;
+    background-color: white !important;
+    font-weight: bold;
+    color: black !important;
+    text-transform: uppercase !important;
+    }
+
+    .new-q-series-btn{
+    @include elevated-button(4px, 4px, 2px);
+    background-color: $recture-yellow;
+    color: black;
+    border: 2px black solid;
+    border-radius: 0px;
+}
 </style>
 
 
@@ -164,8 +215,11 @@
     import UploadPreviewCard from './UploadPreviewCard.vue';
     import SelectOrCreateInput from './SelectOrCreateInput.vue';
     import MessageDialog from './MessageDialog.vue';
+    import NewQuestionSeriesDialog from './NewQuestionSeriesDialog.vue';
 
     import "@/styles/main.scss";
+
+    const showNewQuestionSeriesDialog = ref<boolean>(false);
 
     const props = defineProps<{
         lesson: ILesson,

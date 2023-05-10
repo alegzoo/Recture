@@ -11,7 +11,7 @@
                         <v-avatar outlined id="comments-avatar" size="50" image="/student1.png"></v-avatar>
                     </v-col>
                     <v-col cols="auto" align-self="center">
-                        <h4>Gabriela Fotová</h4>
+                        <h4 class="title">Gabriela Fotová</h4>
                     </v-col>
                     <v-col cols="auto" class="ml-1" align-self="center">
                         <v-chip id="class-chip-comment" variant="text">I.C</v-chip>
