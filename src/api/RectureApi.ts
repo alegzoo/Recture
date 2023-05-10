@@ -2,8 +2,7 @@ import status from "http-status";
 
 export class RectureApi {
 
-    //TODO: Change API URL
-    public static BASE_API_URL: string = "http://recture.study:81/";
+    public static BASE_API_URL: string = "https://api.recture.study/";
 
     public static async signIn(email: string, password: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
