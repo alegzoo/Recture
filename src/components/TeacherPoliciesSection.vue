@@ -20,7 +20,7 @@
                 <h1 class="flex-grow-1">{{ policy.title }}</h1>
                 <v-tooltip v-if="editable" location="start" text="Delete condition" class="spiked-tr">
                     <template v-slot:activator="{ props }">
-                        <v-btn v-bind="props" icon="mdi-delete" variant="plain" class="flex-grow-0"/>
+                        <v-btn v-bind="props" icon="mdi-delete" variant="plain" class="flex-grow-0" @click="showDeleteConfirmationDialog(policy)"/>
                     </template>
                 </v-tooltip>
             </v-col>
@@ -67,6 +67,8 @@
     </v-row>
 
     <NewPolicyDialog v-model="newPolicyDialogVisible" @data-modified="fetchPolicies()"/>
+    <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
+    <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE CONDITION'" :message="'Are you sure you want to delete this condition? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
 </template>
 
 <style lang="scss" scoped>
@@ -93,6 +95,8 @@
     import { ref, watch, onMounted } from 'vue';
     import { IPolicy, RectureApi } from '@/api/RectureApi';
     import NewPolicyDialog from './NewPolicyDialog.vue';
+    import MessageDialog from './MessageDialog.vue';
+    import ConfirmationDialog from './ConfirmationDialog.vue';
 
     const props = defineProps<{
         teacherId: number,
@@ -102,6 +106,12 @@
     const policies = ref<IPolicy[] | null | undefined>(undefined);
 
     const newPolicyDialogVisible = ref<boolean>(false);
+
+    const errorDialogVisible = ref<boolean>(false);
+    const errorDialogMessage = ref<string>("");
+
+    const selectedPolicy = ref<IPolicy | null>(null);
+    const confirmationDialogVisible = ref<boolean>(false);
 
     let fetchAbortController = new AbortController();
 
@@ -119,6 +129,29 @@
             else policies.value = null;
         }).catch(reason => {
             if (reason.name !== "AbortError") policies.value = null;
+        });
+    }
+
+    function showDeleteConfirmationDialog(policy: IPolicy): void {
+        selectedPolicy.value = policy;
+        confirmationDialogVisible.value = true;
+    }
+
+    function confirmationDialogOptionSelected(positive: boolean): void {
+        if (positive && selectedPolicy.value != null) deletePolicy(selectedPolicy.value);
+        selectedPolicy.value = null;
+    }
+
+    function deletePolicy(policy: IPolicy): void {
+        RectureApi.deletePolicy(policy.policyId).then(result => {
+            if (result.success) policies.value = policies.value?.filter(item => item.policyId !== policy.policyId);
+            else {
+                errorDialogMessage.value = "Failed to delete condition.";
+                errorDialogVisible.value = true;
+            }
+        }).catch(reason => {
+            errorDialogMessage.value = "Failed to delete condition.";
+            errorDialogVisible.value = true;
         });
     }
 </script>

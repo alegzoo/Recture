@@ -551,6 +551,16 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async deletePolicy(policyId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("policies/"+policyId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
     public static async createRecording(file: File, lessonId: number, topicId: number, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
         let formData = new FormData();
         formData.append("file", file);
