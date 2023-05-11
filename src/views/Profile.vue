@@ -69,19 +69,6 @@
 
                         <v-divider thickness="2" class="border-opacity-100"/>
 
-                        <template v-if="!showingOnlyPublicInfo">
-                            <v-row class="pb-5 mt-3 ml-5">
-                                <v-col :cols="mdAndUp?2:12">
-                                    <p class="font-weight-medium">Password</p>
-                                </v-col>
-                                <v-col>
-                                    <p class="font-weight-black">*************</p>
-                                </v-col>
-                            </v-row>
-
-                            <v-divider thickness="2" class="border-opacity-100"/>
-                        </template>
-
                         <v-row class="pb-5 mt-3 ml-5">
                             <v-col :cols="mdAndUp?2:12">
                                 <p class="font-weight-medium">School</p>
