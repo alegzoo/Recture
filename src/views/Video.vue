@@ -1,8 +1,10 @@
 <template>
-    <v-container :fluid="lgAndDown">
+    <v-container :class="{'side-offset': xlAndUp}" fluid>
         <v-row no-gutters class="pt-1">
             <v-spacer/>
-            <VideoViewEditDialog/>
+            <v-col class="edit-button-col" cols="auto">
+                <v-btn v-if="accountStore.teacher" :ripple="false" variant="text" size="48" icon="mdi-lead-pencil" class="edit-button" @click="editDialogVisible = true"/>
+            </v-col>
         </v-row>
         <v-row no-gutters>
             <v-col :class="{'pl-11': smAndUp, 'pr-11': sm}">
@@ -41,7 +43,7 @@
                     <v-spacer/>
 
                     <v-col class="pt-3 pl-13" cols="auto">
-                        <v-btn variant="text" :ripple="false" prepend-icon="mdi-check-bold" :disabled="recording?.quizId == null" class="test-yourself-btn" @click="testYourselfDialogVisible = true">Test yourself</v-btn>
+                        <v-btn variant="text" :ripple="false" prepend-icon="mdi-check-bold" :disabled="recording?.quizId == null" class="test-yourself-button" @click="testYourselfDialogVisible = true">Test yourself</v-btn>
                     </v-col>
 
                 </v-row>
@@ -94,6 +96,7 @@
             </v-col>
         </v-row>
     </v-container>
+    <VideoViewEditDialog v-model="editDialogVisible"/>
     <TestYourselfDialog v-model="testYourselfDialogVisible" :quiz-id="recording?.quizId"/>
 </template>
 
@@ -106,6 +109,11 @@
         background-size: cover;
     }
 
+    .v-container.side-offset > .v-row {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
     .video-title {
         font-family: 'Clash Display', sans-serif;
         font-size: 36px;
@@ -116,7 +124,21 @@
         text-shadow: 2px 2px 0px black;
     }
 
-    .test-yourself-btn {
+    .edit-button {
+        @include elevated-button(3px, 3px, 1px);
+        background-color: $recture-yellow;
+        color: black;
+        border-radius: 0px;
+        border-color: black;
+        border-style: solid;
+        border-width: 2px;
+    }
+
+    .edit-button-col {
+        height: 48px;
+    }
+
+    .test-yourself-button {
         background-color: $recture-yellow;
         border-width: 2px;
         border-color: black;
@@ -186,6 +208,7 @@
 
     import router from '@/router';
     import { useRoute } from 'vue-router';
+    import { useAccountStore } from "@/stores/useAccountStore";
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useHomeStore } from '@/stores/useHomeStore';
     import { useRecording } from '@/composables/useRecording';
@@ -194,8 +217,11 @@
     import RelatedVideoList from '@/components/RelatedVideoList.vue';
     import TestYourselfDialog from '@/components/TestYourselfDialog.vue';
     
-    const { sm, smAndUp, mdAndUp, lgAndDown } = useDisplay();
+    const accountStore = useAccountStore();
 
+    const { sm, smAndUp, mdAndUp, lgAndDown, xlAndUp } = useDisplay();
+
+    const editDialogVisible = ref<boolean>(false);
     const testYourselfDialogVisible = ref<boolean>(false);
 
     const video = ref<HTMLVideoElement>();

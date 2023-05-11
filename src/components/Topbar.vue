@@ -2,7 +2,7 @@
     <v-toolbar id="topbar" height="58">
         <v-container id="topbar-panel" fluid>
             <v-row no-gutters align-content="center" justify="center" class="h-100 overflow-hidden">
-                <v-col v-show="router.currentRoute.value.name !== 'videoBrowser' || smAndUp" :cols="smAndUp?3:''" align-self="center" class="h-100">
+                <v-col v-show="router.currentRoute.value.name !== 'videoBrowser' || smAndUp" sm="3" align-self="center" class="h-100">
                     <FloatingAvatar v-show="router.currentRoute.value.name === 'videoBrowser' && smAndUp"/>
                 </v-col>
                 <v-col :cols="smAndUp?'':6" :align="smAndUp?'center':'start'" align-self="center">
@@ -12,8 +12,8 @@
                         </router-link>
                     </v-responsive>
                 </v-col>
-                <v-col :cols="smAndUp?3:''" align-self="center" class="h-100">
-                    <v-row no-gutters align-content="center" justify="center" class="h-100">
+                <v-col sm="3" align-self="center" class="h-100">
+                    <v-row v-if="accountStore.teacher" no-gutters align-content="center" justify="center" class="h-100">
                         <v-col align="center" align-self="center">
                             <UploadTrackerMenuButton id="upload-tracker-menu-button"/>
                             <UploadTrackerMenu activator="#upload-tracker-menu-button"/>
@@ -30,14 +30,14 @@
 </style>
 
 <script lang="ts" setup>
-    import { ref } from 'vue';
     import router from '@/router';
+    import { useAccountStore } from '@/stores/useAccountStore';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import FloatingAvatar from './FloatingAvatar.vue';
     import UploadTrackerMenu from './UploadTrackerMenu.vue';
     import UploadTrackerMenuButton from './UploadTrackerMenuButton.vue';
 
-    const activatorProps = ref<boolean>(false);
+    const accountStore = useAccountStore();
 
     const { smAndUp } = useDisplay();
 </script>

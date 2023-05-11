@@ -30,10 +30,10 @@
             <v-divider thickness="2"/>
 
             <v-list>
-                <v-list-item>
+                <v-list-item v-show="accountStore.teacher">
                     Filter by visibility:
                 </v-list-item>
-                <v-list-item>
+                <v-list-item v-show="accountStore.teacher">
                     <v-radio-group v-model="selectedVisibilityFilter">
                         <v-radio label="All" :value="RecordingVisibilityFilter.ShowAll"></v-radio>
                         <v-radio label="Public only" :value="RecordingVisibilityFilter.ShowPublicOnly"></v-radio>
@@ -71,9 +71,12 @@
 </style>
 
 <script lang="ts" setup>
-    import { IRecordingSort, RecordingVisibilityFilter, RecordingSortKey, SortOrder } from '@/api/RectureApi';
     import { ref, watch } from 'vue';
+    import { IRecordingSort, RecordingVisibilityFilter, RecordingSortKey, SortOrder } from '@/api/RectureApi';
+    import { useAccountStore } from '@/stores/useAccountStore';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
+
+    const accountStore = useAccountStore();
 
     const { mdAndUp } = useDisplay();
 

@@ -20,45 +20,48 @@
         <v-row id="video-area" no-gutters class="h-100 mx-5">
             <v-col id="video-area-content" cols="12">
                 <v-row>
-                    <v-col :cols="mdAndUp?'auto':12">
+                    <v-col cols="12" :md="accountStore.teacher ? 'auto' : ''">
                         <v-row class="mb-3" no gutters>
                             <v-col>
                                 <SearchBar class="mx-0" v-model="videoBrowserStore.searchQuery"/>
                             </v-col>
                         </v-row>
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
-                            <v-col cols="12" md="auto" align="center">
-                                <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-upload" :class="'px-12'+(mdAndUp?'':' mb-2')" @click="showUploadDialog = true">
-                                    UPLOAD
-                                </v-btn>
-                            </v-col>
+                            <template v-if="accountStore.teacher">
+                                <v-col cols="12" md="auto" align="center">
+                                    <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-upload" :class="'px-12'+(mdAndUp?'':' mb-2')" @click="showUploadDialog = true">
+                                        UPLOAD
+                                    </v-btn>
+                                </v-col>
 
-                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                                <v-btn 
-                                    variant="text" 
-                                    class="btn-new-theme-unit"  
-                                    append-icon="mdi-plus-circle"
-                                    rounded
-                                    @click="showNewThematicUnitDialog = true">
-                                    NEW THEMATIC UNIT
-                                </v-btn>
-                            </v-col>
+                                <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
+                                    <v-btn 
+                                        variant="text" 
+                                        class="btn-new-theme-unit"  
+                                        append-icon="mdi-plus-circle"
+                                        rounded
+                                        @click="showNewThematicUnitDialog = true">
+                                        NEW THEMATIC UNIT
+                                    </v-btn>
+                                </v-col>
 
-                            <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
-                                <v-btn 
-                                    variant="text" 
-                                    id="btn-new-question-series" 
-                                    append-icon="mdi-plus-circle"
-                                    @click="showNewQuestionSeriesDialog = true">
-                                    NEW QUESTION SERIES
-                                </v-btn>
-                            </v-col>
+                                <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
+                                    <v-btn 
+                                        variant="text" 
+                                        id="btn-new-question-series" 
+                                        append-icon="mdi-plus-circle"
+                                        @click="showNewQuestionSeriesDialog = true">
+                                        NEW QUESTION SERIES
+                                    </v-btn>
+                                </v-col>
+                            </template>
                         </v-row>
                     </v-col>
 
-                    <v-spacer/>
+                    <v-spacer v-if="accountStore.teacher || !mdAndUp"/>
+                    <v-col v-else cols="2" lg="5" xl="7" xxl="8"/>
 
-                    <v-col :cols="mdAndUp?'auto':12" :align="mdAndUp?'right':'center'" align-self="end">
+                    <v-col cols="12" md="auto" :align="mdAndUp?'right':'center'" :align-self="(accountStore.student && mdAndUp) ? 'start' : 'end'">
                         <v-row align="center" align-content="center" justify="center">
                             <v-col cols="auto" :class="mdAndUp?'':'pt-0'">
                                 <FilterButtonVideoArea @filter-or-sort-changed="onFilterOrSortChanged"/>

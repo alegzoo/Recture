@@ -4,7 +4,7 @@
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
             <SidebarButton icon="mdi-account" text="Profile" to="/profile"/>
             <SidebarButton icon="mdi-comment-text" text="New comments" to="/newcomments"/>
-            <SidebarButton icon="mdi-calendar-clock" text="Timetable" to="/timetable"/>
+            <SidebarButton v-if="accountStore.teacher" icon="mdi-calendar-clock" text="Timetable" to="/timetable"/>
             <v-divider/>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
         </v-list>
@@ -15,6 +15,7 @@
     import { RectureApi } from '@/api/RectureApi';
     import { Stores } from '@/stores/Stores';
     import router from '@/router';
+    import { useAccountStore } from '@/stores/useAccountStore';
     import SidebarButton from './SidebarButton.vue';
 
     const props = defineProps<{
@@ -24,6 +25,8 @@
     const emit = defineEmits<{
         (e: "update:modelValue", val: boolean): void
     }>();
+
+    const accountStore = useAccountStore();
 
     function signOut() {
         RectureApi.signOut().then(function (result) {

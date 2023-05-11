@@ -26,7 +26,9 @@ export const useAccountStore = defineStore("accountStore", {
         avatar: null as string | null
     }),
     getters: {
-        fullName: state => (state.firstName != null && state.lastName != null) ? (state.firstName+" "+state.lastName) : null
+        fullName: state => (state.firstName != null && state.lastName != null) ? (state.firstName+" "+state.lastName) : null,
+        teacher: state => (state.userType === "TEACHER"),
+        student: state => (state.userType === "STUDENT")
     },
     actions: {
         loadData(account: IAccount) {

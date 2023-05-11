@@ -1,10 +1,5 @@
 <template>
-    <v-dialog class="h-100 justify-center" width="700" scroll-strategy="block">
-        <template v-slot:activator="{ props }">
-            <v-col cols="auto">
-                <v-btn v-bind="props" id="video-edit-icon" :ripple="false" variant="text" icon="mdi-lead-pencil"/>
-            </v-col>
-        </template>
+    <v-dialog :model-value="modelValue" @update:model-value="val => emit('update:modelValue', val)" class="h-100 justify-center" width="700" scroll-strategy="block">
         <v-card class="video-edit-card">
             <template v-slot:title>
                 <v-row no-gutters>
@@ -181,84 +176,77 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/styles/constants.scss";
-@import "@/styles/mixins.scss";
+    @import "@/styles/constants.scss";
+    @import "@/styles/mixins.scss";
 
+    .video-edit-card {
+        background-color: #efefef;
+    }
 
-.video-edit-card {
-    background-color: #efefef;
-}
-    
+    .subtitles{
+        color: black;
+        opacity: 50%;
+    }
 
-#video-edit-icon {
-    @include elevated-button(3px, 3px, 1px);
-    background-color: $recture-yellow;
-    color: black;
-    border-radius: 0px;
-    border-color: black;
-    border-style: solid;
-    border-width: 2px;
-}
+    .v-sheet-subject{
+            background-color: $recture-yellow !important;
+            border-radius: 3px 0 0 3px !important;
+            border-color: black;
+            border-style: solid;
+            border-width: 2px;
+            box-shadow: 4px 4px 0px 0px black;
+        }
 
-.subtitles{
-    color: black;
-    opacity: 50%;
-}
-
-.v-sheet-subject{
-        background-color: $recture-yellow !important;
-        border-radius: 3px 0 0 3px !important;
-        border-color: black;
-        border-style: solid;
-        border-width: 2px;
+    .class-chip-comment{
+        background-color: #e24a42;
+        color: white;
         box-shadow: 4px 4px 0px 0px black;
     }
 
-.class-chip-comment{
-    background-color: #e24a42;
-    color: white;
-    box-shadow: 4px 4px 0px 0px black;
-}
+    .save-btn-upload{
+            background-color: #00A6E2;
+            color: white !important;
+            font-size: large;
+            font-weight: bold;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
 
-.save-btn-upload{
-        background-color: #00A6E2;
-        color: white !important;
-        font-size: large;
+        .upload-card{
+            background-color: #efefef;
+            border-radius: 6px;
+        }
+
+        .choose-selectors-video-view-edit{
+        border: solid 2px black !important;
+        border-radius: 0px !important;
+        box-shadow: 2px 2px 0px 0px black !important;
+        background-color: white !important;
         font-weight: bold;
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
+        color: black !important;
+        text-transform: uppercase !important;
+        }
+
+    .new-q-series-btn{
+        @include elevated-button(4px, 4px, 2px);
+        background-color: $recture-yellow;
+        color: black;
+        border: 2px black solid;
+        border-radius: 0px;
     }
-
-    .upload-card{
-        background-color: #efefef;
-        border-radius: 6px;
-    }
-
-    .choose-selectors-video-view-edit{
-    border: solid 2px black !important;
-    border-radius: 0px !important;
-    box-shadow: 2px 2px 0px 0px black !important;
-    background-color: white !important;
-    font-weight: bold;
-    color: black !important;
-    text-transform: uppercase !important;
-    }
-
-.new-q-series-btn{
-    @include elevated-button(4px, 4px, 2px);
-    background-color: $recture-yellow;
-    color: black;
-    border: 2px black solid;
-    border-radius: 0px;
-}
-
 </style>
 
 <script lang="ts" setup>
     import NewQuestionSeriesDialog from './NewQuestionSeriesDialog.vue';
     import { ref } from 'vue';
+
+    const props = defineProps<{
+        modelValue?: boolean
+    }>();
+
+    const emit = defineEmits<{
+        (e: "update:modelValue", val: boolean): void
+    }>();
     
     const showNewQuestionSeriesDialog = ref<boolean>(false);
-
-
 </script>
