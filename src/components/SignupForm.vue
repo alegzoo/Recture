@@ -4,14 +4,12 @@
             <p>{{ mainSideText }} <span class="cursive underlined">{{ cursiveSideText }}</span></p>
         </v-col>
 
-        <v-col v-show="!lgAndUp" cols="2"/>
+        <v-col v-show="!lgAndUp" cols="1" sm="2"/>
         
         <v-col class="form-column pa-0" align-self="end">
             <v-form validate-on="input" @submit.prevent="submitHandler" class="w-100 h-100 px-12 d-flex flex-column" no-gutters>
-                <v-col cols="0"/>
-                <v-img src="@/assets/recture_typeface_logo_2.svg" :max-width="200" class="flex-shrink-5" :aspect-ratio="10"/>
+                <img src="@/assets/recture_typeface_logo_2.svg" :width="200" class="flex-grow-0 py-15"/>
 
-                <v-col sm="0"/>
                 <v-text-field v-model="firstName" class="py-2 flex-grow-0" label="First name" :rules="[validateField]" variant="plain" single-line hide-details/>
                 <v-text-field v-model="lastName" class="py-2 flex-grow-0" label="Last name" :rules="[validateField]" variant="plain" single-line hide-details/>
                 <v-text-field v-model="email" class="py-2 flex-grow-0" label="Email" :rules="[validateField]" variant="plain" single-line hide-details/>
@@ -21,8 +19,7 @@
                 <div class="d-flex flex-grow-0">
                     <v-checkbox v-model="termsAgreedTo" class="flex-grow-0 align-self-center" :ripple="false" hide-details>
                         <template v-slot:label>
-                            <span>I agree to the&nbsp;</span>
-                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="flex-grow-0 align-self-center">Terms of Service</a>
+                            <span>I agree to the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Terms of Service</a></span>
                         </template>
                     </v-checkbox>
                 </div>
@@ -37,7 +34,7 @@
             </v-form>
         </v-col>
 
-        <v-col class="pa-0" cols="2" lg="2"/>
+        <v-col class="pa-0" cols="1" sm="2" lg="1" xl="2"/>
 
         <v-overlay v-model="creatingAccount" class="align-center justify-center" contained persistent>
             <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
