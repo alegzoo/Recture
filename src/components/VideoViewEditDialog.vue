@@ -187,7 +187,6 @@
 
 .video-edit-card {
     background-color: #efefef;
-    border-radius: 6px;
 }
     
 

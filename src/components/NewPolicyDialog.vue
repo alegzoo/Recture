@@ -59,7 +59,6 @@
 
     .v-card {
         background-color: #efefef;
-        border-radius: 6px;
     }
 
     .subtle {

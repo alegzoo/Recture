@@ -246,3 +246,7 @@ html, body {
 .v-select .v-icon, .v-combobox .v-icon {
     opacity: 100% !important;
 }
+
+.v-dialog .v-card {
+    border-radius: 6px !important;
+}
