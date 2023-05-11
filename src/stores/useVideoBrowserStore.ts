@@ -11,16 +11,20 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     "Welcome back, %name!",
                     "Hello, %name!"
                 ],
-                "secondary": [
+                "secondary_teacher": [
                     "Let's share what you know with the world!",
                     "What will you share with the world today?"
+                ],
+                "secondary_student": [
+                    "Knowledge is power.",
+                    "Don't just learn, experience."
                 ]
             },
             primary: "",
             secondary: "",
             templates: {
-                primary: "",
-                secondary: ""
+                primary: null as string | null,
+                secondary: null as string | null
             }
         },
         classes: [] as IClass[],
@@ -57,21 +61,31 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
     },
     actions: {
         generateWelcomeText() {
-            this.welcomeText.templates.primary = this.welcomeText.phrases.primary[Math.floor(Math.random()*this.welcomeText.phrases.primary.length)];
-            this.welcomeText.templates.secondary = this.welcomeText.phrases.secondary[Math.floor(Math.random()*this.welcomeText.phrases.secondary.length)];
+            if (this.welcomeText.templates.primary == null) this.welcomeText.templates.primary = this.welcomeText.phrases.primary[Math.floor(Math.random()*this.welcomeText.phrases.primary.length)];
+            
+            if (this.welcomeText.templates.secondary == null) {
+                const accountStore = useAccountStore();
+
+                let availablePhrases = null as string[] | null;
+                if (accountStore.teacher) availablePhrases = this.welcomeText.phrases.secondary_teacher;
+                else if (accountStore.student) availablePhrases = this.welcomeText.phrases.secondary_student;
+
+                if (availablePhrases != null) this.welcomeText.templates.secondary = availablePhrases[Math.floor(Math.random()*availablePhrases.length)];
+            }
+
             this.formatWelcomeText();
         },
         formatWelcomeText() {
             const accountStore = useAccountStore();
             let name = accountStore.firstName != null ? accountStore.firstName : "user";
-            this.welcomeText.primary = this.welcomeText.templates.primary.replace("%name", name);
-            this.welcomeText.secondary = this.welcomeText.templates.secondary.replace("%name", name);
+            if (this.welcomeText.templates.primary != null) this.welcomeText.primary = this.welcomeText.templates.primary.replace("%name", name);
+            if (this.welcomeText.templates.secondary != null) this.welcomeText.secondary = this.welcomeText.templates.secondary.replace("%name", name);
         },
         clearWelcomeText() {
             this.welcomeText.primary = "";
             this.welcomeText.secondary = "";
-            this.welcomeText.templates.primary = "";
-            this.welcomeText.templates.secondary = "";
+            this.welcomeText.templates.primary = null;
+            this.welcomeText.templates.secondary = null;
         },
         
         fetchRecordings(page: number, pageSize: number = 20) {

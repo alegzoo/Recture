@@ -146,8 +146,9 @@
 
     videoBrowserStore.clearWelcomeText();
     accountStore.$subscribe((mutation, state) => {
-        videoBrowserStore.formatWelcomeText();
+        videoBrowserStore.generateWelcomeText();
     });
+
     videoBrowserStore.generateWelcomeText();
 
     //TODO: May need to prevent race conditions here and in similar calls!
