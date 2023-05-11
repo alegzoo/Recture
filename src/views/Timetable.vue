@@ -38,17 +38,6 @@
             <v-col cols="12" :class="'h-100 d-flex flex-column py-7'+(mdAndUp?' px-10':'')">
                 <TimetableGrid :timetable="timetable" align="stretch" class="flex-grow-1" rounded @timetable-cell-click="onGridCellClick" @timetable-lesson-share-button-click="showShareDialog"/>
                 <v-row align="end" align-content="end" justify="end" class="flex-grow-0 pt-7">
-                    <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="manageGroupsDialogVisible = true">
-                            MANAGE CLASSES AND SUBJECTS
-                        </v-btn>
-                    </v-col>
-                    <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-folder-edit" @click="manageThematicUnitsDialogVisible = true">
-                            MANAGE THEMATIC UNITS
-                        </v-btn>
-                    </v-col>
-
                     <template v-if="timetable.creating.value">
                         <v-col cols="auto">
                             <v-btn variant="text" class="footer-button secondary creating-button" :ripple="false" @click="cancelLessonCreation()">
@@ -63,12 +52,21 @@
                         </v-col>
                     </template>
                     <template v-else>
-
-                    <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetable.editing.value" prepend-icon="mdi-folder-question" @click="manageQuizzesDialogVisible = true">
-                            MANAGE QUIZZES
-                        </v-btn>
-                    </v-col>
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-table-edit" @click="manageGroupsDialogVisible = true">
+                                MANAGE CLASSES AND SUBJECTS
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button" :ripple="false" :disabled="!timetable.idle.value" prepend-icon="mdi-folder-edit" @click="manageThematicUnitsDialogVisible = true">
+                                MANAGE THEMATIC UNITS
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="auto">
+                            <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetable.editing.value" prepend-icon="mdi-folder-question" @click="manageQuizzesDialogVisible = true">
+                                MANAGE QUIZZES
+                            </v-btn>
+                        </v-col>
                     </template>
                 </v-row>
             </v-col>
@@ -110,7 +108,7 @@
 
     import "@/styles/timetable.scss";
 
-    const { mdAndUp, lgAndUp } = useDisplay();
+    const { mdAndUp } = useDisplay();
 
     const timetableSetupDialogVisible = ref<boolean>(false);
     const manageGroupsDialogVisible = ref<boolean>(false);
