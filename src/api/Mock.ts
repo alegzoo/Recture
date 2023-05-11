@@ -533,6 +533,17 @@ export function makeServer() {
                 }
             }, {timing: 300});
 
+            this.del(RectureApi.BASE_API_URL+"/recordings/:id", (schema, request) => {
+                const recordingId = parseInt(request.params.id);
+                const recording = schema.findBy("recording", {recordingId: recordingId});
+                if (recording != null) {
+                    recording.destroy();
+                    return new Response(204);
+                } else {
+                    return new Response(404);
+                }
+            }, {timing: 1000});
+
             this.del(RectureApi.BASE_API_URL+"/lessons/:id", (schema, request) => {
                 const lessonId = parseInt(request.params.id);
                 const lesson = schema.findBy("lesson", {lessonId: lessonId});

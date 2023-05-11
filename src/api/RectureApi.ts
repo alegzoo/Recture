@@ -542,6 +542,28 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
+    public static async updateRecording(recordingId: number, classId: number | null, subjectId: number | null, topicId: number | null, quizId: number | null | undefined, title: string | null, description: string | null, published: boolean | null, commentsAllowed: boolean | null, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        if (classId != null) formData.append("classId", classId.toString());
+        if (subjectId != null) formData.append("subjectId", subjectId.toString());
+        if (topicId != null) formData.append("topicId", topicId.toString());
+        if (quizId != null) formData.append("quizId", quizId.toString());
+        if (title != null) formData.append("title", title.toString());
+        if (description != null) formData.append("description", description.toString());
+        if (published != null) formData.append("published", published.toString());
+        if (commentsAllowed != null) formData.append("commentsAllowed", commentsAllowed.toString());
+        if (recordingTimestamp != null) formData.append("recordingDate", recordingTimestamp.toString());
+
+        const response = await fetch(this.pathToUrl("recordings/"+recordingId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async removeStudentFromClass(classId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId+"/students/"+userId), {
             method: "DELETE",
@@ -554,6 +576,16 @@ export class RectureApi {
 
     public static async removeStudentFromSubject(subjectId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("subjects/"+subjectId+"/students/"+userId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteRecording(recordingId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("recordings/"+recordingId), {
             method: "DELETE",
             credentials: "include",
             signal: signal

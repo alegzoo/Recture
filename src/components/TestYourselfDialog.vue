@@ -99,7 +99,7 @@
 
     const props = defineProps<{
         modelValue?: boolean,
-        quizId: number | undefined
+        quizId: number | null | undefined
     }>();
 
     const emit = defineEmits<{

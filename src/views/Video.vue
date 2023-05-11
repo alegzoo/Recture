@@ -96,7 +96,7 @@
             </v-col>
         </v-row>
     </v-container>
-    <VideoViewEditDialog v-model="editDialogVisible"/>
+    <VideoEditDialog v-model="editDialogVisible" :recording="recording" @data-modified="recordingComposable.fetchAll()"/>
     <TestYourselfDialog v-model="testYourselfDialogVisible" :quiz-id="recording?.quizId"/>
 </template>
 
@@ -212,7 +212,7 @@
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useHomeStore } from '@/stores/useHomeStore';
     import { useRecording } from '@/composables/useRecording';
-    import VideoViewEditDialog from '@/components/VideoViewEditDialog.vue';
+    import VideoEditDialog from '@/components/VideoEditDialog.vue';
     import VideoCommentSection from '@/components/VideoCommentSection.vue';
     import RelatedVideoList from '@/components/RelatedVideoList.vue';
     import TestYourselfDialog from '@/components/TestYourselfDialog.vue';

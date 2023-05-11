@@ -71,6 +71,16 @@
         }
     });
 
+    watch(() => props.modelValue, () => {
+        if (props.modelValue != undefined) {
+            if (props.modelValue instanceof String || typeof props.modelValue === "string") newItemName.value = props.modelValue as string;
+            else selectedItem.value = props.modelValue;
+        } else {
+            selectedItem.value = null;
+            newItemName.value = null;
+        }
+    });
+
     onMounted(() => {
         if (props.mandatory) {
             rules.push(() => {
