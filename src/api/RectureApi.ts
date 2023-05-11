@@ -914,7 +914,7 @@ export interface IRecording {
     commentsAllowed: boolean
     comments: number
     notifications: number
-    quizId: number
+    quizId: number | null
     teacherId: number
     classId: number
     className: string
