@@ -1,10 +1,10 @@
 <template>
     <v-dialog class="h-100 justify-center" width="1000" scroll-strategy="block">
-        <v-card class="new-question-series-card">
+        <v-card>
             <template v-slot:title>
                 <v-row no-gutters>
                     <v-col class="pa-0">
-                        <h2 class="pt-3">NEW QUESTION SERIES</h2>
+                        <h2 class="pt-3">NEW QUIZ</h2>
                     </v-col>
                 </v-row>
                 
@@ -24,7 +24,7 @@
                     </v-col>
 
                     <v-col cols="auto" class="pa-0 pl-1">
-                        <h5 class="subtitles">You can add this question series to another lessons too just by clicking Edit in the right corner of the clicked lesson</h5>
+                        <h5 class="subtitles">You can add this quiz to other recordings too just by clicking Edit in the right corner of its page</h5>
                     </v-col>
                 </v-row>
 
@@ -55,7 +55,7 @@
 
                     <v-row no-gutters>
                         <v-col cols="12" class="pa-0 pl-2 pr-5">
-                            <v-text-field class="title-field" variant="underlined" label="Title of your question series..." single-line hide-details></v-text-field>
+                            <v-text-field class="title-field" variant="underlined" label="Title of your quiz..." single-line hide-details></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -96,7 +96,7 @@
                                             </v-row>
 
                                             <v-row no-gutters class="pt-4">
-                                                <NewOptionQuestionSeries/>
+                                                <NewOptionQuiz/>
                                             </v-row>
 
                                             <v-row no-gutters class="pl-1 pt-1 pb-1">
@@ -126,7 +126,7 @@
 
             <v-row no-gutters height="auto">
                 <v-col align="center" align-self="end">
-                    <v-btn class="create-new-q-series-btn" width="1100" height="50" variant="text">CREATE</v-btn>
+                    <v-btn class="create-new-quiz-btn" width="1100" height="50" variant="text">CREATE</v-btn>
                 </v-col>
             </v-row>
         </v-card>
@@ -136,136 +136,133 @@
 
 
 <style lang="scss" scoped>
-@import "@/styles/constants.scss";
-@import "@/styles/mixins.scss";
-@import "@/styles/lesson-colors.scss";
+    @import "@/styles/constants.scss";
+    @import "@/styles/mixins.scss";
+    @import "@/styles/lesson-colors.scss";
 
-.new-question-series-card{
-    background-color: #efefef;
-    border-radius: 6px;
-}
-
-.v-sheet-header{
-    background-color: black;
-}
-
-.subject-chip-header{
-    background-color: $recture-yellow;
-    color: black;
-}
-
-.header-title{
-    color: white;
-}
-
-.header-date{
-    color: white;
-}
-
-.v-divider-under-title{
-    border-top-style: dashed;
-    border-top-width: 3px;
-    border-top-color: black;
-    background-color: transparent;
-    opacity: 20%;
-}
-
-.v-col-question{
-    background-color: white;
-}
-
-
-.v-sheet-question{
-    background-color: white;
-    border-radius: 6px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-}
-
-
-.v-sheet-question:hover{
-    box-shadow: 4px 4px 0px 0px black;
-}
-
-.v-sheet-question-2{
-    background-color: white;
-    border-radius: 6px !important;
-}
-
-
-.create-new-q-series-btn{
-    background-color: #5cb978;
-    color: white !important;
-    font-size: large;
-    font-weight: bold;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    .v-card {
+        background-color: #efefef;
+        border-radius: 6px;
     }
 
-.new-question-btn{
-    @include elevated-button(3px, 3px, 1px);
-    background-color: $recture-yellow;
-    color: black;
-    border-radius: 9999px;
-    border-color: black;
-    border-style: solid;
-    border-width: 2px;
-}
+    .v-sheet-header {
+        background-color: black;
+    }
 
-.subtitles{
-    color: black;
-    opacity: 50%;
-}
+    .subject-chip-header {
+        background-color: $recture-yellow;
+        color: black;
+    }
 
-.v-sheet-lesson-name{
-    border-top-left-radius: 9999px;
-    border-bottom-left-radius: 9999px;
-    background-color: black;
-    color: white;
-}
+    .header-title {
+        color: white;
+    }
 
-.v-sheet-subject{
-    border-top-left-radius: 9999px;
-    border-bottom-left-radius: 9999px;
-    background-color: $recture-yellow;
-    color: black;
-    border: black 2px solid;
-}
+    .header-date {
+        color: white;
+    }
 
-.v-sheet-class{
-    background-color: #e24a42;
-    border: black 2px solid;
-    border-top-left-radius: 9999px;
-    border-bottom-left-radius: 9999px;
-    color: white;
-}
+    .v-divider-under-title {
+        border-top-style: dashed;
+        border-top-width: 3px;
+        border-top-color: black;
+        background-color: transparent;
+        opacity: 20%;
+    }
 
-.info-icon{
-    color: black;
-    opacity: 50%;
-    font-size: large;
-}
+    .v-col-question {
+        background-color: white;
+    }
 
-.v-sheet-thematic-unit{
-    background-color: white;
-    color: black;
-    border: black 2px solid;
-    border-radius: 9999px;
-}
 
-.questions-making-section{
-    background-color: #afafaf;
-}
+    .v-sheet-question {
+        background-color: white;
+        border-radius: 6px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: black;
+    }
 
-.title-field * {
-    font-size: 20px;
-}
 
+    .v-sheet-question:hover {
+        box-shadow: 4px 4px 0px 0px black;
+    }
+
+    .v-sheet-question-2 {
+        background-color: white;
+        border-radius: 6px !important;
+    }
+
+
+    .create-new-quiz-btn {
+        background-color: #5cb978;
+        color: white !important;
+        font-size: large;
+        font-weight: bold;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        }
+
+    .new-question-btn {
+        @include elevated-button(3px, 3px, 1px);
+        background-color: $recture-yellow;
+        color: black;
+        border-radius: 9999px;
+        border-color: black;
+        border-style: solid;
+        border-width: 2px;
+    }
+
+    .subtitles {
+        color: black;
+        opacity: 50%;
+    }
+
+    .v-sheet-lesson-name {
+        border-top-left-radius: 9999px;
+        border-bottom-left-radius: 9999px;
+        background-color: black;
+        color: white;
+    }
+
+    .v-sheet-subject {
+        border-top-left-radius: 9999px;
+        border-bottom-left-radius: 9999px;
+        background-color: $recture-yellow;
+        color: black;
+        border: black 2px solid;
+    }
+
+    .v-sheet-class {
+        background-color: #e24a42;
+        border: black 2px solid;
+        border-top-left-radius: 9999px;
+        border-bottom-left-radius: 9999px;
+        color: white;
+    }
+
+    .info-icon {
+        color: black;
+        opacity: 50%;
+        font-size: large;
+    }
+
+    .v-sheet-thematic-unit {
+        background-color: white;
+        color: black;
+        border: black 2px solid;
+        border-radius: 9999px;
+    }
+
+    .questions-making-section {
+        background-color: #afafaf;
+    }
+
+    .title-field * {
+        font-size: 20px;
+    }
 </style>
     
 <script lang="ts" setup>
-
-import NewOptionQuestionSeries from '@/components/NewOptionQuestionSeries.vue';
-
+    import NewOptionQuiz from '@/components/NewOptionQuiz.vue';
 </script>

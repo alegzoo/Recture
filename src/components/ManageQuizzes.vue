@@ -1,16 +1,16 @@
 <template>
     <v-dialog width="800" persistent>
-        <v-card class="manage-question-series-card">
+        <v-card>
             <v-card-title>
                 <v-col cols="auto">
-                    <h2>MANAGE QUESTION SERIES</h2>
+                    <h2>MANAGE QUIZZES</h2>
                 </v-col>                
             </v-card-title>      
             <v-card-text>
                     <v-row>
                         <v-col>
                             <v-text-field
-                            label="Title of the question series"
+                            label="Search by quiz title"
                             variant="solo"
                             single-line
                             class="text-field-search"
@@ -23,16 +23,14 @@
 </template>
 
 <style lang="scss" scoped>
+    .v-card{
+        background-color: #efefef;
+    }
 
-.manage-question-series-card{
-    background-color: #efefef;
-}
 
-
-.subtle {
-    color: rgba(0, 0, 0, 0.5);
-}
-
+    .subtle {
+        color: rgba(0, 0, 0, 0.5);
+    }
 </style>
 
 

@@ -36,7 +36,7 @@
 
 <v-row no-gutters class="pt-8">
                             <v-col class="subtle pl-1">
-                                <h4>Question series (optional)</h4>
+                                <h4>Quiz (optional)</h4>
                             </v-col>
                         </v-row>
 
@@ -45,7 +45,7 @@
                                 <v-combobox
                                     v-model="selectedQuiz"
                                     hide-details
-                                    label="Choose question series"
+                                    label="Choose quiz"
                                     :items="quizzes"
                                     item-title="title"
                                     return-object
@@ -151,7 +151,6 @@
         </v-overlay>
     </v-card>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
-    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
 </template>
 
 <style lang="scss" scoped>
@@ -179,14 +178,6 @@
         border-radius: 0px;
     }
 
-    .new-q-series-btn {
-        @include elevated-button(4px, 4px, 2px);
-        background-color: $recture-yellow;
-        color: black;
-        border: 2px black solid;
-        border-radius: 0px;
-    }
-
     .title-field :deep(input) {
         font-weight: bold !important;
     }
@@ -202,11 +193,8 @@
     import UploadPreviewCard from './UploadPreviewCard.vue';
     import SelectOrCreateInput from './SelectOrCreateInput.vue';
     import MessageDialog from './MessageDialog.vue';
-    import NewQuestionSeriesDialog from './NewQuestionSeriesDialog.vue';
 
     import "@/styles/main.scss";
-
-    const showNewQuestionSeriesDialog = ref<boolean>(false);
 
     const props = defineProps<{
         lesson: ILesson,

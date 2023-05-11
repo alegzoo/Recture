@@ -48,10 +48,10 @@
                                 <v-col cols="12" md="auto" align="center" :class="mdAndUp?'ml-5':'mb-2'">
                                     <v-btn 
                                         variant="text" 
-                                        id="btn-new-question-series" 
+                                        id="btn-new-quiz" 
                                         append-icon="mdi-plus-circle"
-                                        @click="showNewQuestionSeriesDialog = true">
-                                        NEW QUESTION SERIES
+                                        @click="showNewQuizDialog = true">
+                                        NEW QUIZ
                                     </v-btn>
                                 </v-col>
                             </template>
@@ -103,7 +103,7 @@
         </v-row>
         <UploadDialog v-model="showUploadDialog"/>
         <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
-        <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
+        <NewQuizDialog v-model="showNewQuizDialog"/>
 </template>
 
 <style lang="scss">
@@ -124,7 +124,7 @@
     import SearchBar from '@/components/SearchBar.vue';
     import UploadDialog from '@/components/UploadDialog.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
-    import NewQuestionSeriesDialog from '@/components/NewQuestionSeriesDialog.vue';
+    import NewQuizDialog from '@/components/NewQuizDialog.vue';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';
@@ -133,7 +133,7 @@
 
     const showUploadDialog = ref<boolean>(false);
     const showNewThematicUnitDialog = ref<boolean>(false);
-    const showNewQuestionSeriesDialog = ref<boolean>(false);
+    const showNewQuizDialog = ref<boolean>(false);
 
     const homeStore = useHomeStore();
     const accountStore = useAccountStore();

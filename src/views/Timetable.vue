@@ -65,8 +65,8 @@
                     <template v-else>
 
                     <v-col cols="auto">
-                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetable.editing.value" prepend-icon="mdi-folder-question" @click="ManageQuestionSeriesVisible = true">
-                            MANAGE QUESTION SERIES
+                        <v-btn variant="text" class="footer-button" :ripple="false" :disabled="timetable.editing.value" prepend-icon="mdi-folder-question" @click="manageQuizzesDialogVisible = true">
+                            MANAGE QUIZZES
                         </v-btn>
                     </v-col>
                     </template>
@@ -85,7 +85,7 @@
     <CreateInvitationDialog v-model="shareDialogVisible" :lesson="shareDialogLesson"/>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
 
-    <ManageQuestionSeries v-model="ManageQuestionSeriesVisible"/>
+    <ManageQuizzes v-model="manageQuizzesDialogVisible"/>
 
     <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
         <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
@@ -106,7 +106,7 @@
     import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
-    import ManageQuestionSeries from '@/components/ManageQuestionSeries.vue';
+    import ManageQuizzes from '@/components/ManageQuizzes.vue';
 
     import "@/styles/timetable.scss";
 
@@ -118,7 +118,7 @@
     const createLessonDialogVisible = ref<boolean>(false);
     const newThematicUnitDialogVisible = ref<boolean>(false);
 
-    const ManageQuestionSeriesVisible = ref<boolean>(false);
+    const manageQuizzesDialogVisible = ref<boolean>(false);
 
     const shareDialogVisible = ref<boolean>(false);
 

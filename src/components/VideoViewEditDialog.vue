@@ -96,7 +96,7 @@
                                 hide-details
                                 no-gutters
                                 class="choose-selectors-video-view-edit"
-                                label="Choose question series"
+                                label="Choose quiz"
                                 :items="['Definičný obor - preskúšanie 1']"
                                 variant="solo"
                                 density="compact"
@@ -109,7 +109,7 @@
                         </v-col>
 
                         <v-col align="start" class="pa-0" cols="5">
-                            <v-btn :ripple="false" class="px-10 new-q-series-btn" variant="text" @click="showNewQuestionSeriesDialog = true">NEW QUESTION SERIES</v-btn>
+                            <v-btn :ripple="false" class="px-10 new-quiz-btn" variant="text" @click="newQuizDialogVisible = true">NEW QUIZ</v-btn>
                         </v-col>
                     </v-row>
                 </v-row>
@@ -171,7 +171,7 @@
             </v-row>
         </v-card>
     </v-dialog>
-    <NewQuestionSeriesDialog v-model="showNewQuestionSeriesDialog"/>
+    <NewQuizDialog v-model="newQuizDialogVisible"/>
 
 </template>
 
@@ -183,12 +183,12 @@
         background-color: #efefef;
     }
 
-    .subtitles{
+    .subtitles {
         color: black;
         opacity: 50%;
     }
 
-    .v-sheet-subject{
+    .v-sheet-subject {
             background-color: $recture-yellow !important;
             border-radius: 3px 0 0 3px !important;
             border-color: black;
@@ -197,13 +197,13 @@
             box-shadow: 4px 4px 0px 0px black;
         }
 
-    .class-chip-comment{
+    .class-chip-comment {
         background-color: #e24a42;
         color: white;
         box-shadow: 4px 4px 0px 0px black;
     }
 
-    .save-btn-upload{
+    .save-btn-upload {
             background-color: #00A6E2;
             color: white !important;
             font-size: large;
@@ -212,12 +212,12 @@
             border-top-right-radius: 0px;
         }
 
-        .upload-card{
+        .upload-card {
             background-color: #efefef;
             border-radius: 6px;
         }
 
-        .choose-selectors-video-view-edit{
+        .choose-selectors-video-view-edit {
         border: solid 2px black !important;
         border-radius: 0px !important;
         box-shadow: 2px 2px 0px 0px black !important;
@@ -227,7 +227,7 @@
         text-transform: uppercase !important;
         }
 
-    .new-q-series-btn{
+    .new-quiz-btn {
         @include elevated-button(4px, 4px, 2px);
         background-color: $recture-yellow;
         color: black;
@@ -237,7 +237,7 @@
 </style>
 
 <script lang="ts" setup>
-    import NewQuestionSeriesDialog from './NewQuestionSeriesDialog.vue';
+    import NewQuizDialog from './NewQuizDialog.vue';
     import { ref } from 'vue';
 
     const props = defineProps<{
@@ -248,5 +248,5 @@
         (e: "update:modelValue", val: boolean): void
     }>();
     
-    const showNewQuestionSeriesDialog = ref<boolean>(false);
+    const newQuizDialogVisible = ref<boolean>(false);
 </script>
