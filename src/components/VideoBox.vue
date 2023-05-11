@@ -32,7 +32,7 @@
         recording: IRecording
     }>();
 
-    const date = computed(() => new Date(props.recording.recordingTimestamp*1000).toLocaleDateString());
+    const date = computed(() => new Date(props.recording.recordingTimestamp).toLocaleDateString());
 </script>
   
 <style>

@@ -135,8 +135,8 @@ export function makeServer() {
                     subjectName: recordingSubject.name,
                     topicId: recordingTopic.topicId,
                     topicName: recordingTopic.name,
-                    uploadTimestamp: Math.floor(Date.now()/1000-i*(24*60*60)),
-                    recordingTimestamp: Math.floor(Date.now()/1000-i*(24*60*60)),
+                    uploadTimestamp: Math.floor(Date.now()-i*(24*60*60*1000)),
+                    recordingTimestamp: Math.floor(Date.now()-i*(24*60*60*1000)),
                     sources: [
                         {
                             sourceUrl: "https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_15MB_MP4.mp4",
@@ -156,7 +156,7 @@ export function makeServer() {
                         userFirstName: account?.firstName,
                         userLastName: account?.lastName,
                         content: "A random comment.",
-                        creationTimestamp: Math.floor(Date.now()/1000-i*(24*60*60))+10000,
+                        creationTimestamp: Math.floor(Date.now()-i*(24*60*60*1000))+10000000,
                         lastEditTimestamp: null
                     } as IComment;
 
@@ -171,7 +171,7 @@ export function makeServer() {
                             userFirstName: account?.firstName,
                             userLastName: account?.lastName,
                             content: "A random reply to a random comment.",
-                            creationTimestamp: Math.floor(Date.now()/1000-i*(24*60*60))+600000,
+                            creationTimestamp: Math.floor(Date.now()-i*(24*60*60*1000))+600000000,
                             lastEditTimestamp: null
                         } as ICommentReply;
 

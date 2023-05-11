@@ -34,7 +34,7 @@
                             </v-col>
                         </v-row>
 
-<v-row no-gutters class="pt-8">
+                        <v-row no-gutters class="pt-8">
                             <v-col class="subtle pl-1">
                                 <h4>Quiz (optional)</h4>
                             </v-col>
