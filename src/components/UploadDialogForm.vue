@@ -34,6 +34,32 @@
                             </v-col>
                         </v-row>
 
+<v-row no-gutters class="pt-8">
+                            <v-col class="subtle pl-1">
+                                <h4>Question series (optional)</h4>
+                            </v-col>
+                        </v-row>
+
+                        <v-row class="pt-5" align="start" no-gutters align-self="center">
+                            <v-col class="py-0 pl-1">
+                                <v-combobox
+                                    v-model="selectedQuiz"
+                                    hide-details
+                                    label="Choose question series"
+                                    :items="quizzes"
+                                    item-title="title"
+                                    return-object
+                                    variant="solo"
+                                    density="compact"
+                                    single-line
+                                    clearable
+                                />
+                            </v-col>
+                            <!-- A bit of a hack, but it works -->
+                            <v-col cols="auto" class="px-15"/>
+                            <v-spacer/>
+                        </v-row>
+
                         <v-row no-gutters class="pt-5">
                             <v-col class="subtle pl-1">
                                 <h4>Thematic unit</h4>
@@ -46,40 +72,9 @@
                             </v-col>
                         </v-row>
 
-
-                        <v-row no-gutters class="pt-8">
-                            <v-col class="subtle pl-1">
-                                <h4>Question series</h4>
-                            </v-col>
-                        </v-row>
-
-                        <v-row class="pt-5" align="start" no-gutters align-self="center">
-                            <v-col class="pl-1">
-                                <v-combobox
-                                hide-details
-                                no-gutters
-                                class="choose-selectors-upload-form"
-                                label="Choose question series"
-                                :items="['Definičný obor - preskúšanie 1']"
-                                variant="solo"
-                                density="compact"
-                                single-line
-                                />
-                            </v-col>
-
-                            <v-col cols="auto" align="start" class="px-8" align-self="center">
-                                <h2>or</h2>
-                            </v-col>
-
-                            <v-col class="pa-0 pr-7" align="center" align-self="center">
-                                <v-btn :ripple="false" class=" px-13 new-q-series-btn" variant="text" @click="showNewQuestionSeriesDialog = true">NEW QUESTION SERIES</v-btn>
-                            </v-col>
-
-                        </v-row>
-
-                        <v-row class="pt-3">
+                        <v-row class="mt-+">
                             <v-col cols="12" class="pl-5 pr-11">
-                                <v-text-field v-model="title" :rules="formRules" variant="underlined" single-line label="Title"></v-text-field>
+                                <v-text-field v-model="title" :rules="formRules" variant="underlined" label="Title" class="title-field" single-line/>
                             </v-col>
                         </v-row>
 
@@ -95,6 +90,7 @@
                                     variant="outlined"
                                     rows="3"
                                     row-height="15"
+                                    single-line
                                 />
                             </v-col>
                         </v-row>
@@ -183,23 +179,17 @@
         border-radius: 0px;
     }
 
-    .choose-selectors-upload-form{
-    border: solid 2px black !important;
-    border-radius: 0px !important;
-    box-shadow: 2px 2px 0px 0px black !important;
-    background-color: white !important;
-    font-weight: bold;
-    color: black !important;
-    text-transform: uppercase !important;
+    .new-q-series-btn {
+        @include elevated-button(4px, 4px, 2px);
+        background-color: $recture-yellow;
+        color: black;
+        border: 2px black solid;
+        border-radius: 0px;
     }
 
-    .new-q-series-btn{
-    @include elevated-button(4px, 4px, 2px);
-    background-color: $recture-yellow;
-    color: black;
-    border: 2px black solid;
-    border-radius: 0px;
-}
+    .title-field :deep(input) {
+        font-weight: bold !important;
+    }
 </style>
 
 
@@ -231,8 +221,9 @@
 
     const uploadForm = useUploadForm(props.lesson, props.date);
     uploadForm.fetchTopics();
+    uploadForm.fetchQuizzes();
 
-    const { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics } = uploadForm;
+    const { title, description, selectedTopic, selectedQuiz, commentsAllowed, published, file, className, subjectName, dateString, topics, quizzes } = uploadForm;
 
     const formRules = reactive<((value: any) => boolean | string)[]>([((val: any) => {
         if (val instanceof String || typeof val === "string") {
@@ -275,7 +266,7 @@
 
     function uploadRecording(topic: ITopic): void {
         const desc = (uploadForm.description.value.trim().length > 0 ? uploadForm.description.value : null) as string | null;
-        uploadStore.uploadRecording(file.value as File, props.lesson, topic, title.value, desc, published.value as boolean, commentsAllowed.value as boolean, props.date.getTime());
+        uploadStore.uploadRecording(file.value as File, props.lesson, topic, selectedQuiz.value, title.value, desc, published.value as boolean, commentsAllowed.value as boolean, props.date.getTime());
         emit("uploadStart");
     }
 

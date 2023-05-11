@@ -1,10 +1,11 @@
-import { ILesson, ITopic, RectureApi } from '@/api/RectureApi';
+import { ILesson, IQuiz, ITopic, RectureApi } from '@/api/RectureApi';
 import { ref, computed, Ref } from 'vue';
 
 export interface IUsableUploadForm {
     title: Ref<string>,
     description: Ref<string>,
     selectedTopic: Ref<ITopic | string | undefined>,
+    selectedQuiz: Ref<IQuiz | undefined>,
     commentsAllowed: Ref<boolean | undefined>,
     published: Ref<boolean | undefined>,
     file: Ref<File | null>,
@@ -14,8 +15,10 @@ export interface IUsableUploadForm {
     dateString: Ref<string>,
 
     topics: Ref<ITopic[]>,
+    quizzes: Ref<IQuiz[]>,
 
     fetchTopics(): void,
+    fetchQuizzes(): void,
     setFile(file: File): void,
     validateForm(): boolean
 }
@@ -24,6 +27,7 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
     const title = ref<string>("");
     const description = ref<string>("");
     const selectedTopic = ref<ITopic | string | undefined>(undefined);
+    const selectedQuiz = ref<IQuiz | undefined>(undefined);
     const commentsAllowed = ref<boolean | undefined>(undefined);
     const published = ref<boolean | undefined>(undefined);
     const file = ref<File | null>(null);
@@ -33,10 +37,20 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
     const dateString = computed<string>(() => date.toLocaleDateString(undefined, {year: "numeric", month: "numeric", day: "numeric"}).toLocaleUpperCase());
 
     const topics = ref<ITopic[]>([]);
+    const quizzes = ref<IQuiz[]>([]);
 
     function fetchTopics(): void {
         RectureApi.getTopics(lesson.classId, lesson.subjectId).then(result => {
             if (result.success && result.data != null) topics.value = result.data;
+            //TODO: Maybe show error on unsuccessful result/exception
+        }).catch(reason => {
+            //TODO: Maybe show error
+        });
+    }
+
+    function fetchQuizzes(): void {
+        RectureApi.getQuizzes(lesson.subjectId).then(result => {
+            if (result.success && result.data != null) quizzes.value = result.data;
             //TODO: Maybe show error on unsuccessful result/exception
         }).catch(reason => {
             //TODO: Maybe show error
@@ -57,5 +71,5 @@ export function useUploadForm(lesson: ILesson, date: Date) : IUsableUploadForm {
         return true;
     }
 
-    return { title, description, selectedTopic, commentsAllowed, published, file, className, subjectName, dateString, topics, fetchTopics, setFile, validateForm };
+    return { title, description, selectedTopic, selectedQuiz, commentsAllowed, published, file, className, subjectName, dateString, topics, quizzes, fetchTopics, fetchQuizzes, setFile, validateForm };
 }

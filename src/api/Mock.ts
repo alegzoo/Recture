@@ -339,6 +339,76 @@ export function makeServer() {
                 } as IQuiz;
             }, {timing: 200});
 
+            this.get(RectureApi.BASE_API_URL+"/quizzes", (schema, request) => {
+                return [{
+                    quizId: 1,
+                    subjectId: 1,
+                    subjectName: "MAT",
+                    title: "Test quiz",
+                    questions: [
+                        {
+                            questionId: 1,
+                            content: "What year is it?",
+                            answers: [
+                                {
+                                    answerId: 1,
+                                    content: "2019",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 2,
+                                    content: "2023",
+                                    correct: true
+                                },
+                                {
+                                    answerId: 3,
+                                    content: "1729",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 4,
+                                    content: "2052",
+                                    correct: false
+                                }
+                            ]
+                        },
+                        {
+                            questionId: 2,
+                            content: "Who is the current president of the United States of America?",
+                            answers: [
+                                {
+                                    answerId: 5,
+                                    content: "Donald Trump",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 6,
+                                    content: "Barrack Obama",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 7,
+                                    content: "Hunter Biden",
+                                    correct: false
+                                },
+                                {
+                                    answerId: 8,
+                                    content: "Joe Biden",
+                                    correct: true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    quizId: 2,
+                    subjectId: 1,
+                    subjectName: "MAT",
+                    title: "Test quiz 2",
+                    questions: []
+                }] as IQuiz[];
+            }, {timing: 200});
+
             this.get(RectureApi.BASE_API_URL+"/classes", (schema) => {
                 return schema.all("class").models;
             }, {timing: 200});

@@ -450,6 +450,25 @@ export class RectureApi {
         }
     }
 
+    public static async getQuizzes(subjectId: number | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz[]>> {
+        let urlParams = new URLSearchParams();
+
+        if (subjectId != null) urlParams.append("subjectId", subjectId.toString());
+
+        const response = await fetch(this.pathToUrl("quizzes", urlParams), {
+            method: "GET",
+            credentials: "include",
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IQuiz[];
+            return new ApiResult<IQuiz[]>(response.status, data);
+        } else {
+            return new ApiResult<IQuiz[]>(response.status);
+        }
+    }
+
     public static async getQuizById(quizId: number, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz>> {
         const response = await fetch(this.pathToUrl("quizzes/"+quizId), {
             method: "GET",
@@ -623,11 +642,12 @@ export class RectureApi {
         return new ApiResult(response.status);
     }
 
-    public static async createRecording(file: File, lessonId: number, topicId: number, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
+    public static async createRecording(file: File, lessonId: number, topicId: number, quizId: number | null | undefined, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number | null, signal: AbortSignal | null = null): Promise<ApiResult<IRecording>> {
         let formData = new FormData();
         formData.append("file", file);
         formData.append("lessonId", lessonId.toString());
         formData.append("topicId", topicId.toString());
+        if (quizId != null) formData.append("quizId", quizId.toString());
         formData.append("title", title.toString());
         if (description != null) formData.append("description", description.toString());
         formData.append("published", published.toString());

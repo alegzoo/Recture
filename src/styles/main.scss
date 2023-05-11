@@ -228,7 +228,7 @@ html, body {
     }
 }
 
-.v-select {
+.v-select, .v-combobox {
     border: solid 2px black !important;
     border-radius: 0px !important;
     box-shadow: 2px 2px 0px 0px black !important;
@@ -238,11 +238,11 @@ html, body {
     text-transform: uppercase !important;
 }
 
-.v-select * {
+.v-select *, .v-combobox * {
     opacity: 100%;
+    border-radius: 0px !important;
 }
 
-.v-select .v-icon {
-    
+.v-select .v-icon, .v-combobox .v-icon {
     opacity: 100% !important;
 }

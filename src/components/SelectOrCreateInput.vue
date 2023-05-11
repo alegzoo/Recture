@@ -4,7 +4,6 @@
             <v-col>
                 <v-select
                     hide-details
-                    no-gutters
                     :label="selectLabel"
                     v-model="selectedItem"
                     :items="items"

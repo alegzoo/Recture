@@ -1,4 +1,4 @@
-import { RectureApi, ApiResult, ILesson, IRecording, ITopic } from "@/api/RectureApi";
+import { RectureApi, ApiResult, ILesson, IRecording, ITopic, IQuiz } from "@/api/RectureApi";
 import { defineStore } from "pinia"
 
 export interface ITrackedUpload {
@@ -15,9 +15,10 @@ export const useUploadStore = defineStore("uploadStore", {
         uploadsInProgress: 0 as number
     }),
     actions: {
-        uploadRecording(file: File, lesson: ILesson, topic: ITopic, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number): ITrackedUpload {
+        uploadRecording(file: File, lesson: ILesson, topic: ITopic, quiz: IQuiz | null | undefined, title: string, description: string | null, published: boolean, commentsAllowed: boolean, recordingTimestamp: number): ITrackedUpload {
             const abortController = new AbortController();
-            const promise = RectureApi.createRecording(file, lesson.lessonId, topic.topicId, title, description, published, commentsAllowed, recordingTimestamp, abortController.signal);
+            const quizId = quiz != null ? quiz.quizId : null;
+            const promise = RectureApi.createRecording(file, lesson.lessonId, topic.topicId, quizId, title, description, published, commentsAllowed, recordingTimestamp, abortController.signal);
             const trackedUpload = {
                 title: title,
                 lesson: lesson,
