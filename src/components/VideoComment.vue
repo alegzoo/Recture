@@ -5,8 +5,8 @@
             <VideoCommentReplyBox v-if="showReplyBox" :replying-to="replyingTo" :disabled-and-loading="postingReply" @cancel-button-click="showReplyBox = false" @postButtonClick="onReplyBoxPostButtonClicked"/>
             <VideoCommentReply v-for="reply in replies" :key="reply.replyId" :reply="reply" @reply-button-click="() => onChildReplyButtonClicked(reply)" @delete-button-click="() => onChildDeleteButtonClicked(reply)"/>
             <v-row v-if="showLoadMoreButton">
-                <v-col>
-                    <v-btn variant="plain" @click="onLoadMoreButtonClicked">Load more replies</v-btn>
+                <v-col align="center">
+                    <v-btn variant="plain" :disabled="repliesLoading" :loading="repliesLoading" @click="onLoadMoreButtonClicked">Load more replies</v-btn>
                 </v-col>
             </v-row>
         </v-col>
@@ -15,6 +15,8 @@
 </template>
 
 <style lang="scss" scoped>
+    @import "@/styles/mixins.scss";
+
     .v-row {
         position: relative;
     }
@@ -31,6 +33,11 @@
     .v-btn {
         margin-left: 66px;
         opacity: 100%;
+    }
+
+    .load-more-button {
+        @include elevated-button(0px, 3px, 1px);
+        border: solid 2px black;
     }
 </style>
 
@@ -63,6 +70,7 @@
 
     const page = ref<number>(0);
     const allRepliesLoaded = ref<boolean>(false);
+    const repliesLoading = ref<boolean>(false);
     const showLoadMoreButton = computed<boolean>(() => replies.value != null && replies.value.length > 0 && !allRepliesLoaded.value);
 
     onMounted(() => {
@@ -85,6 +93,8 @@
     function fetchReplies(page: number) {
         if (page === 0) replies.value = undefined;
 
+        repliesLoading.value = true;
+
         //TODO: Test pagination
         //TODO: Maybe show error on failure?
         RectureApi.getRepliesByComment(page, 5, props.comment.commentId).then((result) => {
@@ -101,6 +111,8 @@
             }
         }).catch(reason => {
             //TODO: Maybe show error
+        }).finally(() => {
+            repliesLoading.value = false;
         });
     }
 
@@ -143,7 +155,7 @@
     }
 
     function onLoadMoreButtonClicked() {
-        page.value += 1;
+        page.value++;;
         fetchReplies(page.value);
     }
 </script>

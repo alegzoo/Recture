@@ -264,7 +264,7 @@ export function makeServer() {
                 
                 return {
                     currentPage: page,
-                    pages: Math.ceil(schema.all("recording").models.length/pageSize),
+                    pages: Math.ceil(recordings.length/pageSize),
                     data: recordings
                 } as IPage<IRecording>;
             }, {timing: 300});

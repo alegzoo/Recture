@@ -76,6 +76,10 @@
             }).finally(() => {
                 recordingsLoading.value = false;
             });
+        } else {
+            recordings.value = [];
+            page.value = 0;
+            totalPages.value = undefined;
         }
     }
 
