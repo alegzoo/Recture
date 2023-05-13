@@ -103,7 +103,7 @@ export function makeServer() {
 
             topics.forEach(array => array.forEach(topic => server.create("topic", topic)));
 
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 200; i++) {
                 const classes = server.schema.all("class").models as IClass[];
                 const subjects = server.schema.all("subject").models as ISubject[];
 
@@ -259,12 +259,14 @@ export function makeServer() {
                     }
                 });
 
+                const pages = Math.ceil(recordings.length/pageSize)
+
                 if (params.sort != null && params.sort.split(",")[1] === "ASC") recordings.reverse();
                 if (recordings.length > pageSize) recordings = recordings.slice(0, pageSize);
                 
                 return {
                     currentPage: page,
-                    pages: Math.ceil(recordings.length/pageSize),
+                    pages: pages,
                     data: recordings
                 } as IPage<IRecording>;
             }, {timing: 300});
