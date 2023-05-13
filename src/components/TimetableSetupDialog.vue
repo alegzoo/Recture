@@ -155,8 +155,6 @@
                     daysOfWeek.value = [true, true, true, true, true, false, false];
                     start.value = 0;
                     end.value = 7;
-                    errorDialogMessage.value = "Failed to load timetable data.";
-                    errorDialogVisible.value = true;
                 }
             } else {
                 daysOfWeek.value = [true, true, true, true, true, false, false];
