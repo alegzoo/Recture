@@ -71,7 +71,7 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12">
-                        <TitledChipSelection title="CLASSES" empty-message="You have not created any classes yet" :loading="videoBrowserStore.classesLoading" :data="videoBrowserStore.classes" v-model="videoBrowserStore.selectedClasses"/>
+                        <TitledChipSelection title="CLASSES" :empty-message="accountStore.teacher ? 'You have not created any classes yet' : 'You are not a member of any classes yet'" :loading="videoBrowserStore.classesLoading" :data="videoBrowserStore.classes" v-model="videoBrowserStore.selectedClasses"/>
                     </v-col>
                 </v-row>
                 <v-row>

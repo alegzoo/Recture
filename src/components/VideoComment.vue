@@ -5,7 +5,7 @@
             <VideoCommentReplyBox v-if="showReplyBox" :replying-to="replyingTo" :disabled-and-loading="postingReply" @cancel-button-click="showReplyBox = false" @postButtonClick="onReplyBoxPostButtonClicked"/>
             <VideoCommentReply v-for="reply in replies" :key="reply.replyId" :reply="reply" @reply-button-click="() => onChildReplyButtonClicked(reply)" @delete-button-click="() => onChildDeleteButtonClicked(reply)"/>
             <v-row v-if="showLoadMoreButton">
-                <v-col align="center">
+                <v-col align="left">
                     <v-btn variant="plain" :disabled="repliesLoading" :loading="repliesLoading" @click="onLoadMoreButtonClicked">Load more replies</v-btn>
                 </v-col>
             </v-row>

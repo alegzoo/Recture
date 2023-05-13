@@ -106,7 +106,8 @@ export function useRecordingEditForm(): IUsableRecordingEditForm {
         let topicId = null as number | null;
         if (selectedTopic.value instanceof String || typeof selectedTopic.value === "string") {
             const topicCreationResult = await RectureApi.createTopic(classId, subjectId, selectedTopic.value as string);
-            if (topicCreationResult.success !== true) throw new Error("Cannot update recording: failed to create topic");
+            if (topicCreationResult.success === true && topicCreationResult.data != null) topicId = topicCreationResult.data.topicId;
+            else throw new Error("Cannot update recording: failed to create topic");
         } else {
             topicId = selectedTopic.value.topicId;
         }
