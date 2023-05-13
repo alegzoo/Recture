@@ -85,7 +85,7 @@
                             <VideoBox :recording="recording"/>
                         </v-col>
                         <v-col cols="12" align="center">
-                            <v-btn v-if="videoBrowserStore.isNextPageAvailable || (videoBrowserStore.isLastPageDisplayed && videoBrowserStore.recordingsLoading)" :disabled="videoBrowserStore.recordingsLoading" :loading="videoBrowserStore.recordingsLoading" variant="flat" color="recture-bright-blue" class="rounded-pill" @click="onLoadMoreButtonClicked">Load more</v-btn>
+                            <v-btn v-if="videoBrowserStore.isNextPageAvailable || (videoBrowserStore.isLastPageDisplayed && videoBrowserStore.recordingsLoading)" :disabled="videoBrowserStore.recordingsLoading" :loading="videoBrowserStore.recordingsLoading" variant="flat" color="recture-bright-blue" class="load-more-button rounded-pill" @click="onLoadMoreButtonClicked">Load more</v-btn>
                         </v-col>
                     </template>
                     <template v-else-if="videoBrowserStore.recordingsLoading">

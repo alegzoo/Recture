@@ -229,3 +229,8 @@
     opacity: 100%;
     border-color: black;
 }
+
+.load-more-button {
+    @include elevated-button(0px, 3px, 1px);
+    border: solid 2px black;
+}

@@ -97,7 +97,7 @@
         </v-row>
     </v-container>
     <VideoEditDialog v-model="editDialogVisible" :recording="recording" @data-modified="recordingComposable.fetchAll()"/>
-    <TestYourselfDialog v-model="testYourselfDialogVisible" :quiz-id="recording?.quizId"/>
+    <TestYourselfDialog v-if="recording != null" v-model="testYourselfDialogVisible" :quiz-id="recording.quizId"/>
 </template>
 
 <style lang="scss" scoped>
