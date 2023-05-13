@@ -38,25 +38,34 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
         recordingSort: { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Descending } as IRecordingSort,
         searchQuery: "" as string | null,
 
+        page: 0 as number,
+        totalPages: undefined as number | undefined,
+
         classesLoading: false as boolean,
         subjectsLoading: false as boolean,
         topicsLoading: false as boolean,
         recordingsLoading: false as boolean
     }),
     getters: {
-        welcomeTextPrimaryDisplay: (state) => {
+        welcomeTextPrimaryDisplay: state => {
             if (state.welcomeText.primary?.length > 0) {
                 return state.welcomeText.primary;
             } else {
                 return "\u00A0";
             }
         },
-        welcomeTextSecondaryDisplay: (state) => {
+        welcomeTextSecondaryDisplay: state => {
             if (state.welcomeText.secondary?.length > 0) {
                 return state.welcomeText.secondary;
             } else {
                 return "\u00A0";
             }
+        },
+        isLastPageDisplayed: state => {
+            return state.totalPages != undefined && state.totalPages === state.page + 1;
+        },
+        isNextPageAvailable: state => {
+            return state.totalPages != undefined && state.totalPages > state.page + 1;
         }
     },
     actions: {
@@ -88,8 +97,12 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             this.welcomeText.templates.secondary = null;
         },
         
-        fetchRecordings(page: number, pageSize: number = 20) {
-            this.recordings = [];
+        fetchRecordings(append: boolean) {
+            if (append !== true) {
+                this.recordings = [];
+                this.page = 0;
+            }
+
             this.recordingsLoading = true;
 
             //TODO: Test out!!!
@@ -102,16 +115,27 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
             let topicIds = [] as number[];
             this.selectedTopics.forEach(selectedTopic => topicIds.push(selectedTopic.topicId));
 
-            RectureApi.getRecordings(page, pageSize, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(result => {
+            RectureApi.getRecordings(this.page, 24, this.recordingSort, this.searchQuery, classIds, subjectIds, topicIds, this.recordingVisibilityFilter).then(result => {
                 this.recordingsLoading = false;
 
                 if (result.success && result.data != null) {
-                    const page = result.data;
-                    this.recordings = page.data;
+                    const fetchedPage = result.data;
+
+                    if (append) fetchedPage.data.forEach(r => this.recordings.push(r));
+                    else this.recordings = fetchedPage.data;
+                    
+                    this.totalPages = fetchedPage.pages;
                 }
             }).catch(reason => {
                 this.recordingsLoading = false;
+                this.page = 0;
+                this.totalPages = undefined;
             });
+        },
+
+        fetchRecordingsNextPage() {
+            this.page++;
+            this.fetchRecordings(true);
         },
 
         fetchClassesAndSubjects() {

@@ -80,9 +80,12 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <template v-if="videoBrowserStore.recordings.length > 0" v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId">
-                        <v-col cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
+                    <template v-if="videoBrowserStore.recordings.length > 0">
+                        <v-col v-for="recording in videoBrowserStore.recordings" :key="recording.recordingId" cols="12" sm="6" md="4" lg="3" xxl="2" class="pa-2">
                             <VideoBox :recording="recording"/>
+                        </v-col>
+                        <v-col cols="12" align="center">
+                            <v-btn v-if="videoBrowserStore.isNextPageAvailable || (videoBrowserStore.isLastPageDisplayed && videoBrowserStore.recordingsLoading)" :disabled="videoBrowserStore.recordingsLoading" :loading="videoBrowserStore.recordingsLoading" variant="flat" color="recture-bright-blue" class="rounded-pill" @click="onLoadMoreButtonClicked">Load more</v-btn>
                         </v-col>
                     </template>
                     <template v-else-if="videoBrowserStore.recordingsLoading">
@@ -142,7 +145,7 @@
     homeStore.sidebarVisible = true;
 
     videoBrowserStore.fetchClassesAndSubjects();
-    videoBrowserStore.fetchRecordings(0);
+    videoBrowserStore.fetchRecordings(false);
 
     videoBrowserStore.clearWelcomeText();
     accountStore.$subscribe((mutation, state) => {
@@ -154,16 +157,16 @@
     //TODO: May need to prevent race conditions here and in similar calls!
     watch(() => [videoBrowserStore.selectedSubject, videoBrowserStore.selectedClasses], () => {
         videoBrowserStore.fetchTopics();
-        videoBrowserStore.fetchRecordings(0);
+        videoBrowserStore.fetchRecordings(false);
     });
 
     //TODO: May need to prevent race conditions here and in similar calls!
     watch(() => [videoBrowserStore.selectedTopics], () => {
-        videoBrowserStore.fetchRecordings(0);
+        videoBrowserStore.fetchRecordings(false);
     });
 
     watch(() => videoBrowserStore.searchQuery, () => {
-        videoBrowserStore.fetchRecordings(0);
+        videoBrowserStore.fetchRecordings(false);
     });
 
     const skeletonSubjects = useSkeletons(2, 5, 40, 90);
@@ -174,6 +177,10 @@
     function onFilterOrSortChanged(filter: RecordingVisibilityFilter, sort: IRecordingSort) {
         videoBrowserStore.recordingVisibilityFilter = filter;
         videoBrowserStore.recordingSort = sort;
-        videoBrowserStore.fetchRecordings(0);
+        videoBrowserStore.fetchRecordings(false);
+    }
+
+    function onLoadMoreButtonClicked() {
+        videoBrowserStore.fetchRecordingsNextPage();
     }
 </script>

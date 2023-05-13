@@ -247,6 +247,6 @@ html, body {
     opacity: 100% !important;
 }
 
-.v-dialog .v-card {
+.v-dialog > .v-card {
     border-radius: 6px !important;
 }

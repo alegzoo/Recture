@@ -232,12 +232,12 @@ export function makeServer() {
 
             this.get(RectureApi.BASE_API_URL+"/recordings", (schema, request) => {
                 const params = request.queryParams;
-                const recordings = [] as IRecording[];
+                let recordings = [] as IRecording[];
 
                 let page = 0;
                 if (params.page != null) page = parseInt(params.page);
 
-                let pageSize = 20;
+                let pageSize = 24;
                 if (params.size != null) pageSize = parseInt(params.size);
 
                 const classIds = [] as number[];
@@ -260,7 +260,7 @@ export function makeServer() {
                 });
 
                 if (params.sort != null && params.sort.split(",")[1] === "ASC") recordings.reverse();
-                if (recordings.length > pageSize) recordings.slice(0, pageSize);
+                if (recordings.length > pageSize) recordings = recordings.slice(0, pageSize);
                 
                 return {
                     currentPage: page,
