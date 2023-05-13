@@ -19,7 +19,7 @@
     
     <template v-if="props.recording != null && props.recording.commentsAllowed && comments != null">
         <VideoComment v-for="comment in comments" :key="comment.commentId" :comment="comment" @delete-button-click="() => onCommentDeleteButtonClicked(comment)"/>
-            <v-btn v-if="totalPages != null && (page+1 < totalPages || (totalPages != null && page+1 === totalPages && commentsLoading))" :disabled="commentsLoading" :loading="commentsLoading" variant="flat" color="recture-bright-blue" class="load-more-button rounded-pill" @click="fetchCommentsNextPage">Load more</v-btn>
+        <v-btn v-if="totalPages != null && (page+1 < totalPages || (totalPages != null && page+1 === totalPages && commentsLoading))" :disabled="commentsLoading" :loading="commentsLoading" variant="flat" color="recture-bright-blue" class="load-more-button rounded-pill" @click="fetchCommentsNextPage">Load more</v-btn>
     </template>
     <template v-else-if="commentsLoading">
         <v-row>
@@ -128,14 +128,21 @@
                             if (comments.value != null) comments.value.push(c);
                         });
                     } else comments.value = result.data.data;
-                } else comments.value = null;
+
+                    totalPages.value = result.data.pages;
+                } else {
+                    comments.value = null;
+                    totalPages.value = undefined;
+                }
             }).catch(reason => {
                 comments.value = null;
+                totalPages.value = undefined;
             }).finally(() => {
                 commentsLoading.value = false;
             });
         } else {
             comments.value = null;
+            totalPages.value = undefined;
         }
     }
 

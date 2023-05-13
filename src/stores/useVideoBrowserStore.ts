@@ -125,6 +125,8 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                     else this.recordings = fetchedPage.data;
                     
                     this.totalPages = fetchedPage.pages;
+                } else {
+                    this.totalPages = undefined;
                 }
             }).catch(reason => {
                 this.recordingsLoading = false;
