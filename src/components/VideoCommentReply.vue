@@ -33,7 +33,7 @@
     const authorFullName = computed<string | null>(() => author.value != null ? (author.value.firstName+" "+author.value.lastName) : null);
     const authorUserType = computed<UserType | null>(() => author.value != null ? author.value.userType : null);
 
-    const taggedReplyAuthorId = computed<number | null>(() => props.reply.taggedReplyId != null ? props.reply.taggedReplyId : null);
+    const taggedReplyAuthorId = computed<number | null>(() => props.reply.taggedReplyUserId != null ? props.reply.taggedReplyUserId : null);
     const taggedReplyAuthorFullName = computed<string | null>(() => (props.reply.taggedReplyUserFirstName != null && props.reply.taggedReplyUserLastName != null) ? (props.reply.taggedReplyUserFirstName+" "+props.reply.taggedReplyUserLastName) : null);
 
     onMounted(() => {
