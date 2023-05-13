@@ -450,10 +450,12 @@ export class RectureApi {
         }
     }
 
-    public static async getQuizzes(subjectId: number | null = null, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz[]>> {
+    public static async getQuizzes(subjectId: number | null = null, query: string | null = null, sortOrder: SortOrder = SortOrder.Descending, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz[]>> {
         let urlParams = new URLSearchParams();
 
         if (subjectId != null) urlParams.append("subjectId", subjectId.toString());
+        if (query != null) urlParams.append("query", query as string);
+        urlParams.append("sort", "quizId,"+sortOrder.toString());
 
         const response = await fetch(this.pathToUrl("quizzes", urlParams), {
             method: "GET",
