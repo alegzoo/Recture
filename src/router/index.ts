@@ -6,7 +6,6 @@ import Video from '@/views/Video.vue';
 import NotFound from '@/views/NotFound.vue';
 import Profile from '@/views/Profile.vue';
 import Timetable from '@/views/Timetable.vue';
-import NewComments from '@/views/NewComments.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { RectureApi } from '@/api/RectureApi';
 import Signup from '@/views/Signup.vue';
@@ -48,17 +47,6 @@ const routes = [
                 path: '',
                 name: 'profile',
                 component: Profile,
-                meta: { requiresAuth: true }
-            }
-        ]
-    },
-    {
-        path: '/newcomments',
-        component: Home,
-        children: [
-            {
-                path: '',
-                component: NewComments,
                 meta: { requiresAuth: true }
             }
         ]

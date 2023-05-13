@@ -3,7 +3,6 @@
         <v-list id="sidebar-panel" width="60" density="compact" active-class="active" nav>
             <SidebarButton icon="mdi-home" text="Home" to="/"/>
             <SidebarButton icon="mdi-account" text="Profile" to="/profile"/>
-            <SidebarButton icon="mdi-comment-text" text="New comments" to="/newcomments"/>
             <SidebarButton v-if="accountStore.teacher" icon="mdi-calendar-clock" text="Timetable" to="/timetable"/>
             <v-divider/>
             <SidebarButton icon="mdi-logout" text="Sign out" @click="signOut"/>
