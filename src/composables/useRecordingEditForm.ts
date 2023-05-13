@@ -5,7 +5,7 @@ export interface IUsableRecordingEditForm {
     title: Ref<string>,
     description: Ref<string>,
     selectedTopic: Ref<ITopic | string | undefined>,
-    selectedQuiz: Ref<IQuiz | null | undefined>,
+    selectedQuiz: Ref<IQuiz | undefined>,
     commentsAllowed: Ref<boolean | undefined>,
     published: Ref<boolean | undefined>,
 
@@ -25,7 +25,7 @@ export function useRecordingEditForm(): IUsableRecordingEditForm {
     const title = ref<string>("");
     const description = ref<string>("");
     const selectedTopic = ref<ITopic | string | undefined>(undefined);
-    const selectedQuiz = ref<IQuiz | null | undefined>(undefined);
+    const selectedQuiz = ref<IQuiz | undefined>(undefined);
     const commentsAllowed = ref<boolean | undefined>(undefined);
     const published = ref<boolean | undefined>(undefined);
 
@@ -74,7 +74,7 @@ export function useRecordingEditForm(): IUsableRecordingEditForm {
             if (!quizResult.success || quizResult.data == null) throw new Error("Failed to load recording quiz");
             selectedQuiz.value = quizResult.data;
         } else {
-            selectedQuiz.value = null;
+            selectedQuiz.value = undefined;
         }
 
         commentsAllowed.value = recording.commentsAllowed;
