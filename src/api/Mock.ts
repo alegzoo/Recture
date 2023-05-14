@@ -535,6 +535,10 @@ export function makeServer() {
                 }
             }, {timing: 300});
 
+            this.put(RectureApi.BASE_API_URL+"/quizzes/:id", (schema, request) => {
+                return new Response(204);
+            }, {timing: 300});
+
             this.del(RectureApi.BASE_API_URL+"/recordings/:id", (schema, request) => {
                 const recordingId = parseInt(request.params.id);
                 const recording = schema.findBy("recording", {recordingId: recordingId});
@@ -590,6 +594,10 @@ export function makeServer() {
                 } else {
                     return new Response(404);
                 }
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/quizzes/:id", (schema, request) => {
+                return new Response(204);
             }, {timing: 300});
         }
     });

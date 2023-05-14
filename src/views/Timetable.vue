@@ -104,7 +104,7 @@
     import MessageDialog from '@/components/MessageDialog.vue';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
 
-    import ManageQuizzes from '@/components/ManageQuizzes.vue';
+    import ManageQuizzes from '@/components/ManageQuizzesDialog.vue';
 
     import "@/styles/timetable.scss";
 
