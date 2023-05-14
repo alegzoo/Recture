@@ -250,3 +250,12 @@ html, body {
 .v-dialog > .v-card {
     border-radius: 6px !important;
 }
+
+.v-dialog .v-card .v-table tbody > tr {
+    outline: dashed 1px #00000033 !important;
+    overflow: visible !important;
+}
+
+.v-dialog .v-card .v-table thead > tr > th {
+    border-bottom: solid 2px black !important;
+}
