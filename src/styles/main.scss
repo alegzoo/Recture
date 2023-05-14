@@ -2,6 +2,7 @@
 
 html, body {
     background-color: $recture-cadet-blue;
+    overflow-y: auto !important;
 }
 
 .v-theme--dark .v-btn, .v-theme--dark.v-btn {
