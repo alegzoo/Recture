@@ -1,6 +1,6 @@
 <template>
     <v-dialog width="500">
-            <v-card class="v-card-quizzes-manage">
+            <v-card class="v-card-create-new-quiz">
                 <v-card-title>
                     <v-row no-gutters align="center" align-self="center" class="pt-3">
                         <v-col>
@@ -38,6 +38,9 @@
 </template>
 
 <style lang="scss" scoped>
+.v-card-create-new-quiz{
+    background-color: #efefef;
+}
     .create-new-quiz-btn {
         background-color: #5cb978;
         color: white !important;
