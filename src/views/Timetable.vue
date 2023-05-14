@@ -46,7 +46,7 @@
                         </v-col>
 
                         <v-col cols="auto">
-                            <v-btn variant="text" class="footer-button plus-button creating-button" :ripple="false" append-icon="mdi-plus-circle" @click="createLessons()">
+                            <v-btn variant="text" class="footer-button plus-button creating-button" :ripple="false" append-icon="mdi-plus-circle" @click="createLessonDialogVisible = true">
                                 {{ createLessonsButtonText }}
                             </v-btn>
                         </v-col>
@@ -141,7 +141,6 @@
             timetable.toggleCellSelectionStatus(cellPosition);
         } else if (timetable.idle.value) {
             timetable.startCreating(cellPosition);
-            createLessonDialogVisible.value = true;
         }
     }
 
@@ -221,8 +220,10 @@
     }
 
     function onCreateLessonDialogExit(result: ICreateLessonDialogResult) {
-        if (result.success) createLessonDialogResult.value = result;
-        else timetable.stopCreating();
+        if (result.success) {
+            createLessonDialogResult.value = result;
+            createLessons();
+        }
     }
 
     function showShareDialog(lesson: ILesson) {
