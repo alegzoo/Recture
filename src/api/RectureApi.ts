@@ -566,6 +566,50 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
+    public static async updateQuiz(quizId: number, subjectId: number, title: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("subjectId", subjectId.toString());
+        formData.append("title", title);
+
+        const response = await fetch(this.pathToUrl("quizzes/"+quizId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+            
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async updateQuizQuestion(questionId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("quizzes/questions/"+questionId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
+    public static async updateQuizAnswer(answerId: number, content: string, correct: boolean, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        let formData = new FormData();
+        formData.append("content", content);
+        formData.append("correct", correct.toString());
+
+        const response = await fetch(this.pathToUrl("quizzes/answers/"+answerId), {
+            method: "PUT",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        return new ApiResult<null>(response.status);
+    }
+
     public static async removeStudentFromClass(classId: number, userId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("classes/"+classId+"/students/"+userId), {
             method: "DELETE",
@@ -668,6 +712,36 @@ export class RectureApi {
 
     public static async deletePolicy(policyId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         const response = await fetch(this.pathToUrl("policies/"+policyId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteQuiz(quizId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("quizzes/"+quizId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteQuizQuestion(questionId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("quizzes/questions/"+questionId), {
+            method: "DELETE",
+            credentials: "include",
+            signal: signal
+        });
+
+        return new ApiResult(response.status);
+    }
+
+    public static async deleteQuizAnswer(answerId: number, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+        const response = await fetch(this.pathToUrl("quizzes/answers/"+answerId), {
             method: "DELETE",
             credentials: "include",
             signal: signal
@@ -876,6 +950,69 @@ export class RectureApi {
             return new ApiResult<IPolicy>(response.status);
         }
     }
+
+    public static async createQuiz(subjectId: number, title: string, signal: AbortSignal | null = null): Promise<ApiResult<IQuiz>> {
+        let formData = new FormData();
+        formData.append("subjectId", subjectId.toString());
+        formData.append("title", title);
+
+        const response = await fetch(this.pathToUrl("quizzes"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IQuiz;
+            
+            return new ApiResult<IQuiz>(response.status, data);
+        } else {
+            return new ApiResult<IQuiz>(response.status);
+        }
+    }
+
+    public static async createQuizQuestion(quizId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<IQuizQuestion>> {
+        let formData = new FormData();
+        formData.append("content", content);
+
+        const response = await fetch(this.pathToUrl("quizzes/"+quizId+"/questions"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IQuizQuestion;
+            
+            return new ApiResult<IQuizQuestion>(response.status, data);
+        } else {
+            return new ApiResult<IQuizQuestion>(response.status);
+        }
+    }
+
+    public static async createQuizAnswer(questionId: number, content: string, correct: boolean, signal: AbortSignal | null = null): Promise<ApiResult<IQuizAnswer>> {
+        let formData = new FormData();
+        formData.append("content", content);
+        formData.append("correct", correct.toString());
+
+        const response = await fetch(this.pathToUrl("quizzes/questions/"+questionId+"/answers"), {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: signal
+        });
+
+        if (response.ok) {
+            const data = await response.json() as IQuizAnswer;
+            
+            return new ApiResult<IQuizAnswer>(response.status, data);
+        } else {
+            return new ApiResult<IQuizAnswer>(response.status);
+        }
+    }
+
 
     private static pathToUrl(path: string, params: URLSearchParams | null = null): string {
         let url = RectureApi.BASE_API_URL + path;
