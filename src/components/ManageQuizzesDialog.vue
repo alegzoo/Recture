@@ -46,7 +46,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <QuizRow v-for="item in tableItems" :key="item.quizId" :quiz="item" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)" @dit="showEditQuizDialog(item)"/>
+                                    <QuizRow v-for="item in tableItems" :key="item.quizId" :quiz="item" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)" @edit="showEditQuizDialog(item)"/>
                                 </tbody>
                             </v-table>
                             <p v-show="!loadingQuizzes && tableItems.length === 0" class="w-100 py-5 text-h6 text-center">No data</p>
@@ -63,7 +63,7 @@
             <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.title+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.title+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
             <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.title+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.title+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
             <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
-            <EditQuizDialog v-model="editQuizDialogVisible"/>
+            <EditQuizDialog v-model="editQuizDialogVisible" :quiz="selectedItem"/>
             <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
                 <v-progress-circular class="ma-auto" color="primary" indeterminate size="64"/>
             </v-overlay>

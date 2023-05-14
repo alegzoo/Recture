@@ -1,7 +1,9 @@
 <template>
     <tr>
         <td class="pt-2 text-left">
-            <span class="font-weight-black">{{ quiz.title }}</span>
+            <span class="font-weight-black">{{ question.content }}</span>
+        </td>
+        <td class="pt-2 text-right">
             <v-tooltip text="Rename question" location="bottom">
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
@@ -22,10 +24,10 @@
 </template>
 
 <script lang="ts" setup>
+    import { IQuizQuestion } from '@/api/RectureApi';
 
-    import { IQuiz } from '@/api/RectureApi';
     const props = defineProps<{
-        quiz: IQuiz
+        question: IQuizQuestion
     }>();
 
     const emit = defineEmits<{
