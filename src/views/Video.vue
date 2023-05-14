@@ -107,6 +107,7 @@
     .v-container {
         background-image: url("@/assets/bg_pattern.png");
         background-size: cover;
+        background-attachment: fixed;
     }
 
     .v-container.side-offset > .v-row {
@@ -185,6 +186,10 @@
 
     .video-header > *:last-child {
         border: none;
+    }
+
+    video {
+        background-color: black;
     }
 
     .v-avatar {
