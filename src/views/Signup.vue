@@ -29,6 +29,7 @@
     .container {
         background-image: url("@/assets/bg_pattern.png");
         background-size: cover;
+        background-attachment: fixed;
     }
 
     .v-btn {
