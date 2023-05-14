@@ -38,24 +38,23 @@
                             </VBtnToggle>
                         </VCol>
                     </VRow>
-                    <VRow class="pt-3">
-                        <VTable class="w-100 px-4 rows-items-manage-quizzes" fixed-header>
-                            <thead>
-                                <tr>
-                                    <th class="text-left rows-items-manage-quizzes">Name</th>
-                                    <th class="text-right rows-items-manage-quizzes">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <QuizRow v-for="item in tableItems" :quiz="item" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"  @edit="showEditQuizDialog(item)" />
-                            </tbody>
-
-                        </VTable>
-                    </VRow>
-
+                        <v-col class="pt-3 pa-0" v-show="tableItems != null">
+                            <VTable class="w-100 px-1 rows-items-manage-quizzes" fixed-header>
+                                <thead>
+                                    <tr class="w-100">
+                                        <th class="text-left rows-items-manage-quizzes">Name</th>
+                                        <th class="text-right rows-items-manage-quizzes">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <QuizRow v-for="item in tableItems" :quiz="item" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)"  @edit="showEditQuizDialog(item)" />
+                                </tbody>
+                                <p v-show="tableItems?.length === 0" class="w-100 py-5 text-h6 text-center">No data</p>
+                            </VTable>
+                        </v-col>
                     <VRow class="pt-10 pb-2" no-gutters>
                         <VCol class="pa-0" align="end">
-                            <VBtn  variant="default" @click="emit('update:modelValue', false)">Close</VBtn>
+                            <VBtn variant="default" @click="emit('update:modelValue', false)">Close</VBtn>
                         </VCol>
                     </VRow>
             </VCardText>
