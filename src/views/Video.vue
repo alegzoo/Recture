@@ -188,6 +188,10 @@
         border: none;
     }
 
+    video {
+        background-color: black;
+    }
+
     .v-avatar {
         border-width: 2px;
         border-color: black;
