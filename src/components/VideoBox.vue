@@ -17,12 +17,18 @@
                     </v-container>
                 </v-col>
                 <v-col v-show="props.recording.quizId != null" cols="auto" align="center" align-self="center" class="px-7">
-                    <v-icon icon="mdi-help-box-multiple-outline" title="This recording contains a quiz." size="48"/>
+                    <v-icon icon="mdi-help" title="This recording contains a quiz." size="36"/>
                 </v-col>
             </v-row>
         </v-container>
     </v-card>
 </template>
+
+<style lang="scss" scoped>
+    .v-icon {
+        transform: rotate(5deg);
+    }
+</style>
   
 <script lang="ts" setup>
     import { computed } from 'vue';
@@ -34,7 +40,3 @@
 
     const date = computed(() => new Date(props.recording.recordingTimestamp).toLocaleDateString());
 </script>
-  
-<style>
-  
-</style>

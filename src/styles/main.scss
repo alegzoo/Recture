@@ -110,6 +110,7 @@ html, body {
     background-color: $recture-cadet-blue;
     margin: 0px;
     padding: 0px 0px 0px 60px;
+    top: 0px !important;
     position: fixed;
     z-index: 100 !important;
     border-style: solid;
@@ -132,6 +133,7 @@ html, body {
 #menu-btn {
     width: 60px;
     height: 60px;
+    top: 0px !important;
     z-index: 110;
     background-color: $recture-cadet-blue;
     border-style: solid;
