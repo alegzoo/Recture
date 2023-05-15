@@ -148,7 +148,6 @@
     
     const dialogSuccess = ref<boolean>(false);
 
-    //TODO: Maybe make reactive and move to composable
     const classes = ref<IClass[]>([]);
     const subjects = ref<ISubject[]>([]);
 
@@ -231,12 +230,10 @@
         }
 
         dialogSuccess.value = success;
-        //TODO: Somehow communicate whether a lesson should be created or not (in case user closes the dialog by clicking outside of it)
         emit('update:modelValue', false);
     }
 
     function copyCodeToClipboard() {
-        //TODO: Check if it works once HTTPS is enabled
         if (navigator.clipboard && inviteCode.value != null) {
             navigator.clipboard.writeText(inviteCode.value);
             alertType.value = "success";

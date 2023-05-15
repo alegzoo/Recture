@@ -95,7 +95,6 @@
 
         repliesLoading.value = true;
 
-        //TODO: Test pagination
         //TODO: Maybe show error on failure?
         RectureApi.getRepliesByComment(page, 5, props.comment.commentId).then((result) => {
             if (result.success && result.data != null) {

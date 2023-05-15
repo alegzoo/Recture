@@ -23,7 +23,6 @@
     homeStore.$reset();
     accountStore.fetchData();
 
-    //TODO: Maybe move elsewhere?
     window.onbeforeunload = function() {
         if (uploadStore.uploadsInProgress > 0) return "";
         else return undefined;

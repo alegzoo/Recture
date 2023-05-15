@@ -205,7 +205,6 @@
                     emit("dataModified");
                     if (item != null) item.name = input;
                 } else {
-                    //TODO: Add separate message for incorrect name format
                     errorDialogMessage.value = "Failed to rename class.";
                     errorDialogVisible.value = true;
                 }
@@ -224,7 +223,6 @@
                     emit("dataModified");
                     if (item != null) item.name = input;
                 } else {
-                    //TODO: Add separate message for incorrect name format
                     errorDialogMessage.value = "Failed to rename subject.";
                     errorDialogVisible.value = true;
                 }

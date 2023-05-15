@@ -84,7 +84,6 @@
     onMounted(() => {
         if (props.mandatory) {
             rules.push(() => {
-                //TODO: Maybe add whitespace check
                 if (selectedItem.value != null || (newItemName.value != null && newItemName.value.length > 0)) return true;
                 else return "Please select an item or enter a value.";
             });

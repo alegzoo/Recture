@@ -3,7 +3,7 @@ import { defineStore } from "pinia"
 
 export const useTimetableStore = defineStore("timetableStore", {
     state: () => ({
-        colors: { //TODO: There has to be a better place to store this
+        colors: {
             "mustard": "#FFBE5D",
             "aqua": "#90C2BD",
             "steel_blue": "#B8BCDF",

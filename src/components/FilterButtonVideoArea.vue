@@ -82,7 +82,6 @@
 
     const menu = ref(false);
 
-    //TODO: Maybe use v-model to bind these to the store?
     const selectedVisibilityFilter = ref();
     const selectedSort = ref();
 

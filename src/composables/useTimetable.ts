@@ -38,15 +38,14 @@ export interface ITimetableGridPosition {
 export type TimetableState = "idle" | "editing" | "creating" | "selecting";
 
 export function useTimetable(initialState: TimetableState = "idle") : IUsableTimetable {
-    //TODO: Maybe use reactives for arrays?
-    const daysOfWeek = /*reactive*/ref([false, false, false, false, false, false, false] as boolean[]);
+    const daysOfWeek = ref([false, false, false, false, false, false, false] as boolean[]);
     const lessonsPerDay = ref<number>(0);
     const firstLessonNumber = ref<number>(1 as number);
-    const lessons = /*reactive*/ref<ILesson[]>([]);
-    const weekDates = /*reactive*/ref<Date[]>([]);
+    const lessons = ref<ILesson[]>([]);
+    const weekDates = ref<Date[]>([]);
 
     const state = ref<TimetableState>(initialState);
-    const selection = /*reactive*/ref<ITimetableGridPosition[]>([]);
+    const selection = ref<ITimetableGridPosition[]>([]);
 
     const idle = computed<boolean>(() => state.value === "idle");
     const editing = computed<boolean>(() => state.value === "editing");

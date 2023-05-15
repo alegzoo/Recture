@@ -98,7 +98,6 @@
 
 
 .plus-btn{
-    //@include elevated-button(3px, 3px, 1px);
     background-color: $recture-yellow;
     color: black;
     border-radius: 9999px;
@@ -280,7 +279,6 @@
                 if (result.success) {
                     if (item != null) item.name = input;
                 } else {
-                    //TODO: Add separate message for incorrect name format
                     errorDialogMessage.value = "Failed to rename thematic unit.";
                     errorDialogVisible.value = true;
                 }

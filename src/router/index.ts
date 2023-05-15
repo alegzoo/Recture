@@ -139,7 +139,6 @@ let lastSuccessfulAuthCheckTimestamp = 0;
 
 router.beforeEach(async (to, from) => {
     if (to.meta.requiresAuth) {
-        //TODO: Verify that this works in every possible scenario
         const timestamp = Date.now();
         if (timestamp - lastSuccessfulAuthCheckTimestamp < 60000 && from.meta.requiresAuth === true) return;
 

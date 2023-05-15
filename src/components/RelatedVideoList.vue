@@ -58,7 +58,6 @@
             recordingsLoading.value = true;
 
             RectureApi.getRecordings(page.value, 20, { sortKey: RecordingSortKey.ByRecordingDate, sortOrder: SortOrder.Ascending }, null, null, null, [props.recording.topicId], null, null).then((result) => {
-                //TODO: Maybe show error if !result.success or exception or if props.recording == null
                 if (result.success && result.data != null) {
                     if (append) {
                         result.data.data.forEach(r => {
@@ -72,7 +71,6 @@
                 }
             }).catch(reason => {
                 totalPages.value = undefined;
-                //TODO: Maybe show error
             }).finally(() => {
                 recordingsLoading.value = false;
             });

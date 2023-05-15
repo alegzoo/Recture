@@ -117,7 +117,6 @@
     }
 
     function copyCodeToClipboard() {
-        //TODO: Check if it works once HTTPS is enabled
         if (navigator.clipboard && props.code) {
             navigator.clipboard.writeText(props.code);
             alertType.value = "success";
@@ -129,7 +128,6 @@
     }
 
     function copyLinkToClipboard() {
-        //TODO: Check if it works once HTTPS is enabled
         if (navigator.clipboard && props.link) {
             navigator.clipboard.writeText(props.link);
             alertType.value = "success";

@@ -110,7 +110,6 @@
         tableItems.value = [];
 
         if (props.group != null) {
-            //TODO: Add pagination
             loadingOverlayVisible.value = true;
 
             let promise = null as Promise<ApiResult<IPage<IPublicUserInfo>>> | null;

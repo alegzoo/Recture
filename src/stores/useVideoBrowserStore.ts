@@ -105,7 +105,6 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
 
             this.recordingsLoading = true;
 
-            //TODO: Test out!!!
             let classIds = [] as number[];
             this.selectedClasses.forEach(selectedClass => classIds.push(selectedClass.classId));
 
@@ -165,7 +164,6 @@ export const useVideoBrowserStore = defineStore("videoBrowserStore", {
                 if (result.success && result.data != null) {
                     this.subjects = result.data;
                     if (this.subjects.length > 0) {
-                        //TODO: Test out!
                         this.selectedSubject = this.subjects[0];
                     }
                 }

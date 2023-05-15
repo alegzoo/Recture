@@ -88,7 +88,6 @@
         border-radius: 0px;
         font-weight: bold;
         border-radius: 9999px;
-        //box-shadow: 0 3px 0 0 black;
     }
 
     .v-btn-toggle .selected {
@@ -100,7 +99,6 @@
     }
 
     .plus-btn {
-        //@include elevated-button(3px, 3px, 1px);
         background-color: $recture-yellow;
         color: black;
         border-radius: 9999px;
