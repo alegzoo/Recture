@@ -32,7 +32,7 @@
 
                     <v-row no-gutters> 
                         <v-col align="center" align-self="end">
-                            <v-btn class="w-100" height="50" variant="text" type="submit" :disabled="quizBeingCreated" :loading="quizBeingCreated">CREATE</v-btn>
+                            <v-btn class="w-100" height="50" variant="text" type="submit" :disabled="quizBeingCreated" :loading="quizBeingCreated">SAVE</v-btn>
                         </v-col>
                     </v-row>
                 </v-form>
