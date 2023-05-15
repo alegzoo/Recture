@@ -2,7 +2,8 @@
     <tr>
         <td class="pt-2">
             <span class="font-weight-black">{{ quiz.title }}</span>
-            <v-tooltip text="Rename" location="end">
+            <v-chip variant="flat" class="px-4 ml-4" :text="quiz.subjectName"/>
+            <v-tooltip text="Change title / subject" location="end">
                 <template v-slot:activator="{ props }">
                     <v-btn :ripple="false" v-bind="props" variant="plain" icon="mdi-pencil" @click="emit('rename')"/>
                 </template>
@@ -22,6 +23,13 @@
         </td>
     </tr>
 </template>
+
+<style lang="scss" scoped>
+    .v-chip {
+        background-color: black;
+        color: white;
+    }
+</style>
 
 <script lang="ts" setup>
     import { IQuiz } from '@/api/RectureApi';

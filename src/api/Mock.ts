@@ -218,6 +218,41 @@ export function makeServer() {
                 return new Response(200);
             }, {timing: 500});
 
+            this.post(RectureApi.BASE_API_URL+"/quizzes", (schema, request) => {
+                const body = (request.requestBody as any) as FormData;
+                const subjectId = body.get("subjectId");
+                const title = body.get("title");
+
+                return new Response(201, undefined, {
+                    quizId: 1337,
+                    subjectId: subjectId,
+                    title: title
+                });
+            }, {timing: 500});
+
+            this.post(RectureApi.BASE_API_URL+"/quizzes/:id/questions", (schema, request) => {
+                const body = (request.requestBody as any) as FormData;
+                const content = body.get("content");
+
+                return new Response(201, undefined, {
+                    questionId: 1337,
+                    content: content,
+                    answers: []
+                });
+            }, {timing: 500});
+
+            this.post(RectureApi.BASE_API_URL+"/quizzes/questions/:id/answers", (schema, request) => {
+                const body = (request.requestBody as any) as FormData;
+                const content = body.get("content");
+                const correct = body.get("correct") === "true";
+
+                return new Response(201, undefined, {
+                    answerId: 1337,
+                    content: content,
+                    correct: correct
+                });
+            }, {timing: 500});
+
             this.get(RectureApi.BASE_API_URL+"/auth/authenticated", (schema, request) => {
                 return new Response(200);
             }, {timing: 50});
@@ -539,6 +574,14 @@ export function makeServer() {
                 return new Response(204);
             }, {timing: 300});
 
+            this.put(RectureApi.BASE_API_URL+"/quizzes/questions/:id", (schema, request) => {
+                return new Response(204);
+            }, {timing: 300});
+
+            this.put(RectureApi.BASE_API_URL+"/quizzes/answers/:id", (schema, request) => {
+                return new Response(204);
+            }, {timing: 300});
+
             this.del(RectureApi.BASE_API_URL+"/recordings/:id", (schema, request) => {
                 const recordingId = parseInt(request.params.id);
                 const recording = schema.findBy("recording", {recordingId: recordingId});
@@ -597,6 +640,14 @@ export function makeServer() {
             }, {timing: 300});
 
             this.del(RectureApi.BASE_API_URL+"/quizzes/:id", (schema, request) => {
+                return new Response(204);
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/quizzes/questions/:id", (schema, request) => {
+                return new Response(204);
+            }, {timing: 300});
+
+            this.del(RectureApi.BASE_API_URL+"/quizzes/answers/:id", (schema, request) => {
                 return new Response(204);
             }, {timing: 300});
         }

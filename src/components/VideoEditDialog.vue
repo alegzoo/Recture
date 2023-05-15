@@ -154,7 +154,6 @@
     </v-dialog>
     <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
     <ConfirmationDialog v-model="deletionConfirmationDialogVisible" :title="'DELETE RECORDING'" :message="'Are you sure you want to delete this recording? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="deletionConfirmationDialogOptionSelected"/>
-    <NewQuizDialog v-model="newQuizDialogVisible"/>
 </template>
 
 <style lang="scss" scoped>
@@ -194,8 +193,7 @@
     import SelectOrCreateInput from './SelectOrCreateInput.vue';
     import MessageDialog from './MessageDialog.vue';
     import ConfirmationDialog from './ConfirmationDialog.vue';
-    import NewQuizDialog from './NewQuizDialog.vue';
-import router from '@/router';
+    import router from '@/router';
 
     const props = defineProps<{
         modelValue?: boolean,
@@ -228,8 +226,6 @@ import router from '@/router';
     const errorDialogMessage = ref<string>("");
 
     const deletionConfirmationDialogVisible = ref<boolean>(false);
-
-    const newQuizDialogVisible = ref<boolean>(false);
 
     const editForm = useRecordingEditForm();
 

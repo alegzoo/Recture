@@ -29,7 +29,7 @@
                         <v-row id="buttons-video-area" align="center" align-self="center" :class="mdAndUp?'':'mx-0'" no-gutters>
                             <template v-if="accountStore.teacher">
                                 <v-col cols="12" md="auto" align="center">
-                                    <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-upload" :class="'px-12'+(mdAndUp?'':' mb-2')" @click="showUploadDialog = true">
+                                    <v-btn id="upload-btn" variant="text" :ripple="false" append-icon="mdi-upload" :class="'px-12'+(mdAndUp?'':' mb-2')" @click="uploadDialogVisible = true">
                                         UPLOAD
                                     </v-btn>
                                 </v-col>
@@ -40,7 +40,7 @@
                                         class="btn-new-theme-unit"  
                                         append-icon="mdi-plus-circle"
                                         rounded
-                                        @click="showNewThematicUnitDialog = true">
+                                        @click="newThematicUnitDialogVisible = true">
                                         NEW THEMATIC UNIT
                                     </v-btn>
                                 </v-col>
@@ -50,7 +50,7 @@
                                         variant="text" 
                                         id="btn-new-quiz" 
                                         append-icon="mdi-plus-circle"
-                                        @click="showNewQuizDialog = true">
+                                        @click="createQuizDialogVisible = true">
                                         NEW QUIZ
                                     </v-btn>
                                 </v-col>
@@ -104,9 +104,10 @@
                 </v-row>
             </v-col>
         </v-row>
-        <UploadDialog v-model="showUploadDialog"/>
-        <NewThematicUnitDialog v-model="showNewThematicUnitDialog"/>
-        <NewQuizDialog v-model="showNewQuizDialog"/>
+        <UploadDialog v-model="uploadDialogVisible"/>
+        <NewThematicUnitDialog v-model="newThematicUnitDialogVisible"/>
+        <CreateQuizDialog v-model="createQuizDialogVisible" @data-modified="manageQuizzesDialogVisible = true"/>
+        <ManageQuizzesDialog v-model="manageQuizzesDialogVisible"/>
 </template>
 
 <style lang="scss">
@@ -127,16 +128,18 @@
     import SearchBar from '@/components/SearchBar.vue';
     import UploadDialog from '@/components/UploadDialog.vue';
     import NewThematicUnitDialog from '@/components/NewThematicUnitDialog.vue';
-    import NewQuizDialog from '@/components/NewQuizDialog.vue';
+    import CreateQuizDialog from '@/components/CreateQuizDialog.vue';
+    import ManageQuizzesDialog from '@/components/ManageQuizzesDialog.vue';
     
     import "@/styles/videobrowser.scss";
     import { useSkeletons } from '@/composables/useSkeletons';
 
     const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
 
-    const showUploadDialog = ref<boolean>(false);
-    const showNewThematicUnitDialog = ref<boolean>(false);
-    const showNewQuizDialog = ref<boolean>(false);
+    const uploadDialogVisible = ref<boolean>(false);
+    const newThematicUnitDialogVisible = ref<boolean>(false);
+    const createQuizDialogVisible = ref<boolean>(false);
+    const manageQuizzesDialogVisible = ref<boolean>(false);
 
     const homeStore = useHomeStore();
     const accountStore = useAccountStore();

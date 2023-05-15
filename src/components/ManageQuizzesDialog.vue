@@ -10,10 +10,10 @@
                     <v-col cols="auto" class="pr-3" align-self="center" align="center">
                         <v-tooltip location="left" class="spiked-tr" text="Create new quiz">
                             <template v-slot:activator="{ props }">
-                                <v-btn v-bind="props" class="plus-btn" icon="mdi-plus" variant="flat" @click="showCreateNewQuizDialog = true"/>
+                                <v-btn v-bind="props" class="plus-btn" icon="mdi-plus" variant="flat" @click="createQuizDialogVisible = true"/>
                             </template>
                         </v-tooltip>
-                    </v-col>    
+                    </v-col>
                 </v-row>         
             </v-card-title>      
             <v-card-text>
@@ -46,7 +46,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <QuizRow v-for="item in tableItems" :key="item.quizId" :quiz="item" @rename="showRenameDialog(item)" @delete="showDeleteDialog(item)" @edit="showEditQuizDialog(item)"/>
+                                    <QuizRow v-for="item in tableItems" :key="item.quizId" :quiz="item" @rename="showUpdateQuizDialog(item)" @delete="showDeleteDialog(item)" @edit="showEditQuizDialog(item)"/>
                                 </tbody>
                             </v-table>
                             <p v-show="!loadingQuizzes && tableItems.length === 0" class="w-100 py-5 text-h6 text-center">No data</p>
@@ -59,9 +59,9 @@
                         </v-col>
                     </v-row>
             </v-card-text>
-            <CreateNewQuizDialog v-model="showCreateNewQuizDialog"/>
+            <CreateQuizDialog v-model="createQuizDialogVisible" @data-modified="loadItems()"/>
+            <UpdateQuizDialog v-model="updateQuizDialogVisible" :quiz="selectedItem"/>
             <ConfirmationDialog v-model="confirmationDialogVisible" :title="'DELETE &quot;'+selectedItem?.title+'&quot;'" :message="'Are you sure you want to delete &quot;'+selectedItem?.title+'&quot;? This action is irreversible.'" positiveButtonText="Delete" negativeButtonText="Cancel" positiveButtonColor="error" @optionSelected="confirmationDialogOptionSelected"/>
-            <InputDialog v-model="renameDialogVisible" :title="'RENAME &quot;'+selectedItem?.title+'&quot;'" :inputLabel="'Enter a new name for &quot;'+selectedItem?.title+'&quot;'" positiveButtonText="Rename" @inputEntered="renameDialogInputEntered"/>
             <MessageDialog v-model="errorDialogVisible" title="ERROR" :message="errorDialogMessage"/>
             <EditQuizDialog v-model="editQuizDialogVisible" :quiz="selectedItem"/>
             <v-overlay v-model="loadingOverlayVisible" class="align-center justify-center" contained persistent>
@@ -112,7 +112,6 @@
     .plus-btn .v-icon {
         font-size: 100px;
     }
-    
 </style>
 
 
@@ -121,23 +120,26 @@
     import { ref, watch} from 'vue';
     import { RectureApi, IQuiz, SortOrder } from '@/api/RectureApi';
     import QuizRow from './QuizRow.vue';
-    import CreateNewQuizDialog from './CreateNewQuizDialog.vue';
+    import CreateQuizDialog from './CreateQuizDialog.vue';
     import InputDialog from './InputDialog.vue';
     import MessageDialog from './MessageDialog.vue';
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import EditQuizDialog from './EditQuizDialog.vue';
+    import UpdateQuizDialog from './UpdateQuizDialog.vue';
 
     const props = defineProps<{
         modelValue?: boolean
     }>();
 
     const emit = defineEmits<{
-        (e: "update:modelValue", val: boolean): void,
-        (e: "dataModified"): void
+        (e: "update:modelValue", val: boolean): void
     }>();
 
     const searchQuery = ref<string>("");
     const sortOrder = ref<SortOrder>(SortOrder.Descending);
+
+    const createQuizDialogVisible = ref<boolean>(false);
+    const updateQuizDialogVisible = ref<boolean>(false);
 
     const confirmationDialogVisible = ref<boolean>(false);
     const renameDialogVisible = ref<boolean>(false);
@@ -148,9 +150,6 @@
 
     const loadingQuizzes = ref<boolean>(false);
     const loadingOverlayVisible = ref<boolean>(false);
-
-    const showCreateNewQuizDialog = ref<boolean>(false);
-
     const selectedItem = ref<IQuiz | null>(null);
 
     confirmationDialogVisible.value = false;
@@ -160,13 +159,7 @@
     errorDialogVisible.value = false;
     errorDialogMessage.value = "";
 
-    const tableItems = ref<IQuiz[]>([{
-        quizId: 1,
-        title: "Test",
-        subjectId: 1,
-        subjectName: "MAT",
-        questions: []
-    }]);
+    const tableItems = ref<IQuiz[]>([]);
 
     watch(() => props.modelValue, value => {
         if (value === true) loadItems();
@@ -197,9 +190,9 @@
         confirmationDialogVisible.value = true;
     }
 
-    function showRenameDialog(item: IQuiz) {
+    function showUpdateQuizDialog(item: IQuiz) {
         selectedItem.value = item;
-        renameDialogVisible.value = true;
+        updateQuizDialogVisible.value = true;
     }
 
     function showEditQuizDialog(item: IQuiz) {
@@ -223,29 +216,6 @@
             }
         }).catch(reason => {
             errorDialogMessage.value = "Failed to delete quiz.";
-            errorDialogVisible.value = true;
-        }).finally(() => {
-            selectedItem.value = null;
-            loadingOverlayVisible.value = false;
-        });
-    }
-
-    function renameDialogInputEntered(positive: boolean, input: string) {
-        if (!positive || selectedItem.value == null) return;
-
-        loadingOverlayVisible.value = true;
-
-        const quiz = selectedItem.value;
-
-        RectureApi.updateQuiz(quiz.quizId, quiz.subjectId, input).then(result => {
-            if (result.success) {
-                quiz.title = input;
-            } else {
-                errorDialogMessage.value = "Failed to rename quiz.";
-                errorDialogVisible.value = true;
-            }
-        }).catch(reason => {
-            errorDialogMessage.value = "Failed to rename quiz.";
             errorDialogVisible.value = true;
         }).finally(() => {
             selectedItem.value = null;
