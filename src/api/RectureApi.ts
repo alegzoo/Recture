@@ -566,10 +566,10 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
-    public static async updateQuiz(quizId: number, subjectId: number, title: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+    public static async updateQuiz(quizId: number, subjectId: number | null, title: string | null, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
-        formData.append("subjectId", subjectId.toString());
-        formData.append("title", title);
+        if (subjectId != null) formData.append("subjectId", subjectId.toString());
+        if (title != null) formData.append("title", title);
 
         const response = await fetch(this.pathToUrl("quizzes/"+quizId), {
             method: "PUT",
@@ -581,9 +581,9 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
-    public static async updateQuizQuestion(questionId: number, content: string, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+    public static async updateQuizQuestion(questionId: number, content: string | null, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
-        formData.append("content", content);
+        if (content != null) formData.append("content", content);
 
         const response = await fetch(this.pathToUrl("quizzes/questions/"+questionId), {
             method: "PUT",
@@ -595,10 +595,10 @@ export class RectureApi {
         return new ApiResult<null>(response.status);
     }
 
-    public static async updateQuizAnswer(answerId: number, content: string, correct: boolean, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
+    public static async updateQuizAnswer(answerId: number, content: string | null, correct: boolean | null, signal: AbortSignal | null = null): Promise<ApiResult<null>> {
         let formData = new FormData();
-        formData.append("content", content);
-        formData.append("correct", correct.toString());
+        if (content != null) formData.append("content", content);
+        if (correct != null) formData.append("correct", correct.toString());
 
         const response = await fetch(this.pathToUrl("quizzes/answers/"+answerId), {
             method: "PUT",
