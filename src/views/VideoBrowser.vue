@@ -121,6 +121,7 @@
     import { IRecordingSort, RecordingVisibilityFilter } from '@/api/RectureApi';
     import { useDisplay } from 'vuetify/lib/framework.mjs';
     import { useHomeStore } from '@/stores/useHomeStore';
+    import { useSkeletons } from '@/composables/useSkeletons';
     import SubjectButton from '@/components/SubjectButton.vue';
     import FilterButtonVideoArea from '@/components/FilterButtonVideoArea.vue';
     import TitledChipSelection from '@/components/TitledChipSelection.vue';
@@ -132,7 +133,6 @@
     import ManageQuizzesDialog from '@/components/ManageQuizzesDialog.vue';
     
     import "@/styles/videobrowser.scss";
-    import { useSkeletons } from '@/composables/useSkeletons';
 
     const { smAndDown, mdAndUp, xlAndUp } = useDisplay();
 

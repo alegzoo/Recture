@@ -64,8 +64,8 @@
 </style>
 
 <script lang="ts" setup>
-    import { RectureApi, ApiResult, IInvitation } from '@/api/RectureApi';
-    import { ref, computed, watch, onMounted } from 'vue';
+    import { RectureApi, IInvitation } from '@/api/RectureApi';
+    import { ref, watch, onMounted } from 'vue';
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import InvitationRow from './InvitationRow.vue';
     import MessageDialog from './MessageDialog.vue';

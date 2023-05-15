@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
     import { computed } from 'vue';
-    import { IInvitation, IPublicUserInfo } from '@/api/RectureApi';
+    import { IInvitation } from '@/api/RectureApi';
 
     const props = defineProps<{
         invitation: IInvitation

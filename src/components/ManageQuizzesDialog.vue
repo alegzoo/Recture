@@ -121,7 +121,6 @@
     import { RectureApi, IQuiz, SortOrder } from '@/api/RectureApi';
     import QuizRow from './QuizRow.vue';
     import CreateQuizDialog from './CreateQuizDialog.vue';
-    import InputDialog from './InputDialog.vue';
     import MessageDialog from './MessageDialog.vue';
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import EditQuizDialog from './EditQuizDialog.vue';

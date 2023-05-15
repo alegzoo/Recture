@@ -117,7 +117,7 @@
 
 <script lang="ts" setup>
     import { RectureApi, IClass, ISubject, ITopic } from '@/api/RectureApi';
-    import { ref, computed, watch, onMounted } from 'vue';
+    import { ref, computed, watch } from 'vue';
     import status from 'http-status';
     import ConfirmationDialog from './ConfirmationDialog.vue';
     import InputDialog from './InputDialog.vue';
