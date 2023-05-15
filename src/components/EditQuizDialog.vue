@@ -90,6 +90,8 @@
         (e: "update:modelValue", val: boolean): void
     }>();
 
+    const fullQuiz = ref<IQuiz | null>();
+
     const tableItems = ref<IQuizQuestion[]>([]);
 
     const createQuestionDialogVisible = ref<boolean>(false);
@@ -106,7 +108,26 @@
 
     function loadQuestions() {
         if (props.quiz != null) {
-            tableItems.value = props.quiz.questions;
+            loadingOverlayVisible.value = true;
+
+            RectureApi.getQuizById(props.quiz.quizId).then(result => {
+                if (result.success && result.data != null) {
+                    fullQuiz.value = result.data;
+                    tableItems.value = fullQuiz.value.questions;
+                } else {
+                    fullQuiz.value = null;
+                    tableItems.value = [];
+                    errorDialogMessage.value = "Failed to load data.";
+                    errorDialogVisible.value = true;
+                }
+            }).catch(reason => {
+                fullQuiz.value = null;
+                tableItems.value = [];
+                errorDialogMessage.value = "Failed to load data.";
+                errorDialogVisible.value = true;
+            }).finally(() => {
+                loadingOverlayVisible.value = false;
+            });
         } else {
             tableItems.value = [];
         }
@@ -128,14 +149,14 @@
     }
 
     function createQuestionDialogInputEntered(positive: boolean, input: string) {
-        if (!positive || props.quiz == null) return;
+        if (!positive || fullQuiz.value == null) return;
 
         loadingOverlayVisible.value = true;
 
-        RectureApi.createQuizQuestion(props.quiz.quizId, input).then(result => {
+        RectureApi.createQuizQuestion(fullQuiz.value.quizId, input).then(result => {
             if (result.success && result.data != null) {
-                if (props.quiz != null) {
-                    props.quiz.questions.push(result.data);
+                if (fullQuiz.value != null) {
+                    fullQuiz.value.questions.push(result.data);
                     loadQuestions();
                 }
             } else {

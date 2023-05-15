@@ -147,7 +147,8 @@
 
         RectureApi.deleteQuizAnswer(answer.answerId).then(result => {
             if (result.success) {
-                tableItems.value = tableItems.value.filter(item => item.answerId !== answer.answerId);
+                if (props.question != null) props.question.answers = props.question.answers.filter(item => item.answerId !== answer.answerId);
+                loadAnswers()
             } else {
                 errorDialogMessage.value = "Failed to delete answer.";
                 errorDialogVisible.value = true;
