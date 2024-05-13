@@ -9,9 +9,9 @@ Teacher Uploads: Educators can upload, manage, and distribute video materials wi
 Search and Filter: Powerful search and filtering capabilities to quickly find specific video content.
 
 # Technologies Used
-Frontend Framework: Vue.js
-Language: TypeScript
+Frontend Framework: Vue.js\n
+Language: TypeScript\n
 Styling: SCSS
 
-# Project status:
+# Project status
 In development...
