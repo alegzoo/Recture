@@ -9,8 +9,10 @@ Features
 Student Access: Students can effortlessly browse and view video content related to their courses.
 Teacher Uploads: Educators can upload, manage, and distribute video materials with ease.
 Search and Filter: Powerful search and filtering capabilities to quickly find specific video content.
-Responsive Design: Optimized for both desktop and mobile use.
+
 Technologies Used
 Frontend Framework: Vue.js
 Language: TypeScript
 Styling: SCSS
+
+Project status: in development...
