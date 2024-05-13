@@ -1,4 +1,5 @@
-# Rec·ture, Video-content distribution WebApp for educational institutions
+# Rec·ture
+Video-content distribution WebApp for educational institutions
 
 # Project Overview
 This web application is designed to facilitate easy access to university video content for students and streamline the distribution of these materials by teachers.<br>
